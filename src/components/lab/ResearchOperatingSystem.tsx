@@ -1,193 +1,203 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import { RESEARCH_STAGES } from "@/lib/hcftl";
-import { ArrowRight, ArrowLeft, ArrowDown } from "lucide-react";
+
+// Path definition for the S-curve — used both in SVG and for the pulse
+// We define it as a cubic bezier series across 9 stages.
+// On desktop: serpentine path (wide). On mobile: straight vertical.
 
 export function ResearchOperatingSystem() {
-  // S-Curve layout grouping:
-  // Row 1: R01, R02, R03 (L -> R)
-  // Row 2: R06, R05, R04 (reversed display: L <- R)
-  // Row 3: R07, R08, R09 (L -> R)
-  const row1 = [RESEARCH_STAGES[0], RESEARCH_STAGES[1], RESEARCH_STAGES[2]];
-  const row2 = [RESEARCH_STAGES[5], RESEARCH_STAGES[4], RESEARCH_STAGES[3]]; // Displayed L to R: R06, R05, R04
-  const row3 = [RESEARCH_STAGES[6], RESEARCH_STAGES[7], RESEARCH_STAGES[8]];
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(containerRef, { once: true, margin: "-20%" });
+
+  // 9 stages laid out in S-curve:
+  // Row 1 (L→R): R01, R02, R03  — y=100–300, x=100–700
+  // Bend R at R03 → R04
+  // Row 2 (R→L): R04, R05, R06  — y=400–600, x=700–100
+  // Bend L at R06 → R07
+  // Row 3 (L→R): R07, R08, R09  — y=700–900, x=100–700
+
+  const STAGE_POSITIONS = [
+    { x: 120, y: 120 },  // R01
+    { x: 380, y: 180 },  // R02
+    { x: 680, y: 140 },  // R03
+    { x: 680, y: 420 },  // R04
+    { x: 420, y: 480 },  // R05
+    { x: 120, y: 440 },  // R06
+    { x: 120, y: 720 },  // R07
+    { x: 400, y: 780 },  // R08
+    { x: 680, y: 740 },  // R09
+  ];
+
+  // Build smooth path through all 9 points
+  const buildPath = () => {
+    const pts = STAGE_POSITIONS;
+    let d = `M ${pts[0].x} ${pts[0].y}`;
+    for (let i = 1; i < pts.length; i++) {
+      const prev = pts[i - 1];
+      const curr = pts[i];
+      const cp1x = prev.x + (curr.x - prev.x) * 0.4;
+      const cp1y = prev.y + (curr.y - prev.y) * 0.1;
+      const cp2x = prev.x + (curr.x - prev.x) * 0.6;
+      const cp2y = curr.y - (curr.y - prev.y) * 0.1;
+      d += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${curr.x} ${curr.y}`;
+    }
+    return d;
+  };
+
+  const pathD = buildPath();
 
   return (
-    <section id="process" className="py-28 border-b border-white/[0.08] bg-[#080B10]/60 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section id="process" className="py-24 md:py-40 relative" ref={containerRef}>
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 pb-8 border-b border-white/[0.08] gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 pb-12 border-b border-white/[0.04] gap-8">
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-none bg-[#7DD3FC]" />
-              <span className="text-xs font-mono tracking-widest text-[#7DD3FC] uppercase">
-                RESEARCH OPERATING SYSTEM {"//"} 09 GATES
-              </span>
+            <div className="flex items-center gap-4 mb-6 font-mono text-[10px] tracking-[0.25em] text-[#7DD3FC]/60 uppercase">
+              <span className="w-6 h-px bg-[#7DD3FC]/30" />
+              <span>HCFTL // Section 06 — Research Operating System</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#F4F7FA] tracking-tight">
-              From Question to Evidence
+            <h2 className="text-5xl sm:text-6xl md:text-7xl font-medium text-[#F4F7FA] tracking-tight leading-[1.05]">
+              Research Pipeline
             </h2>
           </div>
-          <div className="max-w-md text-left md:text-right">
-            <p className="text-xs font-mono text-[#A2ACB9] leading-relaxed">
-              CONTINUOUS UNCOMPROMISING RESEARCH PIPELINE. NO EXPERIMENT SKIPS A GATE.
-            </p>
-            <span className="inline-block mt-2 text-[10px] font-mono text-[#34D399] uppercase tracking-wider">
-              PIPELINE INTEGRITY: ENFORCED
-            </span>
-          </div>
+          <p className="max-w-sm text-base md:text-lg text-[#8899A6] font-light leading-relaxed">
+            Proses tak kenal kompromi dari hipotesis menuju bukti. Tidak ada eksperimen yang melewatkan gerbang pengawasan.
+          </p>
         </div>
 
-        {/* Desktop Connected S-Curve Pipeline Engine (Hidden on Mobile) */}
-        <div className="hidden lg:block relative font-mono">
-          {/* ROW 1: R01 -> R02 -> R03 */}
-          <div className="grid grid-cols-3 gap-6 relative">
-            {row1.map((stage, i) => (
-              <div
-                key={stage.code}
-                className="relative p-6 bg-[#0D1117] border border-white/[0.1] hover:border-[#7DD3FC]/50 transition-colors flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between text-xs mb-3 pb-2 border-b border-white/[0.06]">
-                    <span className="text-[#7DD3FC] font-bold tracking-wider">
-                      GATE // {stage.code}
-                    </span>
-                    <span className="text-[10px] text-[#66717F]">STEP 0{i + 1} OF 09</span>
-                  </div>
-                  <h3 className="text-base font-bold text-[#F4F7FA] mb-2 font-sans tracking-tight">
+        {/* Desktop SVG Pipeline */}
+        <div className="hidden md:block relative">
+          <svg
+            viewBox="0 0 800 1000"
+            className="w-full"
+            style={{ maxHeight: "1100px" }}
+            fill="none"
+          >
+            {/* Background path (dim) */}
+            <path d={pathD} stroke="rgba(255,255,255,0.04)" strokeWidth="2" fill="none" />
+
+            {/* Animated progress path */}
+            {isInView && (
+              <motion.path
+                d={pathD}
+                stroke="#7DD3FC"
+                strokeWidth="2"
+                fill="none"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 2.5, ease: "easeInOut", delay: 0.2 }}
+                style={{ opacity: 0.5 }}
+              />
+            )}
+
+            {/* Stage nodes and labels */}
+            {RESEARCH_STAGES.map((stage, idx) => {
+              const pos = STAGE_POSITIONS[idx];
+              const isLeft = pos.x < 400;
+
+              return (
+                <g key={stage.code}>
+                  {/* Stage node */}
+                  <circle
+                    cx={pos.x} cy={pos.y} r="28"
+                    fill="rgba(3,5,10,0.9)"
+                    stroke="rgba(125,211,252,0.2)"
+                    strokeWidth="1"
+                  />
+                  <circle
+                    cx={pos.x} cy={pos.y} r="10"
+                    fill="rgba(125,211,252,0.15)"
+                    stroke="rgba(125,211,252,0.5)"
+                    strokeWidth="1"
+                  />
+                  <text
+                    x={pos.x} y={pos.y + 4}
+                    textAnchor="middle"
+                    fill="rgba(125,211,252,0.9)"
+                    fontSize="9"
+                    fontFamily="monospace"
+                    letterSpacing="1"
+                  >
+                    {stage.code}
+                  </text>
+
+                  {/* Stage label — alternating sides */}
+                  <text
+                    x={isLeft ? pos.x + 44 : pos.x - 44}
+                    y={pos.y - 8}
+                    textAnchor={isLeft ? "start" : "end"}
+                    fill="rgba(244,247,250,0.9)"
+                    fontSize="15"
+                    fontFamily="sans-serif"
+                    fontWeight="500"
+                  >
                     {stage.name}
-                  </h3>
-                  <p className="text-xs text-[#A2ACB9] font-sans font-light leading-relaxed">
-                    {stage.summary}
-                  </p>
-                </div>
+                  </text>
+                  <text
+                    x={isLeft ? pos.x + 44 : pos.x - 44}
+                    y={pos.y + 12}
+                    textAnchor={isLeft ? "start" : "end"}
+                    fill="rgba(136,153,166,0.8)"
+                    fontSize="12"
+                    fontFamily="sans-serif"
+                  >
+                    {stage.summary.slice(0, 52)}{stage.summary.length > 52 ? "…" : ""}
+                  </text>
+                </g>
+              );
+            })}
 
-                <div className="mt-4 pt-3 border-t border-white/[0.04] flex items-center justify-between text-[10px] text-[#66717F]">
-                  <span>GATE AUDIT</span>
-                  <span className="text-[#34D399]">MANDATORY</span>
-                </div>
+            {/* Animated Research Pulse that travels once on inView */}
+            {isInView && (
+              <motion.circle
+                r="7"
+                fill="#7DD3FC"
+                style={{ filter: "drop-shadow(0 0 10px #7DD3FC)" }}
+                initial={{ cx: 120, cy: 120 }}
+                animate={{
+                  cx: [120, 380, 680, 680, 420, 120, 120, 400, 680],
+                  cy: [120, 180, 140, 420, 480, 440, 720, 780, 740],
+                }}
+                transition={{ duration: 4, ease: "easeInOut", delay: 0.5 }}
+              />
+            )}
+          </svg>
+        </div>
 
-                {/* Connector Arrow for R01 and R02 pointing Right */}
-                {i < 2 && (
-                  <div className="absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-6 h-6 rounded-full bg-[#05070A] border border-white/20 flex items-center justify-center text-[#7DD3FC]">
-                    <ArrowRight className="w-3 h-3" />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+        {/* Mobile: simple vertical list */}
+        <div className="md:hidden relative pl-12">
+          {/* Vertical line */}
+          <div className="absolute left-4 top-0 bottom-0 w-px bg-gradient-to-b from-[#7DD3FC]/50 via-[#7DD3FC]/20 to-[#7DD3FC]/10" />
 
-          {/* TURN 1: Vertical Conduit Downward from R03 to R04 */}
-          <div className="flex justify-end pr-16 py-3">
-            <div className="flex items-center gap-2 px-3 py-1 bg-[#05070A] border border-[#7DD3FC]/30 text-[10px] text-[#7DD3FC]">
-              <span>SIGNAL CONDUIT</span>
-              <ArrowDown className="w-3 h-3 animate-bounce" />
-            </div>
-          </div>
-
-          {/* ROW 2: R06 <- R05 <- R04 */}
-          <div className="grid grid-cols-3 gap-6 relative">
-            {row2.map((stage, i) => (
-              <div
+          <div className="space-y-14">
+            {RESEARCH_STAGES.map((stage, idx) => (
+              <motion.div
                 key={stage.code}
-                className="relative p-6 bg-[#0D1117] border border-white/[0.1] hover:border-[#7DD3FC]/50 transition-colors flex flex-col justify-between"
+                initial={{ opacity: 0, x: -12 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ duration: 0.6, delay: idx * 0.05 }}
+                className="relative"
               >
-                <div>
-                  <div className="flex items-center justify-between text-xs mb-3 pb-2 border-b border-white/[0.06]">
-                    <span className="text-[#7DD3FC] font-bold tracking-wider">
-                      GATE // {stage.code}
-                    </span>
-                    <span className="text-[10px] text-[#66717F]">
-                      {stage.code === "R04" ? "STEP 04 OF 09" : stage.code === "R05" ? "STEP 05 OF 09" : "STEP 06 OF 09"}
-                    </span>
-                  </div>
-                  <h3 className="text-base font-bold text-[#F4F7FA] mb-2 font-sans tracking-tight">
-                    {stage.name}
-                  </h3>
-                  <p className="text-xs text-[#A2ACB9] font-sans font-light leading-relaxed">
-                    {stage.summary}
-                  </p>
+                {/* Node */}
+                <div className="absolute -left-12 top-1 w-6 h-6 rounded-full bg-[#03050A] border border-[#7DD3FC]/40 flex items-center justify-center">
+                  <div className="w-2 h-2 rounded-full bg-[#7DD3FC]/60" />
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-white/[0.04] flex items-center justify-between text-[10px] text-[#66717F]">
-                  <span>GATE AUDIT</span>
-                  <span className="text-[#34D399]">MANDATORY</span>
+                <div className="text-[10px] font-mono tracking-widest text-[#7DD3FC]/60 mb-2 uppercase">
+                  {stage.code}
                 </div>
-
-                {/* Connector Arrow: from R04 to R05 (right to center) and R05 to R06 (center to left) */}
-                {i > 0 && (
-                  <div className="absolute -left-3 top-1/2 -translate-y-1/2 z-20 w-6 h-6 rounded-full bg-[#05070A] border border-white/20 flex items-center justify-center text-[#7DD3FC]">
-                    <ArrowLeft className="w-3 h-3" />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-
-          {/* TURN 2: Vertical Conduit Downward from R06 to R07 */}
-          <div className="flex justify-start pl-16 py-3">
-            <div className="flex items-center gap-2 px-3 py-1 bg-[#05070A] border border-[#7DD3FC]/30 text-[10px] text-[#7DD3FC]">
-              <ArrowDown className="w-3 h-3 animate-bounce" />
-              <span>REPRODUCIBILITY TRANSITION</span>
-            </div>
-          </div>
-
-          {/* ROW 3: R07 -> R08 -> R09 */}
-          <div className="grid grid-cols-3 gap-6 relative">
-            {row3.map((stage, i) => (
-              <div
-                key={stage.code}
-                className="relative p-6 bg-[#0D1117] border border-white/[0.1] hover:border-[#7DD3FC]/50 transition-colors flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex items-center justify-between text-xs mb-3 pb-2 border-b border-white/[0.06]">
-                    <span className="text-[#7DD3FC] font-bold tracking-wider">
-                      GATE // {stage.code}
-                    </span>
-                    <span className="text-[10px] text-[#66717F]">STEP 0{i + 7} OF 09</span>
-                  </div>
-                  <h3 className="text-base font-bold text-[#F4F7FA] mb-2 font-sans tracking-tight">
-                    {stage.name}
-                  </h3>
-                  <p className="text-xs text-[#A2ACB9] font-sans font-light leading-relaxed">
-                    {stage.summary}
-                  </p>
-                </div>
-
-                <div className="mt-4 pt-3 border-t border-white/[0.04] flex items-center justify-between text-[10px] text-[#66717F]">
-                  <span>GATE AUDIT</span>
-                  <span className="text-[#34D399]">MANDATORY</span>
-                </div>
-
-                {/* Connector Arrow for R07 and R08 pointing Right */}
-                {i < 2 && (
-                  <div className="absolute -right-3 top-1/2 -translate-y-1/2 z-20 w-6 h-6 rounded-full bg-[#05070A] border border-white/20 flex items-center justify-center text-[#7DD3FC]">
-                    <ArrowRight className="w-3 h-3" />
-                  </div>
-                )}
-              </div>
+                <h3 className="text-xl font-medium text-[#F4F7FA] mb-2">{stage.name}</h3>
+                <p className="text-sm text-[#8899A6] font-light leading-relaxed">{stage.summary}</p>
+              </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Mobile / Tablet Vertical Telemetry Rail */}
-        <div className="lg:hidden relative pl-6 border-l-2 border-[#7DD3FC]/30 space-y-6">
-          {RESEARCH_STAGES.map((stage, idx) => (
-            <div
-              key={stage.code}
-              className="relative p-5 bg-[#0D1117] border border-white/[0.08] rounded-none"
-            >
-              {/* Rail Node Indicator */}
-              <span className="absolute -left-[31px] top-6 w-3 h-3 bg-[#05070A] border-2 border-[#7DD3FC] rounded-full" />
-
-              <div className="flex items-center justify-between text-xs font-mono mb-2 pb-2 border-b border-white/[0.06]">
-                <span className="text-[#7DD3FC] font-bold">GATE // {stage.code}</span>
-                <span className="text-[10px] text-[#66717F]">PHASE {idx + 1}/9</span>
-              </div>
-
-              <h3 className="text-base font-bold text-[#F4F7FA] mb-1.5">{stage.name}</h3>
-              <p className="text-xs text-[#A2ACB9] font-light leading-relaxed">{stage.summary}</p>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );

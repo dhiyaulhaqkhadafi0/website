@@ -1,31 +1,26 @@
 import type { Metadata } from "next";
 import { Navbar } from "@/components/shared/navbar";
+import { LabMotionProvider } from "@/components/lab/LabMotionContext";
 import { LabHero } from "@/components/lab/LabHero";
 import { LabSectionNav } from "@/components/lab/LabSectionNav";
-import { LabStatus } from "@/components/lab/LabStatus";
 import { LabManifesto } from "@/components/lab/LabManifesto";
-import { ResearchIntelligenceMap } from "@/components/lab/ResearchIntelligenceMap";
-import { ResearchFrontiers } from "@/components/lab/ResearchFrontiers";
-import { ResearchOperatingSystem } from "@/components/lab/ResearchOperatingSystem";
-import { EvidenceLadder } from "@/components/lab/EvidenceLadder";
-import { LabSafetyFramework } from "@/components/lab/LabSafetyFramework";
-import { AutonomyScale } from "@/components/lab/AutonomyScale";
-import { ExperimentRegistry } from "@/components/lab/ExperimentRegistry";
-import { ResearchOutputs } from "@/components/lab/ResearchOutputs";
-import { OpenResearchPhilosophy } from "@/components/lab/OpenResearchPhilosophy";
-import { LabFounder } from "@/components/lab/LabFounder";
+import { ResearchFrontiersSection } from "@/components/lab/ResearchFrontiersSection";
+import { ResearchMethodologySection } from "@/components/lab/ResearchMethodologySection";
+import { LabGovernanceSection } from "@/components/lab/LabGovernanceSection";
+import { LabProgressSection } from "@/components/lab/LabProgressSection";
+import { LabFounderSection } from "@/components/lab/LabFounderSection";
 
 export const metadata: Metadata = {
   title: "HCFTL — Human Centered Frontier Technology Lab | Daffa Dhiyaulhaq Khadafi",
   description:
-    "HCFTL is an independent human-centered frontier technology lab exploring AI, physical intelligence, autonomous systems, digital twins, resilience technology, and responsible research.",
+    "HCFTL adalah lab riset independen yang mengeksplorasi AI dan sistem cerdas yang memperluas kemampuan manusia—melalui eksperimen terukur, bukti yang dapat diperiksa, dan kendali manusia yang tetap terjaga.",
   alternates: {
     canonical: "https://khadafidaffa.com/lab",
   },
   openGraph: {
     title: "HCFTL — Human Centered Frontier Technology Lab | Daffa Dhiyaulhaq Khadafi",
     description:
-      "HCFTL is an independent human-centered frontier technology lab exploring AI, physical intelligence, autonomous systems, digital twins, resilience technology, and responsible research.",
+      "HCFTL adalah lab riset independen yang mengeksplorasi AI dan sistem cerdas yang memperluas kemampuan manusia—melalui eksperimen terukur, bukti yang dapat diperiksa, dan kendali manusia yang tetap terjaga.",
     url: "https://khadafidaffa.com/lab",
     type: "website",
   },
@@ -33,65 +28,101 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "HCFTL — Human Centered Frontier Technology Lab | Daffa Dhiyaulhaq Khadafi",
     description:
-      "HCFTL is an independent human-centered frontier technology lab exploring AI, physical intelligence, autonomous systems, digital twins, resilience technology, and responsible research.",
+      "HCFTL adalah lab riset independen yang mengeksplorasi AI dan sistem cerdas yang memperluas kemampuan manusia—melalui eksperimen terukur, bukti yang dapat diperiksa, dan kendali manusia yang tetap terjaga.",
   },
 };
 
 export default function LabPage() {
   return (
-    <main className="min-h-screen bg-[#05070A] text-[#F4F7FA] selection:bg-[#7DD3FC]/20 selection:text-[#BAE6FD] relative overflow-x-hidden font-sans">
-      {/* Global subtle technical grid overlay */}
-      <div
-        className="fixed inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:3rem_3rem] pointer-events-none z-0"
-        aria-hidden="true"
-      />
+    <LabMotionProvider>
+      <main className="min-h-screen bg-[#070B10] text-[#F2F4F3] selection:bg-[#7DD3FC]/20 selection:text-[#BAE6FD] relative overflow-x-hidden font-sans">
+        {/* Global Shared Navbar */}
+        <Navbar />
 
-      {/* Global Navbar */}
-      <Navbar />
+        <div className="relative flex flex-col">
+          {/* BAB 01 — HERO & SECTION NAVIGATION */}
+          <div className="relative">
+            <LabHero />
+            <LabSectionNav />
+          </div>
 
-      <div className="relative z-10">
-        {/* 01: Facility Entrance */}
-        <LabHero />
+          {/* BAB 02 — MENGAPA HCFTL ADA (MANIFESTO) */}
+          <div
+            className="relative transition-colors"
+            style={{
+              background: "linear-gradient(180deg, #070B10 0%, #080C14 35%, #080C14 75%, #060910 100%)",
+            }}
+          >
+            <LabManifesto />
+          </div>
 
-        {/* Local Sticky Navigation */}
-        <LabSectionNav />
+          {/* BAB 03 — LIMA BIDANG RISET FRONTIER */}
+          <div
+            className="relative transition-colors"
+            style={{
+              background: `
+                radial-gradient(ellipse 85% 60% at 50% 30%, rgba(14,28,48,0.45) 0%, transparent 70%),
+                linear-gradient(180deg, #060910 0%, #070D18 45%, #060A12 100%)
+              `,
+            }}
+          >
+            <ResearchFrontiersSection />
+          </div>
 
-        {/* 02: Laboratory Status */}
-        <LabStatus />
+          {/* BAB 04 — DARI PERTANYAAN MENJADI BUKTI (METODOLOGI & EVIDENCE LADDER) */}
+          <div
+            className="relative transition-colors"
+            style={{
+              background: `
+                radial-gradient(ellipse 75% 55% at 20% 40%, rgba(14,35,64,0.25) 0%, transparent 65%),
+                linear-gradient(180deg, #060A12 0%, #070C15 50%, #060910 100%)
+              `,
+            }}
+          >
+            <ResearchMethodologySection />
+          </div>
 
-        {/* 03: Why HCFTL Exists (Manifesto) */}
-        <LabManifesto />
+          {/* BAB 05 — MANUSIA TETAP MEMEGANG KENDALI (TATA KELOLA KESELAMATAN & OTONOMI) */}
+          <div
+            className="relative transition-colors"
+            style={{
+              background: `
+                radial-gradient(ellipse 65% 50% at 80% 50%, rgba(10,20,35,0.3) 0%, transparent 60%),
+                linear-gradient(180deg, #060910 0%, #060A12 50%, #070B10 100%)
+              `,
+            }}
+          >
+            <LabGovernanceSection />
+          </div>
 
-        {/* 04: Research Intelligence Map */}
-        <ResearchIntelligenceMap />
+          {/* BAB 06 — PERKEMBANGAN LAB (REGISTRY & ARSIP RISET) */}
+          <div
+            className="relative transition-colors"
+            style={{
+              background: `
+                radial-gradient(ellipse 80% 50% at 50% 30%, rgba(12,28,52,0.3) 0%, transparent 65%),
+                linear-gradient(180deg, #070B10 0%, #070C16 50%, #060910 100%)
+              `,
+            }}
+          >
+            <LabProgressSection />
+          </div>
 
-        {/* 05: Research Frontiers */}
-        <ResearchFrontiers />
-
-        {/* 06: Research Operating System (From Question to Evidence) */}
-        <ResearchOperatingSystem />
-
-        {/* 06B: Evidence Ladder */}
-        <EvidenceLadder />
-
-        {/* 07: Human Authority & Safety Framework */}
-        <LabSafetyFramework />
-
-        {/* 07B: Autonomy Scale */}
-        <AutonomyScale />
-
-        {/* 08: Experiment Registry (Locked/Foundation) */}
-        <ExperimentRegistry />
-
-        {/* 09: Research Outputs (0 Public / Negative Results) */}
-        <ResearchOutputs />
-
-        {/* 10: Open Research Philosophy */}
-        <OpenResearchPhilosophy />
-
-        {/* 11: Founder / Institution Leadership & Lab Footer */}
-        <LabFounder />
-      </div>
-    </main>
+          {/* BAB 07 — RISET TERBUKA & PROFIL FOUNDER */}
+          <div
+            className="relative transition-colors"
+            style={{
+              background: `
+                radial-gradient(ellipse 60% 50% at 50% 55%, rgba(125,211,252,0.03) 0%, transparent 65%),
+                linear-gradient(180deg, #060910 0%, #05070D 50%, #020305 100%)
+              `,
+            }}
+          >
+            <LabFounderSection />
+          </div>
+        </div>
+      </main>
+    </LabMotionProvider>
   );
 }
+

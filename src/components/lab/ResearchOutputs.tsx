@@ -2,99 +2,98 @@ import { Lora } from "next/font/google";
 
 const lora = Lora({ subsets: ["latin"], style: ["normal", "italic"] });
 
-export function ResearchOutputs() {
-  const archiveItems = [
-    {
-      index: "01",
-      title: "RESEARCH NOTES",
-      count: "000",
-      status: "No public research notes.",
-      detail:
-        "Preliminary working notes, theoretical explorations, and mathematical drafts will be archived here as research charters mature.",
-    },
-    {
-      index: "02",
-      title: "PUBLICATIONS",
-      count: "000",
-      status: "No reviewed publications.",
-      detail:
-        "Formal manuscripts require minimum Level 04 Reproducible Result verification before external peer review submission.",
-    },
-    {
-      index: "03",
-      title: "OPEN RESEARCH RELEASES",
-      count: "000",
-      status: "No public releases.",
-      detail:
-        "Executable reproduction packages, telemetry datasets, and open-source models will be released under permissive, audited licenses.",
-    },
-    {
-      index: "04",
-      title: "FAILURE RECORDS",
-      count: "000",
-      status: "No recorded experiment failures.",
-      detail:
-        "HCFTL mandates publication of disproven hypotheses, null findings, and anomalies to prevent redundant dead-ends across the field.",
-    },
-  ];
+const archiveItems = [
+  {
+    index: "01",
+    title: "Research Notes",
+    count: "000",
+    status: "Belum ada catatan riset publik.",
+    detail:
+      "Memo kerja awal, eksplorasi teoretis, dan draf matematis akan diarsipkan di sini seiring matangnya piagam riset.",
+  },
+  {
+    index: "02",
+    title: "Publications",
+    count: "000",
+    status: "Belum ada publikasi sejawat.",
+    detail:
+      "Manuskrip formal membutuhkan minimal verifikasi Level 04 Reproducible Result sebelum diajukan ke tinjauan sejawat eksternal.",
+  },
+  {
+    index: "03",
+    title: "Open Research Releases",
+    count: "000",
+    status: "Belum ada rilis terbuka.",
+    detail:
+      "Paket reproduksi yang dapat dieksekusi, dataset telemetri, dan model sumber terbuka akan dirilis di bawah lisensi yang permisif dan diaudit.",
+  },
+  {
+    index: "04",
+    title: "Failure Records",
+    count: "000",
+    status: "Belum ada catatan kegagalan eksperimen.",
+    detail:
+      "HCFTL mewajibkan publikasi hipotesis yang terbukti salah, temuan nol, dan anomali untuk mencegah jalan buntu yang berulang di seluruh bidang.",
+  },
+];
 
+export function ResearchOutputs() {
   return (
-    <section id="research" className="py-28 border-b border-white/[0.08] bg-[#080B10]/50 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section id="research" className="py-24 md:py-40 relative bg-transparent">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-white/[0.08] gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 pb-12 border-b border-white/[0.04] gap-8">
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-none bg-[#7DD3FC]" />
-              <span className="text-xs font-mono tracking-widest text-[#7DD3FC] uppercase">
-                INSTITUTIONAL LEDGER {"//"} 04 CHANNELS
-              </span>
+            <div className="flex items-center gap-4 mb-6 font-mono text-[10px] tracking-[0.25em] text-[#7DD3FC]/60 uppercase">
+              <span className="w-6 h-px bg-[#7DD3FC]/30" />
+              <span>HCFTL // Section 09 — Research Archive</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#F4F7FA] tracking-tight">
+            <h2 className="text-5xl sm:text-6xl md:text-7xl font-medium text-[#F4F7FA] tracking-tight leading-[1.05]">
               Research Archive
             </h2>
           </div>
-          <div className="max-w-md text-left md:text-right">
-            <p className="text-xs font-mono text-[#A2ACB9] leading-relaxed">
-              PUBLIC RECORD OF ALL SCIENTIFIC WORK, BENCHMARKS, DATASETS, AND ANOMALIES.
-            </p>
-            <span className="inline-block mt-2 text-[10px] font-mono text-[#7DD3FC] uppercase tracking-wider">
-              ARCHIVE PROTOCOL: ACTIVE
-            </span>
-          </div>
+          <p className="max-w-sm text-base md:text-lg text-[#8899A6] font-light leading-relaxed">
+            Catatan publik dari seluruh karya ilmiah, tolok ukur, dataset, dan anomali.
+          </p>
         </div>
 
-        {/* Institutional Ledger Rows (Replacing generic card grid) */}
-        <div className="border-t border-white/[0.08] divide-y divide-white/[0.06] font-mono mb-16">
+        {/* Editorial Ledger — journal archive feel */}
+        <div className="border-t border-white/[0.04]">
           {archiveItems.map((item) => (
             <div
               key={item.index}
-              className="py-8 grid grid-cols-1 md:grid-cols-12 gap-6 items-start hover:bg-white/[0.01] transition-colors px-2"
+              className="group grid grid-cols-1 md:grid-cols-[100px_1fr_100px] gap-6 md:gap-16 items-start py-16 md:py-20 border-b border-white/[0.04] hover:bg-white/[0.008] transition-colors px-2 -mx-2 rounded-2xl"
             >
-              {/* Category Number & Title */}
-              <div className="md:col-span-4 flex items-center justify-between md:justify-start gap-4">
-                <span className="text-xs text-[#7DD3FC] font-bold">
-                  {item.index} {"//"}
+              {/* Large ghost index number */}
+              <div className="flex items-start">
+                <span
+                  className="font-mono font-bold text-[#7DD3FC]/20 group-hover:text-[#7DD3FC]/30 transition-colors leading-none"
+                  style={{ fontSize: "clamp(48px, 5vw, 72px)" }}
+                >
+                  {item.index}
                 </span>
-                <span className="text-base sm:text-lg font-bold text-[#F4F7FA] tracking-wider">
+              </div>
+
+              {/* Content */}
+              <div>
+                <h3 className="text-2xl md:text-3xl font-medium text-[#F4F7FA] tracking-tight mb-4 group-hover:text-white transition-colors">
                   {item.title}
-                </span>
-                <span className="md:hidden text-xs text-[#66717F] font-bold">{item.count}</span>
-              </div>
-
-              {/* Status and Detail */}
-              <div className="md:col-span-6 space-y-2">
-                <div className="text-sm text-[#F4F7FA] font-medium font-sans">
+                </h3>
+                <p className="text-lg md:text-xl text-[#8899A6] font-light mb-3">
                   {item.status}
-                </div>
-                <div className="text-xs text-[#A2ACB9] font-light leading-relaxed font-sans">
+                </p>
+                <p className="text-base text-[#66717F] font-light leading-relaxed max-w-2xl">
                   {item.detail}
-                </div>
+                </p>
               </div>
 
-              {/* Item Count */}
-              <div className="hidden md:flex md:col-span-2 justify-end">
-                <span className="text-sm font-bold text-white/30 px-3 py-1 bg-[#05070A] border border-white/[0.08]">
+              {/* Count */}
+              <div className="text-right">
+                <span
+                  className="font-mono font-bold text-white/10 group-hover:text-white/15 transition-colors"
+                  style={{ fontSize: "clamp(36px, 4vw, 64px)" }}
+                >
                   {item.count}
                 </span>
               </div>
@@ -102,21 +101,18 @@ export function ResearchOutputs() {
           ))}
         </div>
 
-        {/* Negative Results Doctrine Ledger Note */}
-        <div className="p-8 sm:p-10 bg-[#05070A] border border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-xl">
-            <blockquote className={`text-xl sm:text-2xl text-[#F4F7FA] font-medium ${lora.className}`}>
-              &ldquo;Negative results are research results.&rdquo;
-            </blockquote>
-            <p className="text-xs font-mono text-[#A2ACB9] font-light">
-              Experimental falsification carries equal epistemic weight to positive confirmations.
-              HCFTL pledges zero concealment of unverified hypotheses.
-            </p>
-          </div>
-          <div className="shrink-0 text-xs font-mono text-[#66717F] border border-white/[0.08] px-4 py-2 bg-[#080B10]">
+        {/* Doctrine statement */}
+        <div className="mt-20 md:mt-24 flex flex-col md:flex-row items-start md:items-center gap-12 md:gap-16 pt-12 border-t border-white/[0.04]">
+          <blockquote
+            className={`${lora.className} text-[28px] sm:text-[36px] md:text-[42px] font-medium text-[#F4F7FA] leading-tight flex-1`}
+          >
+            &ldquo;Hasil negatif tetap merupakan bagian dari proses penelitian.&rdquo;
+          </blockquote>
+          <div className="shrink-0 text-[10px] font-mono text-[#66717F] uppercase tracking-widest border border-white/[0.04] rounded-full px-4 py-2">
             HCFTL DOCTRINE // UNBIASED RECORD
           </div>
         </div>
+
       </div>
     </section>
   );

@@ -1,186 +1,190 @@
+"use client";
+
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { Lora } from "next/font/google";
 import { AUTONOMY_LEVELS } from "@/lib/hcftl";
-import { Shield, AlertTriangle, ShieldAlert } from "lucide-react";
+
+const lora = Lora({ subsets: ["latin"], style: ["normal", "italic"] });
 
 export function AutonomyScale() {
-  const defaultEnvelope = AUTONOMY_LEVELS.filter(
-    (lvl) => lvl.code === "A0" || lvl.code === "A1" || lvl.code === "A2" || lvl.code === "A3"
+  const horizonRef = useRef<HTMLDivElement>(null);
+  const isHorizonInView = useInView(horizonRef, { once: true, margin: "-20%" });
+
+  const defaultEnvelope = AUTONOMY_LEVELS.filter((lvl) =>
+    ["A0", "A1", "A2", "A3"].includes(lvl.code)
   );
-  const elevatedReview = AUTONOMY_LEVELS.filter((lvl) => lvl.code === "A4");
-  const outsideTarget = AUTONOMY_LEVELS.filter((lvl) => lvl.code === "A5");
+  const elevatedReview = AUTONOMY_LEVELS.find((lvl) => lvl.code === "A4")!;
+  const outsideTarget = AUTONOMY_LEVELS.find((lvl) => lvl.code === "A5")!;
 
   return (
-    <section className="py-28 border-b border-white/[0.08] bg-[#080B10]/50 relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section className="py-24 md:py-40 relative bg-transparent overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-white/[0.08] gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 pb-12 border-b border-white/[0.04] gap-8">
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-none bg-[#7DD3FC]" />
-              <span className="text-xs font-mono tracking-widest text-[#7DD3FC] uppercase">
-                POLICY SPECIFICATION {"//"} A0 → A5
-              </span>
+            <div className="flex items-center gap-4 mb-6 font-mono text-[10px] tracking-[0.25em] text-[#7DD3FC]/60 uppercase">
+              <span className="w-6 h-px bg-[#7DD3FC]/30" />
+              <span>HCFTL // Section 07B — Autonomy Scale</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#F4F7FA] tracking-tight">
-              Autonomy Scale
+            <h2 className="text-5xl sm:text-6xl md:text-7xl font-medium text-[#F4F7FA] tracking-tight leading-[1.05]">
+              Skala Otonomi
             </h2>
           </div>
-          <div className="max-w-md text-left md:text-right">
-            <p className="text-xs font-mono text-[#A2ACB9] leading-relaxed">
-              AUTONOMY IS TRACKED INDEPENDENTLY FROM INTELLIGENCE. AGENCY CANNOT ESCAPE HUMAN GOVERNANCE.
-            </p>
-            <span className="inline-block mt-2 text-[10px] font-mono text-[#34D399] uppercase tracking-wider">
-              POLICY: CONSTRAINED ACTUATION DOCTRINE
-            </span>
-          </div>
+          <p className="max-w-sm text-base md:text-lg text-[#8899A6] font-light leading-relaxed">
+            Otonomi dilacak secara terpisah dari kecerdasan. Agensi sistem tidak boleh lepas dari tata kelola manusia.
+          </p>
         </div>
 
-        {/* Structured Envelopes */}
-        <div className="space-y-8">
-          {/* LANE 1: DEFAULT RESEARCH ENVELOPE (A0 - A3) */}
-          <div className="p-6 sm:p-8 bg-[#0D1117] border border-white/[0.1]">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-6 border-b border-white/[0.06] gap-2">
-              <div className="flex items-center gap-3">
-                <span className="p-1.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  <Shield className="w-4 h-4" />
-                </span>
-                <div>
-                  <span className="text-xs font-mono font-bold text-[#34D399] tracking-wider uppercase block">
-                    DEFAULT RESEARCH ENVELOPE // A0 → A3
-                  </span>
-                  <span className="text-[11px] font-mono text-[#66717F]">
-                    PERMITTED FOR STANDARD EXPERIMENTAL DESIGNS UNDER DIRECT RESEARCHER OVERSIGHT
-                  </span>
-                </div>
-              </div>
-              <span className="text-[10px] font-mono px-2.5 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 uppercase tracking-widest self-start sm:self-auto">
-                AUTHORIZED ENVELOPE
-              </span>
+        <div className="max-w-4xl mx-auto">
+
+          {/* DEFAULT RESEARCH ENVELOPE — A0 to A3 */}
+          <div className="mb-20">
+            <div className="flex items-center gap-4 mb-12 text-[10px] font-mono text-[#4ADE80] tracking-widest uppercase">
+              <span className="w-2 h-2 rounded-full bg-[#4ADE80]" />
+              <span>Zona Riset Utama — A0 → A3</span>
             </div>
 
-            <div className="space-y-3">
-              {defaultEnvelope.map((lvl) => (
-                <div
-                  key={lvl.code}
-                  className="p-4 bg-[#080B10] border border-white/[0.06] flex flex-col md:flex-row md:items-center justify-between gap-4"
-                >
-                  <div className="flex items-start md:items-center gap-4">
-                    <span className="text-xs font-mono font-bold px-2.5 py-1 bg-[#7DD3FC]/10 border border-[#7DD3FC]/30 text-[#7DD3FC]">
-                      {lvl.code}
-                    </span>
-                    <div>
-                      <h4 className="text-sm font-bold text-[#F4F7FA] font-mono">{lvl.name}</h4>
-                      <p className="text-xs text-[#A2ACB9] font-light leading-relaxed">
+            <div className="relative pl-8 md:pl-10">
+              {/* Vertical guide line */}
+              <div className="absolute left-2.5 md:left-3.5 top-6 bottom-6 w-px bg-gradient-to-b from-[#4ADE80]/50 via-[#4ADE80]/20 to-[#4ADE80]/10" />
+
+              <div className="space-y-16">
+                {defaultEnvelope.map((lvl) => (
+                  <div key={lvl.code} className="relative group flex flex-col md:flex-row md:items-start gap-6 md:gap-12">
+                    {/* Anchor node */}
+                    <div className="absolute -left-[30px] md:-left-[38px] top-1.5 w-5 h-5 rounded-full bg-[#03050A] border border-[#4ADE80]/40 flex items-center justify-center group-hover:border-[#4ADE80] transition-colors">
+                      <div className="w-1.5 h-1.5 rounded-full bg-[#4ADE80]/60 group-hover:bg-[#4ADE80] transition-colors" />
+                    </div>
+
+                    <div className="w-16 shrink-0 pt-1">
+                      <span className="text-2xl font-mono font-medium text-[#4ADE80]/80 group-hover:text-[#4ADE80] transition-colors">
+                        {lvl.code}
+                      </span>
+                    </div>
+
+                    <div className="flex-1">
+                      <h4 className="text-2xl md:text-3xl font-medium text-[#F4F7FA] mb-3 leading-tight">
+                        {lvl.name}
+                      </h4>
+                      <p className="text-base md:text-lg text-[#8899A6] font-light leading-relaxed mb-3 max-w-xl">
                         {lvl.description}
                       </p>
+                      <span className="text-[10px] font-mono text-[#66717F] uppercase tracking-widest">
+                        {lvl.postureLabel}
+                      </span>
                     </div>
                   </div>
-                  <span className="text-[10px] font-mono px-2 py-0.5 border border-emerald-500/20 text-emerald-400 bg-emerald-500/5 self-start md:self-auto">
-                    {lvl.postureLabel}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* CRITICAL DIVIDER: HUMAN AUTHORITY BOUNDARY */}
-          <div className="relative py-4 flex items-center justify-center">
-            <div className="absolute inset-0 flex items-center" aria-hidden="true">
-              <div className="w-full border-t-2 border-dashed border-amber-500/40" />
-            </div>
-            <div className="relative px-6 py-2 bg-[#05070A] border-2 border-amber-500/60 flex items-center gap-3 text-xs font-mono font-bold text-amber-400 uppercase tracking-widest shadow-xl">
-              <AlertTriangle className="w-4 h-4 text-amber-400" />
-              <span>HUMAN AUTHORITY BOUNDARY</span>
-              <span className="hidden sm:inline text-[#66717F]">{"//"} ZERO UNGOVERNED AGENCY</span>
-            </div>
-          </div>
-
-          {/* LANE 2: ELEVATED REVIEW (A4) */}
-          <div className="p-6 sm:p-8 bg-[#0D1117] border border-amber-500/30">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-6 border-b border-white/[0.06] gap-2">
-              <div className="flex items-center gap-3">
-                <span className="p-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                  <AlertTriangle className="w-4 h-4" />
-                </span>
-                <div>
-                  <span className="text-xs font-mono font-bold text-amber-400 tracking-wider uppercase block">
-                    ELEVATED REVIEW ENVELOPE // A4
-                  </span>
-                  <span className="text-[11px] font-mono text-[#66717F]">
-                    HIGH AUTONOMY. MANDATES DUAL-KEY AUTHORIZATION AND AIR-GAPPED OVERRIDE
-                  </span>
-                </div>
+                ))}
               </div>
-              <span className="text-[10px] font-mono px-2.5 py-1 bg-amber-500/10 text-amber-400 border border-amber-500/30 uppercase tracking-widest self-start sm:self-auto">
-                RESTRICTED ACCESS
-              </span>
             </div>
+          </div>
 
-            {elevatedReview.map((lvl) => (
-              <div
-                key={lvl.code}
-                className="p-4 bg-[#080B10] border border-amber-500/20 flex flex-col md:flex-row md:items-center justify-between gap-4"
+          {/* ── HUMAN AUTHORITY HORIZON ───────────────────────────────── */}
+          <div ref={horizonRef} className="relative py-20">
+
+            {/* Ambient glow */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={isHorizonInView ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 1.5 }}
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: "radial-gradient(ellipse 80% 100% at 50% 50%, rgba(245,158,11,0.08) 0%, transparent 70%)",
+              }}
+            />
+
+            {/* The Horizon Line */}
+            <div className="relative">
+              <motion.div
+                initial={{ scaleX: 0, opacity: 0 }}
+                animate={isHorizonInView ? { scaleX: 1, opacity: 1 } : {}}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                className="w-full h-px origin-left"
+                style={{
+                  background: "linear-gradient(90deg, transparent 0%, rgba(245,158,11,0.6) 20%, rgba(245,158,11,0.8) 50%, rgba(245,158,11,0.6) 80%, transparent 100%)",
+                  boxShadow: "0 0 20px rgba(245,158,11,0.3)",
+                }}
+              />
+
+              {/* Horizon label */}
+              <motion.div
+                initial={{ opacity: 0, y: 8 }}
+                animate={isHorizonInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.8, delay: 0.8 }}
+                className="absolute top-4 left-1/2 -translate-x-1/2 text-center whitespace-nowrap"
               >
-                <div className="flex items-start md:items-center gap-4">
-                  <span className="text-xs font-mono font-bold px-2.5 py-1 bg-amber-500/10 border border-amber-500/30 text-amber-400">
-                    {lvl.code}
-                  </span>
-                  <div>
-                    <h4 className="text-sm font-bold text-[#F4F7FA] font-mono">{lvl.name}</h4>
-                    <p className="text-xs text-[#A2ACB9] font-light leading-relaxed">
-                      {lvl.description}
-                    </p>
-                  </div>
-                </div>
-                <span className="text-[10px] font-mono px-2 py-0.5 border border-amber-500/30 text-amber-400 bg-amber-500/5 self-start md:self-auto">
-                  {lvl.postureLabel}
+                <span className="text-[10px] font-mono tracking-[0.3em] text-amber-400 uppercase">
+                  Human Authority Horizon
                 </span>
-              </div>
-            ))}
-          </div>
-
-          {/* LANE 3: OUTSIDE DEFAULT TARGET (A5) */}
-          <div className="p-6 sm:p-8 bg-[#0D1117] border border-red-500/30">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 mb-6 border-b border-white/[0.06] gap-2">
-              <div className="flex items-center gap-3">
-                <span className="p-1.5 bg-red-500/10 text-red-400 border border-red-500/20">
-                  <ShieldAlert className="w-4 h-4" />
+                <span className="block text-[9px] font-mono text-amber-400/60 mt-1 tracking-widest">
+                  Batas Otoritas Manusia
                 </span>
-                <div>
-                  <span className="text-xs font-mono font-bold text-red-400 tracking-wider uppercase block">
-                    OUTSIDE DEFAULT TARGET // A5
-                  </span>
-                  <span className="text-[11px] font-mono text-[#66717F]">
-                    FULL AUTONOMOUS AGENCY WITHOUT HUMAN REVERSION IS EXCLUDED FROM STANDARD RESEARCH CHARTERS
-                  </span>
-                </div>
-              </div>
-              <span className="text-[10px] font-mono px-2.5 py-1 bg-red-500/10 text-red-400 border border-red-500/30 uppercase tracking-widest self-start sm:self-auto">
-                DISALLOWED BY DEFAULT
-              </span>
+              </motion.div>
             </div>
 
-            {outsideTarget.map((lvl) => (
-              <div
-                key={lvl.code}
-                className="p-4 bg-[#080B10] border border-red-500/20 flex flex-col md:flex-row md:items-center justify-between gap-4"
+            {/* The Signature Statement */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={isHorizonInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 1, delay: 1.2 }}
+              className="mt-20 text-center"
+            >
+              <blockquote
+                className={`${lora.className} text-[32px] sm:text-[42px] md:text-[52px] font-medium text-[#F4F7FA] leading-[1.15] tracking-tight`}
               >
-                <div className="flex items-start md:items-center gap-4">
-                  <span className="text-xs font-mono font-bold px-2.5 py-1 bg-red-500/10 border border-red-500/30 text-red-400">
-                    {lvl.code}
-                  </span>
-                  <div>
-                    <h4 className="text-sm font-bold text-[#F4F7FA] font-mono">{lvl.name}</h4>
-                    <p className="text-xs text-[#A2ACB9] font-light leading-relaxed">
-                      {lvl.description}
-                    </p>
-                  </div>
-                </div>
-                <span className="text-[10px] font-mono px-2 py-0.5 border border-red-500/30 text-red-400 bg-red-500/5 self-start md:self-auto">
-                  {lvl.postureLabel}
+                &ldquo;Otonomi tidak boleh menghapus<br className="hidden md:block" />
+                akuntabilitas manusia.&rdquo;
+              </blockquote>
+            </motion.div>
+          </div>
+
+          {/* ELEVATED REVIEW — A4 */}
+          <div className="mt-16 mb-16 relative pl-8 md:pl-10">
+            <div className="absolute left-2.5 md:left-3.5 top-4 h-24 w-px bg-gradient-to-b from-amber-500/30 to-amber-500/10" />
+            <div className="absolute -left-[30px] md:-left-[38px] top-1.5 w-5 h-5 rounded-full bg-[#03050A] border border-amber-500/50 flex items-center justify-center">
+              <div className="w-1.5 h-1.5 rounded-full bg-amber-400/60" />
+            </div>
+
+            <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-12">
+              <div className="w-16 shrink-0 pt-1">
+                <span className="text-2xl font-mono font-medium text-amber-400/80">{elevatedReview.code}</span>
+              </div>
+              <div>
+                <h4 className="text-2xl md:text-3xl font-medium text-[#F4F7FA] mb-3">{elevatedReview.name}</h4>
+                <p className="text-base md:text-lg text-[#8899A6] font-light leading-relaxed mb-3 max-w-xl">
+                  {elevatedReview.description}
+                </p>
+                <span className="inline-block text-[10px] font-mono px-4 py-1.5 rounded-full border border-amber-500/20 text-amber-400 uppercase tracking-widest">
+                  {elevatedReview.postureLabel}
                 </span>
               </div>
-            ))}
+            </div>
           </div>
+
+          {/* OUTSIDE DEFAULT TARGET — A5 */}
+          <div className="relative pl-8 md:pl-10 opacity-60">
+            <div className="absolute -left-[30px] md:-left-[38px] top-1.5 w-5 h-5 rounded-full bg-[#03050A] border border-red-500/30 flex items-center justify-center">
+              <div className="w-1.5 h-1.5 rounded-full bg-red-400/40" />
+            </div>
+
+            <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-12">
+              <div className="w-16 shrink-0 pt-1">
+                <span className="text-2xl font-mono font-medium text-red-400/70">{outsideTarget.code}</span>
+              </div>
+              <div>
+                <h4 className="text-2xl md:text-3xl font-medium text-[#F4F7FA] mb-3">{outsideTarget.name}</h4>
+                <p className="text-base md:text-lg text-[#8899A6] font-light leading-relaxed mb-3 max-w-xl">
+                  {outsideTarget.description}
+                </p>
+                <span className="inline-block text-[10px] font-mono px-4 py-1.5 rounded-full border border-red-500/20 text-red-400 uppercase tracking-widest">
+                  {outsideTarget.postureLabel}
+                </span>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

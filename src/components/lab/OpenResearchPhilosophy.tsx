@@ -3,97 +3,106 @@ import { Lora } from "next/font/google";
 
 const lora = Lora({ subsets: ["latin"], style: ["normal", "italic"] });
 
-export function OpenResearchPhilosophy() {
-  const models = [
-    {
-      code: "MODE 01",
-      title: "OPEN RESEARCH",
-      icon: Globe,
-      desc: "Full transparency on methods, experimental architectures, raw observations, failure modes, and evaluations.",
-      detail: "All theoretical papers, negative findings, and mathematical proofs are published freely.",
-    },
-    {
-      code: "MODE 02",
-      title: "OPEN SOURCE",
-      icon: Code2,
-      desc: "Software implementations and tooling released under genuine, recognized open-source licenses.",
-      detail: "Source code is distributed cleanly without deceptive restrictions or pseudo-open labels.",
-    },
-    {
-      code: "MODE 03",
-      title: "CONTROLLED RELEASE",
-      icon: LockKeyhole,
-      desc: "High-capability weights, physical actuation triggers, or dual-use datasets gated under bounded access.",
-      detail: "Withheld or released in staged boundaries when unrestricted access induces material physical risk.",
-    },
-  ];
+const models = [
+  {
+    num: "01",
+    icon: Globe,
+    title: "Open Research",
+    desc: "Transparansi penuh pada metode, arsitektur eksperimental, observasi mentah, mode kegagalan, dan evaluasi.",
+    detail: "Semua makalah teoretis, temuan negatif, dan pembuktian matematis dipublikasikan secara bebas.",
+  },
+  {
+    num: "02",
+    icon: Code2,
+    title: "Open Source",
+    desc: "Implementasi perangkat lunak dan peralatan dirilis di bawah lisensi sumber terbuka yang sah dan diakui.",
+    detail: "Kode sumber didistribusikan dengan bersih tanpa batasan yang menipu atau label pseudo-terbuka.",
+  },
+  {
+    num: "03",
+    icon: LockKeyhole,
+    title: "Controlled Release",
+    desc: "Bobot model berkemampuan tinggi, pemicu aktuasi fisik, atau dataset penggunaan ganda diamankan di bawah akses terbatas.",
+    detail: "Ditahan atau dirilis dalam batasan bertahap ketika akses tak terbatas dapat menimbulkan risiko fisik material.",
+  },
+];
 
+export function OpenResearchPhilosophy() {
   return (
-    <section className="py-28 border-b border-white/[0.08] bg-[#05070A] relative">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section className="py-24 md:py-40 relative bg-transparent">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-20 pb-8 border-b border-white/[0.08] gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 pb-12 border-b border-white/[0.04] gap-8">
           <div>
-            <div className="flex items-center gap-2 mb-3">
-              <span className="w-2 h-2 rounded-none bg-[#7DD3FC]" />
-              <span className="text-xs font-mono tracking-widest text-[#7DD3FC] uppercase">
-                DISSEMINATION POLICY {"//"} ETHICAL DIRECTIVE
-              </span>
+            <div className="flex items-center gap-4 mb-6 font-mono text-[10px] tracking-[0.25em] text-[#7DD3FC]/60 uppercase">
+              <span className="w-6 h-px bg-[#7DD3FC]/30" />
+              <span>HCFTL // Section 10 — Open Research Philosophy</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-bold text-[#F4F7FA] tracking-tight">
-              Open When Responsible. Controlled When Necessary.
+            <h2 className="text-5xl sm:text-6xl md:text-7xl font-medium text-[#F4F7FA] tracking-tight leading-[1.05]">
+              Terbuka saat<br />Bertanggung Jawab
             </h2>
           </div>
-          <div className="max-w-md text-left md:text-right">
-            <p className="text-xs font-mono text-[#A2ACB9] leading-relaxed">
-              BALANCING MAXIMUM SCIENTIFIC VELOCITY WITH RIGOROUS BIO/CYBER-PHYSICAL RISK MITIGATION.
-            </p>
-          </div>
+          <p className="max-w-sm text-base md:text-lg text-[#8899A6] font-light leading-relaxed">
+            Menyeimbangkan kecepatan ilmiah maksimum dengan mitigasi risiko bio/siber-fisik yang ketat.
+          </p>
         </div>
 
-        {/* 3 Modes Architectural Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          {models.map((m) => {
+        {/* 3 Large Editorial Columns */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
+          {models.map((m, idx) => {
             const Icon = m.icon;
             return (
               <div
-                key={m.title}
-                className="p-8 bg-[#0D1117] border border-white/[0.08] hover:border-white/20 transition-all flex flex-col justify-between"
+                key={m.num}
+                className={`flex flex-col py-12 px-8 md:px-10 lg:px-12 ${idx !== 0 ? "md:border-l border-white/[0.04]" : ""} ${idx !== models.length - 1 ? "border-b md:border-b-0 border-white/[0.04]" : ""}`}
               >
-                <div>
-                  <div className="flex items-center justify-between pb-4 mb-6 border-b border-white/[0.06] font-mono text-xs">
-                    <span className="text-[#7DD3FC] font-bold">{m.code}</span>
-                    <Icon className="w-4 h-4 text-[#A2ACB9]" />
+                {/* Large number + icon row */}
+                <div className="flex items-end justify-between mb-10">
+                  <span
+                    className="font-mono font-bold text-[#7DD3FC]/20 leading-none"
+                    style={{ fontSize: "clamp(56px, 7vw, 96px)" }}
+                  >
+                    {m.num}
+                  </span>
+                  <div className="w-10 h-10 rounded-full flex items-center justify-center bg-white/[0.03] border border-white/[0.06] mb-2">
+                    <Icon className="w-4 h-4 text-[#7DD3FC]/60" />
                   </div>
-
-                  <h3 className="text-lg font-bold tracking-wider text-[#F4F7FA] font-mono mb-3">
-                    {m.title}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-[#A2ACB9] leading-relaxed font-light mb-6">
-                    {m.desc}
-                  </p>
                 </div>
 
-                <div className="pt-4 border-t border-white/[0.04] text-[11px] font-mono text-[#66717F]">
-                  {m.detail}
+                {/* Title */}
+                <h3 className="text-2xl md:text-3xl font-medium text-[#F4F7FA] tracking-tight mb-6 leading-tight">
+                  {m.title}
+                </h3>
+
+                {/* Description */}
+                <p className="text-base md:text-lg text-[#A2ACB9] font-light leading-relaxed mb-8 flex-1">
+                  {m.desc}
+                </p>
+
+                {/* Detail */}
+                <div className="pt-6 border-t border-white/[0.04]">
+                  <p className="text-sm text-[#66717F] font-light leading-relaxed">
+                    {m.detail}
+                  </p>
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Highlight quote */}
-        <div className="p-8 sm:p-12 bg-[#080B10] border border-white/10 text-center">
+        {/* Central doctrine quote */}
+        <div className="mt-24 py-20 border-y border-white/[0.04] text-center max-w-4xl mx-auto">
           <blockquote
-            className={`text-xl sm:text-2xl text-[#F4F7FA] font-medium leading-relaxed max-w-2xl mx-auto mb-4 ${lora.className}`}
+            className={`${lora.className} text-[28px] sm:text-[36px] md:text-[44px] font-medium text-[#F4F7FA] leading-tight mb-8`}
           >
-            &ldquo;Transparency does not require irresponsible release.&rdquo;
+            &ldquo;Transparansi tidak mengharuskan perilisan yang tidak bertanggung jawab.&rdquo;
           </blockquote>
-          <p className="text-xs font-mono text-[#7DD3FC]">
-            HCFTL ETHICAL GOVERNANCE DIRECTIVE {"//"} PRINCIPLE 10
+          <p className="text-[10px] font-mono text-[#66717F] uppercase tracking-[0.3em]">
+            HCFTL Ethical Governance Directive // Principle 10
           </p>
         </div>
+
       </div>
     </section>
   );
