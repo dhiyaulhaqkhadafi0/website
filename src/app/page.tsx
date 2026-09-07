@@ -570,6 +570,7 @@ const badgesList = [
   { title: "Google AI for Research and Insights", image: "/badge/google-ai-for-research-and-insights.png", link: "https://www.credly.com/badges/930feb58-0310-4ff9-a64c-2ad25893601c/public_url" },
   { title: "Google AI for Writing and Communicating", image: "/badge/google-ai-for-writing-and-communicating.png", link: "https://www.credly.com/badges/7d1b45db-0e82-4bff-8a65-1e13b70de31a/public_url" },
   { title: "Google AI Fundamentals", image: "/badge/google-ai-fundamentals.png", link: "https://www.credly.com/badges/e4bc5476-beff-44d2-8b8d-ea207f798027/public_url" },
+  { title: "Google AI Professional Certificate", image: "/badge/google-ai-professional-certificate.png", link: "https://www.credly.com/badges/14ec7dd4-c6fd-4772-a9dc-9ab7aeef2c4a/public_url" },
   { title: "Cybersecurity Tools & Cyber Attacks", image: "/badge/introduction-to-cybersecurity-tools-cyber-attacks.png", link: "https://www.credly.com/badges/649e1d24-887c-44f2-90b0-64c13c557c10/public_url" },
   { title: "Product Management Essentials", image: "/badge/product-management-essentials.png", link: "https://www.credly.com/badges/6b6c1243-6ab1-4f0c-b881-5692a084b90e/public_url" }
 ];

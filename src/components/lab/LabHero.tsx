@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { ArrowRight, Pause, Play } from "lucide-react";
+import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
 import { motion, AnimatePresence, useSpring, useMotionValue } from "framer-motion";
 import { Lora } from "next/font/google";
 import { useLabMotion } from "./LabMotionContext";
@@ -60,14 +60,11 @@ export function LabHero() {
     (e: React.PointerEvent<HTMLDivElement>) => {
       if (shouldReduceMotion || isPaused || e.pointerType === "touch" || !visualRef.current) return;
       const rect = visualRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      // Parallax range: -7px to +7px
-      mouseX.set(((x - centerX) / centerX) * 7);
-      mouseY.set(((y - centerY) / centerY) * 7);
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      // Clamped to ±6px horizontal, ±8px vertical
+      mouseX.set(Math.max(-6, Math.min(6, x * 12)));
+      mouseY.set(Math.max(-8, Math.min(8, y * 16)));
     },
     [shouldReduceMotion, isPaused, mouseX, mouseY]
   );
@@ -103,6 +100,22 @@ export function LabHero() {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
+
+            {/* Navigasi Kembali ke Beranda */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="mb-6"
+            >
+              <Link
+                href="/"
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#7DD3FC]/40 text-xs font-mono tracking-wider text-[#ADBAC5] hover:text-[#F0F2ED] transition-all group shadow-sm backdrop-blur-md"
+              >
+                <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform text-[#7DD3FC]" />
+                <span>Kembali ke Beranda</span>
+              </Link>
+            </motion.div>
 
             {/* Masthead / Identity */}
             <motion.div

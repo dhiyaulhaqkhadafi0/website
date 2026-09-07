@@ -71,9 +71,8 @@ export default function HeroSlider() {
             The Digital Grimoire
           </span>
         </h1>
-        <p className="text-[#A1A1AA] text-lg md:text-xl leading-relaxed font-light">
-          Catatan perjalanan, arsip pemikiran, dan kerangka arsitektur. 
-          Menjembatani batas antara logika komputasi dan intuisi desain.
+        <p className="text-[#A1A1AA] text-lg md:text-xl leading-relaxed font-light max-w-2xl mx-auto">
+          Arsip pemikiran intelektual, blueprint arsitektur AI, dan laboratorium kreasi produk digital. Mengeksplorasi sinergi rekayasa sistem modern, strategi produk defensible, produktivitas tinggi, hingga masa depan teknologi yang berpusat pada manusia.
         </p>
       </div>
     </section>

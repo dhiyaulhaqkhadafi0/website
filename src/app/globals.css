@@ -390,3 +390,29 @@ body:has(.studio-shell) > footer, body:has(.studio-login-shell) > footer, body:h
   font-size: 11px;
 }
 
+/* Google Translate Headless Styling Overrides -------------------------------- */
+.goog-te-banner-frame.skiptranslate,
+.goog-te-banner-frame,
+iframe.goog-te-banner-frame {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+}
+body {
+  top: 0px !important;
+  position: static !important;
+}
+.skiptranslate {
+  display: none !important;
+}
+body > .skiptranslate {
+  display: none !important;
+}
+#goog-gt-tt, .goog-te-balloon-frame {
+  display: none !important;
+}
+.goog-text-highlight {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+

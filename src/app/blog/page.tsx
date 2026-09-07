@@ -1,3 +1,5 @@
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
 import { getBlogListingPosts } from '@/lib/mdx';
 import { getAllPublishedArticlesEngagement } from '@/lib/engagement';
 import { Navbar } from '@/components/shared/navbar';
@@ -9,7 +11,7 @@ const lora = Lora({ subsets: ['latin'], style: ['normal', 'italic'] });
 
 export const metadata = {
   title: 'Digital Grimoire | Daffa Dhiyaulhaq Khadafi',
-  description: 'A digital diary of an AI-Assisted Product Engineer. Concepts, thoughts, and architectural blueprints.',
+  description: 'Kompendium pemikiran, blueprint arsitektur sistem cerdas, dan eksplorasi produk AI terapan oleh Daffa Dhiyaulhaq Khadafi.',
 };
 
 export const dynamic = 'force-dynamic';
@@ -29,8 +31,19 @@ export default async function BlogIndex() {
 
       <Navbar />
       
-      <main className="relative z-10 pt-24 pb-24 max-w-5xl mx-auto px-6 sm:px-8">
+      <main className="relative z-10 pt-28 pb-24 max-w-5xl mx-auto px-6 sm:px-8">
         
+        {/* Navigasi Kembali */}
+        <div className="mb-6 flex items-center justify-start">
+          <Link 
+            href="/" 
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#34D399]/40 text-xs font-mono tracking-wider text-white/70 hover:text-white transition-all group shadow-sm backdrop-blur-md"
+          >
+            <ArrowLeft className="w-3.5 h-3.5 group-hover:-translate-x-1 transition-transform text-[#34D399]" />
+            <span>Kembali ke Beranda</span>
+          </Link>
+        </div>
+
         <HeroSlider />
 
         {/* Main Content (Premium Search, Filter, Grid) */}

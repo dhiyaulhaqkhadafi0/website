@@ -60,6 +60,7 @@ export const metadata: Metadata = {
 };
 
 import { Footer } from "@/components/shared/footer";
+import { GlobalTranslator } from "@/components/shared/GlobalTranslator";
 
 export default function RootLayout({
   children,
@@ -69,6 +70,7 @@ export default function RootLayout({
   return (
     <html lang="id" className={`${plusJakartaSans.variable} antialiased scroll-smooth`}>
       <body className="min-h-screen flex flex-col bg-brand-bg text-brand-primary font-sans">
+        <GlobalTranslator />
         <main className="flex-1 flex flex-col">
           {children}
         </main>

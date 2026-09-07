@@ -58,7 +58,7 @@ export default function BlogPostContent({ post, slug, relatedPosts, children }: 
             className="inline-flex items-center gap-2 text-sm text-[#9CA3AF] hover:text-[#E2E8F0] transition-colors group bg-[#131316] px-4 py-2 rounded-full border border-[#27272A]/50 shadow-sm backdrop-blur-md"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span className="font-mono">Kembali ke Dunia</span>
+            <span className="font-mono">Kembali ke Blog</span>
           </Link>
         </div>
 

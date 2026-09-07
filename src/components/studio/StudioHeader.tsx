@@ -1,8 +1,9 @@
 "use client";
 
+import Link from 'next/link';
 import {
   PanelLeft, PanelRight, Maximize2, Minimize2, Eye, Save, Send, Check,
-  LoaderCircle, AlertCircle, Undo2, Redo2, Plus, Bot, Sparkles,
+  LoaderCircle, AlertCircle, Undo2, Redo2, Plus, Bot, Sparkles, ArrowLeft,
 } from 'lucide-react';
 import type { StudioArticle } from '@/lib/blog-types';
 
@@ -54,14 +55,23 @@ export function StudioHeader({
   return (
     <header className="studio-topbar flex items-center justify-between px-4 bg-[#0C0D11]/95 backdrop-blur-md border-b border-white/10 select-none h-16 z-30 shadow-sm">
       {/* Left controls: Sidebar toggle & Title/Status */}
-      <div className="flex items-center gap-3 min-w-0 flex-1 mr-3">
+      <div className="flex items-center gap-2 sm:gap-3 min-w-0 flex-1 mr-3">
+        <Link
+          href="/blog"
+          title="Kembali ke Blog"
+          className="h-10 px-2.5 rounded-xl flex items-center gap-1.5 transition-all border text-[#94A3B8] bg-[#14151B] border-white/10 hover:text-[#F8FAFC] hover:bg-white/10 hover:border-white/20 text-xs font-mono flex-shrink-0"
+        >
+          <ArrowLeft className="w-3.5 h-3.5 text-[#34D399]" />
+          <span className="hidden sm:inline">Blog</span>
+        </Link>
+
         {!focusMode && (
           <button
             type="button"
             onClick={onToggleLeft}
             title={leftCollapsed ? 'Buka daftar naskah (Ctrl + \\)' : 'Tutup daftar naskah (Ctrl + \\)'}
             aria-label="Toggle daftar naskah"
-            className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all border ${
+            className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all border flex-shrink-0 ${
               leftCollapsed
                 ? 'text-[#94A3B8] bg-[#14151B] border-white/10 hover:text-[#F8FAFC] hover:bg-white/10 hover:border-white/20'
                 : 'text-[#34D399] bg-[#34D399]/15 border-[#34D399]/30 shadow-sm'

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { EditorContent, useEditor } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Placeholder from '@tiptap/extension-placeholder';
@@ -96,7 +97,16 @@ function LoginPanel({ onAuthenticated }: { onAuthenticated: (session: Session) =
             {busy ? 'Memverifikasi...' : 'Masuk ke Studio'}
           </button>
         </form>
-        <small>Akses dibatasi untuk akun pemilik website.</small>
+        <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between text-xs text-white/50">
+          <small>Akses dibatasi pemilik website.</small>
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-1.5 text-white/60 hover:text-white transition-colors"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span>Kembali ke Blog</span>
+          </Link>
+        </div>
       </div>
     </main>
   );
