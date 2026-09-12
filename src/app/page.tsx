@@ -736,9 +736,47 @@ export default function Home() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Khadafi",
+    alternateName: ["Daffa Khadafi", "khadafidaffa.com"],
+    url: "https://khadafidaffa.com/",
+  };
+
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Daffa Dhiyaulhaq Khadafi",
+    alternateName: "Khadafi",
+    url: "https://khadafidaffa.com/",
+    image: "https://khadafidaffa.com/assets/Profile%20Photo.png",
+    jobTitle: "Kreator, Builder & Freelancer",
+    knowsAbout: [
+      "AI",
+      "produk digital",
+      "pengembangan aplikasi",
+      "bisnis digital",
+      "content creation",
+      "freelancing",
+      "monetisasi",
+    ],
+    sameAs: [
+      "https://www.linkedin.com/in/khdfii9/",
+      "https://www.youtube.com/@khdfii9",
+    ],
+  };
 
   return (
     <main className="w-full min-h-screen bg-brand-bg text-brand-primary overflow-x-hidden font-sans selection:bg-brand-accent/30 relative">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
       {!showPresentation && <Navbar />}
       {/* Global Scroll Progress Bar */}
       <motion.div 

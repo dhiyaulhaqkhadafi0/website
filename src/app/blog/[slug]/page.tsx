@@ -17,15 +17,18 @@ export async function generateMetadata(
   const post = await getPublishedPostBySlug(slug);
 
   if (!post) {
-    return { title: 'Post Not Found' };
+    return { title: 'Artikel Tidak Ditemukan' };
   }
 
   const siteUrl = 'https://khadafidaffa.com';
   const canonicalUrl = `${siteUrl}/blog/${slug}`;
-  const baseTitle = post.metadata.seoTitle?.trim() || post.metadata.title;
-  const title = baseTitle.includes('Digital Grimoire') ? baseTitle : `${baseTitle} | Digital Grimoire`;
+  const rawTitle = post.metadata.seoTitle?.trim() || post.metadata.title;
+  const title = rawTitle
+    .replace(/\s*\|\s*Digital Grimoire/gi, '')
+    .replace(/\s*\|\s*Khadafi/gi, '')
+    .trim();
   const description = post.metadata.seoDescription?.trim() || post.metadata.excerpt;
-  const coverImage = post.metadata.ogImage || post.metadata.cover_url || post.metadata.image;
+  const coverImage = post.metadata.ogImage || post.metadata.cover_url || post.metadata.image || '/assets/og-image.png';
 
   return {
     title,
@@ -40,13 +43,13 @@ export async function generateMetadata(
       url: canonicalUrl,
       publishedTime: post.metadata.date,
       modifiedTime: post.metadata.updatedAt || post.metadata.date,
-      images: coverImage ? [{ url: coverImage }] : undefined,
+      images: [{ url: coverImage, alt: title }],
     },
     twitter: {
       card: 'summary_large_image',
       title,
       description,
-      images: coverImage ? [coverImage] : undefined,
+      images: [coverImage],
     },
   };
 }

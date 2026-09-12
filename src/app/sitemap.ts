@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/mdx';
+import { RESOURCES_DATA } from '@/content/resources-data';
 
 export const dynamic = 'force-dynamic';
 
@@ -33,10 +34,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.85,
     },
     {
+      url: `${siteUrl}/komunitas`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.85,
+    },
+    {
       url: `${siteUrl}/changelog`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
+    },
+    {
+      url: `${siteUrl}/resources`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
     },
     {
       url: `${siteUrl}/privacy`,
@@ -59,6 +72,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
+  const resourceRoutes: MetadataRoute.Sitemap = RESOURCES_DATA.map((item) => ({
+    url: `${siteUrl}/resources/${item.slug}`,
+    lastModified: new Date(item.updatedAt),
+    changeFrequency: 'weekly',
+    priority: 0.85,
+  }));
+
   // Ensure /studio and draft routes are NEVER included
-  return [...staticRoutes, ...blogRoutes];
+  return [...staticRoutes, ...blogRoutes, ...resourceRoutes];
 }

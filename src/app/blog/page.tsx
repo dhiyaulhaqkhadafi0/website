@@ -9,9 +9,39 @@ import HeroSlider from '@/components/blog/HeroSlider';
 
 const lora = Lora({ subsets: ['latin'], style: ['normal', 'italic'] });
 
-export const metadata = {
-  title: 'Digital Grimoire | Daffa Dhiyaulhaq Khadafi',
-  description: 'Kompendium pemikiran, blueprint arsitektur sistem cerdas, dan eksplorasi produk AI terapan oleh Daffa Dhiyaulhaq Khadafi.',
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Blog',
+  description:
+    'Kompendium pemikiran, blueprint sistem cerdas terapan, rekayasa produk digital, dan strategi bisnis dari Khadafi.',
+  alternates: {
+    canonical: 'https://khadafidaffa.com/blog',
+  },
+  openGraph: {
+    title: 'Blog | Khadafi',
+    description:
+      'Kompendium pemikiran, blueprint sistem cerdas terapan, rekayasa produk digital, dan strategi bisnis dari Khadafi.',
+    url: 'https://khadafidaffa.com/blog',
+    siteName: 'Khadafi',
+    locale: 'id_ID',
+    type: 'website',
+    images: [
+      {
+        url: '/assets/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Blog | Khadafi',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Blog | Khadafi',
+    description:
+      'Kompendium pemikiran, blueprint sistem cerdas terapan, rekayasa produk digital, dan strategi bisnis dari Khadafi.',
+    images: ['/assets/og-image.png'],
+  },
 };
 
 export const dynamic = 'force-dynamic';
