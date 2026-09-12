@@ -34,7 +34,7 @@ export function Navbar() {
       label: "Journey",
       href: "/#journey",
       subMenus: [
-        { label: "Sumber Daya Gratis", href: "/#sumber-daya" },
+        { label: "Sumber Daya Gratis", href: "/resources" },
         { label: "Blog", href: "/blog" },
         { label: "Buku", href: "/#buku" },
         { label: "Kampus Kangguru", href: "/#kampus" },
@@ -55,7 +55,7 @@ export function Navbar() {
         { label: "Content Creation", href: "/#content-creation" },
       ],
     },
-    { label: "Komunitas", href: "/#komunitas" },
+    { label: "Komunitas", href: "/komunitas" },
   ];
 
   const closeMobile = () => setMobileOpen(false);
