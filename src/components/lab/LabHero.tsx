@@ -33,7 +33,10 @@ export function LabHero() {
   const { isPaused, togglePause, shouldReduceMotion, isMotionActive } = useLabMotion();
   const [activeSlide, setActiveSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  // Track viewport visibility of the hero section to stop timer when scrolled away
+  const [isHeroInView, setIsHeroInView] = useState(true);
 
+  const sectionRef = useRef<HTMLElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
 
   // Motion values for smooth 60fps pointer parallax
@@ -45,16 +48,32 @@ export function LabHero() {
   const parallaxX = useSpring(mouseX, springConfig);
   const parallaxY = useSpring(mouseY, springConfig);
 
-  // Synchronized Headline Rotation Timer (6 seconds)
+  // Stop headline timer when hero section leaves the viewport
   useEffect(() => {
-    if (!isMotionActive || shouldReduceMotion || isHovered) return;
+    const node = sectionRef.current;
+    if (!node || typeof IntersectionObserver === "undefined") return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroInView(entry.isIntersecting);
+      },
+      { threshold: 0.05 } // hero is "in view" if at least 5% is visible
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  // Synchronized Headline Rotation Timer (6 seconds)
+  // Stops when: motion paused, reduced motion, user hovering copy, or hero out of viewport
+  useEffect(() => {
+    if (!isMotionActive || shouldReduceMotion || isHovered || !isHeroInView) return;
 
     const interval = setInterval(() => {
       setActiveSlide((prev) => (prev + 1) % HEADLINE_ROTATION_PAIRS.length);
     }, 6000);
 
     return () => clearInterval(interval);
-  }, [isMotionActive, shouldReduceMotion, isHovered]);
+  }, [isMotionActive, shouldReduceMotion, isHovered, isHeroInView]);
 
   const handlePointerMove = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
@@ -77,7 +96,7 @@ export function LabHero() {
   const currentPair = HEADLINE_ROTATION_PAIRS[activeSlide];
 
   return (
-    <section className="relative min-h-[90vh] flex flex-col justify-center pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-20 overflow-hidden">
+    <section ref={sectionRef} className="relative min-h-[90vh] flex flex-col justify-center pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-20 overflow-hidden">
       {/* Background ambient lighting - Directional light framing the sculpture */}
       <div
         className="absolute inset-0 pointer-events-none"

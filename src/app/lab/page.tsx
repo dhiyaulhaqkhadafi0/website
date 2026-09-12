@@ -11,24 +11,35 @@ import { LabProgressSection } from "@/components/lab/LabProgressSection";
 import { LabFounderSection } from "@/components/lab/LabFounderSection";
 
 export const metadata: Metadata = {
-  title: "HCFTL — Human Centered Frontier Technology Lab | Daffa Dhiyaulhaq Khadafi",
+  title: "Laboratorium",
   description:
-    "HCFTL adalah lab riset independen yang mengeksplorasi AI dan sistem cerdas yang memperluas kemampuan manusia—melalui eksperimen terukur, bukti yang dapat diperiksa, dan kendali manusia yang tetap terjaga.",
+    "Eksplorasi dan riset frontier AI, sistem cerdas terapan, dan arsitektur produk masa depan yang memperluas kapabilitas manusia di HCFTL Khadafi.",
   alternates: {
     canonical: "https://khadafidaffa.com/lab",
   },
   openGraph: {
-    title: "HCFTL — Human Centered Frontier Technology Lab | Daffa Dhiyaulhaq Khadafi",
+    title: "Laboratorium | Khadafi",
     description:
-      "HCFTL adalah lab riset independen yang mengeksplorasi AI dan sistem cerdas yang memperluas kemampuan manusia—melalui eksperimen terukur, bukti yang dapat diperiksa, dan kendali manusia yang tetap terjaga.",
+      "Eksplorasi dan riset frontier AI, sistem cerdas terapan, dan arsitektur produk masa depan yang memperluas kapabilitas manusia di HCFTL Khadafi.",
     url: "https://khadafidaffa.com/lab",
+    siteName: "Khadafi",
+    locale: "id_ID",
     type: "website",
+    images: [
+      {
+        url: "/assets/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Laboratorium | Khadafi",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "HCFTL — Human Centered Frontier Technology Lab | Daffa Dhiyaulhaq Khadafi",
+    title: "Laboratorium | Khadafi",
     description:
-      "HCFTL adalah lab riset independen yang mengeksplorasi AI dan sistem cerdas yang memperluas kemampuan manusia—melalui eksperimen terukur, bukti yang dapat diperiksa, dan kendali manusia yang tetap terjaga.",
+      "Eksplorasi dan riset frontier AI, sistem cerdas terapan, dan arsitektur produk masa depan yang memperluas kapabilitas manusia di HCFTL Khadafi.",
+    images: ["/assets/og-image.png"],
   },
 };
 
