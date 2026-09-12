@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s | Khadafi",
   },
   description:
-    "Website resmi Khadafi: Kreator, Builder & Freelancer. Temukan riset AI, produk digital, panduan taktis, dan sumber daya gratis untuk membangun bisnis mandiri.",
+    "Jelajahi ekosistem Khadafi: produk digital, jasa, aplikasi, blog, laboratorium AI, komunitas, tools, dan sumber daya gratis untuk membangun bisnis mandiri.",
   applicationName: "Khadafi",
   authors: [{ name: "Daffa Dhiyaulhaq Khadafi", url: "https://khadafidaffa.com" }],
   creator: "Daffa Dhiyaulhaq Khadafi",
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     siteName: "Khadafi",
     title: "Khadafi — Kreator, Builder & Freelancer",
     description:
-      "Website resmi Khadafi: Kreator, Builder & Freelancer. Temukan riset AI, produk digital, panduan taktis, dan sumber daya gratis untuk membangun bisnis mandiri.",
+      "Jelajahi ekosistem Khadafi: produk digital, jasa, aplikasi, blog, laboratorium AI, komunitas, tools, dan sumber daya gratis untuk membangun bisnis mandiri.",
     images: [
       {
         url: "/assets/og-image.png",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Khadafi — Kreator, Builder & Freelancer",
     description:
-      "Website resmi Khadafi: Kreator, Builder & Freelancer. Temukan riset AI, produk digital, panduan taktis, dan sumber daya gratis untuk membangun bisnis mandiri.",
+      "Jelajahi ekosistem Khadafi: produk digital, jasa, aplikasi, blog, laboratorium AI, komunitas, tools, dan sumber daya gratis untuk membangun bisnis mandiri.",
     images: ["/assets/og-image.png"],
   },
   robots: {

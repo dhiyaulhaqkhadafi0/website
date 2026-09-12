@@ -742,6 +742,8 @@ export default function Home() {
     name: "Khadafi",
     alternateName: ["Daffa Khadafi", "khadafidaffa.com"],
     url: "https://khadafidaffa.com/",
+    description:
+      "Jelajahi ekosistem Khadafi: produk digital, jasa, aplikasi, blog, laboratorium AI, komunitas, tools, dan sumber daya gratis untuk membangun bisnis mandiri.",
   };
 
   const personJsonLd = {
