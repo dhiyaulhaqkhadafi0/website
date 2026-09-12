@@ -43,7 +43,7 @@ export function Navbar() {
     { label: "AI", href: "/#ai" },
     { label: "Lab", href: "/lab" },
     { label: "Freelance", href: "/#freelance" },
-    { label: "Handbook", href: "/#handbook" },
+    { label: "Apps", href: "/#apps" },
     {
       label: "Belajar",
       href: "/#belajar",
