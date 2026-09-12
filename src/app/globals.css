@@ -56,6 +56,22 @@ body {
   animation: shine-sweep 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.animate-gradient-flow {
+  background-size: 300% 300%;
+  animation: gradient-flow 6s ease infinite;
+}
+
+.animate-gradient-fast {
+  background-size: 300% 300%;
+  animation: gradient-flow 3.5s ease infinite;
+}
+
 /* Blog Studio ------------------------------------------------------------- */
 body:has(.studio-shell), body:has(.studio-login-shell), body:has(.studio-loading) { overflow: hidden; }
 body:has(.studio-shell) > main, body:has(.studio-login-shell) > main, body:has(.studio-loading) > main { display: block; }
