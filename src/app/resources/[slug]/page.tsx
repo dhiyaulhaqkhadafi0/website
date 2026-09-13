@@ -39,6 +39,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       type: "article",
       url: canonicalUrl,
+      siteName: "Khadafi",
+      locale: "id_ID",
       images: [
         {
           url: "/assets/og-image.png",
@@ -70,8 +72,34 @@ export default async function ResourceDetailPage({ params }: Props) {
     .map((s) => RESOURCES_DATA.find((r) => r.slug === s))
     .filter((r): r is typeof resource => !!r);
 
+  const siteUrl = "https://khadafidaffa.com";
+  const canonicalUrl = `${siteUrl}/resources/${resource.slug}`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: resource.title,
+    description: resource.description || resource.tagline,
+    url: canonicalUrl,
+    inLanguage: "id-ID",
+    author: {
+      "@type": "Person",
+      name: "Daffa Dhiyaulhaq Khadafi",
+      url: siteUrl,
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Daffa Dhiyaulhaq Khadafi",
+      url: siteUrl,
+    },
+  };
+
   return (
     <main className="min-h-screen bg-[#05050A] text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
       <ResourceDetailView
         resource={resource}

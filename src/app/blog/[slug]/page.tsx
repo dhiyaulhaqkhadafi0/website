@@ -101,6 +101,11 @@ export default async function BlogPost({ params }: Props) {
   const siteUrl = 'https://khadafidaffa.com';
   const articleUrl = `${siteUrl}/blog/${slug}`;
   const coverImage = post.metadata.ogImage || post.metadata.cover_url || post.metadata.image;
+  const absoluteCoverImage = coverImage
+    ? coverImage.startsWith('http')
+      ? coverImage
+      : `${siteUrl}${coverImage.startsWith('/') ? '' : '/'}${coverImage}`
+    : `${siteUrl}/assets/og-image.png`;
 
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -124,7 +129,7 @@ export default async function BlogPost({ params }: Props) {
       '@type': 'WebPage',
       '@id': articleUrl,
     },
-    image: coverImage ? [coverImage] : undefined,
+    image: [absoluteCoverImage],
   };
 
   const jsonLdScript = (
