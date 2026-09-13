@@ -279,6 +279,143 @@ body:has(.studio-shell) > footer, body:has(.studio-login-shell) > footer, body:h
   border-radius: 0.75rem;
 }
 
+/* Editorial Table Styling (Studio & Public Article) ----------------------- */
+.tableWrapper,
+.studio-table-wrapper,
+.prose > table,
+.studio-tiptap > table {
+  position: relative;
+  width: 100%;
+  margin: 2.25rem 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 0.875rem;
+}
+
+/* Custom subtle scrollbar for tables */
+.tableWrapper::-webkit-scrollbar,
+.studio-table-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+.tableWrapper::-webkit-scrollbar-track,
+.studio-table-wrapper::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 999px;
+}
+.tableWrapper::-webkit-scrollbar-thumb,
+.studio-table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+}
+.tableWrapper::-webkit-scrollbar-thumb:hover,
+.studio-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(52, 211, 153, 0.4);
+}
+
+/* Table element */
+.studio-tiptap table,
+.prose table.studio-editorial-table,
+.prose table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0 auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.875rem;
+  overflow: hidden;
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+  font-size: 0.925rem;
+  line-height: 1.6;
+}
+
+/* Header Cells (th) */
+.studio-tiptap th,
+.prose table th {
+  padding: 0.85rem 1.15rem;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #F8FAFC;
+  background-color: rgba(255, 255, 255, 0.045);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.studio-tiptap th:last-child,
+.prose table th:last-child {
+  border-right: none;
+}
+
+/* Data Cells (td) */
+.studio-tiptap td,
+.prose table td {
+  padding: 0.75rem 1.15rem;
+  color: #CBD5E1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  vertical-align: top;
+  transition: background-color 0.15s ease;
+}
+
+.studio-tiptap td:last-child,
+.prose table td:last-child {
+  border-right: none;
+}
+
+.studio-tiptap tr:last-child td,
+.prose table tr:last-child td {
+  border-bottom: none;
+}
+
+/* Subtle Row Hover */
+.studio-tiptap tbody tr:hover td,
+.prose table tbody tr:hover td {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+/* Paragraphs inside cells: remove excessive prose margin */
+.studio-tiptap td > p,
+.studio-tiptap th > p,
+.prose table td > p,
+.prose table th > p {
+  margin: 0 !important;
+  line-height: inherit;
+}
+
+/* Editor Selected Cell Highlight (Tiptap CellSelection) */
+.studio-tiptap .selectedCell,
+.studio-tiptap td.selectedCell,
+.studio-tiptap th.selectedCell {
+  background-color: rgba(52, 211, 153, 0.12) !important;
+  box-shadow: inset 0 0 0 1.5px rgba(52, 211, 153, 0.5);
+  position: relative;
+}
+
+/* Light Theme Compatibility */
+.theme-light .studio-editorial-table,
+.theme-light table {
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #1E293B;
+}
+.theme-light th {
+  background-color: rgba(0, 0, 0, 0.04);
+  color: #0F172A;
+  border-bottom-color: rgba(0, 0, 0, 0.12);
+  border-right-color: rgba(0, 0, 0, 0.06);
+}
+.theme-light td {
+  color: #334155;
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+  border-right-color: rgba(0, 0, 0, 0.06);
+}
+.theme-light tbody tr:hover td {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+
 /* Studio Login & Loading Screens */
 .studio-login-shell,
 .studio-loading {

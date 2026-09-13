@@ -20,6 +20,12 @@ import { ArticleRenderer } from '@/components/shared/ArticleRenderer';
 
 import { EditorialBlockquote } from './tiptap-extensions/EditorialBlockquote';
 import { EditorialFigure } from './tiptap-extensions/EditorialFigure';
+import {
+  EditorialTable,
+  EditorialTableRow,
+  EditorialTableHeader,
+  EditorialTableCell,
+} from './tiptap-extensions/EditorialTable';
 import { StudioArticleRail } from './StudioArticleRail';
 import { StudioDocumentHeader } from './StudioDocumentHeader';
 import { StudioHeader } from './StudioHeader';
@@ -28,6 +34,7 @@ import { StudioPublishModal } from './StudioPublishModal';
 import { StudioSlashMenu } from './StudioSlashMenu';
 import { StudioBubbleMenu } from './StudioBubbleMenu';
 import { StudioImageToolbar } from './StudioImageToolbar';
+import { StudioTableToolbar } from './StudioTableToolbar';
 import { StudioTemplateModal } from './StudioTemplateModal';
 import { StudioUnsavedGuardModal } from './StudioUnsavedGuardModal';
 import { StudioAiModal } from './StudioAiModal';
@@ -378,6 +385,10 @@ export default function BlogStudio() {
       }),
       EditorialBlockquote,
       EditorialFigure,
+      EditorialTable,
+      EditorialTableRow,
+      EditorialTableHeader,
+      EditorialTableCell,
       Placeholder.configure({
         placeholder: ({ node }) => {
           if (node.type.name === 'heading') return 'Subjudul...';
@@ -874,6 +885,7 @@ export default function BlogStudio() {
         canUndo={editor.can().undo()}
         canRedo={editor.can().redo()}
         onInsertBlockClick={openInsertBlockMenu}
+        onInsertTable={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}
         onOpenAiModal={isAiEnabled ? () => setAiModalOpen(true) : undefined}
         onOpenRepurposeModal={isAiEnabled ? () => setRepurposeModalOpen(true) : undefined}
         hasSelection={Boolean(editor && !editor.state.selection.empty)}
@@ -984,6 +996,7 @@ export default function BlogStudio() {
 
       <StudioBubbleMenu editor={editor} />
       <StudioImageToolbar editor={editor} />
+      <StudioTableToolbar editor={editor} />
 
       {/* Hidden file input for image uploads */}
       <input
