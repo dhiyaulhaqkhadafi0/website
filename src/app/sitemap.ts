@@ -10,74 +10,78 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: `${siteUrl}`,
-      lastModified: new Date(),
+      url: `${siteUrl}/`,
       changeFrequency: 'weekly',
       priority: 1.0,
     },
     {
       url: `${siteUrl}/about`,
-      lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
       url: `${siteUrl}/blog`,
-      lastModified: new Date(),
-      changeFrequency: 'daily',
-      priority: 0.9,
-    },
-    {
-      url: `${siteUrl}/lab`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.85,
-    },
-    {
-      url: `${siteUrl}/komunitas`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.85,
     },
     {
+      url: `${siteUrl}/lab`,
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/komunitas`,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       url: `${siteUrl}/changelog`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,
     },
     {
       url: `${siteUrl}/resources`,
-      lastModified: new Date(),
       changeFrequency: 'weekly',
-      priority: 0.9,
+      priority: 0.85,
     },
     {
       url: `${siteUrl}/privacy`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
     {
       url: `${siteUrl}/terms`,
-      lastModified: new Date(),
       changeFrequency: 'yearly',
       priority: 0.3,
     },
   ];
 
-  const blogRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `${siteUrl}/blog/${post.metadata.slug}`,
-    lastModified: new Date(post.metadata.date),
-    changeFrequency: 'monthly',
-    priority: 0.8,
-  }));
+  function getValidDate(dateStr?: string): Date | undefined {
+    if (!dateStr) return undefined;
+    const d = new Date(dateStr);
+    return isNaN(d.getTime()) ? undefined : d;
+  }
 
-  const resourceRoutes: MetadataRoute.Sitemap = RESOURCES_DATA.map((item) => ({
-    url: `${siteUrl}/resources/${item.slug}`,
-    lastModified: new Date(item.updatedAt),
-    changeFrequency: 'weekly',
-    priority: 0.85,
-  }));
+  const blogRoutes: MetadataRoute.Sitemap = posts.map((post) => {
+    const validDate =
+      getValidDate(post.metadata.updatedAt) || getValidDate(post.metadata.date);
+    return {
+      url: `${siteUrl}/blog/${post.metadata.slug}`,
+      ...(validDate ? { lastModified: validDate } : {}),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    };
+  });
+
+  const resourceRoutes: MetadataRoute.Sitemap = RESOURCES_DATA.map((item) => {
+    const validDate = getValidDate(item.updatedAt);
+    return {
+      url: `${siteUrl}/resources/${item.slug}`,
+      ...(validDate ? { lastModified: validDate } : {}),
+      changeFrequency: 'monthly',
+      priority: 0.75,
+    };
+  });
 
   // Ensure /studio and draft routes are NEVER included
   return [...staticRoutes, ...blogRoutes, ...resourceRoutes];

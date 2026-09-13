@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import {
   PanelLeft, PanelRight, Maximize2, Minimize2, Eye, Save, Send, Check,
-  LoaderCircle, AlertCircle, Undo2, Redo2, Plus, Bot, Sparkles, ArrowLeft,
+  LoaderCircle, AlertCircle, Undo2, Redo2, Plus, Bot, Sparkles, ArrowLeft, Table as TableIcon,
 } from 'lucide-react';
 import type { StudioArticle } from '@/lib/blog-types';
 
@@ -24,6 +24,7 @@ type Props = {
   canUndo: boolean;
   canRedo: boolean;
   onInsertBlockClick: () => void;
+  onInsertTable?: () => void;
   onOpenAiModal?: () => void;
   onOpenRepurposeModal?: () => void;
   hasSelection?: boolean;
@@ -46,6 +47,7 @@ export function StudioHeader({
   canUndo,
   canRedo,
   onInsertBlockClick,
+  onInsertTable,
   onOpenAiModal,
   onOpenRepurposeModal,
   hasSelection = false,
@@ -118,8 +120,8 @@ export function StudioHeader({
         </div>
       </div>
 
-      {/* Center minimal editing tools (Undo, Redo, Add Block) */}
-      <div className="hidden md:flex items-center gap-1.5 px-3 py-1 bg-[#121319] rounded-xl border border-white/10">
+      {/* Center minimal editing tools (Undo, Redo, Add Block, Tabel) */}
+      <div className="hidden sm:flex items-center gap-1.5 px-2.5 sm:px-3 py-1 bg-[#121319] rounded-xl border border-white/10 flex-shrink-0">
         <button
           type="button"
           onClick={onInsertBlockClick}
@@ -129,6 +131,18 @@ export function StudioHeader({
           <Plus className="w-3.5 h-3.5 text-[#34D399]" />
           <span>Tambah blok</span>
         </button>
+
+        {onInsertTable && (
+          <button
+            type="button"
+            onClick={onInsertTable}
+            title="Sisipkan tabel editorial (3×3)"
+            className="flex items-center gap-1.5 h-8 px-2.5 rounded-lg text-xs font-medium text-[#E2E8F0] hover:text-white hover:bg-white/10 transition-colors"
+          >
+            <TableIcon className="w-3.5 h-3.5 text-[#34D399]" />
+            <span>Tabel</span>
+          </button>
+        )}
 
         <span className="w-px h-4 bg-white/10 mx-0.5" />
 

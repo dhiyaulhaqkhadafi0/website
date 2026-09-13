@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import type { Editor } from "@tiptap/react";
 import {
   Type, Heading2, Heading3, Quote, List, ListOrdered, Code2,
-  Minus, ImageIcon, MessageSquareQuote, Bookmark,
+  Minus, ImageIcon, MessageSquareQuote, Bookmark, Table as TableIcon,
 } from "lucide-react";
 
 export type SlashCommandItem = {
@@ -139,6 +139,18 @@ export function StudioSlashMenu({
       description: "Garis pemisah antar babak naskah",
       icon: Minus,
       action: (ed) => ed.chain().focus().setHorizontalRule().run(),
+    },
+    {
+      id: "table",
+      title: "Tabel (Table)",
+      description: "Sisipkan tabel editorial 3×3 dengan baris header",
+      icon: TableIcon,
+      action: (ed) => {
+        ed.chain()
+          .focus()
+          .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+          .run();
+      },
     },
     {
       id: "image",
