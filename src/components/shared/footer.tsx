@@ -62,6 +62,7 @@ export function Footer() {
             <ul className="space-y-5">
               <li><Link href="/" className="text-slate-400 hover:text-brand-accent text-[15px] font-medium transition-all hover:translate-x-1 inline-block">Home</Link></li>
               <li><Link href="/about" className="text-slate-400 hover:text-brand-accent text-[15px] font-medium transition-all hover:translate-x-1 inline-block">Tentang Saya</Link></li>
+              <li><Link href="/freelance" className="text-slate-400 hover:text-brand-accent text-[15px] font-medium transition-all hover:translate-x-1 inline-block">Freelance Hub</Link></li>
               <li><Link href="/changelog" className="text-slate-400 hover:text-brand-accent text-[15px] font-medium transition-all hover:translate-x-1 inline-block">Changelog</Link></li>
             </ul>
           </div>

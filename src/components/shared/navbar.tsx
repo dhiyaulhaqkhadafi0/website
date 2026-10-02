@@ -42,7 +42,7 @@ export function Navbar() {
     },
     { label: "AI", href: "/#ai" },
     { label: "Lab", href: "/lab" },
-    { label: "Freelance", href: "/#freelance" },
+    { label: "Freelance", href: "/freelance" },
     { label: "Apps", href: "/#apps" },
     {
       label: "Belajar",
@@ -67,7 +67,7 @@ export function Navbar() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="absolute top-2 left-0 right-0 z-[90] transition-all duration-300 px-4 md:px-6 pointer-events-auto"
     >
-      <div className={`max-w-7xl mx-auto rounded-2xl transition-all duration-300 ${scrolled || mobileOpen ? "bg-[#05050A]/90 backdrop-blur-xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.5)]" : "bg-transparent border border-transparent"}`}>
+      <div className={`max-w-[1240px] mx-auto rounded-2xl transition-all duration-300 ${scrolled || mobileOpen ? "bg-[#05050A]/90 backdrop-blur-xl border border-white/10 shadow-[0_10px_40px_rgba(0,0,0,0.5)]" : "bg-transparent border border-transparent"}`}>
         <div className="flex items-center justify-between px-6 py-4">
           {/* Logo */}
           <div className="flex items-center">
@@ -78,7 +78,7 @@ export function Navbar() {
                 width={220}
                 height={66}
                 priority
-                className="h-14 sm:h-16 md:h-[72px] w-auto object-contain group-hover:scale-[1.03] transition-transform duration-300"
+                className="h-16 sm:h-[72px] md:h-[84px] w-auto object-contain group-hover:scale-[1.03] transition-transform duration-300"
               />
             </Link>
           </div>
@@ -90,7 +90,7 @@ export function Navbar() {
                 <div key={item.label} className="relative group px-1">
                   <Link
                     href={item.href}
-                    className="flex items-center gap-1.5 px-3 py-2 text-[13px] font-bold tracking-wide text-white/70 hover:text-white transition-all rounded-lg group-hover:bg-white/5"
+                    className="flex items-center gap-1.5 px-3 py-2 text-[14px] font-bold tracking-wide text-white/70 hover:text-white transition-all rounded-lg group-hover:bg-white/5"
                   >
                     {item.label}
                     {item.subMenus && <ChevronDown className="w-3.5 h-3.5 text-brand-accent/70 group-hover:text-brand-accent transition-transform duration-300 group-hover:-rotate-180" />}
