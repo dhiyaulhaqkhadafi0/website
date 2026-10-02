@@ -85,7 +85,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={`${plusJakartaSans.variable} antialiased scroll-smooth`}>
+    <html lang="id" data-scroll-behavior="smooth" className={`${plusJakartaSans.variable} antialiased scroll-smooth`}>
       <body className="min-h-screen flex flex-col bg-brand-bg text-brand-primary font-sans">
         <GlobalTranslator />
         <main className="flex-1 flex flex-col">

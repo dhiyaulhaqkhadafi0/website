@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Globe, Sparkles, ArrowRight, Laptop, BookOpen, Briefcase, Layers, Compass } from "lucide-react";
+import { Globe, Sparkles, ArrowRight, Laptop, Briefcase, Layers, Compass } from "lucide-react";
 
 interface NodeData {
   id: string;
@@ -205,10 +205,17 @@ export function RemoteWorldVisualizer({
     if (containerRef.current) resizeObserver.observe(containerRef.current);
 
     const render = (time: number) => {
-      const dt = (time - lastTime) / 1000;
+      // Keep the decorative canvas quiet while it is outside the reading viewport.
+      const visibleRect = containerRef.current?.getBoundingClientRect();
+      if (time - lastTime < 33 || document.hidden || (visibleRect && (visibleRect.bottom < 0 || visibleRect.top > window.innerHeight))) {
+        animationFrameId = requestAnimationFrame(render);
+        return;
+      }
+      const dt = Math.min((time - lastTime) / 1000, .1);
       lastTime = time;
 
       const state = stateRef.current;
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       const rect = containerRef.current?.getBoundingClientRect();
       if (!rect || rect.width === 0 || rect.height === 0) {
         animationFrameId = requestAnimationFrame(render);
@@ -223,7 +230,7 @@ export function RemoteWorldVisualizer({
       const sphereRadius = Math.min(width * 0.48, height * 0.55, 260);
 
       // Handle auto rotation when not dragging
-      if (state.autoRotate && !state.isDragging) {
+      if (state.autoRotate && !state.isDragging && !reduceMotion && !document.hidden) {
         state.targetRotY += 0.22 * dt;
       }
 
@@ -389,7 +396,7 @@ export function RemoteWorldVisualizer({
 
       ORBITAL_NODES.forEach((node, idx) => {
         // Advance angle
-        state.angles[idx] += node.orbitSpeed;
+        if (!reduceMotion) state.angles[idx] += node.orbitSpeed * dt * 60;
         const currentAngle = state.angles[idx];
 
         // Position on inclined circle
@@ -465,7 +472,7 @@ export function RemoteWorldVisualizer({
 
     return () => {
       cancelAnimationFrame(animationFrameId);
-      if (containerRef.current) resizeObserver.unobserve(containerRef.current);
+      resizeObserver.disconnect();
     };
   }, []);
 
@@ -493,7 +500,6 @@ export function RemoteWorldVisualizer({
       // Subtle parallax tilt when hovering
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
-        const normX = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
         const normY = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
         stateRef.current.targetRotX = 0.18 + normY * 0.12;
       }
@@ -522,7 +528,7 @@ export function RemoteWorldVisualizer({
 
       const target = document.getElementById(node.targetId);
       if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "center" });
+        target.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "center" });
       }
     },
     [onSelectCategory, onOpenInquiry]
@@ -592,7 +598,6 @@ export function RemoteWorldVisualizer({
           if (!node || !pos.visible) return null;
 
           const isHovered = activeNode?.id === node.id;
-          const Icon = node.icon;
           const zDepthOpacity = Math.max(0.35, Math.min(1, (pos.z + 1.2) / 2));
           const zScale = Math.max(0.78, Math.min(1.08, 0.9 + pos.z * 0.18));
 

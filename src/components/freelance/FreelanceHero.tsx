@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { WorkAtlas } from "./WorkAtlas";
+import styles from "./discovery.module.css";
 
 interface FreelanceHeroProps {
   onScrollToLibrary: () => void;
@@ -17,7 +19,8 @@ export function FreelanceHero({
       {/* Minimal warm atmospheric glow — very subtle */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#A5AC91]/[0.06] blur-[160px] rounded-full pointer-events-none" />
 
-      <div className="container mx-auto px-6 max-w-[1240px] relative z-10">
+      <div className={`container mx-auto px-6 max-w-[1240px] relative z-10 ${styles.heroGrid}`}>
+        <div>
         {/* Eyebrow */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -32,10 +35,12 @@ export function FreelanceHero({
 
         {/* Main Headline — editorial display */}
         <motion.h1
+          id="hub-title"
+          tabIndex={-1}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.08 }}
-          className="text-[52px] sm:text-[68px] md:text-[84px] lg:text-[96px] font-black tracking-[-0.04em] text-[#ECEDE7] leading-[0.96] max-w-3xl"
+          className="text-[48px] sm:text-[68px] md:text-[80px] lg:text-[72px] xl:text-[80px] font-black tracking-[-0.045em] text-[#ECEDE7] leading-[1.02] max-w-3xl"
         >
           Building a career
           <br />
@@ -74,7 +79,7 @@ export function FreelanceHero({
             id="hero-cta-secondary"
             className="inline-flex items-center justify-center gap-2 px-2 py-3.5 text-[#C3C5BD] font-medium text-[14px] sm:text-[15px] hover:text-[#ECEDE7] transition-colors duration-200 group"
           >
-            <span>Lihat Lowongan Remote</span>
+            <span>Temukan Peluang Remote</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
           </button>
         </motion.div>
@@ -90,6 +95,8 @@ export function FreelanceHero({
             Freelance&nbsp;&nbsp;·&nbsp;&nbsp;Remote Work&nbsp;&nbsp;·&nbsp;&nbsp;AI&nbsp;&nbsp;·&nbsp;&nbsp;Digital Career
           </p>
         </motion.div>
+        </div>
+        <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1, delay: .3 }}><WorkAtlas /></motion.div>
       </div>
     </section>
   );

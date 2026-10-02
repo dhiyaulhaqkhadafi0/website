@@ -4,7 +4,6 @@ import { motion } from "framer-motion";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 interface FreelanceClosingCTAProps {
-  onScrollToLibrary: () => void;
   onOpenInquiry: () => void;
 }
 
@@ -55,7 +54,6 @@ function TimelineItem({
 }
 
 export function FreelanceClosingCTA({
-  onScrollToLibrary,
   onOpenInquiry,
 }: FreelanceClosingCTAProps) {
   return (
@@ -134,7 +132,7 @@ export function FreelanceClosingCTA({
       </section>
 
       {/* 2. WORK WITH ME SECTION */}
-      <section className="relative w-full py-20 border-t border-[rgba(255,255,255,0.04)] bg-[#292A27]">
+      <section id="card-work-with-me" className="relative w-full py-20 border-t border-[rgba(255,255,255,0.04)] bg-[#292A27]">
         <div className="container mx-auto px-6 max-w-[1240px]">
           <motion.div
             initial={{ opacity: 0, y: 16 }}

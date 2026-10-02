@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
 import styles from "./reading-progress.module.css";
 
-export function ReadingProgress({ startId, endId }: { startId: string; endId: string }) {
+export function ReadingProgress({ startId, endId, titleId = "guide-title", label = "Progres membaca panduan" }: { startId: string; endId: string; titleId?: string; label?: string }) {
   const [progress, setProgress] = useState(0);
   const [showTop, setShowTop] = useState(false);
 
@@ -38,12 +38,12 @@ export function ReadingProgress({ startId, endId }: { startId: string; endId: st
   }, [startId, endId]);
 
   const goToTop = () => {
-    document.getElementById("guide-title")?.focus({ preventScroll: true });
+    document.getElementById(titleId)?.focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth" });
   };
 
   return <>
-    <div className={styles.track} role="progressbar" aria-label="Progres membaca panduan" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}>
+    <div className={styles.track} role="progressbar" aria-label={label} aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress}>
       <div className={styles.fill} style={{ transform: `scaleX(${progress / 100})` }} />
     </div>
     {showTop && <button type="button" className={styles.backTop} onClick={goToTop} aria-label="Kembali ke atas" title={`Kembali ke atas · ${progress}% dibaca`}>

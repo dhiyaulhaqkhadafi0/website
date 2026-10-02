@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import Link from "next/link";
+import { motion, AnimatePresence, MotionConfig } from "framer-motion";
+import { ReadingProgress } from "./ReadingProgress";
+import { HubAtmosphere } from "./HubAtmosphere";
+import styles from "./discovery.module.css";
 import { FreelanceHero } from "./FreelanceHero";
 import { RemoteWorldVisualizer } from "./RemoteWorldVisualizer";
 import {
@@ -29,7 +31,6 @@ export function FreelanceHubView() {
 
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
   const [showSecondaryNav, setShowSecondaryNav] = useState(false);
-  const [activeSection, setActiveSection] = useState<string | null>(null);
   const heroRef = useRef<HTMLDivElement>(null);
 
   // Show secondary nav after hero
@@ -48,22 +49,21 @@ export function FreelanceHubView() {
     const id = href.replace("#", "");
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      el.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" });
     }
   };
 
   const handleScrollToLibrary = () => {
     const el = document.getElementById("explore-library");
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      el.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "start" });
     }
   };
 
   const handleScrollToJobs = () => {
-    setSelectedCategory("Lowongan");
     const el = document.getElementById("card-lowongan");
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      el.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth", block: "center" });
     } else {
       handleScrollToLibrary();
     }
@@ -73,7 +73,9 @@ export function FreelanceHubView() {
   const handleCloseInquiry = () => setIsInquiryOpen(false);
 
   return (
-    <div className="relative w-full bg-[#242522] text-[#ECEDE7] overflow-hidden font-sans selection:bg-[#A5AC91]/20 selection:text-[#ECEDE7]">
+    <MotionConfig reducedMotion="user"><div id="hub-start" className={styles.hub}>
+      <HubAtmosphere />
+      <ReadingProgress startId="hub-start" endId="hub-end" titleId="hub-title" label="Progres menjelajahi Freelance Hub" />
       {/* Secondary sticky navigation */}
       <AnimatePresence>
         {showSecondaryNav && (
@@ -120,12 +122,14 @@ export function FreelanceHubView() {
           onScrollToJobs={handleScrollToJobs}
         />
       </div>
+      <div className={styles.connector} aria-hidden="true">01 / Lihat dunianya <span /></div>
 
       {/* 2. WORLD VISUALIZER */}
       <RemoteWorldVisualizer
         onSelectCategory={(cat) => setSelectedCategory(cat as FilterCategory)}
         onOpenInquiry={handleOpenInquiry}
       />
+      <div className={styles.connector} aria-hidden="true">02 / Temukan jalanmu <span /></div>
 
       {/* 3. SEARCH & FILTERS */}
       <FreelanceExploreLibrary
@@ -136,16 +140,15 @@ export function FreelanceHubView() {
       />
 
       {/* 4. LIBRARY GRID */}
-      <FreelanceLibraryGrid
-        searchQuery={searchQuery}
-        selectedCategory={selectedCategory}
-      />
+      <FreelanceLibraryGrid />
 
+      <div className={styles.connector} aria-hidden="true">03 / Terus bergerak <span /></div>
       {/* 5. CLOSING CTA */}
+      <div id="hub-end">
       <FreelanceClosingCTA
-        onScrollToLibrary={handleScrollToLibrary}
         onOpenInquiry={handleOpenInquiry}
       />
+      </div>
 
       {/* MODALS */}
 
@@ -153,6 +156,6 @@ export function FreelanceHubView() {
         isOpen={isInquiryOpen}
         onClose={handleCloseInquiry}
       />
-    </div>
+    </div></MotionConfig>
   );
 }

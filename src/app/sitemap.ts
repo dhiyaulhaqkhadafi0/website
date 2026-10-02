@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/mdx';
 import { RESOURCES_DATA } from '@/content/resources-data';
+import { FREELANCE_PLATFORMS } from '@/content/freelance-directory';
 
 export const dynamic = 'force-dynamic';
 
@@ -89,5 +90,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   });
 
   // Ensure /studio and draft routes are NEVER included
-  return [...staticRoutes, ...blogRoutes, ...resourceRoutes];
+  const freelanceRoutes: MetadataRoute.Sitemap = [
+    { url: `${siteUrl}/freelance/direktori`, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${siteUrl}/freelance/belajar/mulai-freelance`, changeFrequency: 'monthly', priority: 0.8 },
+    ...FREELANCE_PLATFORMS.map(platform => ({ url: `${siteUrl}/freelance/direktori/${platform.slug}`, lastModified: new Date(platform.lastCheckedAt), changeFrequency: 'monthly' as const, priority: 0.65 })),
+  ];
+  return [...staticRoutes, ...blogRoutes, ...resourceRoutes, ...freelanceRoutes];
 }
