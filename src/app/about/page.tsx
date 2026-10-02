@@ -45,9 +45,11 @@ export default function AboutPage() {
           </Link>
 
           <motion.div
+            id="journey"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
+            className="scroll-mt-28"
           >
             <h1 className="text-4xl md:text-6xl font-black mb-6 leading-tight">
               Tentang <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-accent to-purple-400">Saya</span>
@@ -78,18 +80,21 @@ export default function AboutPage() {
           </div>
 
           <motion.div
+            id="jasa"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="bg-gradient-to-br from-brand-accent/20 to-indigo-900/20 border border-brand-accent/30 p-10 md:p-12 rounded-[3rem] text-center"
+            className="scroll-mt-28 bg-gradient-to-br from-brand-accent/20 to-indigo-900/20 border border-brand-accent/30 p-10 md:p-12 rounded-[3rem] text-center"
           >
             <h2 className="text-2xl font-bold mb-4">Mari Bangun Sesuatu yang Besar</h2>
             <p className="text-white/70 mb-8 max-w-lg mx-auto">
               Apakah Anda memiliki ide produk gila, butuh bantuan untuk AI integration, atau ingin bertukar pikiran?
             </p>
-            <Link href="mailto:daffadhiyaulhaqkhadafi@gmail.com" className="inline-flex items-center gap-2 px-8 py-4 bg-brand-accent text-white font-bold rounded-full hover:bg-brand-accent/90 transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(129,140,248,0.4)]">
-              Mulai Percakapan <ArrowRight className="w-4 h-4" />
-            </Link>
+            <div id="contact" className="inline-block">
+              <Link href="mailto:daffadhiyaulhaqkhadafi@gmail.com" className="inline-flex items-center gap-2 px-8 py-4 bg-brand-accent text-white font-bold rounded-full hover:bg-brand-accent/90 transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(129,140,248,0.4)]">
+                Mulai Percakapan <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </motion.div>
         </div>
       </main>

@@ -1027,8 +1027,9 @@ export default function Home() {
         </motion.section>
 
         <motion.section 
+          id="certifications"
           {...appleTransition}
-          className="relative"
+          className="relative scroll-mt-28"
         >
           <div className="text-center max-w-3xl mx-auto mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/5 text-emerald-400 text-xs font-bold uppercase tracking-widest mb-4 shadow-lg shadow-emerald-500/5">
