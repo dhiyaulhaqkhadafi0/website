@@ -54,6 +54,7 @@ const extraSources: Record<string, { label: string; url: string }[]> = {
   "linkedin-jobs": [{ label: "Pencarian & aplikasi pekerjaan", url: "https://www.linkedin.com/help/linkedin/topic/a153003?lang=en" }],
 };
 for (const p of FREELANCE_PLATFORMS) p.sources.push(...(extraSources[p.slug] ?? []));
+for (const p of FREELANCE_PLATFORMS) if (["we-work-remotely", "contra", "fiverr", "upwork"].includes(p.slug)) p.lastCheckedAt = "2026-10-03";
 const design = FREELANCE_PLATFORMS.find(p => p.slug === "99designs")!;
 design.indonesiaNotes[1] = "Halaman payout resmi mewajibkan Hyperwallet dan menyatakan metode transfer berbeda menurut negara. Pilihan yang benar-benar tersedia untuk akun Indonesia perlu diperiksa pada akun resmi; kurasi ini belum menguji pencairan lokal.";
 

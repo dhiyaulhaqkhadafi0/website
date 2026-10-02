@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import { FEATURED_PLATFORMS } from "@/content/freelance-directory";
 import { RESOURCES_DATA } from "@/content/resources-data";
 import styles from "./discovery.module.css";
+import { PlatformLogo } from "./PlatformLogo";
 export function FreelanceLibraryGrid() {
   return <section className={styles.library} aria-label="Perpustakaan freelance">
     <div className={styles.featureGrid}>
@@ -13,7 +14,7 @@ export function FreelanceLibraryGrid() {
     </div>
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .7 }}>
       <div id="card-direktori" className={styles.sectionHeader}><div><span className={styles.eyebrow}>03 / Direktori Platform</span><h2>Tiga pintu masuk. Berbeda arah.</h2><p>Remote career, jasa independen, atau penulisan. Mulai dari kebutuhanmu, lalu baca detail platformnya.</p></div><Link className={styles.textLink} href="/freelance/direktori">Lihat direktori <ArrowRight size={18} /></Link></div>
-      <div className={styles.platformGrid}>{FEATURED_PLATFORMS.map(p => <Link href={`/freelance/direktori/${p.slug}`} key={p.slug} className={styles.platformCard}><span className={styles.monogram} aria-hidden="true">{p.name.split(" ").map(w => w[0]).join("").slice(0, 3)}</span><h3>{p.name}</h3><p>{p.description}</p><small>{p.type} · {p.pricing}<br />Belum dicoba langsung</small><span className={styles.textLink}>Kenali platform <ArrowRight size={16} /></span></Link>)}</div>
+      <div className={styles.platformGrid}>{FEATURED_PLATFORMS.map(p => <Link href={`/freelance/direktori/${p.slug}`} key={p.slug} className={styles.platformCard}><PlatformLogo name={p.name} logo={p.logo}/><h3 className="mt-5">{p.name}</h3><p>{p.description}</p><small>{p.type} · {p.pricing}<br />Belum dicoba langsung</small><span className={styles.textLink}>Kenali platform <ArrowRight size={16} /></span></Link>)}</div>
     </motion.div>
     <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .7 }}>
       <div id="card-resources" className={styles.sectionHeader}><div><span className={styles.eyebrow}>04 / Sumber Daya & Tools</span><h2>Sistem kecil untuk bekerja lebih baik.</h2></div><Link className={styles.textLink} href="/resources">Semua resources <ArrowRight size={18} /></Link></div>

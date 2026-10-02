@@ -4,6 +4,7 @@ import { Search, X, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { SEARCH_CATEGORIES, searchFreelance, type FilterCategory } from "@/content/freelance-search";
 import styles from "./discovery.module.css";
+import { PlatformLogo } from "./PlatformLogo";
 export type { FilterCategory } from "@/content/freelance-search";
 export function FreelanceExploreLibrary({ searchQuery, onSearchChange, selectedCategory, onCategoryChange, full = false }: {
   searchQuery: string; onSearchChange: (query: string) => void; selectedCategory: FilterCategory;
@@ -26,8 +27,8 @@ export function FreelanceExploreLibrary({ searchQuery, onSearchChange, selectedC
     {!full && <div className={styles.popular}><span className="py-2.5">Mulai dari:</span>{["kerja remote", "freelance pemula", "menulis", "portfolio", "AI tools"].map(term => <button type="button" key={term} onClick={() => onSearchChange(term)}>{term}</button>)}</div>}
     {active && <div className={styles.results}>
       <div className={styles.resultMeta}><span role="status" aria-live="polite">{results.length} hasil{searchQuery.trim() && <> untuk “{searchQuery.trim()}”</>}</span>{!full && <Link href={`/freelance/cari?q=${encodeURIComponent(searchQuery)}&category=${encodeURIComponent(selectedCategory)}`}>Lihat semua hasil ↗</Link>}</div>
-      {shown.map(result => <Link className={styles.result} key={result.href} href={result.href}><small>{selectedCategory === "Lowongan" ? "Job board" : result.category}</small><div><h3>{result.title}</h3><p>{result.description}</p></div><ArrowRight size={18} aria-hidden="true" /></Link>)}
-      {!results.length && <p className={styles.empty}>Belum ada hasil yang cocok. Coba “menulis”, “design”, atau nama platform; pilih Semua untuk memperluas pencarian.</p>}
+      {shown.map(result => <Link className={styles.result} key={result.href} href={result.href}><small>{selectedCategory === "Lowongan" ? "Job board" : result.category}</small><div>{result.category === "Direktori" && <span className={styles.searchLogo}><PlatformLogo name={result.title} logo={result.logo}/></span>}<h3>{result.title}</h3><p>{result.description}</p></div><ArrowRight size={18} aria-hidden="true" /></Link>)}
+      {!results.length && <div className={styles.empty}><p>Belum ada hasil yang cocok. Coba “menulis”, “design”, atau nama platform; pilih Semua untuk memperluas pencarian.</p><button type="button" className={styles.textLink} onClick={() => { onSearchChange(""); onCategoryChange("Semua"); }}>Reset pencarian ↗</button></div>}
       {selectedCategory === "Lowongan" && <p className="text-xs leading-6 text-[#89917b] mt-5">Hasil berupa platform pencarian kerja. Lowongan aktif dan aplikasi tersedia di situs masing-masing.</p>}
     </div>}
   </section>;

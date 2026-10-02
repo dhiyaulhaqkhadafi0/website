@@ -47,7 +47,18 @@ async function main() {
           } catch { /* Try the next declared icon; fallback stays available. */ }
         }
         if (!saved) throw new Error('Declared icons unavailable');
-      } catch (e) { console.log(`${slug}: monogram fallback (${e.message})`); }
+      } catch (e) {
+        // /favicon.ico is the standard browser icon endpoint on the official domain.
+        try {
+          const iconUrl = new URL('/favicon.ico', url).href;
+          const r = await fetchSafe(iconUrl);
+          const bytes = Buffer.from(await r.arrayBuffer());
+          if (bytes.length > 50000 || bytes[0] !== 0 || bytes[1] !== 0 || bytes[2] !== 1 || bytes[3] !== 0) throw new Error('Not a small ICO');
+          await fs.writeFile(path.join(dir, `${slug}.ico`), bytes);
+          manifest[slug] = { path: `/images/platforms/${slug}.ico`, source: iconUrl };
+          console.log(`${slug}: official favicon endpoint (${bytes.length} bytes)`);
+        } catch { console.log(`${slug}: monogram fallback (${e.message})`); }
+      }
     }));
   }
   const ordered = Object.fromEntries(Object.entries(manifest).sort(([a], [b]) => a.localeCompare(b)));

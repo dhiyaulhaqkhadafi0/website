@@ -7,7 +7,13 @@ export function SearchResults({ initialQuery, initialCategory }: { initialQuery:
   const query = params.get("q") ?? initialQuery;
   const candidate = params.get("category") as FilterCategory | null;
   const category = candidate && SEARCH_CATEGORIES.includes(candidate) ? candidate : initialCategory;
-  const updateQuery = (value: string) => window.history.replaceState(null, "", `/freelance/cari?q=${encodeURIComponent(value)}&category=${encodeURIComponent(category)}`);
-  const updateCategory = (value: FilterCategory) => window.history.replaceState(null, "", `/freelance/cari?q=${encodeURIComponent(query)}&category=${encodeURIComponent(value)}`);
+  const updateQuery = (value: string) => {
+    const next = new URLSearchParams(window.location.search); next.set("q", value);
+    window.history.replaceState(null, "", `/freelance/cari?${next}`);
+  };
+  const updateCategory = (value: FilterCategory) => {
+    const next = new URLSearchParams(window.location.search); next.set("category", value);
+    window.history.replaceState(null, "", `/freelance/cari?${next}`);
+  };
   return <FreelanceExploreLibrary full searchQuery={query} onSearchChange={updateQuery} selectedCategory={category} onCategoryChange={updateCategory} />;
 }

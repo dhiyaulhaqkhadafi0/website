@@ -72,7 +72,8 @@
 .breadcrumb a:hover{text-decoration:underline}
 .pageHero h1{font-size:clamp(38px,6vw,72px);font-weight:800;line-height:1.05;letter-spacing:-.045em;max-width:860px;margin-bottom:24px}
 .pageHero p{max-width:670px;color:#bfc2b7;font-size:16px;line-height:1.9}
-.paper{background:#f3f2eb;color:#30332b;padding:60px 24px 80px}
+.paper{background:#f1efe8;color:#242520;padding:60px 24px 80px}
+.searchLogo{float:left;margin-right:18px;margin-bottom:8px}
 .paper .eyebrow{color:#697556}
 .paper .resultMeta,.paper .empty{color:#676d5d}
 .paper .result{border-color:#30332b26}

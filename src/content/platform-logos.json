@@ -15,6 +15,10 @@
     "path": "/images/platforms/dribbble.webp",
     "source": "https://dribbble.com/images/apple-touch-icon-precomposed.png"
   },
+  "fiverr": {
+    "path": "/images/platforms/fiverr.ico",
+    "source": "https://www.fiverr.com/favicon.ico"
+  },
   "flexjobs": {
     "path": "/images/platforms/flexjobs.webp",
     "source": "https://assets.flexjobs.com/blobcontent/flexjobs/images/favicon.png"
@@ -43,9 +47,25 @@
     "path": "/images/platforms/peopleperhour.ico",
     "source": "https://www.peopleperhour.com/favicon.ico"
   },
+  "problogger": {
+    "path": "/images/platforms/problogger.ico",
+    "source": "https://problogger.com/favicon.ico"
+  },
   "remote-ok": {
     "path": "/images/platforms/remote-ok.webp",
     "source": "https://remoteok.com/assets/apple-icon-57x57.png?2"
+  },
+  "toptal": {
+    "path": "/images/platforms/toptal.ico",
+    "source": "https://www.toptal.com/favicon.ico"
+  },
+  "upwork": {
+    "path": "/images/platforms/upwork.ico",
+    "source": "https://www.upwork.com/favicon.ico"
+  },
+  "we-work-remotely": {
+    "path": "/images/platforms/we-work-remotely.ico",
+    "source": "https://weworkremotely.com/favicon.ico"
   },
   "wellfound": {
     "path": "/images/platforms/wellfound.ico",
