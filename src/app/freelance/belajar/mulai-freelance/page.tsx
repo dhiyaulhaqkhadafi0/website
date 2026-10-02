@@ -23,7 +23,7 @@ const chapters = [
 
 function ChapterHead({ number, category, title, intro }: { number: string; category: string; title: string; intro: string }) {
   return <header className={styles.chapterHead}>
-    <p className={styles.eyebrow}>{number} / {category}</p>
+    <p className={styles.chapterLabel}><span>{number}</span><span>{category}</span></p>
     <h2>{title}</h2>
     <p className={styles.lede}>{intro}</p>
   </header>;
@@ -38,7 +38,7 @@ function Checkpoint({ number, children }: { number: string; children: React.Reac
 
 export default function MulaiFreelancePage() {
   return <>
-    <ReadingProgress />
+    <ReadingProgress startId="mulai-membaca" endId="guide-closing" />
     <Navbar />
     <main className={styles.page}>
       <section className={styles.hero} aria-labelledby="guide-title">
@@ -49,7 +49,7 @@ export default function MulaiFreelancePage() {
           <div className={styles.heroGrid}>
             <div>
               <p className={styles.darkEyebrow}>Worldwide Freelancer · Panduan 01</p>
-              <h1 id="guide-title">Mulai<span className={styles.mobileBreak}><br /></span><span className={styles.desktopSpace}> </span>Freelance<br /><em>dari Nol.</em></h1>
+              <h1 id="guide-title" tabIndex={-1}>Mulai<span className={styles.mobileBreak}><br /></span><span className={styles.desktopSpace}> </span>Freelance<br /><em>dari Nol.</em></h1>
               <p className={styles.heroIntro}>Panduan praktis memahami dunia freelance, menentukan arah, membangun penawaran, menyiapkan portfolio, menentukan harga, mencari peluang, hingga mengelola client pertama.</p>
               <div className={styles.heroMeta}><span>Diperbarui Oktober 2026</span><span>± 25–35 menit baca & praktik</span></div>
               <a className={styles.startLink} href="#mulai-membaca">Mulai panduan <span aria-hidden="true">↓</span></a>
@@ -169,7 +169,7 @@ export default function MulaiFreelancePage() {
 
             <section id="06-peluang" className={styles.chapter}>
               <ChapterHead number="06" category="Mencari peluang" title="Client tidak muncul hanya karena portfolio sudah jadi." intro="Setelah fondasi siap, bangun sistem untuk menemukan peluang. Fokus pada aktivitas yang bisa kamu kendalikan dan kualitas percakapan yang kamu mulai." />
-              <div className={styles.opportunityMap}>{[["Freelance platform", "Permintaan sudah ada, tetapi kompetisi tinggi. Pilih brief yang relevan."], ["Remote job board", "Cari peran contract, part-time, atau project-based; tidak semua remote job adalah freelance."], ["Direct outreach", "Mulai dari observasi yang spesifik, bukan pesan massal."], ["Personal brand", "Bagikan proses, case study, dan pembelajaran agar orang mengingat keahlianmu."], ["Network & referral", "Jelaskan layanan yang kamu buka sehingga orang tahu kapan harus mengenalkanmu."]].map(([name, copy], i) => <div key={name}><span>0{i + 1}</span><h3>{name}</h3><p>{copy}</p></div>)}</div>
+              <div className={styles.opportunityMap}><p className={styles.eyebrow}>Opportunity map / lima jalur peluang</p>{[["Freelance platform", "Permintaan sudah ada, tetapi kompetisi tinggi. Pilih brief yang relevan."], ["Remote job board", "Cari peran contract, part-time, atau project-based; tidak semua remote job adalah freelance."], ["Direct outreach", "Mulai dari observasi yang spesifik, bukan pesan massal."], ["Personal brand", "Bagikan proses, case study, dan pembelajaran agar orang mengingat keahlianmu."], ["Network & referral", "Jelaskan layanan yang kamu buka sehingga orang tahu kapan harus mengenalkanmu."]].map(([name, copy], i) => <div key={name}><span>0{i + 1}</span><h3>{name}</h3><p>{copy}</p></div>)}</div>
               <div className={styles.example}><span className={styles.eyebrow}>Contoh outreach yang spesifik</span><p>“Saya melihat landing page produk Anda belum mempunyai CTA yang jelas di mobile. Saya sempat membuat beberapa catatan perbaikan yang mungkin relevan. Kalau berkenan, saya bisa kirimkan.”</p></div>
               <p>Untuk network, sampaikan kebutuhanmu dengan konkret: “Saya sedang membuka project landing page untuk bisnis digital. Kalau ada temanmu yang hendak meluncurkan produk, boleh kenalkan saya.” Untuk personal brand, bagikan pekerjaan yang sudah kamu lakukan dan alasan keputusanmu. Tujuannya bukan menjadi influencer, melainkan membuat kemampuanmu mudah diingat ketika kebutuhan muncul.</p>
               <h3>Rawat pipeline, bukan sekadar daftar link</h3><p>Catat setiap peluang agar kamu tahu langkah berikutnya. Spreadsheet sederhana sudah cukup.</p><div className={styles.pipeline}>Lead <span>→</span> Contacted <span>→</span> Replied <span>→</span> Discovery <span>→</span> Proposal <span>→</span> Negotiation <span>→</span> Won / Lost</div>
@@ -182,7 +182,10 @@ export default function MulaiFreelancePage() {
 
             <section id="07-client" className={styles.chapter}>
               <ChapterHead number="07" category="Manajemen client" title="Mendapatkan client baru setengah perjalanan." intro="Karier freelance juga ditentukan oleh cara kamu mengelola pekerjaan, ekspektasi, komunikasi, dan hubungan setelah project selesai." />
-              <div className={styles.workflow} aria-label="Alur kerja dengan client">{["Inquiry", "Discovery", "Scope", "Proposal", "Agreement", "Payment", "Kickoff", "Production", "Review", "Delivery", "Testimonial", "Retention"].map((step, i) => <span key={step}>{String(i + 1).padStart(2, "0")} {step}</span>)}</div>
+              <div className={styles.workflowBlock}>
+                <p className={styles.eyebrow}>Client workflow / dari inquiry ke retention</p>
+                <ol className={styles.workflow} aria-label="Alur kerja dengan client">{["Inquiry", "Discovery", "Scope", "Proposal", "Agreement", "Payment", "Kickoff", "Production", "Review", "Delivery", "Testimonial", "Retention"].map((step, i) => <li key={step}><span>{String(i + 1).padStart(2, "0")}</span><strong>{step}</strong></li>)}</ol>
+              </div>
               <h3>Sebelum pekerjaan dimulai</h3><p>Saat discovery, pahami masalah, hasil yang diinginkan, deadline, pengambil keputusan, budget bila tersedia, dan scope. Dalam proposal serta kesepakatan tertulis, jelaskan deliverable, apa yang tidak termasuk, timeline, revisi, pembayaran, hak penggunaan, dan pembatalan. Struktur pembayaran awal berbeda menurut jenis proyek; yang penting semua terms jelas sebelum kickoff.</p>
               <p>Jangan langsung menawarkan solusi pada menit pertama discovery. Tanyakan apa yang sudah dicoba, apa yang membuat masalah ini mendesak, dan bagaimana client akan menilai pekerjaan berhasil. Tuliskan kembali pemahamanmu dengan kata-kata sederhana. Jika kamu dan client ternyata membayangkan hasil yang berbeda, lebih murah memperbaikinya sebelum proposal daripada setelah produksi dimulai.</p>
               <h3>Saat pekerjaan berjalan</h3><p>Kumpulkan file, akses, panduan brand, tujuan, kontak utama, dan tenggat. Beri kabar secara rutin tanpa memaksa meeting setiap hari. Contoh: “Minggu ini struktur halaman selesai. Berikutnya saya mengerjakan versi responsif. Tidak ada hambatan saat ini dan timeline masih sesuai rencana.”</p>
@@ -209,7 +212,7 @@ export default function MulaiFreelancePage() {
         <p className={styles.roadmapClose}>Freelance jarang berhasil karena satu keputusan besar. Ia tumbuh dari banyak iterasi kecil.</p>
       </div></section>
 
-      <section className={styles.closing} aria-labelledby="closing-title"><div className={styles.wrap}>
+      <section id="guide-closing" className={styles.closing} aria-labelledby="closing-title"><div className={styles.wrap}>
         <p className={styles.darkEyebrow}>Langkah berikutnya</p><h2 id="closing-title">Mulai kecil.<br />Bangun bukti.<br /><em>Ulangi.</em></h2>
         <p>Kamu tidak perlu portfolio, branding, atau website yang sempurna untuk memulai. Kamu membutuhkan skill yang cukup berguna, masalah yang jelas, bukti bahwa kamu bisa membantu, dan keberanian menawarkan pekerjaanmu ke pasar.</p>
         <div className={styles.closingFlow}>Skill <span>→</span> Proof <span>→</span> Offer <span>→</span> Opportunity <span>→</span> Client <span>→</span> Reputation <span>→</span> Repeat</div>

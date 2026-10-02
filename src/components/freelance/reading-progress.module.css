@@ -1,0 +1,14 @@
+.track { position: fixed; inset: 0 0 auto; height: 3px; background: #292a2726; z-index: 100; pointer-events: none; }
+.fill { height: 100%; background: #9eaf91; transform-origin: left; }
+.backTop { position: fixed; right: max(24px, env(safe-area-inset-right)); bottom: max(24px, env(safe-area-inset-bottom)); z-index: 85; width: 56px; height: 56px; display: grid; place-items: center; border: 1px solid #666d5e; border-radius: 50%; color: #f1f0e9; background: #292a27; box-shadow: 0 4px 16px #24252018; cursor: pointer; transition: background .18s, border-color .18s; }
+.backTop:hover { background: #3b4035; border-color: #9eaf91; }
+.backTop:focus-visible { outline: 2px solid #819474; outline-offset: 4px; }
+.ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); pointer-events: none; }
+.ringTrack { stroke: #51564a; stroke-width: 1.5; }
+.ringFill { stroke: #b7c5a8; stroke-width: 1.5; stroke-linecap: round; }
+.tooltip { position: absolute; right: calc(100% + 12px); white-space: nowrap; padding: 8px 12px; border: 1px solid #686e60; background: #292a27; border-radius: 3px; color: #f1f0e9; font: 12px var(--font-sans), sans-serif; opacity: 0; visibility: hidden; pointer-events: none; }
+.tooltip span { color: #bdc9b0; margin-left: 12px; font-variant-numeric: tabular-nums; }
+.backTop:hover .tooltip, .backTop:focus-visible .tooltip { opacity: 1; visibility: visible; }
+:global(body:has([role="dialog"])) .backTop { visibility: hidden; }
+@media (max-width: 767px) { .backTop { width: 48px; height: 48px; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); } .tooltip { display: none; } }
+@media (prefers-reduced-motion: reduce) { .backTop { transition: none; } }
