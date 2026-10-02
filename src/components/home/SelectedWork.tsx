@@ -20,7 +20,7 @@ export function SelectedWork() {
         { label: "Core Feature", value: "Multi-Format AI Repurpose" },
         { label: "Performance", value: "Sub-100ms Interactions" },
       ],
-      link: "/studio",
+      link: null,
       actionText: "Buka Chikki Studio ↗",
       icon: <Sparkles className="w-5 h-5 text-indigo-400" />,
     },
@@ -118,13 +118,13 @@ export function SelectedWork() {
                     {item.icon}
                     <span>{item.badge}</span>
                   </div>
-                  <Link
+                  {item.link && (<Link
                     href={item.link}
                     className="inline-flex items-center gap-1.5 text-sm font-semibold text-white/80 hover:text-white transition-colors"
                   >
                     <span>{item.actionText}</span>
                     <ArrowUpRight className="w-4 h-4 text-indigo-400" />
-                  </Link>
+                  </Link>)}
                 </div>
 
                 <h3 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-2 tracking-tight group-hover:text-indigo-200 transition-colors">
@@ -201,12 +201,12 @@ export function SelectedWork() {
                 </div>
 
                 <div className="pt-5 border-t border-white/5 flex items-center justify-between">
-                  <Link
+                  {item.link && (<Link
                     href={item.link}
                     className="inline-flex items-center gap-1 text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors"
                   >
                     <span>{item.actionText}</span>
-                  </Link>
+                  </Link>)}
                 </div>
               </motion.div>
             ))}

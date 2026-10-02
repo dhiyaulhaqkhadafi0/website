@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { X, Sparkles, CheckCircle2, MessageSquare, Mail } from "lucide-react";
+import { useState, useEffect, useRef, useId } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { X, CheckCircle2, MessageSquare, Mail } from "lucide-react";
 
 export interface ProjectInquiryModalProps {
   isOpen: boolean;
@@ -22,6 +22,10 @@ export function ProjectInquiryModal({
   const [contact, setContact] = useState("");
   const [brief, setBrief] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const fieldId = useId();
+  const reduceMotion = useReducedMotion();
 
   if (initialService !== prevInitial) {
     setPrevInitial(initialService);
@@ -29,20 +33,28 @@ export function ProjectInquiryModal({
   }
 
   useEffect(() => {
+    if (!isOpen) return;
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    const frame = requestAnimationFrame(() => dialogRef.current?.querySelector<HTMLButtonElement>('button')?.focus());
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
+      if (e.key === "Escape") {
         onClose();
       }
+      if (e.key === "Tab") {
+        const controls = Array.from(dialogRef.current?.querySelectorAll<HTMLElement>('button:not([disabled]), input, textarea, a[href]') ?? []).filter(element => element.offsetParent !== null);
+        const first = controls[0], last = controls[controls.length - 1];
+        if (e.shiftKey && (document.activeElement === first || !dialogRef.current?.contains(document.activeElement))) { e.preventDefault(); last?.focus(); }
+        else if (!e.shiftKey && (document.activeElement === last || !dialogRef.current?.contains(document.activeElement))) { e.preventDefault(); first?.focus(); }
+      }
     };
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-      window.addEventListener("keydown", handleKeyDown);
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleKeyDown);
     return () => {
-      document.body.style.overflow = "";
+      cancelAnimationFrame(frame);
+      document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
+      previousFocus?.focus({ preventScroll: true });
     };
   }, [isOpen, onClose]);
 
@@ -71,11 +83,12 @@ export function ProjectInquiryModal({
       `*Target Timeline:* ${timeline}\n` +
       `*Ringkasan Kebutuhan:*\n${brief || "Tertarik berkolaborasi untuk pengembangan produk digital / AI."}`
     );
-    window.open(`https://wa.me/6281946838791?text=${text}`, "_blank");
+    window.open(`https://wa.me/6281946838791?text=${text}`, "_blank", "noopener,noreferrer");
     setSubmitted(true);
   };
 
   const handleEmailSubmit = () => {
+    if (!formRef.current?.reportValidity()) return;
     const subject = encodeURIComponent(`[Project Inquiry] ${selectedService} — ${name || "Partner"}`);
     const body = encodeURIComponent(
       `Halo Khadafi,\n\nSaya tertarik berdiskusi mengenai proyek:\n\n` +
@@ -103,9 +116,10 @@ export function ProjectInquiryModal({
         <div className="fixed inset-0 z-[120] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
           {/* Backdrop */}
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={{ duration: reduceMotion ? 0 : 0.2 }}
             onClick={onClose}
             className="fixed inset-0 bg-black/80 backdrop-blur-md"
             aria-hidden="true"
@@ -113,13 +127,14 @@ export function ProjectInquiryModal({
 
           {/* Dialog Container */}
           <motion.div
+            ref={dialogRef}
             role="dialog"
             aria-modal="true"
             aria-labelledby="inquiry-modal-title"
-            initial={{ opacity: 0, scale: 0.95, y: 16 }}
+            initial={reduceMotion ? false : { opacity: 0, scale: 0.95, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 16 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
+            transition={{ duration: reduceMotion ? 0 : 0.25, ease: "easeOut" }}
             className="relative w-full max-w-lg bg-[#141513] border border-white/10 rounded-3xl p-6 sm:p-8 shadow-2xl z-10 text-[#ECEDE7] my-auto"
           >
             {/* Close Button */}
@@ -152,7 +167,6 @@ export function ProjectInquiryModal({
             ) : (
               <div>
                 <div className="flex items-center gap-2 text-xs font-mono text-emerald-400 uppercase tracking-widest mb-2">
-                  <Sparkles className="w-3.5 h-3.5" />
                   <span>Start A Project — Khadafi Business OS</span>
                 </div>
                 <h3 id="inquiry-modal-title" className="text-2xl font-bold tracking-tight mb-2">
@@ -162,7 +176,7 @@ export function ProjectInquiryModal({
                   Ceritakan ide produk, MVP, automasi AI, atau kebutuhan arsitektur Anda. Saya akan merespons dalam 1x24 jam.
                 </p>
 
-                <form onSubmit={handleWhatsAppSubmit} className="space-y-4">
+                <form ref={formRef} onSubmit={handleWhatsAppSubmit} className="space-y-4">
                   {/* Service Selection */}
                   <div>
                     <label className="block text-xs font-semibold uppercase tracking-wider text-white/70 mb-2">
@@ -212,10 +226,11 @@ export function ProjectInquiryModal({
                   {/* Name & Contact */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-semibold text-white/70 mb-1">
+                      <label htmlFor={`${fieldId}-name`} className="block text-xs font-semibold text-white/70 mb-1">
                         Nama / Nama Organisasi
                       </label>
                       <input
+                        id={`${fieldId}-name`}
                         type="text"
                         required
                         value={name}
@@ -225,10 +240,11 @@ export function ProjectInquiryModal({
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-semibold text-white/70 mb-1">
+                      <label htmlFor={`${fieldId}-contact`} className="block text-xs font-semibold text-white/70 mb-1">
                         Kontak (Email / No. HP)
                       </label>
                       <input
+                        id={`${fieldId}-contact`}
                         type="text"
                         required
                         value={contact}
@@ -241,10 +257,11 @@ export function ProjectInquiryModal({
 
                   {/* Brief */}
                   <div>
-                    <label className="block text-xs font-semibold text-white/70 mb-1">
+                    <label htmlFor={`${fieldId}-brief`} className="block text-xs font-semibold text-white/70 mb-1">
                       Ringkasan Kebutuhan Proyek
                     </label>
                     <textarea
+                      id={`${fieldId}-brief`}
                       rows={3}
                       value={brief}
                       onChange={(e) => setBrief(e.target.value)}

@@ -12,7 +12,7 @@ export function CurrentlyBuilding() {
       status: "Live MVP",
       statusColor: "bg-emerald-400 text-emerald-300 border-emerald-500/30",
       stage: "Active Iteration",
-      link: "/studio",
+      link: null,
     },
     {
       project: "Freelance Journey Hub",
@@ -93,13 +93,13 @@ export function CurrentlyBuilding() {
                   <span className="text-slate-400 text-[11px] sm:w-32 text-right">
                     {item.stage}
                   </span>
-                  <Link
+                  {item.link && (<Link
                     href={item.link}
                     className="p-1 text-slate-400 hover:text-white transition-colors"
                     aria-label={`Buka detail ${item.project}`}
                   >
                     <ArrowUpRight className="w-4 h-4" />
-                  </Link>
+                  </Link>)}
                 </div>
               </motion.div>
             ))}

@@ -269,7 +269,6 @@ export const SELECTED_WORK: CaseStudy[] = [
       "Membangun modal AI repurposing untuk mengubah artikel panjang menjadi tweet thread, LinkedIn post, dan newsletter.",
       "Arsitektur database Supabase dengan Row Level Security untuk melindungi privasi draf kreator."
     ],
-    link: "/studio"
   },
   {
     id: "gerakasa",

@@ -12,7 +12,7 @@ export function ProductsEcosystem() {
       description:
         "Platform penulisan bebas distraksi dengan dukungan TipTap WYSIWYG, integrasi Supabase, dan engine AI repurposing untuk kreator dan penulis independen.",
       status: "Live Product MVP",
-      link: "/studio",
+      link: null,
       actionText: "Buka Chikki Studio ↗",
       icon: <Box className="w-5 h-5 text-indigo-400" />,
       accent: "from-indigo-500/10 to-transparent",
@@ -101,13 +101,13 @@ export function ProductsEcosystem() {
               </div>
 
               <div className="pt-5 border-t border-white/5">
-                <Link
+                {item.link && (<Link
                   href={item.link}
                   className="inline-flex items-center justify-between w-full text-xs font-semibold text-white/90 group-hover:text-emerald-400 transition-colors"
                 >
                   <span>{item.actionText}</span>
                   <ArrowUpRight className="w-3.5 h-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" />
-                </Link>
+                </Link>)}
               </div>
             </motion.div>
           ))}

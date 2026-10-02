@@ -1,4 +1,5 @@
 "use client";
+import { PUBLIC_NAV_CATEGORIES } from "@/content/public-navigation";
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,27 +11,12 @@ import {
   Menu,
   X,
   ArrowUpRight,
-  Sparkles,
   ExternalLink,
 } from "lucide-react";
 import { NavbarLanguageSwitcher } from "./GlobalTranslator";
 import { ProjectInquiryModal } from "./ProjectInquiryModal";
 
-interface SubMenuItem {
-  label: string;
-  href: string;
-  description: string;
-  isExternal?: boolean;
-  badge?: string;
-}
 
-interface NavCategory {
-  key: string;
-  label: string;
-  href: string;
-  badge?: string;
-  subMenus: SubMenuItem[];
-}
 
 export function Navbar() {
   const pathname = usePathname() || "";
@@ -107,183 +93,12 @@ export function Navbar() {
       );
     }
     if (categoryKey === "produk") {
-      return pathname.startsWith("/studio");
+      return false;
     }
     return false;
   };
 
-  const navCategories: NavCategory[] = [
-    {
-      key: "produk",
-      label: "Produk",
-      href: "/#produk",
-      badge: "Ventures",
-      subMenus: [
-        {
-          label: "Chikki — Writing Network",
-          href: "/studio",
-          description: "Platform studio penulisan & repurposing AI (Live MVP)",
-          badge: "Live Product",
-        },
-        {
-          label: "Produk Digital",
-          href: "/resources?topic=product",
-          description: "Blueprint PRD, arsitektur software & template sistem",
-        },
-        {
-          label: "Buku & Panduan",
-          href: "/resources",
-          description: "Playbook, mental models & panduan taktis builder",
-        },
-      ],
-    },
-    {
-      key: "jasa",
-      label: "Jasa",
-      href: "/about#jasa",
-      badge: "Hire Me",
-      subMenus: [
-        {
-          label: "Work With Me & Kapabilitas",
-          href: "/about#jasa",
-          description: "Prinsip rekayasa produk AI, arsitektur defensible & eksekusi cepat",
-        },
-        {
-          label: "Mulai Proyek / Konsultasi",
-          href: "#inquiry",
-          description: "Diskusikan ide produk, MVP, atau automasi workflow bersama Khadafi",
-          badge: "Direct Contact",
-        },
-      ],
-    },
-    {
-      key: "freelance",
-      label: "Freelance",
-      href: "/freelance",
-      badge: "Hub",
-      subMenus: [
-        {
-          label: "Freelance Journey Hub",
-          href: "/freelance",
-          description: "Pusat ekosistem, catatan, dan navigasi karier remote",
-        },
-        {
-          label: "Mulai Freelance dari Nol",
-          href: "/freelance/belajar/mulai-freelance",
-          description: "Panduan flagship langkah awal membangun karier mandiri",
-          badge: "Flagship Guide",
-        },
-        {
-          label: "Peluang Remote Jobs",
-          href: "/freelance/direktori?type=Remote+Job+Board",
-          description: "Kurasi job board & papan lowongan internasional",
-        },
-        {
-          label: "Direktori Platform",
-          href: "/freelance/direktori",
-          description: "14+ platform kerja independen & marketplace proyek",
-        },
-        {
-          label: "Tools & Sumber Daya",
-          href: "/freelance/cari",
-          description: "Pencarian terpadu tools, panduan, dan direktori",
-        },
-      ],
-    },
-    {
-      key: "resources",
-      label: "Resources",
-      href: "/resources",
-      subMenus: [
-        {
-          label: "Semua Resources",
-          href: "/resources",
-          description: "Kumpulan sistem kerja, blueprint PRD, dan panduan taktis",
-        },
-        {
-          label: "AI & Prompt Engineering",
-          href: "/resources?topic=ai",
-          description: "Context engineering primer, prompt pack & eval sheet",
-        },
-        {
-          label: "Product Building",
-          href: "/resources?topic=product",
-          description: "PRD engine, architecture RFC & MVP readiness checklist",
-        },
-        {
-          label: "Digital Business & Assets",
-          href: "/resources?topic=business",
-          description: "Positioning canvas, monetisasi independen & unit ekonomi",
-        },
-        {
-          label: "Creator Systems",
-          href: "/resources?topic=content",
-          description: "Content OS, repurposing engine & alur distribusi",
-        },
-        {
-          label: "The Digital Grimoire (Blog)",
-          href: "/blog",
-          description: "Esai mendalam seputar AI, produk, dan bisnis digital",
-          badge: "Editorial",
-        },
-      ],
-    },
-    {
-      key: "komunitas",
-      label: "Komunitas",
-      href: "/komunitas",
-      subMenus: [
-        {
-          label: "Tentang Komunitas",
-          href: "/komunitas",
-          description: "Wadah belajar dan berjejaring builder & kreator Indonesia",
-        },
-        {
-          label: "Gabung Komunitas",
-          href: "/komunitas#join",
-          description: "Akses grup diskusi eksklusif & sharing sesi berkala",
-        },
-        {
-          label: "Event & Sesi Diskusi",
-          href: "/komunitas",
-          description: "Bedah studi kasus produk, demo AI workflow & tanya jawab",
-        },
-      ],
-    },
-    {
-      key: "tentang",
-      label: "Tentang",
-      href: "/about",
-      subMenus: [
-        {
-          label: "Tentang Khadafi",
-          href: "/about",
-          description: "Profil builder, AI-assisted product engineer & etos kerja",
-        },
-        {
-          label: "Journey / Now",
-          href: "/about#journey",
-          description: "Fokus eksplorasi saat ini & roadmap pembangunan produk",
-        },
-        {
-          label: "Sertifikasi & Kredensial",
-          href: "/#certifications",
-          description: "Validasi profesional dari Google, IBM & institusi global",
-        },
-        {
-          label: "HCFTL Lab",
-          href: "/lab",
-          description: "Human-Centered Future Tech Lab: Riset AI & teknologi masa depan",
-          badge: "Research Lab",
-        },
-        {
-          label: "Changelog",
-          href: "/changelog",
-          description: "Catatan pembaruan berkala Khadafi Business OS",
-        },
-      ],
-    },
-  ];
+  const navCategories = PUBLIC_NAV_CATEGORIES;
 
   return (
     <>
@@ -297,8 +112,8 @@ export function Navbar() {
           ref={navRef}
           className={`max-w-[1240px] mx-auto rounded-2xl pointer-events-auto transition-all duration-300 ${
             scrolled || mobileOpen
-              ? "bg-[#0b0c10]/95 backdrop-blur-xl border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.65)] py-2 sm:py-2.5 px-3 sm:px-6"
-              : "bg-[#08090e]/80 backdrop-blur-md border border-white/10 shadow-[0_6px_25px_rgba(0,0,0,0.4)] py-2 sm:py-3 px-3 sm:px-6"
+              ? "bg-[#181815]/95 backdrop-blur-xl border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.65)] py-2 sm:py-2.5 px-3 sm:px-6"
+              : "bg-[#121210]/80 backdrop-blur-md border border-white/10 shadow-[0_6px_25px_rgba(0,0,0,0.4)] py-2 sm:py-3 px-3 sm:px-6"
           }`}
         >
           <div className="flex items-center justify-between gap-1.5 sm:gap-4">
@@ -314,7 +129,7 @@ export function Navbar() {
                   <Image
                     src="/assets/logo%20AAPE.png"
                     alt="Khadafi Logo"
-                    width={130}
+                    width={60}
                     height={40}
                     priority
                     className="h-8 sm:h-9 md:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_12px_rgba(255,255,255,0.2)]"
@@ -380,7 +195,7 @@ export function Navbar() {
                           transition={{ duration: 0.18, ease: "easeOut" }}
                           className="absolute top-[110%] left-1/2 -translate-x-1/2 w-80 pt-2 z-50 pointer-events-auto"
                         >
-                          <div className="bg-[#0e0f14]/98 backdrop-blur-2xl border border-white/15 rounded-2xl p-2 shadow-[0_20px_60px_rgba(0,0,0,0.85)] flex flex-col relative overflow-hidden">
+                          <div className="bg-[#181815]/98 backdrop-blur-2xl border border-white/15 rounded-2xl p-2 shadow-[0_20px_60px_rgba(0,0,0,0.85)] flex flex-col relative overflow-hidden">
                             {/* Subtle Ambient Glow */}
                             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-[50px] rounded-full pointer-events-none" />
 
@@ -441,7 +256,6 @@ export function Navbar() {
                 onClick={() => setInquiryOpen(true)}
                 className="group relative inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2.5 rounded-xl text-xs sm:text-[13px] font-bold tracking-wide bg-white/10 hover:bg-white text-white hover:text-black border border-white/20 hover:border-white transition-all duration-300 shadow-[0_4px_16px_rgba(255,255,255,0.06)] hover:shadow-[0_4px_24px_rgba(255,255,255,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 active:scale-95"
               >
-                <Sparkles className="w-3.5 h-3.5 text-emerald-400 group-hover:text-black transition-colors" />
                 <span>Mulai Proyek</span>
                 <span className="text-white/40 group-hover:text-black transition-colors" aria-hidden="true">
                   →
@@ -567,7 +381,6 @@ export function Navbar() {
                       }}
                       className="w-full py-3.5 px-4 bg-white text-black font-bold text-sm rounded-xl transition-all shadow-lg flex items-center justify-center gap-2"
                     >
-                      <Sparkles className="w-4 h-4 text-emerald-600" />
                       <span>Mulai Proyek Bersama Khadafi</span>
                     </button>
 

@@ -80,9 +80,9 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
       <Navbar />
-      <main className="min-h-screen flex flex-col">
+      <div className="min-h-screen flex flex-col">
         <HomeView posts={posts} />
-      </main>
+      </div>
     </>
   );
 }

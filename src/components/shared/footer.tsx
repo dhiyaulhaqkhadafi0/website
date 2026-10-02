@@ -1,4 +1,5 @@
 "use client";
+import { PUBLIC_FOOTER_GROUPS } from "@/content/public-navigation";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -84,43 +85,10 @@ const MailIcon = ({ className }: { className?: string }) => (
 export function Footer() {
   const currentYear = new Date().getFullYear();
 
-  const footerGroups = [
-    {
-      title: "Build",
-      links: [
-        { label: "Products", href: "/#produk", desc: "Aplikasi & aset digital" },
-        { label: "Services", href: "/about#jasa", desc: "Engineering & konsultasi" },
-        { label: "Apps & Studio", href: "/studio", desc: "Platform penulisan in-house" },
-      ],
-    },
-    {
-      title: "Learn",
-      links: [
-        { label: "Resources", href: "/resources", desc: "Blueprint & sistem kerja" },
-        { label: "The Digital Grimoire", href: "/blog", desc: "Esai AI & product building" },
-        { label: "Guides", href: "/freelance/belajar/mulai-freelance", desc: "Mulai freelance dari nol" },
-      ],
-    },
-    {
-      title: "Ecosystem",
-      links: [
-        { label: "Freelance Hub", href: "/freelance", desc: "Navigasi karier remote" },
-        { label: "Community", href: "/komunitas", desc: "Wadah builder & kreator" },
-        { label: "Chikki Studio", href: "/studio", desc: "Immersive writing network" },
-      ],
-    },
-    {
-      title: "Khadafi",
-      links: [
-        { label: "About Khadafi", href: "/about", desc: "Profil & filosofi builder" },
-        { label: "HCFTL Lab", href: "/lab", desc: "Human-Centered Tech Lab" },
-        { label: "Changelog", href: "/changelog", desc: "Catatan pembaruan sistem" },
-      ],
-    },
-  ];
+  const footerGroups = PUBLIC_FOOTER_GROUPS;
 
   return (
-    <footer className="w-full border-t border-white/10 bg-[#06070a] text-[#ECEDE7] mt-auto relative z-20 overflow-hidden font-sans">
+    <footer className="w-full border-t border-white/10 bg-[#10100e] text-[#ECEDE7] mt-auto relative z-20 overflow-hidden font-sans">
       {/* Ambient Lighting Accents */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-emerald-500/30 to-transparent" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] bg-emerald-500/[0.03] blur-[100px] rounded-full pointer-events-none" />
@@ -134,8 +102,8 @@ export function Footer() {
               <Image
                 src="/assets/logo%20AAPE.png"
                 alt="Khadafi Logo"
-                width={160}
-                height={50}
+                width={66}
+                height={44}
                 className="w-auto h-11 object-contain drop-shadow-[0_0_12px_rgba(255,255,255,0.2)] group-hover:scale-105 transition-transform"
               />
               <div className="flex flex-col border-l border-white/10 pl-3">
@@ -224,7 +192,7 @@ export function Footer() {
 
         {/* Bottom Utility Bar: Legal, Status & Copyright */}
         <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
             <p>
               © {currentYear} Daffa Dhiyaulhaq Khadafi. All rights reserved.
             </p>
@@ -247,7 +215,7 @@ export function Footer() {
 
           <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-full bg-white/[0.03] border border-white/10 text-slate-400 font-mono text-[11px]">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Digital Business OS · Phase 1 Active</span>
+            <span>Independent builder · Indonesia</span>
           </div>
         </div>
       </div>
