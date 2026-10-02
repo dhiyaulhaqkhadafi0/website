@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- Standalone CommonJS verification script. */
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
@@ -6,12 +7,12 @@ const ts = require("typescript");
 const cache = new Map();
 function load(file) {
   if (cache.has(file)) return cache.get(file).exports;
-  const module = { exports: {} };
-  cache.set(file, module);
+  const loadedModule = { exports: {} };
+  cache.set(file, loadedModule);
   const code = ts.transpileModule(fs.readFileSync(file, "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020, esModuleInterop: true } }).outputText;
   const localRequire = name => name.endsWith(".json") ? JSON.parse(fs.readFileSync(path.resolve(path.dirname(file), name), "utf8")) : name.startsWith(".") ? load(path.resolve(path.dirname(file), `${name}.ts`)) : require(name);
-  vm.runInThisContext(`(function(require,module,exports){${code}\n})`, { filename: file })(localRequire, module, module.exports);
-  return module.exports;
+  vm.runInThisContext(`(function(require,module,exports){${code}\n})`, { filename: file })(localRequire, loadedModule, loadedModule.exports);
+  return loadedModule.exports;
 }
 const root = path.resolve(__dirname, "..");
 const { FREELANCE_PLATFORMS, platformOutbound, platformAlternatives } = load(path.join(root, "src/content/freelance-directory.ts"));

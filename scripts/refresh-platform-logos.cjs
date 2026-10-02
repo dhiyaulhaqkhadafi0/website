@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports -- Standalone CommonJS maintenance script. */
 // Explicit maintenance command. Never called from the browser or during a build.
 // Only uses icon links declared by each official platform page; no logo aggregator.
 const fs = require('node:fs/promises');
