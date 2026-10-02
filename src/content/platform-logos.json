@@ -1,0 +1,62 @@
+{
+  "99designs": {
+    "path": "/images/platforms/99designs.webp",
+    "source": "https://99designs.com/touch-icon-iphone.png"
+  },
+  "arc": {
+    "path": "/images/platforms/arc.webp",
+    "source": "https://assets.arc.dev/icons/apple-touch-icon.png"
+  },
+  "contra": {
+    "path": "/images/platforms/contra.webp",
+    "source": "https://contra.com/static/media/apple-touch-icon.png"
+  },
+  "dribbble": {
+    "path": "/images/platforms/dribbble.webp",
+    "source": "https://dribbble.com/images/apple-touch-icon-precomposed.png"
+  },
+  "flexjobs": {
+    "path": "/images/platforms/flexjobs.webp",
+    "source": "https://assets.flexjobs.com/blobcontent/flexjobs/images/favicon.png"
+  },
+  "freelancer": {
+    "path": "/images/platforms/freelancer.webp",
+    "source": "https://www.f-cdn.com/assets/main/en/assets/app-icons/apple-touch-icon.png"
+  },
+  "gun-io": {
+    "path": "/images/platforms/gun-io.webp",
+    "source": "https://gun.io/wp-content/uploads/2023/08/cropped-Gun.io-Favicon-180x180.png"
+  },
+  "himalayas": {
+    "path": "/images/platforms/himalayas.webp",
+    "source": "https://himalayas.app/apple-icon.png?apple-icon.25onb6977ckzx.png"
+  },
+  "jobspresso": {
+    "path": "/images/platforms/jobspresso.webp",
+    "source": "https://jobspresso.co/wp-content/uploads/2015/04/Favicon-iOS.jpg"
+  },
+  "linkedin-jobs": {
+    "path": "/images/platforms/linkedin-jobs.ico",
+    "source": "https://static.licdn.com/aero-v1/sc/h/al2o9zrvru7aqj8e1x2rzsrca"
+  },
+  "peopleperhour": {
+    "path": "/images/platforms/peopleperhour.ico",
+    "source": "https://www.peopleperhour.com/favicon.ico"
+  },
+  "remote-ok": {
+    "path": "/images/platforms/remote-ok.webp",
+    "source": "https://remoteok.com/assets/apple-icon-57x57.png?2"
+  },
+  "wellfound": {
+    "path": "/images/platforms/wellfound.ico",
+    "source": "https://reach.wellfound.com/assets/favicon-e42a577e2f467509d228c4411d236f4e8b3085565860374f06710f3fffab4808.ico"
+  },
+  "working-nomads": {
+    "path": "/images/platforms/working-nomads.ico",
+    "source": "https://d262ri5vl0r1ym.cloudfront.net/jobs/assets/favicon.ico"
+  },
+  "yc-work-at-a-startup": {
+    "path": "/images/platforms/yc-work-at-a-startup.ico",
+    "source": "https://bookface-static.ycombinator.com/assets/ycdc/favicon-c8a914eeeba9fe6f7a863b35608b55aeedd7c1ff409c97b9ecb96b7a6c278d70.ico"
+  }
+}
