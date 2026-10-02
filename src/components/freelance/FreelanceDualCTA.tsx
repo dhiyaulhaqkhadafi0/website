@@ -16,7 +16,7 @@ export function FreelanceDualCTA({ onOpenInquiry }: FreelanceDualCTAProps) {
       <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[400px] bg-brand-accent/5 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 max-w-6xl relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono uppercase tracking-wider text-white/60">
@@ -32,7 +32,7 @@ export function FreelanceDualCTA({ onOpenInquiry }: FreelanceDualCTAProps) {
 
         {/* Dual Split Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
-          
+
           {/* Card A: Potential Client */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}

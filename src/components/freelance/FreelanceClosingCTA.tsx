@@ -24,11 +24,11 @@ function TimelineItem({
     <div className="relative pl-8 pb-10 last:pb-0">
       {/* Timeline Line */}
       <div className="absolute left-[9px] top-3 bottom-[-12px] w-[1px] bg-[rgba(255,255,255,0.08)] last:hidden" />
-      
+
       {/* Timeline Dot */}
       <div className={`absolute left-0 top-1.5 w-5 h-5 rounded-full flex items-center justify-center bg-[#2E2F2B] border ${
-        status === "current" 
-          ? "border-[#ECEDE7] text-[#ECEDE7]" 
+        status === "current"
+          ? "border-[#ECEDE7] text-[#ECEDE7]"
           : status === "past"
           ? "border-[#A1A39B] text-[#A1A39B]"
           : "border-[rgba(255,255,255,0.1)] text-transparent"
@@ -64,7 +64,7 @@ export function FreelanceClosingCTA({
       <section id="card-perjalanan" className="relative w-full py-20 md:py-28 border-t border-[rgba(255,255,255,0.07)]">
         <div className="container mx-auto px-6 max-w-[1240px]">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-8">
-            
+
             {/* Header side */}
             <motion.div
               initial={{ opacity: 0, y: 14 }}
@@ -86,11 +86,11 @@ export function FreelanceClosingCTA({
               <p className="mt-8 text-[15px] md:text-[16px] text-[#C3C5BD] leading-relaxed font-normal">
                 Saya tidak sedang menunggu semuanya sempurna. Saya membangun karier freelance ini sambil mendokumentasikan apa yang saya coba, apa yang gagal, dan apa yang berhasil.
               </p>
-              
+
               <div className="mt-8 pt-8 border-t border-[rgba(255,255,255,0.07)]">
-                <a 
-                  href="https://twitter.com" 
-                  target="_blank" 
+                <a
+                  href="https://twitter.com"
+                  target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#A1A39B] hover:text-[#ECEDE7] transition-colors"
                 >
@@ -107,23 +107,23 @@ export function FreelanceClosingCTA({
               transition={{ duration: 0.6, delay: 0.1 }}
               className="lg:col-span-5 lg:col-start-8"
             >
-              <TimelineItem 
+              <TimelineItem
                 year="2026"
                 status="past"
                 title="Memulai Freelance Journey"
                 description="Portfolio, positioning, dan platform setup."
               />
-              <TimelineItem 
+              <TimelineItem
                 status="current"
                 title="Membangun Freelance Journey Hub"
                 description="Sedang berlangsung. Dokumentasi resource."
               />
-              <TimelineItem 
+              <TimelineItem
                 status="future"
                 title="Penghasilan freelance konsisten"
                 description="In progress."
               />
-              <TimelineItem 
+              <TimelineItem
                 status="future"
                 title="Klien internasional pertama"
                 description="Next milestone."

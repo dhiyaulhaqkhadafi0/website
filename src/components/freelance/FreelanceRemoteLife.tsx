@@ -15,7 +15,7 @@ export function FreelanceRemoteLife() {
   return (
     <section id="remote-life" className="py-20 md:py-28 relative border-t border-white/[0.08] bg-[#03050A]">
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10">
-        
+
         {/* Section Header */}
         <div className="max-w-3xl mb-14 space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-xs font-mono uppercase tracking-wider text-emerald-400">

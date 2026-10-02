@@ -9,7 +9,7 @@ export function FreelanceNotes() {
   return (
     <section id="notes" className="py-20 md:py-28 relative border-t border-white/[0.08] bg-[#020205]">
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10">
-        
+
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14">
           <div className="space-y-3 max-w-2xl">

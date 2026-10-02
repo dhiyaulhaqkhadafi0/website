@@ -47,7 +47,7 @@ export function FreelanceToolkit() {
   return (
     <section id="toolkit" className="py-20 md:py-28 relative border-t border-white/[0.08] bg-[#030409]">
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/20 text-xs font-mono uppercase tracking-wider text-teal-400">
@@ -63,7 +63,7 @@ export function FreelanceToolkit() {
 
         {/* Search & Category Filter Controls */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mb-10">
-          
+
           {/* Category Tabs */}
           <div className="flex flex-wrap items-center gap-2">
             {categories.map((cat) => (

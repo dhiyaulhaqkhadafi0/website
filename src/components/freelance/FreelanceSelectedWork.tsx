@@ -12,7 +12,7 @@ export function FreelanceSelectedWork() {
       <div className="absolute top-1/4 right-0 w-[500px] h-[500px] bg-indigo-500/5 blur-[150px] rounded-full pointer-events-none" />
 
       <div className="container mx-auto px-4 sm:px-6 max-w-7xl relative z-10">
-        
+
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div className="space-y-3 max-w-2xl">
@@ -47,10 +47,10 @@ export function FreelanceSelectedWork() {
               <div className={`absolute top-0 right-0 w-96 h-96 bg-gradient-to-br ${work.accentColor} blur-[120px] rounded-full pointer-events-none opacity-50 group-hover:opacity-80 transition-opacity`} />
 
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
-                
+
                 {/* Left: Content & Metrics (5 cols) */}
                 <div className="lg:col-span-6 space-y-6">
-                  
+
                   {/* Category & Badge */}
                   <div className="flex flex-wrap items-center gap-2">
                     <span className="text-[10px] font-mono uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-accent/15 border border-brand-accent/30 text-brand-accent font-bold">
@@ -134,7 +134,7 @@ export function FreelanceSelectedWork() {
                 {/* Right: Rich Interactive Visual / Product Showcase Frame (6 cols) */}
                 <div className="lg:col-span-6">
                   <div className="relative rounded-2xl bg-[#090C16] border border-white/10 p-5 sm:p-6 shadow-2xl group-hover:border-brand-accent/40 group-hover:scale-[1.01] transition-all">
-                    
+
                     {/* Browser / App Header */}
                     <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10 text-[11px] font-mono text-white/40">
                       <div className="flex items-center gap-2">
@@ -151,7 +151,7 @@ export function FreelanceSelectedWork() {
                     {/* Visual Mock Canvas */}
                     <div className="aspect-[16/10] rounded-xl bg-gradient-to-br from-[#0D1220] to-[#070912] border border-white/5 p-4 sm:p-6 flex flex-col justify-between relative overflow-hidden">
                       {/* Subtle Grid in Mock */}
-                      <div 
+                      <div
                         className="absolute inset-0 opacity-[0.05]"
                         style={{
                           backgroundImage: `radial-gradient(circle at 1px 1px, #FFFFFF 1px, transparent 0)`,

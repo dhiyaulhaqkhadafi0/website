@@ -40,7 +40,7 @@ function FeaturedCard({
       <Link href={href} className="absolute inset-0 z-10">
         <span className="sr-only">{title}</span>
       </Link>
-      
+
       <div>
         <span className="block text-[11px] font-bold tracking-[0.18em] text-[#A1A39B] mb-4">
           {index}
@@ -103,7 +103,7 @@ function EditorialListCard({
           {title}
         </h3>
       </div>
-      
+
       <p className="text-[13px] text-[#A1A39B] leading-relaxed font-normal mb-5 flex-1">
         {description}
       </p>
@@ -146,7 +146,7 @@ function PreviewItemRow({
         </div>
         <p className="text-[12px] text-[#898B84] mt-1.5">{tags}</p>
       </div>
-      
+
       <div className="shrink-0 flex items-center gap-1.5 text-[12px] font-medium text-[#A1A39B] group-hover:text-[#ECEDE7] transition-colors">
         Detail <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
       </div>
@@ -207,7 +207,7 @@ export function FreelanceLibraryGrid({
       <div className="container mx-auto px-6 max-w-[1240px]">
         {/* Hub Main Cards */}
         <div className="space-y-16">
-          
+
           {/* TOP ROW: 2 Featured Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {showBelajar && (
@@ -221,7 +221,7 @@ export function FreelanceLibraryGrid({
                 href="/freelance/belajar/mulai-freelance"
               />
             )}
-            
+
             {showLowongan && (
               <FeaturedCard
                 id="card-lowongan"
@@ -275,7 +275,7 @@ export function FreelanceLibraryGrid({
         {/* Content Previews (Shows when no search filter active) */}
         {selectedCategory === "Semua" && !searchQuery && (
           <div className="mt-24 pt-16 border-t border-[rgba(255,255,255,0.07)] grid grid-cols-1 md:grid-cols-2 gap-16">
-            
+
             {/* Preview: Platform */}
             <motion.div
               initial={{ opacity: 0, y: 16 }}
@@ -286,23 +286,23 @@ export function FreelanceLibraryGrid({
               <h3 className="text-[18px] font-bold text-[#ECEDE7] mb-6">
                 Platform yang layak dicoba
               </h3>
-              
+
               <div className="flex flex-col">
-                <PreviewItemRow 
+                <PreviewItemRow
                   title="Contra"
                   subtitle="Freelance Platform"
                   meta="Worldwide · Gratis"
                   tags="Creative · Development · Marketing"
                   href="/freelance/direktori/contra"
                 />
-                <PreviewItemRow 
+                <PreviewItemRow
                   title="We Work Remotely"
                   subtitle="Remote Job Board"
                   meta="Worldwide · Gratis"
                   tags="Engineering · Product · Design"
                   href="/freelance/direktori/we-work-remotely"
                 />
-                <PreviewItemRow 
+                <PreviewItemRow
                   title="FlexJobs"
                   subtitle="Curated Remote Jobs"
                   meta="Worldwide · Berbayar"
@@ -322,23 +322,23 @@ export function FreelanceLibraryGrid({
               <h3 className="text-[18px] font-bold text-[#ECEDE7] mb-6">
                 Peluang remote terbaru
               </h3>
-              
+
               <div className="flex flex-col">
-                <PreviewItemRow 
+                <PreviewItemRow
                   title="Product Designer"
                   subtitle="Tech Startup"
                   meta="Worldwide · Remote · Full-time"
                   tags="Design Systems · Figma · UI/UX"
                   href="/freelance/lowongan/product-designer-tech-startup"
                 />
-                <PreviewItemRow 
+                <PreviewItemRow
                   title="AI Content Writer"
                   subtitle="Digital Agency"
                   meta="Remote · Contract"
                   tags="Content Strategy · Prompt Engineering"
                   href="/freelance/lowongan/ai-content-writer-agency"
                 />
-                <PreviewItemRow 
+                <PreviewItemRow
                   title="Frontend Developer (React)"
                   subtitle="SaaS Company"
                   meta="US Timezone · Freelance"

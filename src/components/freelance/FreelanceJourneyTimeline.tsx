@@ -24,7 +24,7 @@ export function FreelanceJourneyTimeline() {
   return (
     <section id="the-journey" className="py-20 md:py-28 relative border-t border-white/[0.08] bg-[#020307]">
       <div className="container mx-auto px-4 sm:px-6 max-w-5xl relative z-10">
-        
+
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-xs font-mono uppercase tracking-wider text-indigo-400">
@@ -85,7 +85,7 @@ export function FreelanceJourneyTimeline() {
 
                 {/* Milestone Card */}
                 <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-white/20 transition-all">
-                  
+
                   {/* Card Header */}
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
                     <div className="flex items-center gap-2">
