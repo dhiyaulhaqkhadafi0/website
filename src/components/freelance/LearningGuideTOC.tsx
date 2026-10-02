@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Check, Circle } from "lucide-react";
 
 interface TOCItem {
   id: string;
@@ -10,84 +9,56 @@ interface TOCItem {
 }
 
 export function LearningGuideTOC({ items }: { items: TOCItem[] }) {
-  const [activeId, setActiveId] = useState<string>(items[0]?.id || "");
-  const [progress, setProgress] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => {
-      let currentActiveId = items[0]?.id;
-      let passedSections = 0;
-
-      for (let i = items.length - 1; i >= 0; i--) {
-        const item = items[i];
-        const el = document.getElementById(item.id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          // Adjust threshold so that when the element is just below the center of the viewport, it becomes active.
-          if (rect.top <= window.innerHeight * 0.4) {
-            currentActiveId = item.id;
-            passedSections = i + 1;
-            break;
-          }
-        }
-      }
-
-      setActiveId(currentActiveId);
-      setProgress(passedSections);
+    const update = () => {
+      let current = 0;
+      items.forEach((item, index) => {
+        const section = document.getElementById(item.id);
+        if (section && section.getBoundingClientRect().top <= window.innerHeight * 0.38) current = index;
+      });
+      setActiveIndex(current);
     };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    // Initial check
-    handleScroll();
-
-    return () => window.removeEventListener("scroll", handleScroll);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
   }, [items]);
 
-  return (
-    <div className="sticky top-32">
-      <h4 className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#8C8E87] mb-8">
-        Dalam Panduan Ini
-      </h4>
-      <nav className="flex flex-col gap-4">
-        {items.map((item, index) => {
-          const isActive = activeId === item.id;
-          const isPast = items.findIndex((i) => i.id === activeId) > index;
-          
-          return (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              className={`text-[14px] font-medium flex items-center justify-between transition-colors group ${
-                isActive 
-                  ? "text-[#242521]" 
-                  : isPast 
-                  ? "text-[#8C8E87] hover:text-[#242521]"
-                  : "text-[#8C8E87] hover:text-[#242521]"
-              }`}
-            >
-              <div className="flex items-center gap-4">
-                <span className={`text-[11px] font-bold tracking-widest ${isActive ? "text-[#242521]" : "text-[#8C8E87]"}`}>
-                  {item.label}
-                </span>
-                <span>{item.title}</span>
-              </div>
-              
-              <div className="shrink-0 flex items-center justify-center">
-                {isPast ? (
-                  <Check className="w-3.5 h-3.5 text-[#A5AC91]" />
-                ) : isActive ? (
-                  <Circle className="w-2.5 h-2.5 fill-[#242521] text-[#242521]" />
-                ) : null}
-              </div>
-            </a>
-          );
-        })}
-      </nav>
+  const links = (mobile = false) => items.map((item, index) => (
+    <a
+      key={item.id}
+      href={`#${item.id}`}
+      aria-current={activeIndex === index ? "location" : undefined}
+      className={`flex items-start gap-3 py-2.5 leading-snug transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#78906d] ${activeIndex === index ? "text-[#22251f] font-bold" : "text-[#62675d] hover:text-[#22251f]"} ${mobile ? "text-sm" : "text-[13px]"}`}
+    >
+      <span className="w-5 shrink-0 text-[11px] font-bold pt-0.5">{index < activeIndex ? "✓" : item.label}</span>
+      <span>{item.title}</span>
+      {activeIndex === index && <span className="ml-auto text-[#6f8268]" aria-hidden="true">●</span>}
+    </a>
+  ));
 
-      <div className="mt-12 pt-6 border-t border-[#D9D8D2] flex flex-col gap-1.5 text-[12px] font-medium text-[#8C8E87]">
-        <span>25 menit baca</span>
-        <span>{progress} / {items.length} selesai</span>
+  return <>
+    <aside className="hidden lg:block sticky top-8 self-start" aria-label="Navigasi panduan">
+      <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#66705f] mb-5">Dalam panduan</p>
+      <nav aria-label="Bab panduan">{links()}</nav>
+      <div className="mt-8 pt-5 border-t border-[#c9cec0]">
+        <p className="text-[10px] font-bold uppercase tracking-[0.17em] text-[#66705f] mb-2">Posisi membaca</p>
+        <p className="text-2xl font-bold tracking-tight text-[#242520]">{String(activeIndex + 1).padStart(2, "0")} <span className="text-sm font-normal text-[#677063]">/ 07</span></p>
+        <div className="h-1 bg-[#cbd0c3] mt-3" aria-hidden="true"><div className="h-full bg-[#667b5d] transition-[width] duration-300 motion-reduce:transition-none" style={{ width: `${((activeIndex + 1) / items.length) * 100}%` }} /></div>
+        <p className="text-xs text-[#62675d] mt-4">± 25–35 menit baca & praktik</p>
       </div>
-    </div>
-  );
+    </aside>
+    <details className="lg:hidden border-y border-[#b9beaf] mb-8 group">
+      <summary className="cursor-pointer list-none py-4 flex items-center justify-between gap-4 text-sm font-semibold text-[#242520] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#78906d]">
+        <span>Dalam panduan <span className="text-[#6b7667] font-normal ml-2">{String(activeIndex + 1).padStart(2, "0")} / 07</span></span>
+        <span className="group-open:rotate-45 transition-transform motion-reduce:transition-none text-xl" aria-hidden="true">+</span>
+      </summary>
+      <nav className="pb-4" aria-label="Bab panduan">{links(true)}</nav>
+    </details>
+  </>;
 }
