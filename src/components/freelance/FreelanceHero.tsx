@@ -1,21 +1,22 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { WorkAtlas } from "./WorkAtlas";
 import styles from "./discovery.module.css";
 
 interface FreelanceHeroProps {
   onScrollToLibrary: () => void;
-  onScrollToJobs: () => void;
+
 }
 
 export function FreelanceHero({
   onScrollToLibrary,
-  onScrollToJobs,
+
 }: FreelanceHeroProps) {
   return (
-    <section className="relative w-full pt-36 pb-24 md:pt-44 md:pb-32 overflow-hidden bg-[#292A27]">
+    <section className="relative w-full pt-14 pb-24 md:pt-20 md:pb-32 overflow-hidden bg-[#292A27]">
       {/* Minimal warm atmospheric glow — very subtle */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#A5AC91]/[0.06] blur-[160px] rounded-full pointer-events-none" />
 
@@ -73,15 +74,13 @@ export function FreelanceHero({
             <span>Jelajahi Dunia Freelance</span>
           </button>
 
-          <button
-            onClick={onScrollToJobs}
-            type="button"
+          <Link href="/freelance/jobs"
             id="hero-cta-secondary"
             className="inline-flex items-center justify-center gap-2 px-2 py-3.5 text-[#C3C5BD] font-medium text-[14px] sm:text-[15px] hover:text-[#ECEDE7] transition-colors duration-200 group"
           >
             <span>Temukan Peluang Remote</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
-          </button>
+          </Link>
         </motion.div>
 
         {/* Micro taxonomy */}

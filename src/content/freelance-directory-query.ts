@@ -1,12 +1,12 @@
 import type { FreelancePlatform } from "./freelance-directory";
 export const DIRECTORY_PAGE_SIZE = 9;
 export const DIRECTORY_FIELDS = [
-  { key: "type", label: "Jenis platform", short: "Semua jenis", values: (p: FreelancePlatform) => [p.type] },
+  { key: "region", label: "Lokasi platform", short: "Semua lokasi", values: (p: FreelancePlatform) => p.regions },
   { key: "field", label: "Bidang", short: "Semua bidang", values: (p: FreelancePlatform) => p.categories },
-  { key: "region", label: "Cakupan", short: "Semua cakupan", values: (p: FreelancePlatform) => p.regions },
+  { key: "level", label: "Tingkatan", short: "Semua tingkatan", values: (p: FreelancePlatform) => p.experienceLevels },
   { key: "pricing", label: "Biaya", short: "Semua biaya", values: (p: FreelancePlatform) => [p.pricing] },
+  { key: "type", label: "Jenis platform", short: "Semua jenis", values: (p: FreelancePlatform) => [p.type] },
   { key: "opportunity", label: "Tipe peluang", short: "Semua peluang", values: (p: FreelancePlatform) => p.opportunityTypes },
-  { key: "level", label: "Level", short: "Semua level", values: (p: FreelancePlatform) => p.experienceLevels },
 ];
 const aliases: Record<string, string> = { menulis: "writing", writer: "writing", penulis: "writing", desain: "design", developer: "development", coding: "development", worldwide: "internasional", global: "internasional", jobs: "job", lowongan: "job" };
 const normalize = (s: string) => s.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").toLowerCase();

@@ -16,8 +16,11 @@ function load(file) {
 }
 const root = path.resolve(__dirname, "..");
 const { FREELANCE_PLATFORMS, platformOutbound, platformAlternatives } = load(path.join(root, "src/content/freelance-directory.ts"));
+const { activeRemoteJobs, filterRemoteJobs, REMOTE_JOBS } = load(path.join(root, "src/content/freelance-jobs.ts"));
 const { directoryResults } = load(path.join(root, "src/content/freelance-directory-query.ts"));
-const { searchFreelance, SEARCH_INDEX } = load(path.join(root, "src/content/freelance-search.ts"));
+const { searchFreelance: liveSearch, SEARCH_INDEX } = load(path.join(root, "src/content/freelance-search.ts"));
+const referenceDay = new Date('2026-10-11T12:00:00Z');
+const searchFreelance = (query, category) => liveSearch(query, category, referenceDay);
 const { RESOURCES_DATA } = load(path.join(root, "src/content/resources-data.ts"));
 assert.equal(FREELANCE_PLATFORMS.length, 23);
 assert.equal(new Set(FREELANCE_PLATFORMS.map(p => p.slug)).size, 23);
@@ -61,5 +64,17 @@ assert.ok(searchFreelance("portfolio", "Panduan").length > 0);
 assert.ok(searchFreelance("kerja remote", "Lowongan").length > 0);
 assert.ok(searchFreelance("AI tools", "Tools").some(r => r.href.endsWith("high-context-prompts-pack")));
 assert.equal(searchFreelance("zzzz-no-match").length, 0);
-assert.equal(searchFreelance("  ").length, SEARCH_INDEX.length);
+assert.equal(searchFreelance("  ").length, SEARCH_INDEX.length + activeRemoteJobs(referenceDay).length);
 console.log(`Discovery checks passed: ${FREELANCE_PLATFORMS.length} platforms, ${SEARCH_INDEX.length} unique real destinations, search aliases and category intersections.`);
+
+assert.equal(activeRemoteJobs(referenceDay).length, 4);
+assert.equal(activeRemoteJobs(new Date('2026-10-26T00:00:00Z')).length, 0);
+assert.equal(liveSearch('', 'Lowongan', new Date('2026-10-26T00:00:00Z')).length, 0);
+assert.ok(REMOTE_JOBS.every(j => new URL(j.sourceUrl).hostname === 'job-boards.greenhouse.io'));
+assert.ok(REMOTE_JOBS.every(j => j.locations.includes('Indonesia')));
+assert.equal(filterRemoteJobs(activeRemoteJobs(referenceDay), new URLSearchParams('level=Pemula')).length, 0);
+assert.equal(filterRemoteJobs(activeRemoteJobs(referenceDay), new URLSearchParams('field=Development&employment=Contract&location=Indonesia')).length, 1);
+assert.equal(filterRemoteJobs(activeRemoteJobs(referenceDay), new URLSearchParams('q=zzzz-no-match')).length, 0);
+assert.ok(searchFreelance('', 'Lowongan').every(r => r.category === 'Lowongan' && r.href.startsWith('/freelance/jobs?')));
+assert.ok(searchFreelance('', 'Direktori').every(r => !r.categories.includes('Lowongan')));
+console.log('Job separation, location filters, and expiry checks passed.');

@@ -9,6 +9,11 @@ export default function PrivacyPage() {
   const sections = [
     {
       icon: <Database className="w-6 h-6 text-brand-accent" />,
+      title: "Freelance Field Notes",
+      content: "Saat Anda menyetujui pendaftaran Field Notes, kami menyimpan nama, email, waktu persetujuan, status langganan, dan sumber pendaftaran. Parameter sumber atau kampanye pada tautan kunjungan juga dapat disimpan. Untuk membatasi spam, identitas jaringan diproses menjadi hash; penghitung percobaan lama dibersihkan setelah satu hari saat ada permintaan berikutnya. Data subscriber hanya tersedia bagi admin. Anda dapat berhenti melalui tautan pribadi yang ditampilkan setelah pendaftaran atau tautan pada email Field Notes; tautan ini tidak perlu dibagikan kepada orang lain.",
+    },
+    {
+      icon: <Database className="w-6 h-6 text-brand-accent" />,
       title: "Data yang Kami Kumpulkan",
       content: "Kami hanya mengumpulkan informasi yang Anda berikan secara sukarela, seperti nama dan alamat email saat Anda berlangganan *newsletter* atau menghubungi kami. Kami tidak secara diam-diam melacak data pribadi Anda.",
     },

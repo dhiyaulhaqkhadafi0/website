@@ -5,3 +5,11 @@ node_modules/
 .wrangler/
 *.tsbuildinfo
 Master-Prompt*.md
+
+.open-next/
+.wrangler/
+artifacts/
+
+.open-next/
+.wrangler/
+artifacts/

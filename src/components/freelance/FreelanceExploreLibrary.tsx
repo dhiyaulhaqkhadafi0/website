@@ -14,7 +14,7 @@ export function FreelanceExploreLibrary({ searchQuery, onSearchChange, selectedC
   const results = searchFreelance(searchQuery, selectedCategory);
   const shown = full ? results : results.slice(0, 6);
   return <section id="explore-library" className={styles.searchSection}>
-    {!full && <motion.div className={styles.searchHeading} initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .6 }}><h2>Mau cari apa?</h2><p>Panduan, platform, dan sumber daya untuk langkah berikutnya dalam karier independenmu.</p></motion.div>}
+    {!full && <motion.div className={styles.searchHeading} initial={{ opacity: 0, y: 14 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .6 }}><h2>Mau cari apa?</h2><p>Lowongan, panduan, platform, dan sumber daya untuk langkah berikutnya dalam karier independenmu.</p></motion.div>}
     <form action="/freelance/cari" role="search" className={styles.searchForm}>
       <div className={styles.searchField}><Search size={19} aria-hidden="true" />
         <input aria-label="Cari di Freelance Hub" name="q" type="search" value={searchQuery} onChange={e => onSearchChange(e.target.value)} placeholder="Cari platform, skill, panduan, atau tools…" onKeyDown={e => { if (e.key === "Escape") onSearchChange(""); }} />
@@ -27,9 +27,9 @@ export function FreelanceExploreLibrary({ searchQuery, onSearchChange, selectedC
     {!full && <div className={styles.popular}><span className="py-2.5">Mulai dari:</span>{["kerja remote", "freelance pemula", "menulis", "portfolio", "AI tools"].map(term => <button type="button" key={term} onClick={() => onSearchChange(term)}>{term}</button>)}</div>}
     {active && <div className={styles.results}>
       <div className={styles.resultMeta}><span role="status" aria-live="polite">{results.length} hasil{searchQuery.trim() && <> untuk “{searchQuery.trim()}”</>}</span>{!full && <Link href={`/freelance/cari?q=${encodeURIComponent(searchQuery)}&category=${encodeURIComponent(selectedCategory)}`}>Lihat semua hasil ↗</Link>}</div>
-      {shown.map(result => <Link className={styles.result} key={result.href} href={result.href}><small>{selectedCategory === "Lowongan" ? "Job board" : result.category}</small><div>{result.category === "Direktori" && <span className={styles.searchLogo}><PlatformLogo name={result.title} logo={result.logo}/></span>}<h3>{result.title}</h3><p>{result.description}</p></div><ArrowRight size={18} aria-hidden="true" /></Link>)}
+      {shown.map(result => <Link className={styles.result} key={result.href} href={result.href}><small>{result.category}</small><div>{result.category === "Direktori" && <span className={styles.searchLogo}><PlatformLogo name={result.title} logo={result.logo}/></span>}<h3>{result.title}</h3><p>{result.description}</p></div><ArrowRight size={18} aria-hidden="true" /></Link>)}
       {!results.length && <div className={styles.empty}><p>Belum ada hasil yang cocok. Coba “menulis”, “design”, atau nama platform; pilih Semua untuk memperluas pencarian.</p><button type="button" className={styles.textLink} onClick={() => { onSearchChange(""); onCategoryChange("Semua"); }}>Reset pencarian ↗</button></div>}
-      {selectedCategory === "Lowongan" && <p className="text-xs leading-6 text-[#89917b] mt-5">Hasil berupa platform pencarian kerja. Lowongan aktif dan aplikasi tersedia di situs masing-masing.</p>}
+      {selectedCategory === "Lowongan" && <p className={styles.jobsNote}>Hasil berupa lowongan individual. Cek lokasi, tanggal pemeriksaan, dan status pada sumber resmi sebelum melamar. <Link href="/freelance/jobs" className={styles.textLink}>Buka job board ↗</Link></p>}
     </div>}
   </section>;
 }

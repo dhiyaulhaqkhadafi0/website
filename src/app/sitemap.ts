@@ -11,6 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getAllPosts();
 
   const staticRoutes: MetadataRoute.Sitemap = [
+    { url: `${siteUrl}/freelance/jobs`, changeFrequency: 'daily', priority: 0.8 },
     {
       url: `${siteUrl}/`,
       changeFrequency: 'weekly',

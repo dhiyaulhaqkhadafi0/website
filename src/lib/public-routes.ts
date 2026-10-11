@@ -4,6 +4,7 @@ export const PUBLIC_PATHS = [
   "/about",
   "/freelance",
   "/freelance/cari",
+  "/freelance/jobs",
   "/freelance/direktori",
   "/freelance/belajar/mulai-freelance",
   "/resources",

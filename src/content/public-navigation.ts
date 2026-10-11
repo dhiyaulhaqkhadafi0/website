@@ -71,9 +71,9 @@ export const PUBLIC_NAV_CATEGORIES: NavCategory[] = [
         badge: "Flagship Guide",
       },
       {
-        label: "Peluang Remote Jobs",
-        href: "/freelance/direktori?type=Remote+Job+Board",
-        description: "Kurasi job board & papan lowongan internasional",
+        label: "Lowongan Remote",
+        href: "/freelance/jobs",
+        description: "Lowongan individual, lokasi kandidat & sumber resmi",
       },
       {
         label: "Direktori Platform",
@@ -83,7 +83,7 @@ export const PUBLIC_NAV_CATEGORIES: NavCategory[] = [
       {
         label: "Tools & Sumber Daya",
         href: "/freelance/cari",
-        description: "Pencarian terpadu tools, panduan, dan direktori",
+        description: "Pencarian lowongan, tools, panduan, dan platform",
       },
     ],
   },

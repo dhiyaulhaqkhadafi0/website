@@ -3,7 +3,7 @@ import { Navbar } from "@/components/shared/navbar";
 import { FreelanceHubView } from "@/components/freelance/FreelanceHubView";
 
 export const metadata: Metadata = {
-  title: "Building a career without an office — Freelance Journey Hub | Khadafi",
+  title: "Building a career without an office — Freelance Journey Hub",
   description:
     "Catatan perjalanan, pekerjaan, sistem, dan resources saya dalam membangun karier freelance & remote.",
   alternates: {

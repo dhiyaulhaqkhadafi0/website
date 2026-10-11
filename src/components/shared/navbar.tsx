@@ -20,6 +20,7 @@ import { ProjectInquiryModal } from "./ProjectInquiryModal";
 
 export function Navbar() {
   const pathname = usePathname() || "";
+  const inFreelance = pathname === "/freelance" || pathname.startsWith("/freelance/");
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
@@ -106,7 +107,7 @@ export function Navbar() {
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="fixed top-0 left-0 right-0 z-[90] px-3 sm:px-6 pt-3 sm:pt-4 pointer-events-none"
+        className={`${inFreelance ? "relative bg-[#292a27] pb-3 sm:pb-4" : "fixed top-0 left-0 right-0"} z-[90] px-3 sm:px-6 pt-3 sm:pt-4 pointer-events-none`}
       >
         <div
           ref={navRef}
