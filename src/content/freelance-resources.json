@@ -1,0 +1,248 @@
+[
+  {
+    "id": "G01",
+    "slug": "mulai-freelance-dari-nol",
+    "title": "Mulai Freelance dari Nol",
+    "type": "guide",
+    "description": "Panduan tujuh bab untuk memilih jasa, membangun portofolio, mencari klien, dan menyiapkan sistem kerja freelance.",
+    "audience": "Pemula yang belum pernah menerima proyek klien",
+    "keywords": [
+      "freelance pemula",
+      "roadmap",
+      "klien pertama",
+      "panduan"
+    ],
+    "isFree": true,
+    "status": "published",
+    "featured": true,
+    "updatedAt": "2026-10-12",
+    "contentFile": "src/components/freelance/FullFreelanceGuide.tsx",
+    "relatedIds": [
+      "T01",
+      "K01",
+      "T03"
+    ],
+    "accessLevel": "free",
+    "pricingModel": "free"
+  },
+  {
+    "id": "K01",
+    "slug": "freelance-rate-calculator",
+    "title": "Freelance Rate Calculator",
+    "type": "calculator",
+    "description": "Hitung perkiraan tarif freelance per jam dari target penghasilan, biaya, dan kapasitas jam yang dapat ditagihkan.",
+    "audience": "Freelancer yang sedang menentukan harga jasa",
+    "keywords": [
+      "kalkulator tarif",
+      "hourly rate",
+      "harga jasa",
+      "rate"
+    ],
+    "isFree": true,
+    "status": "published",
+    "featured": true,
+    "updatedAt": "2026-10-12",
+    "contentFile": "src/content/freelance-resource-content.ts#K01",
+    "relatedIds": [
+      "T02",
+      "T06",
+      "G01"
+    ],
+    "accessLevel": "free",
+    "pricingModel": "free"
+  },
+  {
+    "id": "T01",
+    "slug": "portfolio-starter-kit",
+    "title": "Portfolio Starter Kit",
+    "type": "template",
+    "description": "Struktur portofolio dan studi kasus yang jujur, termasuk ketika kamu belum memiliki klien.",
+    "audience": "Freelancer baru dan career switcher",
+    "keywords": [
+      "portofolio",
+      "case study",
+      "profil freelance"
+    ],
+    "isFree": true,
+    "status": "published",
+    "featured": false,
+    "updatedAt": "2026-10-12",
+    "contentFile": "src/content/freelance-resource-content.ts#T01",
+    "relatedIds": [
+      "G01",
+      "T03",
+      "T02"
+    ],
+    "accessLevel": "free",
+    "pricingModel": "free"
+  },
+  {
+    "id": "T02",
+    "slug": "client-proposal-template",
+    "title": "Client Proposal Template",
+    "type": "template",
+    "description": "Kerangka proposal profesional untuk menjelaskan solusi, ruang lingkup, waktu, harga, dan cara kerja.",
+    "audience": "Freelancer yang akan mengajukan penawaran klien",
+    "keywords": [
+      "proposal",
+      "scope",
+      "penawaran",
+      "harga"
+    ],
+    "isFree": true,
+    "status": "published",
+    "featured": false,
+    "updatedAt": "2026-10-12",
+    "contentFile": "src/content/freelance-resource-content.ts#T02",
+    "relatedIds": [
+      "K01",
+      "T06",
+      "T03"
+    ],
+    "accessLevel": "free",
+    "pricingModel": "free"
+  },
+  {
+    "id": "T03",
+    "slug": "cold-outreach-message-kit",
+    "title": "Cold Outreach Message Kit",
+    "type": "template",
+    "description": "Koleksi pesan personalisasi untuk memperkenalkan jasa, melakukan follow-up, dan membuka percakapan dengan prospek.",
+    "audience": "Freelancer yang sedang mencari klien pertama",
+    "keywords": [
+      "outreach",
+      "email",
+      "DM",
+      "follow up",
+      "prospek"
+    ],
+    "isFree": true,
+    "status": "published",
+    "featured": false,
+    "updatedAt": "2026-10-12",
+    "contentFile": "src/content/freelance-resource-content.ts#T03",
+    "relatedIds": [
+      "T01",
+      "T02",
+      "G01"
+    ],
+    "accessLevel": "free",
+    "pricingModel": "free"
+  },
+  {
+    "id": "T06",
+    "slug": "freelance-invoice-template",
+    "title": "Freelance Invoice Template",
+    "type": "template",
+    "description": "Format invoice dengan rincian pekerjaan, total, jatuh tempo, dan instruksi pembayaran yang bisa disesuaikan.",
+    "audience": "Freelancer yang akan menagih pembayaran",
+    "keywords": [
+      "invoice",
+      "tagihan",
+      "pembayaran",
+      "billing"
+    ],
+    "isFree": true,
+    "status": "published",
+    "featured": false,
+    "updatedAt": "2026-10-12",
+    "contentFile": "src/content/freelance-resource-content.ts#T06",
+    "relatedIds": [
+      "T02",
+      "K01",
+      "E02"
+    ],
+    "accessLevel": "free",
+    "pricingModel": "free"
+  },
+  {
+    "id": "E01",
+    "slug": "notion-untuk-freelancer",
+    "title": "Notion untuk Freelancer",
+    "type": "tool",
+    "description": "Kelola klien, proyek, checklist, dan dokumentasi kerja dari satu workspace yang rapi.",
+    "audience": "Freelancer yang butuh manajemen proyek sederhana",
+    "keywords": [
+      "notion",
+      "project management",
+      "klien",
+      "database"
+    ],
+    "isFree": true,
+    "status": "published",
+    "featured": false,
+    "updatedAt": "2026-10-12",
+    "contentFile": "src/content/freelance-resource-content.ts#E01",
+    "officialUrl": "https://www.notion.so/",
+    "pricingUrl": "https://www.notion.com/pricing",
+    "lastVerified": "2026-10-12",
+    "pricingNote": "Free untuk individu; unggahan maksimal 5 MB per file dan riwayat halaman 7 hari. Kolaborasi tim memiliki batas.",
+    "relatedIds": [
+      "E02",
+      "T02",
+      "G01"
+    ],
+    "accessLevel": "free",
+    "pricingModel": "freemium"
+  },
+  {
+    "id": "E02",
+    "slug": "clockify-untuk-freelancer",
+    "title": "Clockify untuk Freelancer",
+    "type": "tool",
+    "description": "Catat jam kerja per proyek agar estimasi durasi, pelaporan, dan penetapan tarif lebih akurat.",
+    "audience": "Freelancer hourly maupun fixed-price",
+    "keywords": [
+      "clockify",
+      "time tracking",
+      "timesheet",
+      "project"
+    ],
+    "isFree": true,
+    "status": "published",
+    "featured": false,
+    "updatedAt": "2026-10-12",
+    "contentFile": "src/content/freelance-resource-content.ts#E02",
+    "officialUrl": "https://clockify.me/",
+    "pricingUrl": "https://clockify.me/pricing",
+    "lastVerified": "2026-10-12",
+    "pricingNote": "Paket Free mendukung pelacakan waktu tanpa batas dan hingga lima pengguna; fungsi invoicing ada di paket berbayar.",
+    "relatedIds": [
+      "K01",
+      "T06",
+      "E01"
+    ],
+    "accessLevel": "free",
+    "pricingModel": "freemium"
+  },
+  {
+    "id": "E03",
+    "slug": "loom-untuk-freelancer",
+    "title": "Loom untuk Freelancer",
+    "type": "tool",
+    "description": "Rekam walkthrough hasil kerja atau update singkat agar komunikasi dengan klien lebih jelas.",
+    "audience": "Freelancer remote yang memberi hasil kerja visual atau teknis",
+    "keywords": [
+      "loom",
+      "screen recording",
+      "presentasi",
+      "client update"
+    ],
+    "isFree": true,
+    "status": "published",
+    "featured": false,
+    "updatedAt": "2026-10-12",
+    "contentFile": "src/content/freelance-resource-content.ts#E03",
+    "officialUrl": "https://www.loom.com/",
+    "pricingUrl": "https://www.loom.com/pricing",
+    "lastVerified": "2026-10-12",
+    "pricingNote": "Starter gratis; 5 menit per screen recording, batas 25 video per creator.",
+    "relatedIds": [
+      "T02",
+      "E01",
+      "T01"
+    ],
+    "accessLevel": "free",
+    "pricingModel": "freemium"
+  }
+]

@@ -66,7 +66,7 @@ export const PUBLIC_NAV_CATEGORIES: NavCategory[] = [
       },
       {
         label: "Mulai Freelance dari Nol",
-        href: "/freelance/belajar/mulai-freelance",
+        href: "/freelance/tools/mulai-freelance-dari-nol",
         description: "Panduan flagship langkah awal membangun karier mandiri",
         badge: "Flagship Guide",
       },
@@ -82,8 +82,8 @@ export const PUBLIC_NAV_CATEGORIES: NavCategory[] = [
       },
       {
         label: "Tools & Sumber Daya",
-        href: "/freelance/cari",
-        description: "Pencarian lowongan, tools, panduan, dan platform",
+        href: "/freelance/tools",
+        description: "Panduan, template, kalkulator tarif, dan tools pilihan",
       },
     ],
   },
@@ -211,7 +211,7 @@ export const PUBLIC_FOOTER_GROUPS = [
       },
       {
         label: "Guides",
-        href: "/freelance/belajar/mulai-freelance",
+        href: "/freelance/tools/mulai-freelance-dari-nol",
         desc: "Mulai freelance dari nol",
       },
     ],

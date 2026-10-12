@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { getAllPosts } from '@/lib/mdx';
 import { RESOURCES_DATA } from '@/content/resources-data';
+import { PUBLISHED_RESOURCES, resourceHref } from '@/content/freelance-resources';
 import { FREELANCE_PLATFORMS } from '@/content/freelance-directory';
 import { isPublicDestination } from '@/lib/public-routes';
 
@@ -94,7 +95,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Ensure /studio and draft routes are NEVER included
   const freelanceRoutes: MetadataRoute.Sitemap = [
     { url: `${siteUrl}/freelance/direktori`, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${siteUrl}/freelance/belajar/mulai-freelance`, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${siteUrl}/freelance/tools`, changeFrequency: 'monthly', priority: 0.85 },
+    ...PUBLISHED_RESOURCES.map(r => ({ url: siteUrl + resourceHref(r), lastModified: new Date(r.updatedAt), changeFrequency: 'monthly' as const, priority: 0.75 })),
     ...FREELANCE_PLATFORMS.map(platform => ({ url: `${siteUrl}/freelance/direktori/${platform.slug}`, lastModified: new Date(platform.lastCheckedAt), changeFrequency: 'monthly' as const, priority: 0.65 })),
   ];
   return [...staticRoutes, ...blogRoutes, ...resourceRoutes, ...freelanceRoutes].filter(route => isPublicDestination(new URL(route.url).pathname));

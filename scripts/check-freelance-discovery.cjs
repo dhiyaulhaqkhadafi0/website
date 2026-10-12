@@ -55,14 +55,14 @@ assert.equal(new Set(SEARCH_INDEX.map(r => r.href)).size, SEARCH_INDEX.length);
 for (const r of SEARCH_INDEX) {
   if (r.href.startsWith("/resources/")) assert.ok(RESOURCES_DATA.some(p => r.href === `/resources/${p.slug}`));
   else if (r.href.startsWith("/freelance/direktori/")) assert.ok(FREELANCE_PLATFORMS.some(p => r.href.endsWith(`/${p.slug}`)));
-  else assert.equal(r.href, "/freelance/belajar/mulai-freelance");
+  else assert.ok(r.href.startsWith("/freelance/tools/"));
 }
 assert.ok(searchFreelance("menulis").some(r => r.title === "ProBlogger"));
 assert.ok(searchFreelance("writer").some(r => r.title === "ProBlogger"));
 assert.ok(searchFreelance("freelance pemula", "Panduan").some(r => r.title === "Mulai Freelance dari Nol"));
-assert.ok(searchFreelance("portfolio", "Panduan").length > 0);
+assert.ok(searchFreelance("roadmap", "Panduan").length > 0);
 assert.ok(searchFreelance("kerja remote", "Lowongan").length > 0);
-assert.ok(searchFreelance("AI tools", "Tools").some(r => r.href.endsWith("high-context-prompts-pack")));
+assert.ok(searchFreelance("clockify", "Tools").some(r => r.href.endsWith("clockify-untuk-freelancer")));
 assert.equal(searchFreelance("zzzz-no-match").length, 0);
 assert.equal(searchFreelance("  ").length, SEARCH_INDEX.length + activeRemoteJobs(referenceDay).length);
 console.log(`Discovery checks passed: ${FREELANCE_PLATFORMS.length} platforms, ${SEARCH_INDEX.length} unique real destinations, search aliases and category intersections.`);
