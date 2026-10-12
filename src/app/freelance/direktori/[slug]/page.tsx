@@ -11,6 +11,7 @@ import { DirectoryMotion } from "@/components/freelance/DirectoryMotion";
 import { AffiliateDisclosure } from "@/components/freelance/AffiliateDisclosure";
 import { ReadingProgress } from "@/components/freelance/ReadingProgress";
 import styles from "@/components/freelance/directory.module.css";
+import { Micro1Page } from "@/components/freelance/Micro1Page";
 export const dynamicParams = false;
 export function generateStaticParams() { return FREELANCE_PLATFORMS.map(p => ({ slug: p.slug })); }
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
@@ -18,12 +19,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const p = FREELANCE_PLATFORMS.find(item => item.slug === slug);
   if (!p) return {};
   const url = `https://khadafidaffa.com/freelance/direktori/${p.slug}`;
+  if (slug === "micro1") return { title: "Micro1 — Peluang Remote untuk Expert di Era AI", description: "Kenali Micro1 untuk profesional Indonesia: peluang remote, AI interview, sertifikasi, persyaratan negara, dan transparansi referral.", alternates: { canonical: url }, openGraph: { title: "Micro1 — Peluang Remote untuk Expert di Era AI", description: "Panduan editorial tentang peluang expert, AI training, proses seleksi, dan batasannya.", url, type: "article" } };
   return { title: `${p.name} — Direktori Freelance`, description: `${p.description} Kenali model kerja, biaya, dan pertimbangannya.`, alternates: { canonical: url }, openGraph: { title: `${p.name} — Direktori Freelance`, description: p.description, url } };
 }
 export default async function PlatformPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const p = FREELANCE_PLATFORMS.find(item => item.slug === slug);
   if (!p) notFound();
+  if (slug === "micro1") return <Micro1Page/>;
   const outbound = platformOutbound(p);
   const checkedDate = new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(`${p.lastCheckedAt}T12:00:00Z`));
   return <DirectoryMotion><Navbar/><ReadingProgress startId="platform-start" endId="platform-end" titleId="platform-title" label={`Progres membaca ${p.name}`}/>

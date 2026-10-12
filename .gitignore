@@ -1,5 +1,7 @@
 node_modules/
+.dev.vars*
 .next/
+.next-*/
 .open-next/
 .env*.local
 .wrangler/
@@ -13,3 +15,5 @@ artifacts/
 .open-next/
 .wrangler/
 artifacts/
+
+supabase/.temp/

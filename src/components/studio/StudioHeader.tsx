@@ -70,6 +70,7 @@ export function StudioHeader({
         <Link href="/studio/freelance" className="min-h-11 px-2 flex items-center text-xs text-[#B8C7A5] shrink-0">
           Field Notes
         </Link>
+        <Link href="/studio/affiliates" className="min-h-11 px-2 flex items-center text-xs text-[#B8C7A5] shrink-0">Affiliates</Link>
 
         {!focusMode && (
           <button
