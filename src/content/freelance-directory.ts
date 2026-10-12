@@ -54,6 +54,18 @@ const extraSources: Record<string, { label: string; url: string }[]> = {
   "99designs": [{ label: "Client introduction fee", url: "https://support.99designs.com/hc/en-us/articles/360022018152-What-is-a-client-introduction-fee" }, { label: "Pembayaran & metode per negara", url: "https://support.99designs.com/hc/en-us/articles/204108819-How-and-when-do-I-get-paid" }],
   "linkedin-jobs": [{ label: "Pencarian & aplikasi pekerjaan", url: "https://www.linkedin.com/help/linkedin/topic/a153003?lang=en" }],
 };
+// URL supplied by the site owner from their micro1 referral dashboard on 2026-10-12.
+// Tracking and confirmed payouts remain in micro1 until first-party analytics is built.
+const micro1Referral = FREELANCE_PLATFORMS.find(p => p.slug === "micro1");
+if (micro1Referral) {
+  micro1Referral.affiliate = {
+    status: "active",
+    affiliateUrl: "https://refer.micro1.ai/referral/jobs?referralCode=b22f58a9-d462-4389-ab54-34e45d361215&utm_source=referral&utm_medium=share&utm_campaign=job_referral",
+    verifiedAt: "2026-10-12",
+    disclosureRequired: true,
+  };
+}
+
 for (const p of FREELANCE_PLATFORMS) p.sources.push(...(extraSources[p.slug] ?? []));
 for (const p of FREELANCE_PLATFORMS) if (["we-work-remotely", "contra", "fiverr", "upwork"].includes(p.slug)) p.lastCheckedAt = "2026-10-03";
 const design = FREELANCE_PLATFORMS.find(p => p.slug === "99designs")!;
