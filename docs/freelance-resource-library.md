@@ -57,3 +57,14 @@ Draft items are excluded from catalogue/search, detail generation, related items
 QA evidence is saved locally under `artifacts/resource-library/`: `browser-qa.json`, `production-browser-qa.json`, `guide-preservation.json`, catalogue screenshots, four downloaded Markdown files and the generated `invoice-print.pdf`. Artifacts are not deployed as website assets.
 
 Invoice/calculator values are intentionally temporary. Refreshing the page clears invoice edits; users should save the PDF. The currency selector changes the unit only and performs no live exchange conversion. Browser-native downloading/printing remains subject to the browser's save dialogs and device settings.
+
+## Production result — 12 October 2026
+
+- Application release commit: `ea6cf306b3c66d001504149f41e737af066cf96f`, pushed to GitHub main.
+- Live catalogue: https://khadafidaffa.com/freelance/tools
+- Cloudflare Worker version: `bce7f872-e380-49ef-a7d8-ca4138798e91`. Build ID: `jT32pjhgSXOT68rmDNXge`. All 57 cache objects uploaded.
+- Final production webpack build and TypeScript passed: 66 generated pages. Manifest contains 45 route entries with commerce excluded. Focused ESLint and Git diff checks passed.
+- Production HTTP checks passed for catalogue SSR, nine detail pages, four exact downloads, three permanent redirects, sitemap, real unknown-slug 404, homepage/Freelance regression and commerce exclusion.
+- Full production browser verification passed at 360/768/1280px, including all catalogue interactions, clipboard fallback, downloads, calculator, invoice printing, seven guide chapters and regression routes. A transient network timeout on the legacy search page was resolved by rerunning the browser suite with bounded connection retries.
+- Additional production checks passed: ten resource pages without console errors, keyboard navigation, mobile navigation, unobstructed scrolling, and invoice printing without the international translation prompt or footer.
+- No outstanding functional blockers. Browser save dialogs and temporary invoice/calculator state are the intentional limits described above.
