@@ -8,7 +8,7 @@ const checks=[];const errors=[];
 async function main(){const browser=await chromium.launch({headless:true,channel:"chrome"});const context=await browser.newContext({viewport:{width:1280,height:900},locale:"id-ID",timezoneId:"Asia/Jakarta",permissions:['clipboard-read','clipboard-write'],reducedMotion:'reduce'});const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
  const go=async route=>{const response=await page.goto(base+route,{waitUntil:'networkidle',timeout:90000});assert.equal(response.status(),200,route);};
  await go('/freelance/tools');await page.locator('[data-resource]').first().waitFor();assert.equal(await page.locator('[data-resource]').count(),9);
- 
+
  await page.getByRole('button',{name:'Template 4',exact:true}).click();assert.equal(await page.locator('[data-resource]').count(),4);assert.match(page.url(),/type=template/);
  await page.goBack();await page.waitForTimeout(250);assert.equal(await page.locator('[data-resource]').count(),9);
  await page.getByRole('searchbox',{name:'Cari resource'}).fill('invoice');await page.waitForTimeout(250);assert.equal(await page.locator('[data-resource]').count(),1);await page.reload();await page.locator('[data-resource]').first().waitFor();assert.equal(await page.locator('[data-resource]').count(),1);

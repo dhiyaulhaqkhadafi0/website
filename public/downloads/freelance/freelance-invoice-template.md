@@ -2,20 +2,20 @@
 
 **INVOICE**
 
-**Nomor invoice:** [INV-2026-001]  
-**Tanggal terbit:** [DD MMM YYYY]  
-**Jatuh tempo:** [DD MMM YYYY]  
+**Nomor invoice:** [INV-2026-001]\
+**Tanggal terbit:** [DD MMM YYYY]\
+**Jatuh tempo:** [DD MMM YYYY]\
 **Mata uang:** [IDR / USD]
 
 ### Dari (Penyedia jasa)
-[Nama freelancer / nama usaha]  
-[Alamat / kota jika relevan]  
-[Email profesional]  
+[Nama freelancer / nama usaha]\
+[Alamat / kota jika relevan]\
+[Email profesional]\
 [Informasi perpajakan hanya jika relevan dan diwajibkan]
 
 ### Ditagihkan kepada
-[Nama klien / perusahaan]  
-[Nama kontak]  
+[Nama klien / perusahaan]\
+[Nama kontak]\
 [Alamat dan email penagihan]
 
 ### Rincian jasa
@@ -25,15 +25,15 @@
 | [Deliverable / milestone A] | [1] | [Rp...] | [Rp...] |
 | [Deliverable / milestone B] | [1] | [Rp...] | [Rp...] |
 
-**Subtotal:** [nominal]  
-**Diskon (jika ada):** [nominal / 0]  
-**Pajak (hanya jika berlaku):** [jenis & nominal yang benar]  
+**Subtotal:** [nominal]\
+**Diskon (jika ada):** [nominal / 0]\
+**Pajak (hanya jika berlaku):** [jenis & nominal yang benar]\
 **TOTAL TAGIHAN:** **[nominal akhir]**
 
 ### Cara pembayaran
-**Metode:** [Transfer bank / metode lain]  
-**Nama penerima:** [nama]  
-**Detail rekening / pembayaran:** [detail valid, jangan cantumkan data sensitif di halaman publik]  
+**Metode:** [Transfer bank / metode lain]\
+**Nama penerima:** [nama]\
+**Detail rekening / pembayaran:** [detail valid, jangan cantumkan data sensitif di halaman publik]\
 **Referensi:** Mohon sertakan nomor invoice pada keterangan pembayaran bila memungkinkan.
 
 ### Catatan

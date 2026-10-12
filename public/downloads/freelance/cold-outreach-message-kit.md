@@ -10,7 +10,7 @@ Halo [nama], saya [nama kamu]. Saya melihat [observasi spesifik yang benar tenta
 
 Ada satu ide yang mungkin relevan: [ide singkat, tidak merendahkan pekerjaan yang sudah ada]. Kalau berkenan, boleh saya kirim contoh satu halaman/hasil kerja untuk dilihat?
 
-Terima kasih,  
+Terima kasih,\
 [Nama] — [link portofolio]
 
 ## 2. DM LinkedIn — pemilik bisnis atau marketing lead
@@ -25,7 +25,7 @@ Hi [first name], I came across [specific, verified observation]. I help [target 
 
 One idea that might be useful is [1–2 sentences]. Would you be open to a short example or a relevant case study? No pressure if this isn't a priority right now.
 
-Best,  
+Best,\
 [Your name] | [Portfolio URL]
 
 ## 4. Follow-up pertama — sekitar 3–5 hari kerja kemudian
