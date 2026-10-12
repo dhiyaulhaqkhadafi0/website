@@ -22,8 +22,8 @@ const { searchFreelance: liveSearch, SEARCH_INDEX } = load(path.join(root, "src/
 const referenceDay = new Date('2026-10-11T12:00:00Z');
 const searchFreelance = (query, category) => liveSearch(query, category, referenceDay);
 const { RESOURCES_DATA } = load(path.join(root, "src/content/resources-data.ts"));
-assert.equal(FREELANCE_PLATFORMS.length, 23);
-assert.equal(new Set(FREELANCE_PLATFORMS.map(p => p.slug)).size, 23);
+assert.equal(FREELANCE_PLATFORMS.length, 24);
+assert.equal(new Set(FREELANCE_PLATFORMS.map(p => p.slug)).size, 24);
 for (const p of FREELANCE_PLATFORMS) {
   assert.equal(new URL(p.website).protocol, "https:");
   assert.equal(p.personallyTested, false);
@@ -31,8 +31,8 @@ for (const p of FREELANCE_PLATFORMS) {
   assert.equal(p.workflow.length, 3);
   assert.ok(p.longDescription.length > 100 && p.workingNotes.length > 100);
   assert.equal(platformAlternatives(p).length, 3);
-  assert.equal(p.affiliate.status, "none");
-  assert.equal(platformOutbound(p).href, p.website);
+  assert.equal(p.affiliate.status, p.slug === "micro1" ? "active" : "none");
+  assert.equal(platformOutbound(p).href, p.slug === "micro1" ? "/go/micro1?campaign=website-directory" : p.website);
   if (p.logo) assert.ok(fs.existsSync(path.join(root, 'public', p.logo.path)));
 }
 const sample = FREELANCE_PLATFORMS[0];
@@ -40,17 +40,17 @@ assert.equal(platformOutbound({ ...sample, affiliate: { status: 'pending', affil
 assert.equal(platformOutbound({ ...sample, affiliate: { status: 'active', affiliateUrl: 'javascript:alert(1)', verifiedAt: '2026-10-03', disclosureRequired: true } }).href, sample.website);
 assert.equal(platformOutbound({ ...sample, affiliate: { status: 'active', affiliateUrl: 'https://example.com/ref', verifiedAt: '2026-10-03', disclosureRequired: true } }).rel, 'sponsored noopener noreferrer');
 const query = s => directoryResults(FREELANCE_PLATFORMS, new URLSearchParams(s));
-assert.equal(query('q=Worldwide').filtered.length, 23);
+assert.equal(query('q=Worldwide').filtered.length, 24);
 assert.ok(query('q=menulis').filtered.some(p => p.slug === 'problogger'));
 assert.deepEqual(query('field=Writing&pricing=Gratis').filtered.map(p => p.slug), ['problogger']);
 assert.equal(query('q=zzzz-no-match').filtered.length, 0);
 assert.equal(query('field=Writing&pricing=Gratis&page=900').page, 1);
 assert.equal(query('page=2.5').page, 2);
 assert.equal(query('page=Infinity').page, 1);
-assert.equal(query('field=bogus').filtered.length, 23);
+assert.equal(query('field=bogus').filtered.length, 24);
 assert.equal(query('sort=az').rows[0].slug, '99designs');
 assert.equal(query('sort=free').rows[0].pricing, 'Gratis');
-assert.equal(query('page=3').rows.length, 5);
+assert.equal(query('page=3').rows.length, 6);
 assert.equal(new Set(SEARCH_INDEX.map(r => r.href)).size, SEARCH_INDEX.length);
 for (const r of SEARCH_INDEX) {
   if (r.href.startsWith("/resources/")) assert.ok(RESOURCES_DATA.some(p => r.href === `/resources/${p.slug}`));
