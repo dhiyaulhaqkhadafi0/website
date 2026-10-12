@@ -1,10 +1,11 @@
-const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+/* eslint-disable @typescript-eslint/no-require-imports -- Standalone Node CommonJS browser verification script. */
+const assert=require('node:assert/strict'),fs=require('node:fs');
 const {chromium}=require(process.env.PLAYWRIGHT_PATH||'C:/Users/user/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 const base=process.env.QA_BASE_URL||'http://localhost:3211';
 const ua='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36';
 const destination='https://refer.micro1.ai/referral/jobs?referralCode=b22f58a9-d462-4389-ab54-34e45d361215&utm_source=referral&utm_medium=share&utm_campaign=job_referral';
 (async()=>{
- fs.mkdirSync('artifacts/micro1',{recursive:true});const browser=await chromium.launch({channel:'chrome',headless:true});const context=await browser.newContext({userAgent:ua,locale:'id-ID',timezoneId:'Asia/Jakarta',reducedMotion:'reduce'});const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
+ fs.mkdirSync('artifacts/micro1',{recursive:true});const browser=await chromium.launch({channel:'chrome',headless:true});const context=await browser.newContext({userAgent:ua,locale:'id-ID',timezoneId:'Asia/Jakarta',reducedMotion:'reduce',...(process.env.QA_PROXY?{proxy:{server:process.env.QA_PROXY}}:{})});const page=await context.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
  const checks=[];const pass=name=>{checks.push(name);console.log('PASS',name);};
  try{
   for(const width of [360,768,1280]){

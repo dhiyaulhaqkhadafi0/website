@@ -93,7 +93,34 @@ Rollback aman: kembalikan versi aplikasi sebelumnya atau pause program/link/camp
 - `node scripts/check-affiliate-manager-browser.cjs`: loopback Supabase HTTP fixture untuk UI/API integration lengkap, sesi existing → server gate, six areas, create/edit/archive, copy, manual commission validation/paid, empty state, stale edit, outage/retry. Fixture tidak dikirim ke hosted database dan tidak disisipkan dalam application code. Pemeriksaan RLS/persistence hosted dilakukan terpisah oleh SQL di atas. Login admin asli di hosted preview memerlukan kredensial pemilik; kredensial tidak dibuat, diubah, atau diambil untuk QA.
 - Regression Resource Library, directory/search/jobs, targeted TypeScript/ESLint, production Next/Worker build dan live preview smoke checks dicatat pada bagian hasil release setelah selesai.
 
-Screenshot dan laporan JSON berada di `artifacts/micro1/` (ignored, tersedia di checkout lokal). Preview URL, commit, versi Worker, serta hasil akhir akan ditambahkan setelah upload dan pemeriksaan live.
+Screenshot dan laporan JSON berada di `artifacts/micro1/` (ignored, tersedia di checkout lokal).
+
+## Hasil release preview — 12 Oktober 2026
+
+- Implementasi aplikasi: commit `4c84a42`, sudah di-push ke branch PR #3 `feat/micro1-directory-20261012`. Commit sesudahnya hanya merapikan script QA dan mencatat hasil verifikasi; aplikasi pada Worker sama dengan commit implementasi tersebut.
+- Preview publik: [Micro1 Directory](https://micro1-affiliates-khadafi.dhiyaulhaqkhadafi0.workers.dev/freelance/direktori/micro1). Manager: [Studio Affiliates](https://micro1-affiliates-khadafi.dhiyaulhaqkhadafi0.workers.dev/studio/affiliates).
+- Worker preview `e8e25992-eee5-43f2-bead-7c9b4aa0c433`; [URL versi tetap](https://e8e25992-khadafi.dhiyaulhaqkhadafi0.workers.dev/freelance/direktori/micro1). Upload menggunakan `versions upload --keep-vars --secrets-file .dev.vars --preview-alias micro1-affiliates`, bukan deployment traffic production.
+- Next webpack production build **exit 0**, TypeScript berhasil, 68 static pages. OpenNext Worker build **exit 0**. Dependency preview diinstal terpisah melalui `npm ci`; Windows copy warnings pada paket MDX tetap muncul, sehingga pemeriksaan runtime hosted dilakukan setelah build. Tidak ada perubahan dependency manifest atau lockfile.
+- R2: **58/58** objek cache diunggah dengan prefix build `N32oTVNTN6B_WFuXvHv8-`; tidak menimpa prefix build production. `/go` dan `/studio/affiliates` dynamic, tidak masuk cache statis. Pemindaian **407** aset publik tidak menemukan nilai private credential dari environment lokal.
+- Validator **30 lulus**; regression directory/search/jobs **lulus** (24 platform, 33 tujuan unik); Resource Library **lulus** (9 resource, 4 download, 7 bab, calculator dan invalid inputs).
+- PostgreSQL hosted transaction/RLS/CRUD/audit/aggregate checks **lulus**, seluruh data sintetis rollback. Tiga migrasi additive sudah diterapkan; tidak ada migrasi tabel/auth existing atau destructive SQL.
+- Browser publik hosted **16 lulus**, Chrome 360/768/1280; FAQ, anchor, referral POST/303, parameter asli, signed-token retry, HEAD/prefetch, arbitrary destination rejection, unauthorized GET/POST/PATCH, dan related routes. Respons ke provider ditahan oleh QA; tidak ada aplikasi kandidat dikirim.
+- Browser pencarian direktori hosted **lulus**: pencarian `Micro1` menghasilkan tepat satu link lalu membuka detail yang benar.
+- HTTP smoke hosted **22 lulus**, termasuk canonical/sitemap, gate admin `no-store`, alias handbook 308, resource MDX dan artikel blog existing, tracker unavailable 410, serta route commerce tetap 404. Production Resource Library masih 200 dan Micro1 masih 404, sesuai batas preview.
+- Manager UI/API **17 lulus** pada loopback fixture: existing-session bridge, gate server, CRUD, clipboard preview URL, archive confirmation, manual proven commission, totals, empty/error/retry, optimistic conflict, unauthorized/non-admin access, dan unsafe/offline/inactive tracking. Ini tidak menggantikan login pemilik pada preview; persistence dan RLS hosted dibuktikan terpisah lewat PostgreSQL.
+- ESLint seluruh source repo (tanpa generated artifacts) masih mempunyai **25 error dan 81 warning pada file existing di luar perubahan ini**. Seluruh file TS/TSX/CJS yang berubah bersih dari error maupun warning. Tidak mengklaim lint seluruh repository lulus.
+- TypeScript `tsc --noEmit` **exit 0** dan changed-file ESLint **exit 0**. Cloudflare Git integration berhasil membangun branch commit `4c84a42`; integrasi Vercel existing melaporkan error, terpisah dari Worker preview yang diuji. URL preview terkonfigurasi di atas memiliki secret tracking preview sendiri; jangan memakai preview bot lain sebagai bukti konfigurasi credential.
+- Setelah browser hosted: **5 click events preview nyata**, **0 click events production**, **0 commission**, **1 program**, **1 link**, **1 campaign**. Klik preview mencakup navigasi QA lokal/hosted; bukan laporan konversi atau penghasilan provider.
+- Production traffic tetap **100%** pada Worker `e1c6d95e-1bdd-4cdd-b157-c3c2c1c42610`, deployment `8db29913-f247-4bec-aaba-ad900ccf7c88`. Tidak menjalankan merge PR, `wrangler deploy`, atau `versions deploy`.
+
+Koneksi lokal memiliki kendala DNS ISP: hostname `workers.dev` diarahkan ke CNAME `blockpage.xlaxiata.id`. Verifikasi hosted dilakukan melalui IP Cloudflare dari HTTPS DNS resmi, menggunakan tunnel loopback khusus hostname preview dan validasi sertifikat HTTPS normal. DNS perangkat tidak diubah. Jika preview tidak terbuka dari jaringan yang sama, gunakan koneksi yang dapat mengakses `workers.dev`; ini terpisah dari runtime aplikasi. Credential owner dan konfigurasi akun Micro1 tidak diambil atau diubah. Analytics hanya mengetahui navigasi website; commission/conversion tetap rekonsiliasi manual.
+
+## Langkah production release berikutnya
+
+1. Tinjau PR #3 dan uji login melalui akun Studio pemilik yang sudah ada pada preview. Sesudah login, buka Affiliates; manager tetap memakai allowlist admin existing.
+2. Operator membuat secret production yang berbeda, memasukkan hash SHA-256 dengan scope production ke private tracking config, dan mengatur `AFFILIATE_ENVIRONMENT=production` pada versi release. Validasi exact referral, allowlist domain, dan scope credential sebelum release.
+3. Setelah ada instruksi production eksplisit, merge PR, build dari commit yang disetujui, upload cache dengan prefix build baru, deploy Worker ke domain utama, lalu smoke-test public detail, tracked redirect, admin authorization, dan statistik production. Preview QA events tetap berada pada scope preview.
+4. Jika pemeriksaan gagal, pertahankan/kembalikan versi aplikasi sebelumnya dan pause program/link/campaign bila diperlukan. Jangan menghapus tabel, audit, atau ledger untuk rollback.
 
 ## Peta perubahan source
 
