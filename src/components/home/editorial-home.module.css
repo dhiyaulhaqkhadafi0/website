@@ -76,7 +76,7 @@
   color: var(--muted);
 }
 .hero {
-  padding-top: 205px;
+  padding-top: 115px;
   padding-bottom: 40px;
 }
 .heroGrid {
@@ -983,20 +983,6 @@
     transform: translateY(0);
   }
 }
-:global(body):has(.home) > footer {
-  background: #10100e;
-}
-:global(body):has(.home[data-theme="light"]) > footer {
-  background: #ece8de;
-  color: #252620;
-  border-color: #25262020;
-}
-:global(body):has(.home[data-theme="light"]) > footer :is(h3, a, p, span) {
-  color: #595d52;
-}
-:global(body):has(.home[data-theme="light"]) > footer img {
-  filter: invert(1);
-}
 @media (min-width: 1600px) {
   .heroGrid {
     gap: 65px;
@@ -1168,7 +1154,7 @@
     padding-block: 78px;
   }
   .hero {
-    padding-top: 177px;
+    padding-top: 108px;
     padding-bottom: 28px;
   }
   .hero h1 {
@@ -1574,4 +1560,312 @@
 }
 .atlasPreview > div {
   max-width: none;
+}
+.hero h1 {
+  font-size: clamp(42px, 4.3vw, 60px);
+  line-height: 1.12;
+  letter-spacing: -0.055em;
+}
+.heroCopy {
+  max-width: 560px;
+}
+.themeToggle {
+  top: 26px;
+}
+.dynamicNote {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 28px;
+  color: var(--muted);
+  font-size: 13px;
+  min-height: 44px;
+}
+.dynamicNote > span {
+  min-width: 230px;
+}
+.dynamicWord {
+  display: inline-block;
+  animation: wordArrive 0.5s ease both;
+}
+.dynamicNote button {
+  width: 44px;
+  height: 44px;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+}
+@keyframes wordArrive {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.primary {
+  transition:
+    transform 0.22s,
+    box-shadow 0.22s,
+    background 0.22s;
+  position: relative;
+  overflow: hidden;
+}
+.primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px #0002;
+}
+.primary:active {
+  transform: translateY(0) scale(0.98);
+}
+.primary span,
+.textLink span {
+  transition: transform 0.22s;
+}
+.primary:hover span,
+.textLink:hover span {
+  transform: translateX(4px);
+}
+.freelanceLinks {
+  display: grid;
+  gap: 0;
+  margin-top: 36px;
+}
+.freelanceLinks a {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid var(--line);
+  padding-block: 16px;
+  min-height: 52px;
+  font-size: 14px;
+}
+.freelanceLinks a > span:first-child {
+  color: var(--muted);
+  font-size: 12px;
+}
+.freelanceLinks a > span:last-child {
+  margin-left: auto;
+}
+.aboutCapabilities {
+  margin-top: 80px;
+  padding-top: 48px;
+  border-top: 1px solid var(--line);
+}
+.aboutCapabilities .capabilityRows {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 56px;
+  margin-bottom: 24px;
+}
+.aboutCapabilities .capabilityRows h3 {
+  font-size: 22px;
+}
+.newsletter {
+  padding: 56px;
+  gap: 64px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  align-items: start;
+}
+.newsletter h2 {
+  font-size: clamp(30px, 3.1vw, 42px);
+  line-height: 1.2;
+}
+.newsletterBenefits {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  display: grid;
+  gap: 12px;
+}
+.newsletterBenefits li:before {
+  content: "↗";
+  margin-right: 12px;
+  color: var(--accent);
+}
+.newsletterForm {
+  min-width: 0;
+  padding-top: 8px;
+}
+.newsletter form {
+  display: grid;
+  gap: 22px;
+}
+.newsletter label {
+  font-size: 13px;
+  margin: 0;
+  color: var(--text);
+  line-height: 1.8;
+}
+.newsletter input:not([type="checkbox"]) {
+  display: block;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  border-radius: 3px;
+  margin-top: 8px;
+  padding: 14px 16px;
+  font-size: 16px;
+}
+.newsletter .newsletterConsent {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.newsletterConsent input {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  accent-color: var(--accent);
+}
+.newsletterConsent a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--text);
+}
+.newsletter button.primary {
+  background: var(--paper);
+  color: #252620;
+  justify-content: space-between;
+  padding: 16px 22px;
+  width: 100%;
+  font-size: 14px;
+  min-height: 54px;
+}
+.newsletter button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+}
+.newsletter .formNote {
+  font-size: 12px;
+  margin: 0;
+  line-height: 1.8;
+}
+.newsletter form > .honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  border: 0;
+}
+.newsletterError {
+  color: var(--text) !important;
+  border-left: 2px solid #b47f6f;
+  padding-left: 14px;
+  font-size: 13px;
+}
+.newsletterSuccess {
+  display: grid;
+  gap: 22px;
+  padding: 16px 0;
+}
+.newsletterSuccess > span {
+  font-size: 32px;
+  color: var(--accent);
+}
+.newsletterSuccess h3 {
+  font-size: 25px;
+}
+.newsletterSuccess p {
+  font-size: 15px;
+}
+.finalCta h2 {
+  font-size: clamp(38px, 4.6vw, 64px);
+  max-width: 950px;
+  margin-inline: auto;
+}
+.finalCta .actions {
+  justify-content: center;
+  gap: 28px;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .composition:hover .ideaSheet {
+    transform: rotate(-7deg) translateY(-5px);
+  }
+  .composition:hover .writingFragment {
+    transform: rotate(-2deg) translateY(-4px);
+  }
+  .composition :is(.ideaSheet, .writingFragment) {
+    transition: transform 0.6s ease;
+  }
+}
+@media (max-width: 1000px) {
+  .newsletter {
+    padding: 36px;
+    gap: 36px;
+  }
+  .hero {
+    padding-top: 105px;
+  }
+  .aboutCapabilities .capabilityRows {
+    gap: 0 28px;
+  }
+}
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: clamp(38px, 9.2vw, 50px);
+  }
+  .hero {
+    padding-top: 100px;
+  }
+  .themeToggle {
+    top: 24px;
+  }
+  .newsletter {
+    padding: 28px 22px;
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .newsletter h2 {
+    font-size: 32px;
+  }
+  .aboutCapabilities {
+    margin-top: 56px;
+    padding-top: 32px;
+  }
+  .aboutCapabilities .capabilityRows {
+    grid-template-columns: 1fr;
+  }
+  .aboutCapabilities .capabilityRows h3 {
+    font-size: 20px;
+  }
+  .dynamicNote {
+    font-size: 12px;
+    gap: 8px;
+  }
+  .dynamicNote > span {
+    min-width: 215px;
+  }
+  .finalCta h2 {
+    font-size: 40px;
+  }
+  .finalCta p br {
+    display: none;
+  }
+  .home .eyebrow {
+    font-size: 11px;
+  }
+  .composition .writingFragment p {
+    font-size: 23px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dynamicNote button {
+    display: none;
+  }
+  .home * {
+    animation: none !important;
+    transition: none !important;
+  }
 }

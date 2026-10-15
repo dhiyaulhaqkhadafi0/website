@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { BlogCardItem } from "@/lib/mdx";
 import { SIGNATURE_SYSTEMS } from "@/content/resources-data";
 import { WorkAtlas } from "@/components/freelance/WorkAtlas";
-import { HomeExperience, InquiryButton } from "./HomeExperience";
+import { HomeExperience, DynamicNote } from "./HomeExperience";
 import { CredentialsGallery } from "./CredentialsGallery";
 import { NewsletterSection } from "./NewsletterSection";
 import styles from "./editorial-home.module.css";
@@ -12,54 +12,61 @@ function BuilderComposition() {
   return (
     <figure
       className={styles.composition}
-      aria-label="Komposisi proses builder: ide, tulisan, antarmuka, dan arsitektur"
+      aria-label="Dari ide menjadi produk: tulisan, antarmuka, dan sistem"
     >
       <div className={styles.compositionAxis} aria-hidden="true" />
-      <span className={styles.compositionIndex}>FIELD STUDY / 01</span>
+      <span className={styles.compositionIndex}>CATATAN PROSES / 01</span>
       <div className={styles.ideaSheet}>
-        <span>From a small idea.</span>
+        <span>Berawal dari ide kecil.</span>
         <p>
-          Make something
+          Buat sesuatu
           <br />
-          <em>worth using.</em>
+          <em>yang berguna.</em>
         </p>
-        <div aria-hidden="true">01 / Start small</div>
+        <div aria-hidden="true">01 / Mulai sederhana</div>
       </div>
       <div className={styles.architecture}>
-        <span>Product architecture</span>
+        <span>Arsitektur produk</span>
         <div>
-          <i>Idea</i>
+          <i>Ide</i>
           <b>→</b>
-          <i>Interface</i>
+          <i>Antarmuka</i>
           <b>→</b>
-          <i>System</i>
+          <i>Sistem</i>
         </div>
-        <code>build → test → learn</code>
+        <code>bangun → uji → pelajari</code>
       </div>
       <div className={styles.writingFragment}>
-        <span>CHIKKI / PRODUCT EXPLORATION</span>
+        <span>CHIKKI / EKSPLORASI PRODUK</span>
         <p>
-          A space for words.
-          <br />A place for people.
+          Ruang untuk cerita.
+          <br />
+          Tempat untuk terhubung.
         </p>
         <div aria-hidden="true" />
-        <small>Writing · Reading · Possibility</small>
+        <small>Menulis · Membaca · Bertumbuh</small>
       </div>
-      <figcaption>Products, words, and the systems between them.</figcaption>
+      <figcaption>Ide, karya, dan sistem yang menghubungkannya.</figcaption>
     </figure>
   );
 }
 const capabilities = [
   [
     "AI-Assisted Product Development",
-    "Idea → strategy → UX → build → production",
+    "Dari ide dan strategi, hingga produk yang dapat digunakan.",
   ],
-  ["Web & MVP Development", "Useful digital products, built with clear scope."],
+  [
+    "Web & MVP Development",
+    "Membangun produk digital dengan tujuan dan lingkup yang jelas.",
+  ],
   [
     "AI Workflow & Automation",
-    "Practical systems for the work you do every day.",
+    "Sistem praktis untuk membantu pekerjaan sehari-hari.",
   ],
-  ["Product Strategy", "Turn a vague idea into a product worth building."],
+  [
+    "Product Strategy",
+    "Merumuskan masalah, menguji ide, dan menentukan langkah berikutnya.",
+  ],
 ];
 export function HomeView({ posts }: { posts: BlogCardItem[] }) {
   return (
@@ -68,33 +75,35 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
         <div className={styles.container}>
           <div className={styles.heroGrid}>
             <div>
-              <p className={styles.eyebrow}>AI-assisted product engineer</p>
+              <p className={styles.eyebrow}>
+                AI-Assisted Product Engineer &amp; Digital Builder
+              </p>
               <h1>
-                I build digital products,
-                <br className={styles.desktopBreak} /> AI systems &amp;
-                independent
-                <br className={styles.desktopBreak} /> internet businesses.
+                Belajar, berkarya,
+                <br className={styles.desktopBreak} /> dan membangun peluang di
+                dunia digital.
               </h1>
               <p className={styles.heroCopy}>
-                I turn ideas into useful products —
-                <br className={styles.desktopBreak} /> from strategy and UX to
-                production.
+                Saya Khadafi, product engineer dan kreator. Di sini saya
+                membagikan produk, sumber daya, dan perjalanan membangun karier
+                serta bisnis digital dengan bantuan AI.
               </p>
               <div className={styles.actions}>
-                <Link href="#featured-work" className={styles.primary}>
-                  Explore My Work <span aria-hidden="true">↗</span>
+                <Link href="#intent" className={styles.primary}>
+                  Jelajahi Website <span aria-hidden="true">↗</span>
                 </Link>
-                <InquiryButton className={styles.textLink}>
-                  Start a Project <span aria-hidden="true">→</span>
-                </InquiryButton>
+                <Link href="/about" className={styles.textLink}>
+                  Kenali Saya <span aria-hidden="true">→</span>
+                </Link>
               </div>
+              <DynamicNote />
             </div>
             <BuilderComposition />
           </div>
           <div className={styles.heroFoot}>
-            <span>Independent builder / Indonesia</span>
+            <span>Builder independen / Indonesia</span>
             <a href="#intent">
-              Find your way <span aria-hidden="true">↓</span>
+              Temukan langkahmu <span aria-hidden="true">↓</span>
             </a>
           </div>
         </div>
@@ -106,32 +115,30 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
         data-reveal
       >
         <div className={styles.container}>
-          <h2 id="intent-title">What brings you here?</h2>
+          <h2 id="intent-title">Mulai dari yang kamu butuhkan.</h2>
           <div className={styles.intentRail}>
-            <InquiryButton className={styles.intentItem}>
-              <span className={styles.number}>01</span>
-              <span className={styles.eyebrow}>Work with me</span>
-              <strong>Build something together.</strong>
-              <span className={styles.railArrow} aria-hidden="true">
-                →
-              </span>
-            </InquiryButton>
-            <a href="#knowledge" className={styles.intentItem}>
-              <span className={styles.number}>02</span>
-              <span className={styles.eyebrow}>Learn</span>
-              <strong>Resources, systems &amp; guides.</strong>
-              <span className={styles.railArrow} aria-hidden="true">
-                →
-              </span>
-            </a>
-            <a href="#featured-work" className={styles.intentItem}>
-              <span className={styles.number}>03</span>
-              <span className={styles.eyebrow}>Explore</span>
-              <strong>Products I&apos;m building.</strong>
-              <span className={styles.railArrow} aria-hidden="true">
-                →
-              </span>
-            </a>
+            {[
+              ["Belajar", "Bekal untuk langkah berikutnya.", "#knowledge"],
+              [
+                "Jelajahi Produk",
+                "Kenali karya dan produk digital.",
+                "#featured-work",
+              ],
+              [
+                "Temukan Peluang",
+                "Bangun jalan karier mandirimu.",
+                "/freelance",
+              ],
+            ].map(([label, title, href], i) => (
+              <Link href={href} key={label} className={styles.intentItem}>
+                <span className={styles.number}>0{i + 1}</span>
+                <span className={styles.eyebrow}>{label}</span>
+                <strong>{title}</strong>
+                <span className={styles.railArrow} aria-hidden="true">
+                  →
+                </span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -146,24 +153,29 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
           <span id="selected-work" className={styles.anchor} />
           <span id="work" className={styles.anchor} />
           <div className={styles.sectionHead}>
-            <p className={styles.eyebrow}>01 / Featured work</p>
-            <h2 id="featured-title">A few things taking shape.</h2>
+            <p className={styles.eyebrow}>01 / Produk &amp; proyek pilihan</p>
+            <h2 id="featured-title">
+              Ide yang terus
+              <br />
+              <em>menemukan bentuknya.</em>
+            </h2>
           </div>
           <div className={styles.flagship}>
             <figure
               className={styles.chikkiVisual}
-              aria-label="Chikki product study: ruang menulis dan hubungan antara penulis dan pembaca"
+              aria-label="Chikki: ruang menulis dan hubungan antara penulis dan pembaca"
             >
               <div className={styles.productMasthead}>
-                CHIKKI<span>Product study</span>
+                CHIKKI<span>Eksplorasi produk</span>
               </div>
               <div className={styles.chikkiPage}>
-                <span>THE SPACE BETWEEN</span>
+                <span>RUANG UNTUK BERCERITA</span>
                 <p>
-                  An idea.
-                  <br />A story.
+                  Sebuah ide.
                   <br />
-                  <em>A connection.</em>
+                  Sebuah cerita.
+                  <br />
+                  <em>Sebuah koneksi.</em>
                 </p>
                 <div className={styles.proseLines} aria-hidden="true">
                   <i />
@@ -173,43 +185,63 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
                 <span className={styles.pageNumber}>01</span>
               </div>
               <figcaption>
-                Writer <span aria-hidden="true">—</span> Reader{" "}
-                <span aria-hidden="true">—</span> Opportunity
+                Penulis <span aria-hidden="true">—</span> Pembaca{" "}
+                <span aria-hidden="true">—</span> Peluang
               </figcaption>
             </figure>
             <div className={styles.flagshipCopy}>
-              <p className={styles.eyebrow}>Featured product / Building</p>
+              <p className={styles.eyebrow}>
+                Produk pilihan / Terus dikembangkan
+              </p>
               <h3>Chikki</h3>
               <p className={styles.productSubtitle}>
                 Immersive Writing Network
               </p>
               <p>
-                A writing platform exploring a better relationship between
-                writers, readers, and creative opportunities.
+                Platform menulis yang mengeksplorasi hubungan lebih dekat antara
+                penulis, pembaca, dan peluang berkarya.
               </p>
               <p className={styles.disciplines}>
-                Product Strategy · UX · Full-stack · Infrastructure
+                Strategi produk · UX · Full-stack · Infrastruktur
               </p>
+              <a
+                href="https://chikki.id"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.textLink}
+              >
+                Jelajahi Chikki <span aria-hidden="true">↗</span>
+              </a>
               <span className={styles.buildingNote}>
-                Public destination coming later.
+                Sudah dapat dijelajahi. Pengalaman membaca dan ruang kreator
+                terus dikembangkan.
               </span>
             </div>
           </div>
           <div className={styles.projectRows}>
             {[
               [
+                "Produk Digital",
+                "Jelajahi katalog; harga dan ketersediaan ditampilkan pada tiap produk.",
+                "/products",
+              ],
+              [
                 "Freelance Journey Hub",
-                "A field guide to independent work.",
+                "Tersedia · Panduan, direktori platform, dan lowongan individual.",
                 "/freelance",
               ],
               [
                 "Khadafi Business OS",
-                "This home for my work, systems, and ideas.",
+                "Terus dikembangkan · Rumah untuk karya, sistem, dan ide saya.",
                 "/about",
               ],
-              ["HCFTL", "Experiments in human-centered technology.", "/lab"],
+              [
+                "HCFTL",
+                "Eksplorasi · Eksperimen teknologi yang berpusat pada manusia.",
+                "/lab",
+              ],
             ].map(([name, description, href], i) => (
-              <Link key={name} href={href}>
+              <Link href={href} key={name}>
                 <span className={styles.number}>0{i + 2}</span>
                 <div>
                   <h3>{name}</h3>
@@ -219,54 +251,6 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
               </Link>
             ))}
           </div>
-          <div className={styles.ledger}>
-            <p className={styles.eyebrow}>Currently building</p>
-            <dl>
-              <div>
-                <dt>Chikki</dt>
-                <dd>Building</dd>
-              </div>
-              <div>
-                <dt>Freelance Hub</dt>
-                <dd>Improving</dd>
-              </div>
-              <div>
-                <dt>Business OS</dt>
-                <dd>Building</dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </section>
-      <section
-        id="capabilities"
-        className={`${styles.section} ${styles.capabilities}`}
-        aria-labelledby="capabilities-title"
-        data-reveal
-      >
-        <div className={`${styles.container} ${styles.capabilityLayout}`}>
-          <div>
-            <p className={styles.eyebrow}>02 / Capabilities</p>
-            <h2 id="capabilities-title">
-              From idea
-              <br />
-              to something real.
-            </h2>
-            <InquiryButton className={styles.textLink}>
-              Let&apos;s build together <span aria-hidden="true">→</span>
-            </InquiryButton>
-          </div>
-          <ol className={styles.capabilityRows}>
-            {capabilities.map(([title, description], i) => (
-              <li key={title}>
-                <span className={styles.number}>0{i + 1}</span>
-                <div>
-                  <h3>{title}</h3>
-                  <p>{description}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
         </div>
       </section>
       <section
@@ -276,19 +260,37 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
       >
         <div className={`${styles.container} ${styles.freelanceGrid}`}>
           <div>
-            <p className={styles.eyebrow}>03 / Independent work</p>
+            <p className={styles.eyebrow}>02 / Freelance Journey Hub</p>
             <h2 id="freelance-preview-title">
-              Building a career
+              Bangun karier.
               <br />
-              <em>without an office.</em>
+              <em>Tentukan jalanmu.</em>
             </h2>
             <p>
-              Notes, opportunities, and useful systems from my journey building
-              an independent career.
+              Bekal praktis untuk memulai dan mengembangkan karier mandiri.
+              Pelajari dasarnya, kenali platformnya, lalu temukan peluang yang
+              sesuai.
             </p>
             <Link href="/freelance" className={styles.textLink}>
-              Enter Freelance Journey Hub <span aria-hidden="true">→</span>
+              Jelajahi Freelance Hub <span aria-hidden="true">→</span>
             </Link>
+            <div className={styles.freelanceLinks}>
+              {[
+                [
+                  "01",
+                  "Panduan belajar",
+                  "/freelance/tools/mulai-freelance-dari-nol",
+                ],
+                ["02", "Direktori platform", "/freelance/direktori"],
+                ["03", "Lowongan individual", "/freelance/jobs"],
+              ].map(([num, label, href]) => (
+                <Link href={href} key={href}>
+                  <span>{num}</span>
+                  {label}
+                  <span aria-hidden="true">↗</span>
+                </Link>
+              ))}
+            </div>
           </div>
           <div className={styles.atlasPreview}>
             <WorkAtlas />
@@ -303,12 +305,16 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
       >
         <div className={styles.container}>
           <div className={styles.sectionHead}>
-            <p className={styles.eyebrow}>04 / Knowledge</p>
-            <h2 id="knowledge-title">Systems worth sharing.</h2>
+            <p className={styles.eyebrow}>03 / Sumber daya &amp; artikel</p>
+            <h2 id="knowledge-title">
+              Belajar sesuatu.
+              <br />
+              <em>Jadikan berguna.</em>
+            </h2>
           </div>
           <div className={styles.knowledgeGrid}>
             <div>
-              <h3 className={styles.columnTitle}>Resources</h3>
+              <h3 className={styles.columnTitle}>Sumber daya pilihan</h3>
               <div className={styles.resourceRows}>
                 {SIGNATURE_SYSTEMS.map((system) => (
                   <Link
@@ -322,12 +328,12 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
                 ))}
               </div>
               <Link href="/resources" className={styles.textLink}>
-                Explore all resources <span aria-hidden="true">→</span>
+                Semua sumber daya <span aria-hidden="true">→</span>
               </Link>
             </div>
             <div className={styles.articleColumn}>
               <h3 className={styles.columnTitle}>
-                Latest from The Digital Grimoire
+                Terbaru dari The Digital Grimoire
               </h3>
               {posts.slice(0, 3).map((post) => (
                 <Link
@@ -336,13 +342,13 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
                   className={styles.articleRow}
                 >
                   <span className={styles.eyebrow}>
-                    {post.metadata.category || "Article"}
+                    {post.metadata.category || "Artikel"}
                   </span>
                   <h4>{post.metadata.title}</h4>
                   <div>
                     <time dateTime={post.metadata.date}>
                       {new Date(post.metadata.date).toLocaleDateString(
-                        "en-GB",
+                        "id-ID",
                         {
                           day: "numeric",
                           month: "short",
@@ -352,17 +358,17 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
                       )}
                     </time>
                     {post.metadata.readingTime && (
-                      <span>{post.metadata.readingTime} min read</span>
+                      <span>{post.metadata.readingTime} menit baca</span>
                     )}
                     <span aria-hidden="true">↗</span>
                   </div>
                 </Link>
               ))}
               {posts.length === 0 && (
-                <p>New field notes will appear here when published.</p>
+                <p>Artikel akan tampil di sini setelah diterbitkan.</p>
               )}
               <Link href="/blog" className={styles.textLink}>
-                Read the journal <span aria-hidden="true">→</span>
+                Baca semua artikel <span aria-hidden="true">→</span>
               </Link>
             </div>
           </div>
@@ -383,24 +389,41 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
                 fill
                 sizes="(max-width: 600px) 80vw, 360px"
               />
-              <figcaption>Khadafi / Builder, always learning.</figcaption>
+              <figcaption>Khadafi / Berkarya, sambil terus belajar.</figcaption>
             </figure>
             <div>
-              <p className={styles.eyebrow}>05 / The person behind the work</p>
+              <p className={styles.eyebrow}>04 / Di balik karya</p>
               <h2 id="about-title">
-                I&apos;m Khadafi.
+                Saya Khadafi.
                 <br />
-                <em>I build things on the internet.</em>
+                <em>Membangun hal yang berguna.</em>
               </h2>
               <p>
-                An independent builder working across product strategy, design,
-                and engineering. I like turning complex ideas into useful,
-                thoughtful things.
+                Saya bekerja di persimpangan strategi produk, desain, dan
+                rekayasa. Saya senang mengubah ide yang rumit menjadi pengalaman
+                digital yang jelas dan bermanfaat.
               </p>
               <Link href="/about" className={styles.textLink}>
-                More About Me <span aria-hidden="true">→</span>
+                Lebih dekat dengan saya <span aria-hidden="true">→</span>
               </Link>
             </div>
+          </div>
+          <div id="capabilities" className={styles.aboutCapabilities}>
+            <p className={styles.eyebrow}>Dari ide hingga menjadi nyata</p>
+            <ol className={styles.capabilityRows}>
+              {capabilities.map(([title, description], i) => (
+                <li key={title}>
+                  <span className={styles.number}>0{i + 1}</span>
+                  <div>
+                    <h3>{title}</h3>
+                    <p>{description}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+            <Link href="/about#jasa" className={styles.textLink}>
+              Lihat kemampuan &amp; jasa <span aria-hidden="true">↗</span>
+            </Link>
           </div>
           <CredentialsGallery />
         </div>
@@ -414,19 +437,26 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
         <div className={styles.container}>
           <NewsletterSection />
           <div className={styles.finalCta}>
-            <p className={styles.eyebrow}>A good next step</p>
+            <p className={styles.eyebrow}>Langkah berikutnya, pilihanmu.</p>
             <h2>
-              Have something
+              Temukan hal yang berguna
               <br />
-              <em>worth building?</em>
+              <em>untuk langkahmu berikutnya.</em>
             </h2>
-            <p>Let&apos;s turn your idea into a working product.</p>
+            <p>
+              Jelajahi produk, panduan, dan sumber daya yang sedang saya bangun.
+              <br />
+              Butuh bantuan? Hubungi saya melalui email.
+            </p>
             <div className={styles.actions}>
-              <InquiryButton className={styles.primary}>
-                Start a Project <span aria-hidden="true">→</span>
-              </InquiryButton>
-              <a href="#featured-work" className={styles.textLink}>
-                Explore My Work <span aria-hidden="true">↗</span>
+              <Link href="#intent" className={styles.primary}>
+                Jelajahi Website <span aria-hidden="true">↑</span>
+              </Link>
+              <a
+                href="mailto:daffadhiyaulhaqkhadafi@gmail.com"
+                className={styles.textLink}
+              >
+                Hubungi Support <span aria-hidden="true">↗</span>
               </a>
             </div>
           </div>

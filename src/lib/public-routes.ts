@@ -9,12 +9,14 @@ export const PUBLIC_PATHS = [
   "/freelance/direktori",
   "/freelance/belajar/mulai-freelance",
   "/resources",
+  "/products",
   "/blog",
   "/lab",
   "/komunitas",
   "/community",
   "/privacy",
   "/terms",
+  "/cookies",
   "/changelog",
 ] as const;
 const PUBLIC_ANCHORS = [
@@ -36,6 +38,8 @@ export function isPublicDestination(href: string) {
   const path = href.split(/[?#]/)[0];
   return (
     (PUBLIC_PATHS as readonly string[]).includes(path) ||
-    /^\/(blog|resources|freelance\/direktori|freelance\/tools)\/[a-z0-9-]+$/.test(path)
+    /^\/(blog|products|resources|freelance\/direktori|freelance\/tools)\/[a-z0-9-]+$/.test(
+      path,
+    )
   );
 }

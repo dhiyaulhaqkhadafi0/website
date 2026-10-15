@@ -1,1 +1,156 @@
-.dashboard{max-width:1168px;padding:50px 24px 80px;margin:auto;color:#e8e8de}.eyebrow{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#abb797}.dashboard h1{font-size:clamp(30px,4vw,48px);letter-spacing:-.04em;font-weight:750;margin:18px 0}.dashboard>p{font-size:14px;line-height:1.9;color:#b3b9a6}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin:35px 0}.stats>div{border:1px solid #454c39;padding:24px;display:grid;gap:18px}.stats span{font-size:12px;color:#b3b9a6}.stats strong{font-size:32px}.breakdown{display:grid;grid-template-columns:1fr 1fr;gap:35px;padding-bottom:35px}.breakdown h2{font-size:20px;margin-bottom:18px}.breakdown p{display:flex;gap:24px;justify-content:space-between;font-size:13px;padding:10px 0;border-bottom:1px solid #343c2b}.breakdown small{display:block;font-size:12px;line-height:1.8;color:#adb69d;margin-top:20px}.filters{display:flex;gap:20px;align-items:end;flex-wrap:wrap;padding-block:24px}.filters label{display:grid;gap:8px;font-size:12px}.filters select{background:#24291f;padding:10px;min-height:44px;border:1px solid #4f593e;border-radius:3px}.filters button,.pagination a{padding:10px 18px;min-height:44px;border:1px solid #6a7957;font-size:13px;cursor:pointer}.tableWrap{max-width:100%;overflow:auto}.tableWrap table{width:100%;min-width:620px;border-collapse:collapse;font-size:13px}.tableWrap caption{text-align:left;padding:20px 0;color:#abb797}.tableWrap :is(th,td){padding:18px 16px;border-bottom:1px solid #454c39;text-align:left}.tableWrap small{display:block;margin-top:6px;color:#adb69d;font-size:12px}.pagination{display:flex;gap:20px;margin-top:24px}.dashboard :is(a,button,select):focus-visible{outline:2px solid #abb797;outline-offset:4px}@media(max-width:700px){.stats{grid-template-columns:1fr 1fr}.stats>div{padding:18px}.breakdown{grid-template-columns:1fr}.dashboard{padding-inline:20px}.filters{gap:14px}}
+.dashboard {
+  max-width: 1168px;
+  padding: 50px 24px 80px;
+  margin: auto;
+  color: #e8e8de;
+}
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #abb797;
+}
+.dashboard h1 {
+  font-size: clamp(30px, 4vw, 48px);
+  letter-spacing: -0.04em;
+  font-weight: 750;
+  margin: 18px 0;
+}
+.dashboard > p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: #b3b9a6;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin: 35px 0;
+}
+.stats > div {
+  border: 1px solid #454c39;
+  padding: 24px;
+  display: grid;
+  gap: 18px;
+}
+.stats span {
+  font-size: 12px;
+  color: #b3b9a6;
+}
+.stats strong {
+  font-size: 32px;
+}
+.breakdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px;
+  padding-bottom: 35px;
+}
+.breakdown h2 {
+  font-size: 20px;
+  margin-bottom: 18px;
+}
+.breakdown p {
+  display: flex;
+  gap: 24px;
+  justify-content: space-between;
+  font-size: 13px;
+  padding: 10px 0;
+  border-bottom: 1px solid #343c2b;
+}
+.breakdown small {
+  display: block;
+  font-size: 12px;
+  line-height: 1.8;
+  color: #adb69d;
+  margin-top: 20px;
+}
+.filters {
+  display: flex;
+  gap: 20px;
+  align-items: end;
+  flex-wrap: wrap;
+  padding-block: 24px;
+}
+.filters label {
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+}
+.filters select {
+  background: #24291f;
+  padding: 10px;
+  min-height: 44px;
+  border: 1px solid #4f593e;
+  border-radius: 3px;
+}
+.filters button,
+.pagination a {
+  padding: 10px 18px;
+  min-height: 44px;
+  border: 1px solid #6a7957;
+  font-size: 13px;
+  cursor: pointer;
+}
+.tableWrap {
+  max-width: 100%;
+  overflow: auto;
+}
+.tableWrap table {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.tableWrap caption {
+  text-align: left;
+  padding: 20px 0;
+  color: #abb797;
+}
+.tableWrap :is(th, td) {
+  padding: 18px 16px;
+  border-bottom: 1px solid #454c39;
+  text-align: left;
+}
+.tableWrap small {
+  display: block;
+  margin-top: 6px;
+  color: #adb69d;
+  font-size: 12px;
+}
+.pagination {
+  display: flex;
+  gap: 20px;
+  margin-top: 24px;
+}
+.dashboard :is(a, button, select):focus-visible {
+  outline: 2px solid #abb797;
+  outline-offset: 4px;
+}
+@media (max-width: 700px) {
+  .stats {
+    grid-template-columns: 1fr 1fr;
+  }
+  .stats > div {
+    padding: 18px;
+  }
+  .breakdown {
+    grid-template-columns: 1fr;
+  }
+  .dashboard {
+    padding-inline: 20px;
+  }
+  .filters {
+    gap: 14px;
+  }
+}
+.dashboard {
+  width: 100%;
+  min-width: 0;
+}
+.tableWrap {
+  min-width: 0;
+}
+.tableWrap td {
+  overflow-wrap: anywhere;
+}

@@ -1,16 +1,12 @@
 "use client";
 import {
-  createContext,
-  useContext,
   useEffect,
   useRef,
   useState,
   useSyncExternalStore,
   type ReactNode,
 } from "react";
-import { ProjectInquiryModal } from "@/components/shared/ProjectInquiryModal";
 import styles from "./editorial-home.module.css";
-const InquiryContext = createContext<() => void>(() => {});
 const subscribe = (callback: () => void) => {
   window.addEventListener("home-theme-change", callback);
   return () => window.removeEventListener("home-theme-change", callback);
@@ -25,7 +21,6 @@ const getTheme = () => {
   }
 };
 export function HomeExperience({ children }: { children: ReactNode }) {
-  const [inquiryOpen, setInquiryOpen] = useState(false);
   const theme = useSyncExternalStore(subscribe, getTheme, () => "dark");
   const root = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -61,37 +56,65 @@ export function HomeExperience({ children }: { children: ReactNode }) {
     window.dispatchEvent(new Event("home-theme-change"));
   };
   return (
-    <InquiryContext.Provider value={() => setInquiryOpen(true)}>
-      <div ref={root} className={styles.home} data-theme={theme}>
-        <button
-          type="button"
-          className={styles.themeToggle}
-          onClick={toggleTheme}
-          aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
-        >
-          {theme === "dark" ? "Light mode" : "Dark mode"}
-          <span aria-hidden="true">{theme === "dark" ? "◐" : "◑"}</span>
-        </button>
-        {children}
-        <ProjectInquiryModal
-          isOpen={inquiryOpen}
-          onClose={() => setInquiryOpen(false)}
-        />
-      </div>
-    </InquiryContext.Provider>
+    <div ref={root} className={styles.home} data-theme={theme}>
+      <button
+        type="button"
+        className={styles.themeToggle}
+        onClick={toggleTheme}
+        aria-label={
+          theme === "dark" ? "Gunakan tema terang" : "Gunakan tema gelap"
+        }
+      >
+        {theme === "dark" ? "Tema terang" : "Tema gelap"}
+        <span aria-hidden="true">{theme === "dark" ? "◐" : "◑"}</span>
+      </button>
+      {children}
+    </div>
   );
 }
-export function InquiryButton({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
-  const open = useContext(InquiryContext);
+const notes = [
+  "Mulai dari rasa ingin tahu.",
+  "Ubah ide menjadi karya.",
+  "Buka peluang berikutnya.",
+];
+export function DynamicNote() {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (paused || preference.matches || index >= notes.length - 1) return;
+    let timer: ReturnType<typeof setTimeout>;
+    const schedule = () => {
+      clearTimeout(timer);
+      if (!document.hidden && !preference.matches)
+        timer = setTimeout(() => setIndex((i) => i + 1), 4200);
+    };
+    schedule();
+    document.addEventListener("visibilitychange", schedule);
+    preference.addEventListener("change", schedule);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener("visibilitychange", schedule);
+      preference.removeEventListener("change", schedule);
+    };
+  }, [index, paused]);
   return (
-    <button type="button" onClick={open} className={className}>
-      {children}
-    </button>
+    <div className={styles.dynamicNote}>
+      <span aria-label="Mulai dari rasa ingin tahu. Ubah ide menjadi karya. Buka peluang berikutnya.">
+        <span key={index} className={styles.dynamicWord} aria-hidden="true">
+          {notes[index]}
+        </span>
+      </span>
+      {index < notes.length - 1 && (
+        <button
+          type="button"
+          aria-label={paused ? "Lanjutkan animasi kata" : "Jeda animasi kata"}
+          aria-pressed={paused}
+          onClick={() => setPaused((p) => !p)}
+        >
+          {paused ? "▷" : "Ⅱ"}
+        </button>
+      )}
+    </div>
   );
 }

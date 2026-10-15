@@ -2,7 +2,7 @@
 import { PUBLIC_NAV_CATEGORIES } from "@/content/public-navigation";
 
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -15,11 +15,15 @@ import {
 } from "lucide-react";
 import { NavbarLanguageSwitcher } from "./GlobalTranslator";
 import { ProjectInquiryModal } from "./ProjectInquiryModal";
+import { useAccountDestination } from "./useAccountDestination";
 
 
 
 export function Navbar() {
   const pathname = usePathname() || "";
+  const inHome = pathname === "/";
+  const account = useAccountDestination();
+  const reduced = useReducedMotion();
   const inFreelance = pathname === "/freelance" || pathname.startsWith("/freelance/");
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -27,6 +31,7 @@ export function Navbar() {
   const [mobileExpandedCat, setMobileExpandedCat] = useState<string | null>(null);
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
+  const menuButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,13 +45,20 @@ export function Navbar() {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
+        if (mobileOpen) menuButton.current?.focus();
         setMobileOpen(false);
         setOpenDropdown(null);
+      }
+      if (event.key === "Tab" && mobileOpen && navRef.current) {
+        const items = [...navRef.current.querySelectorAll<HTMLElement>('a[href], button:not([disabled])')].filter(item => item.getClientRects().length > 0);
+        const first = items[0], last = items[items.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [mobileOpen]);
 
   // Lock body scroll on mobile open
   useEffect(() => {
@@ -104,10 +116,10 @@ export function Navbar() {
   return (
     <>
       <motion.header
-        initial={inFreelance ? false : { y: -80, opacity: 0 }}
+        initial={false}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: "easeOut" }}
-        className={`${inFreelance ? "relative bg-[#292a27] pb-3 sm:pb-4" : "fixed top-0 left-0 right-0"} z-[90] px-3 sm:px-6 pt-3 sm:pt-4 pointer-events-none`}
+        transition={{ duration: reduced ? 0 : 0.5, ease: "easeOut" }}
+        className={`${inHome ? "relative bg-[#10100e] pb-3 sm:pb-4" : inFreelance ? "relative bg-[#292a27] pb-3 sm:pb-4" : "fixed top-0 left-0 right-0"} z-[90] px-3 sm:px-6 pt-3 sm:pt-4 pointer-events-none`}
       >
         <div
           ref={navRef}
@@ -193,7 +205,7 @@ export function Navbar() {
                           initial={{ opacity: 0, y: 8, scale: 0.98 }}
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 6, scale: 0.98 }}
-                          transition={{ duration: 0.18, ease: "easeOut" }}
+                          transition={{ duration: reduced ? 0 : 0.18, ease: "easeOut" }}
                           className="absolute top-[110%] left-1/2 -translate-x-1/2 w-80 pt-2 z-50 pointer-events-auto"
                         >
                           <div className="bg-[#181815]/98 backdrop-blur-2xl border border-white/15 rounded-2xl p-2 shadow-[0_20px_60px_rgba(0,0,0,0.85)] flex flex-col relative overflow-hidden">
@@ -252,20 +264,20 @@ export function Navbar() {
               </div>
 
               {/* Primary CTA: Mulai Proyek */}
-              <button
-                type="button"
-                onClick={() => setInquiryOpen(true)}
+              <Link
+                href={account.href}
                 className="group relative inline-flex items-center gap-1 px-3 sm:px-4 py-1.5 sm:py-2.5 rounded-xl text-xs sm:text-[13px] font-bold tracking-wide bg-white/10 hover:bg-white text-white hover:text-black border border-white/20 hover:border-white transition-all duration-300 shadow-[0_4px_16px_rgba(255,255,255,0.06)] hover:shadow-[0_4px_24px_rgba(255,255,255,0.25)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 active:scale-95"
               >
-                <span>Mulai Proyek</span>
+                <span>{account.label}</span>
                 <span className="text-white/40 group-hover:text-black transition-colors" aria-hidden="true">
                   →
                 </span>
-              </button>
+              </Link>
 
               {/* Mobile Menu Toggle Button */}
               <div className="lg:hidden flex items-center">
                 <button
+                  ref={menuButton}
                   type="button"
                   onClick={() => setMobileOpen((open) => !open)}
                   aria-label={mobileOpen ? "Tutup navigasi" : "Buka navigasi"}
@@ -285,7 +297,7 @@ export function Navbar() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.25, ease: "easeInOut" }}
+                transition={{ duration: reduced ? 0 : 0.25, ease: "easeInOut" }}
                 className="lg:hidden overflow-hidden border-t border-white/10 mt-3 pt-3"
               >
                 <nav
@@ -338,7 +350,7 @@ export function Navbar() {
                               initial={{ opacity: 0, height: 0 }}
                               animate={{ opacity: 1, height: "auto" }}
                               exit={{ opacity: 0, height: 0 }}
-                              transition={{ duration: 0.2 }}
+                              transition={{ duration: reduced ? 0 : 0.2 }}
                               className="px-3 py-2 bg-black/40 border-t border-white/5 flex flex-col gap-1"
                             >
                               {category.subMenus.map((sub) => (
@@ -374,21 +386,18 @@ export function Navbar() {
 
                   {/* Mobile Footer Area */}
                   <div className="pt-4 mt-2 border-t border-white/10 flex flex-col gap-3">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        closeMobile();
-                        setInquiryOpen(true);
-                      }}
+                    <Link
+                      href={account.href}
+                      onClick={closeMobile}
                       className="w-full py-3.5 px-4 bg-white text-black font-bold text-sm rounded-xl transition-all shadow-lg flex items-center justify-center gap-2"
                     >
-                      <span>Mulai Proyek Bersama Khadafi</span>
-                    </button>
+                      <span>{account.label}</span>
+                    </Link>
 
                     <div className="flex items-center justify-between px-2 pt-1 text-xs text-white/50 font-mono">
                       <div className="flex items-center gap-1.5 text-emerald-400">
                         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                        <span>Available for Selected Projects</span>
+                        <span>Belajar · Berkarya · Bertumbuh</span>
                       </div>
                       <NavbarLanguageSwitcher />
                     </div>

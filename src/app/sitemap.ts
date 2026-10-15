@@ -1,66 +1,82 @@
-import type { MetadataRoute } from 'next';
-import { getAllPosts } from '@/lib/mdx';
-import { RESOURCES_DATA } from '@/content/resources-data';
-import { PUBLISHED_RESOURCES, resourceHref } from '@/content/freelance-resources';
-import { FREELANCE_PLATFORMS } from '@/content/freelance-directory';
-import { isPublicDestination } from '@/lib/public-routes';
+import type { MetadataRoute } from "next";
+import { getAllPosts } from "@/lib/mdx";
+import { RESOURCES_DATA } from "@/content/resources-data";
+import {
+  PUBLISHED_RESOURCES,
+  resourceHref,
+} from "@/content/freelance-resources";
+import { FREELANCE_PLATFORMS } from "@/content/freelance-directory";
+import { isPublicDestination } from "@/lib/public-routes";
+import { publishedProducts } from "@/lib/commerce-server";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = 'https://khadafidaffa.com';
+  const siteUrl = "https://khadafidaffa.com";
   const posts = await getAllPosts();
+  const products = await publishedProducts();
 
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: `${siteUrl}/freelance/jobs`, changeFrequency: 'daily', priority: 0.8 },
+    { url: `${siteUrl}/cookies`, changeFrequency: "monthly", priority: 0.3 },
+    { url: `${siteUrl}/products`, changeFrequency: "weekly", priority: 0.8 },
+    ...products.map((product) => ({
+      url: `${siteUrl}/products/${product.slug}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
+    {
+      url: `${siteUrl}/freelance/jobs`,
+      changeFrequency: "daily",
+      priority: 0.8,
+    },
     {
       url: `${siteUrl}/`,
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 1.0,
     },
     {
       url: `${siteUrl}/about`,
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${siteUrl}/blog`,
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 0.85,
     },
     {
       url: `${siteUrl}/freelance`,
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 0.9,
     },
     {
       url: `${siteUrl}/lab`,
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 0.8,
     },
     {
       url: `${siteUrl}/komunitas`,
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 0.8,
     },
     {
       url: `${siteUrl}/changelog`,
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 0.7,
     },
     {
       url: `${siteUrl}/resources`,
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 0.85,
     },
     {
       url: `${siteUrl}/privacy`,
-      changeFrequency: 'yearly',
+      changeFrequency: "yearly",
       priority: 0.3,
     },
     {
       url: `${siteUrl}/terms`,
-      changeFrequency: 'yearly',
+      changeFrequency: "yearly",
       priority: 0.3,
     },
   ];
@@ -77,7 +93,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return {
       url: `${siteUrl}/blog/${post.metadata.slug}`,
       ...(validDate ? { lastModified: validDate } : {}),
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 0.7,
     };
   });
@@ -87,17 +103,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     return {
       url: `${siteUrl}/resources/${item.slug}`,
       ...(validDate ? { lastModified: validDate } : {}),
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
       priority: 0.75,
     };
   });
 
   // Ensure /studio and draft routes are NEVER included
   const freelanceRoutes: MetadataRoute.Sitemap = [
-    { url: `${siteUrl}/freelance/direktori`, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${siteUrl}/freelance/tools`, changeFrequency: 'monthly', priority: 0.85 },
-    ...PUBLISHED_RESOURCES.map(r => ({ url: siteUrl + resourceHref(r), lastModified: new Date(r.updatedAt), changeFrequency: 'monthly' as const, priority: 0.75 })),
-    ...FREELANCE_PLATFORMS.map(platform => ({ url: `${siteUrl}/freelance/direktori/${platform.slug}`, lastModified: new Date(platform.lastCheckedAt), changeFrequency: 'monthly' as const, priority: 0.65 })),
+    {
+      url: `${siteUrl}/freelance/direktori`,
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${siteUrl}/freelance/tools`,
+      changeFrequency: "monthly",
+      priority: 0.85,
+    },
+    ...PUBLISHED_RESOURCES.map((r) => ({
+      url: siteUrl + resourceHref(r),
+      lastModified: new Date(r.updatedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
+    })),
+    ...FREELANCE_PLATFORMS.map((platform) => ({
+      url: `${siteUrl}/freelance/direktori/${platform.slug}`,
+      lastModified: new Date(platform.lastCheckedAt),
+      changeFrequency: "monthly" as const,
+      priority: 0.65,
+    })),
   ];
-  return [...staticRoutes, ...blogRoutes, ...resourceRoutes, ...freelanceRoutes].filter(route => isPublicDestination(new URL(route.url).pathname));
+  return [
+    ...staticRoutes,
+    ...blogRoutes,
+    ...resourceRoutes,
+    ...freelanceRoutes,
+  ].filter((route) => isPublicDestination(new URL(route.url).pathname));
 }

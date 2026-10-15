@@ -1,0 +1,319 @@
+.footer {
+  --footer-bg: #10100e;
+  --footer-text: #eeece4;
+  --footer-muted: #b2b0a5;
+  --footer-line: #ffffff21;
+  --footer-accent: #a8b99a;
+  background: var(--footer-bg);
+  color: var(--footer-text);
+  border-top: 1px solid var(--footer-line);
+  margin-top: auto;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.7;
+}
+.container {
+  width: 100%;
+  max-width: 1320px;
+  margin: auto;
+  padding: 64px 48px 28px;
+}
+.topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  color: var(--footer-muted);
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--footer-line);
+  font-size: 15px;
+}
+.topline > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  color: var(--footer-text);
+}
+.main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.8fr);
+  gap: 96px;
+  padding-block: 64px 80px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 18px;
+  font-weight: 750;
+  letter-spacing: 0.14em;
+  font-size: 15px;
+}
+.brand img {
+  object-fit: contain;
+  width: 66px;
+  height: 44px;
+}
+.brand small {
+  display: block;
+  margin-top: 8px;
+  color: var(--footer-muted);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.025em;
+  line-height: 1.8;
+}
+.identity p {
+  max-width: 330px;
+  margin-block: 26px 28px;
+  color: var(--footer-muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+.socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+.socials a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--footer-line);
+  border-radius: 50%;
+  color: var(--footer-muted);
+  transition:
+    transform 0.2s,
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+.socials svg {
+  width: 18px;
+  height: 18px;
+}
+.socials a:hover {
+  transform: translateY(-3px);
+  background: var(--footer-accent);
+  border-color: var(--footer-accent);
+  color: var(--footer-bg);
+}
+.socials a:active {
+  transform: translateY(0) scale(0.96);
+}
+.email {
+  display: inline-block;
+  color: var(--footer-muted);
+  font-size: 12px;
+  overflow-wrap: anywhere;
+  min-height: 44px;
+  padding-block: 10px;
+}
+.groups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 44px;
+}
+.groups h2 {
+  margin: 0 0 26px;
+  color: var(--footer-accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+.groups ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 22px;
+}
+.groups a {
+  display: block;
+  min-height: 44px;
+}
+.groups a > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.groups a svg {
+  opacity: 0;
+  transform: translate(-3px, 3px);
+  transition:
+    opacity 0.2s,
+    transform 0.2s;
+  flex-shrink: 0;
+}
+.groups a:hover svg,
+.groups a:focus-visible svg {
+  opacity: 1;
+  transform: none;
+}
+.groups small {
+  display: block;
+  color: var(--footer-muted);
+  font-size: 12px;
+  line-height: 1.8;
+  margin-top: 5px;
+}
+.footer a {
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer a:hover {
+  color: var(--footer-accent);
+}
+.footer .socials a:hover {
+  color: var(--footer-bg);
+}
+.footer :is(a, button):focus-visible {
+  outline: 2px solid var(--footer-accent);
+  outline-offset: 5px;
+  border-radius: 3px;
+}
+.bottom {
+  border-top: 1px solid var(--footer-line);
+  padding-block: 28px 12px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  color: var(--footer-muted);
+  font-size: 12px;
+}
+.bottom p {
+  margin: 0;
+}
+.bottom nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 28px;
+  grid-column: 1/-1;
+  grid-row: 1;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--footer-line);
+}
+.bottom nav a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+.location {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.location i {
+  width: 6px;
+  height: 6px;
+  background: var(--footer-accent);
+  border-radius: 50%;
+}
+.backToTop {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: calc(20px + env(safe-area-inset-bottom));
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  z-index: 60;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px solid #b2b0a566;
+  background: #e8e3d5;
+  color: #252620;
+  box-shadow: 0 6px 24px #0002;
+  transition: transform 0.2s;
+}
+.backToTop:hover {
+  transform: translateY(-3px);
+}
+:global(body):has([data-theme="light"]) .footer {
+  --footer-bg: #ece8de;
+  --footer-text: #252620;
+  --footer-muted: #595d52;
+  --footer-line: #25262029;
+  --footer-accent: #506b42;
+}
+:global(body):has([data-theme="light"]) .brand img {
+  filter: invert(1);
+}
+@media (max-width: 1100px) {
+  .main {
+    gap: 48px;
+    grid-template-columns: 1fr 1.5fr;
+  }
+  .groups {
+    gap: 26px;
+  }
+}
+@media (max-width: 800px) {
+  .container {
+    padding: 40px 28px 24px;
+  }
+  .main {
+    grid-template-columns: 1fr;
+    gap: 52px;
+    padding-block: 48px 60px;
+  }
+  .identity p {
+    max-width: 440px;
+  }
+  .groups {
+    gap: 32px;
+  }
+  .bottom {
+    align-items: flex-start;
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 480px) {
+  .container {
+    padding-inline: 22px;
+  }
+  .topline {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 28px;
+  }
+  .groups {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 28px;
+  }
+  .groups > div:last-child {
+    grid-column: 1/-1;
+  }
+  .groups > div:last-child ul {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 28px;
+  }
+  .main {
+    padding-bottom: 48px;
+  }
+  .socials {
+    gap: 9px;
+  }
+  .brand small {
+    font-size: 11px;
+  }
+  .bottom {
+    gap: 10px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer *,
+  .backToTop {
+    transition: none !important;
+    animation: none !important;
+  }
+}

@@ -70,7 +70,7 @@ const navigation = [
   ]),
   ...PUBLIC_FOOTER_GROUPS.flatMap((group) => group.links),
 ];
-assert.equal(PUBLIC_NAV_CATEGORIES.length, 6);
+assert.equal(PUBLIC_NAV_CATEGORIES.length, 5);
 for (const item of navigation)
   assert.ok(isPublicDestination(item.href), item.href);
 

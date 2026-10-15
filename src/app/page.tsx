@@ -2,18 +2,19 @@ import type { Metadata } from "next";
 import { Navbar } from "@/components/shared/navbar";
 import { HomeView } from "@/components/home/HomeView";
 import { getBlogListingPosts } from "@/lib/mdx";
+import { SOCIAL_LINKS } from "@/content/social-links";
 
 export const metadata: Metadata = {
-  title: "Khadafi — AI-Assisted Product Engineer & Digital Builder",
+  title: "Khadafi — Belajar, Berkarya & Membangun Peluang Digital",
   description:
-    "Personal Business Headquarters Khadafi: membangun produk digital defensible, sistem automasi AI, karier remote independen, dan inisiatif internet mandiri.",
+    "Jelajahi produk digital, panduan AI, sumber daya belajar, dan peluang freelance bersama Khadafi, AI-Assisted Product Engineer & Digital Builder.",
   alternates: {
     canonical: "https://khadafidaffa.com/",
   },
   openGraph: {
-    title: "Khadafi — AI-Assisted Product Engineer & Digital Builder",
+    title: "Khadafi — Belajar, Berkarya & Membangun Peluang Digital",
     description:
-      "Personal Business Headquarters Khadafi: membangun produk digital defensible, sistem automasi AI, karier remote independen, dan inisiatif internet mandiri.",
+      "Jelajahi produk digital, panduan AI, sumber daya belajar, dan peluang freelance bersama Khadafi.",
     url: "https://khadafidaffa.com/",
     siteName: "Khadafi",
     locale: "id_ID",
@@ -29,9 +30,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Khadafi — AI-Assisted Product Engineer & Digital Builder",
+    title: "Khadafi — Belajar, Berkarya & Membangun Peluang Digital",
     description:
-      "Personal Business Headquarters Khadafi: membangun produk digital defensible, sistem automasi AI, karier remote independen, dan inisiatif internet mandiri.",
+      "Jelajahi produk digital, panduan AI, sumber daya belajar, dan peluang freelance bersama Khadafi.",
     images: ["/assets/og-image.png"],
   },
 };
@@ -42,10 +43,10 @@ export default async function HomePage() {
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Khadafi — Personal Business Headquarters",
+    name: "Khadafi — Ekosistem Digital",
     url: "https://khadafidaffa.com",
     description:
-      "Personal Business Headquarters Khadafi: membangun produk digital defensible, sistem automasi AI, karier remote independen, dan inisiatif internet mandiri.",
+      "Jelajahi produk digital, panduan AI, sumber daya belajar, dan peluang freelance bersama Khadafi.",
     inLanguage: "id-ID",
     publisher: {
       "@type": "Person",
@@ -62,11 +63,7 @@ export default async function HomePage() {
     alternateName: ["Khadafi", "khdfii9"],
     url: "https://khadafidaffa.com",
     jobTitle: "AI-Assisted Product Engineer & Digital Builder",
-    sameAs: [
-      "https://www.linkedin.com/in/khdfii9/",
-      "https://www.youtube.com/@khdfii9",
-      "https://github.com/dhiyaulhaqkhadafi0",
-    ],
+    sameAs: SOCIAL_LINKS.map((link) => link.href),
   };
 
   return (

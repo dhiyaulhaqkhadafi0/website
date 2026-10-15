@@ -45,7 +45,7 @@ export function CredentialsGallery() {
       dialog.current
         ?.querySelector<HTMLButtonElement>(
           selected === null
-            ? '[aria-label="Close certifications"]'
+            ? '[aria-label="Tutup sertifikasi"]'
             : "[data-viewer-back]",
         )
         ?.focus({ preventScroll: true });
@@ -59,7 +59,7 @@ export function CredentialsGallery() {
   return (
     <div id="certifications" className={styles.credentials}>
       <div>
-        <p className={styles.eyebrow}>Credentials &amp; foundations</p>
+        <p className={styles.eyebrow}>Sertifikasi &amp; bekal profesional</p>
         <p>
           Google AI Professional · IBM Product Management
           <br />
@@ -75,7 +75,7 @@ export function CredentialsGallery() {
           dialog.current?.showModal();
         }}
       >
-        View all certifications <span aria-hidden="true">→</span>
+        Lihat semua sertifikasi <span aria-hidden="true">→</span>
       </button>
       <dialog
         ref={dialog}
@@ -108,16 +108,16 @@ export function CredentialsGallery() {
       >
         <div className={styles.galleryHead}>
           <div>
-            <p className={styles.eyebrow}>9 certificates / 13 badges</p>
+            <p className={styles.eyebrow}>9 sertifikat / 13 lencana</p>
             <h2 id="credentials-title">
-              {current ? current.title : "Credentials & foundations"}
+              {current ? current.title : "Sertifikasi & bekal profesional"}
             </h2>
           </div>
           <button
             autoFocus
             type="button"
             onClick={close}
-            aria-label="Close certifications"
+            aria-label="Tutup sertifikasi"
           >
             ×
           </button>
@@ -130,7 +130,7 @@ export function CredentialsGallery() {
                 type="button"
                 onClick={() => setSelected(null)}
               >
-                ← All credentials
+                ← Semua sertifikasi
               </button>
               <span>
                 {selected! + 1} / {items.length}
@@ -139,7 +139,7 @@ export function CredentialsGallery() {
                 type="button"
                 onClick={() => setZoom((z) => Math.max(1, z - 0.25))}
                 disabled={zoom === 1}
-                aria-label="Zoom out certificate"
+                aria-label="Perkecil sertifikat"
               >
                 −
               </button>
@@ -147,12 +147,12 @@ export function CredentialsGallery() {
                 type="button"
                 onClick={() => setZoom((z) => Math.min(2, z + 0.25))}
                 disabled={zoom === 2}
-                aria-label="Zoom in certificate"
+                aria-label="Perbesar sertifikat"
               >
                 +
               </button>
               <button type="button" onClick={() => setZoom(1)}>
-                Reset zoom
+                Ukuran semula
               </button>
             </div>
             <div className={styles.imageViewport}>
@@ -173,7 +173,7 @@ export function CredentialsGallery() {
             {pages.length > 1 && (
               <div
                 className={styles.pageControls}
-                aria-label="Certificate pages"
+                aria-label="Halaman sertifikat"
               >
                 {pages.map((_, index) => (
                   <button
@@ -185,7 +185,7 @@ export function CredentialsGallery() {
                       setZoom(1);
                     }}
                   >
-                    Page {index + 1}
+                    Halaman {index + 1}
                   </button>
                 ))}
               </div>
@@ -197,14 +197,14 @@ export function CredentialsGallery() {
                   select((selected! - 1 + items.length) % items.length)
                 }
               >
-                ← Previous credential
+                ← Sertifikasi sebelumnya
               </button>
               <a
                 href={encodeURI(pages[page])}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Open original ↗
+                Buka gambar asli ↗
               </a>
               {sourceLink(current.link) && (
                 <a
@@ -212,14 +212,14 @@ export function CredentialsGallery() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Credential source ↗
+                  Sumber sertifikasi ↗
                 </a>
               )}
               <button
                 type="button"
                 onClick={() => select((selected! + 1) % items.length)}
               >
-                Next credential →
+                Sertifikasi berikutnya →
               </button>
             </div>
           </div>
@@ -229,7 +229,7 @@ export function CredentialsGallery() {
               <button
                 key={`${item.title}-${index}`}
                 type="button"
-                aria-label={`Open credential ${index + 1}: ${item.title}`}
+                aria-label={`Buka sertifikasi ${index + 1}: ${item.title}`}
                 onClick={() => select(index)}
               >
                 <div>
@@ -241,7 +241,7 @@ export function CredentialsGallery() {
                     sizes="(max-width: 600px) 80vw, 300px"
                   />
                 </div>
-                <span>{item.issuer ?? "Digital badge"}</span>
+                <span>{item.issuer ?? "Lencana digital"}</span>
                 <strong>{item.title}</strong>
               </button>
             ))}

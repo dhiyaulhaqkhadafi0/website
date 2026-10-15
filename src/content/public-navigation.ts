@@ -13,22 +13,22 @@ export interface NavCategory {
   badge?: string;
   subMenus: SubMenuItem[];
 }
-export const PUBLIC_NAV_CATEGORIES: NavCategory[] = [
+const NAV_CATEGORIES: NavCategory[] = [
   {
     key: "produk",
     label: "Produk",
-    href: "/#produk",
-    badge: "Ventures",
+    href: "/products",
     subMenus: [
       {
         label: "Produk Digital",
-        href: "/resources?topic=product",
-        description: "Blueprint PRD, arsitektur software & template sistem",
+        href: "/products",
+        description: "Ebook, panduan & bekal digital dari Khadafi",
       },
       {
         label: "Buku & Panduan",
-        href: "/resources",
-        description: "Playbook, mental models & panduan taktis builder",
+        href: "/products",
+        description:
+          "Kenali koleksi dan temukan bekal untuk langkah berikutnya",
       },
     ],
   },
@@ -89,11 +89,11 @@ export const PUBLIC_NAV_CATEGORIES: NavCategory[] = [
   },
   {
     key: "resources",
-    label: "Resources",
+    label: "Sumber Daya",
     href: "/resources",
     subMenus: [
       {
-        label: "Semua Resources",
+        label: "Semua Sumber Daya",
         href: "/resources",
         description: "Kumpulan sistem kerja, blueprint PRD, dan panduan taktis",
       },
@@ -160,7 +160,7 @@ export const PUBLIC_NAV_CATEGORIES: NavCategory[] = [
           "Profil builder, AI-assisted product engineer & etos kerja",
       },
       {
-        label: "Journey / Now",
+        label: "Perjalanan & Fokus",
         href: "/about#journey",
         description: "Fokus eksplorasi saat ini & roadmap pembangunan produk",
       },
@@ -174,7 +174,7 @@ export const PUBLIC_NAV_CATEGORIES: NavCategory[] = [
         href: "/lab",
         description:
           "Human-Centered Future Tech Lab: Riset AI & teknologi masa depan",
-        badge: "Research Lab",
+        badge: "Eksplorasi",
       },
       {
         label: "Changelog",
@@ -184,40 +184,62 @@ export const PUBLIC_NAV_CATEGORIES: NavCategory[] = [
     ],
   },
 ];
+export const PUBLIC_NAV_CATEGORIES: NavCategory[] = [
+  ...NAV_CATEGORIES.filter((c) =>
+    ["produk", "freelance", "resources"].includes(c.key),
+  ),
+  {
+    key: "artikel",
+    label: "Artikel",
+    href: "/blog",
+    subMenus: [
+      {
+        label: "The Digital Grimoire",
+        href: "/blog",
+        description: "Catatan AI, produk, dan bisnis digital",
+      },
+    ],
+  },
+  ...NAV_CATEGORIES.filter((c) => c.key === "tentang"),
+];
 export const PUBLIC_FOOTER_GROUPS = [
   {
-    title: "Build",
+    title: "Jelajahi",
     links: [
-      { label: "Products", href: "/#produk", desc: "Aplikasi & aset digital" },
       {
-        label: "Services",
+        label: "Produk Digital",
+        href: "/products",
+        desc: "Bekal untuk langkah berikutnya",
+      },
+      {
+        label: "Jasa & Kemampuan",
         href: "/about#jasa",
         desc: "Engineering & konsultasi",
       },
     ],
   },
   {
-    title: "Learn",
+    title: "Belajar",
     links: [
       {
-        label: "Resources",
+        label: "Sumber Daya",
         href: "/resources",
         desc: "Blueprint & sistem kerja",
       },
       {
-        label: "The Digital Grimoire",
+        label: "Artikel",
         href: "/blog",
         desc: "Esai AI & product building",
       },
       {
-        label: "Guides",
+        label: "Panduan Freelance",
         href: "/freelance/tools/mulai-freelance-dari-nol",
         desc: "Mulai freelance dari nol",
       },
     ],
   },
   {
-    title: "Ecosystem",
+    title: "Terhubung",
     links: [
       {
         label: "Freelance Hub",
@@ -225,25 +247,19 @@ export const PUBLIC_FOOTER_GROUPS = [
         desc: "Navigasi karier remote",
       },
       {
-        label: "Community",
+        label: "Komunitas",
         href: "/komunitas",
         desc: "Wadah builder & kreator",
       },
-    ],
-  },
-  {
-    title: "Khadafi",
-    links: [
       {
-        label: "About Khadafi",
+        label: "Tentang Khadafi",
         href: "/about",
-        desc: "Profil & filosofi builder",
+        desc: "Profil & perjalanan berkarya",
       },
-      { label: "HCFTL Lab", href: "/lab", desc: "Human-Centered Tech Lab" },
       {
-        label: "Changelog",
-        href: "/changelog",
-        desc: "Catatan pembaruan sistem",
+        label: "HCFTL Lab",
+        href: "/lab",
+        desc: "Eksplorasi teknologi manusia",
       },
     ],
   },

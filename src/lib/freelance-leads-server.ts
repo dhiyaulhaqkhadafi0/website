@@ -1,17 +1,13 @@
 import "server-only";
 import { createClient } from "@supabase/supabase-js";
 import { supabaseUrl, supabasePublishableKey } from "./supabase";
+import { hasSameOrigin } from "./request-origin";
 
 export const freelanceClient = () => createClient(supabaseUrl, supabasePublishableKey, { auth: { persistSession: false, autoRefreshToken: false } });
 export const leadJson = (data: unknown, status = 200, extra: Record<string,string> = {}) => Response.json(data, { status, headers: { "Cache-Control": "no-store", ...extra } });
 export const signupSecret = () => process.env.FREELANCE_SIGNUP_SECRET || process.env.ENGAGEMENT_SIGNING_SECRET;
 export function sameLeadOrigin(request: Request) {
-  try {
-    const origin = new URL(request.headers.get("origin") || "");
-    const host = request.headers.get("host") || new URL(request.url).host;
-    const local = origin.hostname === "localhost" || origin.hostname === "127.0.0.1";
-    return origin.origin === request.headers.get("origin") && origin.host === host && (origin.protocol === "https:" || (local && origin.protocol === "http:"));
-  } catch { return false; }
+  return hasSameOrigin(request);
 }
 export async function sha256(value: string) {
   const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
