@@ -27,6 +27,13 @@ const catalog = load("src/content/shop.ts"),
   validation = load("src/lib/service-inquiry.ts", {
     "@/content/shop": catalog,
   });
+async function request(input, options = {}) {
+  const response = await fetch(input, { ...options, signal: options.signal || AbortSignal.timeout(base.startsWith("https://") ? 20000 : 120000) });
+  const bytes = await response.arrayBuffer();
+  const copy = new Response([204,205,304].includes(response.status) ? null : bytes, { status: response.status, statusText: response.statusText, headers: response.headers });
+  Object.defineProperty(copy, "url", { value: response.url });
+  return copy;
+}
 const checks = [],
   errors = [],
   layouts = [],
@@ -144,6 +151,19 @@ async function run() {
     locale: "id-ID",
   });
   const page = await ctx.newPage();
+  async function settled() {
+    await ready(page);
+    if (await page.locator("#koleksi").count()) await page.locator('#koleksi[data-hydrated="true"]').waitFor();
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  }
+  async function navigate(url, options = {}) {
+    const response = await page.goto(url, { ...options, waitUntil: "domcontentloaded" });
+    await settled(); return response;
+  }
+  async function reloadReady() {
+    const response = await page.reload({ waitUntil: "domcontentloaded" });
+    await settled(); return response;
+  }
   page.setDefaultTimeout(15000);
   page.setDefaultNavigationTimeout(90000);
   page.on("pageerror", (e) => errors.push(e.message));
@@ -168,10 +188,11 @@ async function run() {
   for (const width of [375, 768, 1440])
     for (const route of routes) {
       await page.setViewportSize({ width, height: 1000 });
-      const response = await page.goto(base + route, {
+      const response = await navigate(base + route, {
         waitUntil: "networkidle",
         timeout: 90000,
       });
+      if (response.status() !== 200) fs.writeFileSync(path.join(out, "unexpected-response.json"), JSON.stringify({route,width,status:response.status(),headers:await response.allHeaders(),body:(await response.text()).slice(0,2000)},null,2));
       assert.equal(response.status(), 200, route);
       await ready(page);
       assert.equal(await page.locator("h1").count(), 1, route);
@@ -214,7 +235,7 @@ async function run() {
   pass(
     "33 responsive layouts across 11 routes at 375/768/1440: HTTP 200, one H1, canonical, no overflow, correct dark palette",
   );
-  await page.goto(base + "/products", { waitUntil: "networkidle" });
+  await navigate(base + "/products", { waitUntil: "networkidle" });
   const cards = page.locator("a[data-offering]");
   assert.equal(await cards.count(), 7);
   await page.getByLabel("Cari koleksi", { exact: true }).fill("OPENAI");
@@ -237,7 +258,7 @@ async function run() {
   assert.equal(await cards.count(), 1);
   assert.match(await cards.innerText(), /Vercel/);
   assert.equal(await page.getByLabel("Harga", { exact: true }).count(), 0);
-  await page.reload({ waitUntil: "networkidle" });
+  await reloadReady();
   assert.equal(await cards.count(), 1);
   await page.getByRole("button", { name: "Hapus filter format" }).click();
   assert.equal(await cards.count(), 2);
@@ -257,7 +278,7 @@ async function run() {
   pass(
     "Search, debounce, clear, combined filters, shareable reload, remove-one chips, reset, empty and honest unpublished original state",
   );
-  await page.goto(base + "/products", { waitUntil: "networkidle" });
+  await navigate(base + "/products", { waitUntil: "networkidle" });
   await page.locator('#koleksi[data-hydrated="true"]').waitFor();
   await page.keyboard.press("Control+k");
   assert.equal(
@@ -303,7 +324,7 @@ async function run() {
         .getPropertyValue("--bg")
         .trim() === "#f5f2ec",
   );
-  await page.goto(base + "/services", { waitUntil: "networkidle" });
+  await navigate(base + "/services", { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Gunakan tema gelap" }).waitFor();
   await page.screenshot({
     path: path.join(out, "services-375-light.png"),
@@ -323,14 +344,14 @@ async function run() {
     "Shared ivory/dark persistence, reduced motion and keyboard storefront submenu",
   );
   for (const tool of catalog.CURATED_TOOLS) {
-    await page.goto(base + tool.href, { waitUntil: "networkidle" });
+    await navigate(base + tool.href, { waitUntil: "networkidle" });
     const outbound = page.getByRole("link", { name: "Lihat di Website Resmi" });
     assert.equal(await outbound.getAttribute("href"), tool.officialUrl);
     assert.equal(await outbound.getAttribute("target"), "_blank");
     assert.match(await outbound.getAttribute("rel"), /noopener/);
     assert.match(await page.locator("main").innerText(), /bukan affiliate/);
   }
-  const draft = await page.goto(
+  const draft = await navigate(
     base + "/products/formula-profitable-blueprint",
     { waitUntil: "networkidle" },
   );
@@ -338,7 +359,7 @@ async function run() {
   await page.getByRole("heading", { name: "404", exact: true }).waitFor();
   assert.ok(await page.locator('meta[name="robots"][content*="noindex"]').count());
   assert.equal(await page.locator('a[href^="/checkout/"]').count(), 0);
-  const missing = await page.goto(base + "/services/not-a-service", {
+  const missing = await navigate(base + "/services/not-a-service", {
     waitUntil: "networkidle",
   });
   assert.ok([200, 404].includes(missing.status()));
@@ -349,14 +370,14 @@ async function run() {
   );
   if (base.startsWith("https://")) {
     assert.equal(new URL(base).hostname, "khadafidaffa.com", "Production QA is restricted to the intended domain");
-    const invalid = await fetch(base + "/api/services/inquiries", { method: "POST", headers: { "Content-Type": "application/json", Origin: base }, body: "{}" });
+    const invalid = await request(base + "/api/services/inquiries", { method: "POST", headers: { "Content-Type": "application/json", Origin: base }, body: "{}" });
     assert.equal(invalid.status, 400);
-    const foreign = await fetch(base + "/api/services/inquiries", { method: "POST", headers: { "Content-Type": "application/json", Origin: "https://foreign.example" }, body: "{}" });
+    const foreign = await request(base + "/api/services/inquiries", { method: "POST", headers: { "Content-Type": "application/json", Origin: "https://foreign.example" }, body: "{}" });
     assert.equal(foreign.status, 403);
-    const privateApi = await fetch(base + "/api/studio/inquiries");
+    const privateApi = await request(base + "/api/studio/inquiries");
     assert.equal(privateApi.status, 401);
     assert.match(privateApi.headers.get("cache-control"), /no-store/);
-    const privatePage = await fetch(base + "/studio/inquiries", { redirect: "manual" });
+    const privatePage = await request(base + "/studio/inquiries", { redirect: "manual" });
     assert.ok([307,308].includes(privatePage.status));
     assert.match(privatePage.headers.get("location"), /login/);
     pass("Production API validation/origin rejection and private Studio authorization; no synthetic production contact saved");
@@ -365,9 +386,9 @@ async function run() {
     fs.writeFileSync(path.join(out, "verification.json"), JSON.stringify({base, checks, layouts, errors, metrics, fieldVitals: "Not measured; unthrottled browser lab only", productionWrites: false}, null, 2));
     return;
   }
-  await fetch(fixture + "/__qa/reset", { method: "POST" });
-  assert.equal((await fetch(base + "/api/services/inquiries", { method: "POST", headers: { "Content-Type": "application/json", Origin: base }, body: "{}" })).status, 400);
-  await page.goto(base + "/services/website-landing-page", {
+  await request(fixture + "/__qa/reset", { method: "POST" });
+  assert.equal((await request(base + "/api/services/inquiries", { method: "POST", headers: { "Content-Type": "application/json", Origin: base }, body: "{}" })).status, 400);
+  await navigate(base + "/services/website-landing-page", {
     waitUntil: "networkidle",
   });
   assert.equal(
@@ -384,23 +405,23 @@ async function run() {
       "A browser fixture brief for a responsive website with a clear inquiry flow.",
     );
   await page.getByRole("button", { name: "Kirim brief proyek" }).click();
-  assert.equal((await (await fetch(fixture + "/__qa/status")).json()).count, 0);
+  assert.equal((await (await request(fixture + "/__qa/status")).json()).count, 0);
   await page.locator('input[name="consent"]').check();
-  await fetch(fixture + "/__qa/fail-next", { method: "POST" });
+  await request(fixture + "/__qa/fail-next", { method: "POST" });
   await page.getByRole("button", { name: "Kirim brief proyek" }).click();
   await page.locator('form [role="alert"]').waitFor();
   assert.match(
     await page.locator('form [role="alert"]').innerText(),
     /belum dapat dikonfirmasi/,
   );
-  assert.equal((await (await fetch(fixture + "/__qa/status")).json()).count, 0);
+  assert.equal((await (await request(fixture + "/__qa/status")).json()).count, 0);
   assert.match(
     await page.locator("#inquiry-description").inputValue(),
     /browser fixture/,
   );
   await page.getByRole("button", { name: "Kirim brief proyek" }).click();
   await page.getByRole("heading", { name: "Idemu sudah sampai." }).waitFor();
-  const saved = await (await fetch(fixture + "/__qa/status")).json();
+  const saved = await (await request(fixture + "/__qa/status")).json();
   assert.equal(saved.count, 1);
   assert.equal(saved.leads, 0);
   pass(
@@ -421,7 +442,7 @@ async function run() {
       request_id: crypto.randomUUID(),
     };
   const api = (value, headers = {}) =>
-    fetch(base + "/api/services/inquiries", {
+    request(base + "/api/services/inquiries", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -444,7 +465,7 @@ async function run() {
   );
   assert.equal((await api(valid)).status, 201);
   assert.equal((await api(valid)).status, 201);
-  assert.equal((await (await fetch(fixture + "/__qa/status")).json()).count, 2);
+  assert.equal((await (await request(fixture + "/__qa/status")).json()).count, 2);
   assert.equal(
     (await api({ ...valid, description: valid.description + " modified" }))
       .status,
@@ -475,19 +496,19 @@ async function run() {
     "/account/library",
     "/studio/inquiries",
   ]) {
-    const response = await fetch(base + route, { redirect: "manual" });
+    const response = await request(base + route, { redirect: "manual" });
     assert.ok([307, 308].includes(response.status), route);
     assert.match(response.headers.get("location"), /login/);
   }
   for (const route of ["/api/studio/inquiries", "/api/studio/products"]) {
-    const response = await fetch(base + route);
+    const response = await request(base + route);
     assert.equal(response.status, 401, route);
     if (route.endsWith("inquiries"))
       assert.match(response.headers.get("cache-control"), /no-store/);
   }
   const login = async (email) =>
     await (
-      await fetch(fixture + "/auth/v1/token", {
+      await request(fixture + "/auth/v1/token", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password: "local-fixture-password" }),
@@ -497,13 +518,13 @@ async function run() {
     owner = await login("owner@example.invalid");
   assert.equal(
     (
-      await fetch(base + "/api/studio/inquiries", {
+      await request(base + "/api/studio/inquiries", {
         headers: { Authorization: "Bearer " + reader.access_token },
       })
     ).status,
     403,
   );
-  let report = await fetch(base + "/api/studio/inquiries", {
+  let report = await request(base + "/api/studio/inquiries", {
     headers: { Authorization: "Bearer " + owner.access_token },
   });
   assert.equal(report.status, 200);
@@ -513,7 +534,7 @@ async function run() {
   const id = inbox.inquiries[0].id;
   assert.equal(
     (
-      await fetch(base + "/api/studio/inquiries", {
+      await request(base + "/api/studio/inquiries", {
         method: "PATCH",
         headers: {
           Origin: base,
@@ -539,7 +560,7 @@ async function run() {
       sameSite: "Lax",
     },
   ]);
-  await page.goto(base + "/studio/inquiries", { waitUntil: "networkidle" });
+  await navigate(base + "/studio/inquiries", { waitUntil: "networkidle" });
   await page.getByRole("heading", { name: "Percakapan berikutnya." }).waitFor();
   await page.getByText("QA Local Builder", { exact: true }).waitFor();
   await page.screenshot({
