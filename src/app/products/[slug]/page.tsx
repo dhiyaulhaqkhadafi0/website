@@ -1,8 +1,14 @@
 import type { Metadata } from "next";
+import { CURATED_TOOLS } from "@/content/shop";
+import { CuratedDetail } from "@/components/shop/CuratedDetail";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowUpRight } from "lucide-react";
-import { publishedProduct, pageUser, commerceConfigured } from "@/lib/commerce-server";
+import {
+  publishedProduct,
+  pageUser,
+  commerceConfigured,
+} from "@/lib/commerce-server";
 import { money, type Product } from "@/lib/commerce-types";
 import { BookCover } from "@/components/commerce/BookCover";
 import s from "@/components/commerce/commerce.module.css";
@@ -19,6 +25,18 @@ export async function generateMetadata({
   const { preview } = await searchParams;
   if (preview === "1")
     return { title: "Preview produk", robots: { index: false, follow: false } };
+  const tool = CURATED_TOOLS.find((item) => item.slug === slug);
+  if (tool)
+    return {
+      title: tool.title + " — Pilihan Khadafi",
+      description: tool.description,
+      alternates: { canonical: tool.href },
+      openGraph: {
+        title: tool.title,
+        description: tool.description,
+        url: tool.href,
+      },
+    };
   const p = await publishedProduct(slug);
   if (!p) return { title: "Produk tidak ditemukan", robots: { index: false } };
   return {
@@ -36,6 +54,8 @@ export async function generateMetadata({
 export default async function ProductPage({ params, searchParams }: Props) {
   const { slug } = await params;
   const { preview } = await searchParams;
+  const tool = CURATED_TOOLS.find((item) => item.slug === slug);
+  if (tool && preview !== "1") return <CuratedDetail tool={tool} />;
   let p: Product | null;
   if (preview === "1") {
     const auth = await pageUser("/products/" + slug + "?preview=1", true);
@@ -60,6 +80,9 @@ export default async function ProductPage({ params, searchParams }: Props) {
       "@type": "Offer",
       price: p.price,
       priceCurrency: "IDR",
+      availability: available
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
       url: "https://khadafidaffa.com/products/" + p.slug,
     },
   };
@@ -102,7 +125,9 @@ export default async function ProductPage({ params, searchParams }: Props) {
                   {p.price === 0 ? "Dapatkan gratis" : "Dapatkan produk"}{" "}
                   <ArrowUpRight />
                 </Link>
-              ) : <span className={s.badge}>Penjualan belum dibuka</span>}
+              ) : (
+                <span className={s.badge}>Penjualan belum dibuka</span>
+              )}
               <a href="#tentang-produk" className={s.secondary}>
                 Lihat lebih dekat ↓
               </a>
@@ -172,6 +197,19 @@ export default async function ProductPage({ params, searchParams }: Props) {
             <p>
               Buka Akun saya → Library dan pilih Unduh produk. Link unduhan
               bersifat sementara; kamu bisa membuat link baru dari library.
+            </p>
+          </details>
+          <details className={s.faq}>
+            <summary>Bagaimana lisensi dan bantuan produk?</summary>
+            <p>
+              Hak penggunaan mengikuti ketentuan produk pada saat pembelian dan{" "}
+              <Link href="/terms">Syarat & Ketentuan</Link>. Jangan menjual
+              ulang atau mendistribusikan file tanpa izin. Untuk pertanyaan
+              produk, hubungi{" "}
+              <a href="mailto:daffadhiyaulhaqkhadafi@gmail.com">
+                email Khadafi
+              </a>
+              .
             </p>
           </details>
           <details className={s.faq}>

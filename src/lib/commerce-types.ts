@@ -103,6 +103,19 @@ export function validateProduct(input: unknown) {
     slug = str("slug", 160);
   if (!name || !/^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug))
     throw new Error("Nama dan slug produk wajib diisi dengan benar.");
+  if (
+    [
+      "original",
+      "recommended",
+      "chatgpt",
+      "figma",
+      "notion",
+      "vercel",
+    ].includes(slug)
+  )
+    throw new Error(
+      "Slug tersebut digunakan oleh koleksi atau rekomendasi storefront.",
+    );
   if (!CATEGORIES.includes(p.category as Product["category"]))
     throw new Error("Kategori tidak valid.");
   if (

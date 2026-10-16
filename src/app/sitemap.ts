@@ -1,4 +1,5 @@
 import type { MetadataRoute } from "next";
+import { CURATED_TOOLS, SERVICES } from "@/content/shop";
 import { getAllPosts } from "@/lib/mdx";
 import { LEARNING_RESOURCES } from "@/content/learning-resources";
 import {
@@ -19,6 +20,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${siteUrl}/cookies`, changeFrequency: "monthly", priority: 0.3 },
     { url: `${siteUrl}/products`, changeFrequency: "weekly", priority: 0.8 },
+    ...[
+      "/products/original",
+      "/products/recommended",
+      "/services",
+      ...CURATED_TOOLS.map((item) => item.href),
+      ...SERVICES.map((item) => item.href),
+    ].map((path) => ({
+      url: siteUrl + path,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
     ...products.map((product) => ({
       url: `${siteUrl}/products/${product.slug}`,
       changeFrequency: "monthly" as const,
@@ -98,7 +110,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     };
   });
 
-  const resourceRoutes: MetadataRoute.Sitemap = LEARNING_RESOURCES.filter(r => r.internalPath && r.status === "published").map((item) => {
+  const resourceRoutes: MetadataRoute.Sitemap = LEARNING_RESOURCES.filter(
+    (r) => r.internalPath && r.status === "published",
+  ).map((item) => {
     const validDate = getValidDate(item.verifiedAt);
     return {
       url: `${siteUrl}/resources/${item.slug}`,

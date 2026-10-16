@@ -10,6 +10,7 @@ export const PUBLIC_PATHS = [
   "/freelance/belajar/mulai-freelance",
   "/resources",
   "/products",
+  "/services",
   "/blog",
   "/lab",
   "/komunitas",
@@ -38,7 +39,7 @@ export function isPublicDestination(href: string) {
   const path = href.split(/[?#]/)[0];
   return (
     (PUBLIC_PATHS as readonly string[]).includes(path) ||
-    /^\/(blog|products|resources|freelance\/direktori|freelance\/tools)\/[a-z0-9-]+$/.test(
+    /^\/(blog|products|services|resources|freelance\/direktori|freelance\/tools)\/[a-z0-9-]+$/.test(
       path,
     )
   );

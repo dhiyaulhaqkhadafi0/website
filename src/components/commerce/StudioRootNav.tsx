@@ -17,7 +17,18 @@ export function StudioRootNav() {
         fontSize: 13,
       }}
     >
-      <Link href="/studio/affiliates" style={{ minHeight: 44, display: "flex", alignItems: "center" }}>Afiliasi</Link>
+      <Link
+        href="/studio/inquiries"
+        style={{ minHeight: 44, display: "flex", alignItems: "center" }}
+      >
+        Brief Proyek
+      </Link>
+      <Link
+        href="/studio/affiliates"
+        style={{ minHeight: 44, display: "flex", alignItems: "center" }}
+      >
+        Afiliasi
+      </Link>
       <Link
         href="/studio/overview"
         style={{ minHeight: 44, display: "flex", alignItems: "center" }}

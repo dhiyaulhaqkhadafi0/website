@@ -16,31 +16,40 @@ export interface NavCategory {
 const NAV_CATEGORIES: NavCategory[] = [
   {
     key: "produk",
-    label: "Produk",
+    label: "Produk & Jasa",
     href: "/products",
     subMenus: [
       {
-        label: "Produk Digital",
+        label: "Semua Koleksi",
         href: "/products",
-        description: "Ebook, panduan & bekal digital dari Khadafi",
+        description: "Produk original, tools pilihan, dan layanan",
       },
       {
-        label: "Buku & Panduan",
-        href: "/products",
-        description:
-          "Kenali koleksi dan temukan bekal untuk langkah berikutnya",
+        label: "Produk Digital Khadafi",
+        href: "/products/original",
+        description: "Ebook dan bekal digital original",
+      },
+      {
+        label: "Rekomendasi Pilihan",
+        href: "/products/recommended",
+        description: "Tools terkurasi, manfaat dan batas yang jelas",
+      },
+      {
+        label: "Jasa & Kolaborasi",
+        href: "/services",
+        description: "Website, prototype, dan strategi konten",
       },
     ],
   },
   {
     key: "jasa",
     label: "Jasa",
-    href: "/about#jasa",
+    href: "/services",
     badge: "Hire Me",
     subMenus: [
       {
         label: "Work With Me & Kapabilitas",
-        href: "/about#jasa",
+        href: "/services",
         description:
           "Prinsip rekayasa produk AI, arsitektur defensible & eksekusi cepat",
       },
@@ -213,7 +222,7 @@ export const PUBLIC_FOOTER_GROUPS = [
       },
       {
         label: "Jasa & Kemampuan",
-        href: "/about#jasa",
+        href: "/services",
         desc: "Engineering & konsultasi",
       },
     ],
