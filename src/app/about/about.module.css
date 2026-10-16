@@ -1,0 +1,692 @@
+.aboutPage {
+  color: var(--text);
+  --lavender: #b8a9ef;
+  --sage: #a8c4b8;
+}
+.container {
+  max-width: 1240px;
+  padding-inline: 40px;
+  margin: auto;
+}
+.aboutPage :is(h1, h2, h3, p, figure, ol) {
+  margin: 0;
+}
+.aboutPage em {
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 400;
+}
+.aboutPage :is(a, button):focus-visible {
+  outline: 2px solid var(--lavender);
+  outline-offset: 5px;
+}
+.aboutPage h2 {
+  font-size: clamp(38px, 4vw, 53px);
+  font-weight: 550;
+  letter-spacing: -0.05em;
+  line-height: 1.12;
+}
+.kicker {
+  font-size: 11px !important;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  margin-bottom: 24px !important;
+}
+.hero {
+  padding: 160px 0 0;
+}
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 22px;
+}
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 100px;
+  align-items: center;
+  padding-block: 65px 70px;
+}
+.introduction {
+  position: relative;
+}
+.introduction h1 {
+  font-size: clamp(65px, 7.5vw, 104px);
+  line-height: 0.98;
+  font-weight: 500;
+  letter-spacing: -0.07em;
+  position: relative;
+}
+.introduction h1 em {
+  color: var(--lavender);
+}
+.introduction h1 > span {
+  position: absolute;
+  right: 35px;
+  bottom: 4px;
+  font-size: 56px;
+  color: var(--sage);
+  font-weight: 400;
+}
+.introduction > p:not(.kicker) {
+  font-size: 18px;
+  line-height: 1.85;
+  max-width: 480px;
+  margin-top: 38px;
+  color: var(--muted);
+}
+.heroLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-top: 30px;
+}
+.heroLinks a {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 44px;
+  font-size: 12px;
+  border-bottom: 1px solid var(--line);
+  padding-block: 10px;
+  color: var(--text);
+}
+.portrait {
+  position: relative;
+  padding-bottom: 55px;
+  padding-inline: 0 10px;
+}
+.photo {
+  height: 470px;
+  width: 100%;
+  position: relative;
+  max-width: 400px;
+  background: var(--surface);
+  border-radius: 160px 160px 12px 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+.photo img {
+  object-fit: cover;
+  object-position: center 35%;
+  filter: saturate(0.6);
+}
+.portrait figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  max-width: 400px;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 18px;
+}
+.portraitNote {
+  position: absolute;
+  bottom: 3px;
+  right: -10px;
+  background: #d8cfb9;
+  color: #3a352b;
+  padding: 17px 25px;
+  font-size: 13px;
+  line-height: 1.6;
+  transform: rotate(-5deg);
+  box-shadow: 0 10px 25px #0002;
+}
+.portraitNote em {
+  font-size: 16px;
+}
+.heroBottom {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+  border-top: 1px solid var(--line);
+  padding-block: 26px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.journey {
+  padding-block: 125px;
+  scroll-margin-top: 100px;
+}
+.storyGrid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.3fr;
+  gap: 110px;
+}
+.story {
+  max-width: 650px;
+}
+.story > p {
+  font-size: 16px;
+  line-height: 1.95;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+.story .lead {
+  font-size: 25px;
+  line-height: 1.6;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  margin-bottom: 30px;
+}
+.storyLine {
+  display: block;
+  width: 1px;
+  height: 125px;
+  background: linear-gradient(var(--line), transparent);
+  margin: 45px 0 0 10px;
+}
+.storyAside {
+  border-left: 1px solid var(--lavender);
+  display: flex;
+  gap: 18px;
+  padding: 8px 0 8px 24px;
+  margin: 35px 0;
+}
+.storyAside > span {
+  color: var(--lavender);
+  font-size: 20px;
+}
+.storyAside p {
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.storyAside strong {
+  font-weight: 500;
+  color: var(--text);
+}
+.workSection {
+  border-block: 1px solid var(--line);
+  padding-block: 105px 115px;
+  background: linear-gradient(135deg, #9686d807, transparent 70%);
+}
+.sectionHeading {
+  display: flex;
+  justify-content: space-between;
+  gap: 45px;
+  align-items: flex-end;
+  margin-bottom: 50px;
+}
+.sectionHeading > p {
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--muted);
+  max-width: 300px;
+}
+.works {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.work {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+  transition:
+    transform 0.25s,
+    border-color 0.25s;
+}
+.work:hover {
+  transform: translateY(-4px);
+  border-color: #b8a9ef77;
+}
+.workVisual {
+  height: 210px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 25px;
+  background: #c9c1d3;
+  color: #302738;
+  position: relative;
+  overflow: hidden;
+}
+.workVisual > span {
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  z-index: 1;
+}
+.workVisual strong {
+  font-family: Georgia, serif;
+  font-size: 120px;
+  line-height: 0.8;
+  font-weight: 400;
+  text-align: center;
+  z-index: 1;
+}
+.workVisual > small {
+  font-size: 9px;
+  z-index: 1;
+}
+.workVisual:before,
+.workVisual:after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border: 1px solid #30273825;
+  border-radius: 50%;
+  left: 50%;
+  top: 12%;
+  transform: translateX(-50%);
+}
+.workVisual:after {
+  width: 130px;
+  height: 130px;
+  top: 24%;
+}
+.workVisual[data-work="02"] {
+  background: #a8b9ad;
+  color: #273930;
+}
+.workVisual[data-work="02"] strong {
+  font-family: inherit;
+  font-size: 95px;
+}
+.workVisual[data-work="03"] {
+  background: #d4c1a6;
+  color: #493b2b;
+}
+.workVisual[data-work="03"] strong {
+  font-family: inherit;
+  font-size: 100px;
+}
+.workCopy {
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.workStatus {
+  display: flex;
+  gap: 7px;
+  align-items: center;
+  font-size: 9px;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.workStatus i {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--sage);
+}
+.workCopy h3 {
+  font-size: 23px;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+  line-height: 1.25;
+  margin-bottom: 16px;
+}
+.workCopy p {
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.9;
+}
+.workLink {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  margin-top: auto;
+  padding-top: 30px;
+}
+.thinking {
+  padding-block: 130px;
+  scroll-margin-top: 110px;
+}
+.principles {
+  list-style: none;
+  padding: 0;
+  margin-block: 35px !important;
+}
+.principles li {
+  display: flex;
+  gap: 20px;
+  border-top: 1px solid var(--line);
+  padding-block: 22px;
+}
+.principles li:last-child {
+  border-bottom: 1px solid var(--line);
+}
+.principles li > span {
+  font-family: Georgia, serif;
+  color: var(--sage);
+  font-size: 14px;
+}
+.principles h3 {
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.5;
+}
+.principles p {
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin-top: 7px;
+}
+.connect {
+  border-top: 1px solid var(--line);
+  padding-block: 110px 80px;
+  text-align: center;
+  background: radial-gradient(ellipse at 50% 15%, #9686d80a, transparent 60%);
+  scroll-margin-top: 80px;
+}
+.connect h2 {
+  font-size: clamp(48px, 6vw, 78px);
+  margin-bottom: 30px;
+}
+.connect h2 em {
+  color: var(--lavender);
+}
+.connect .container > p:not(.kicker) {
+  max-width: 560px;
+  margin: 15px auto;
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--muted);
+}
+.contactButton {
+  display: inline-flex;
+  gap: 45px;
+  align-items: center;
+  padding: 15px 24px;
+  background: #b8a9ef;
+  color: #241b34;
+  font-size: 13px;
+  border-radius: 8px;
+  margin-top: 24px;
+  transition: transform 0.2s;
+}
+.contactButton:hover {
+  transform: translateY(-3px);
+}
+.signature {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  border-top: 1px solid var(--line);
+  margin-top: 75px;
+  padding-top: 30px;
+  text-align: left;
+  color: var(--muted);
+  font-size: 11px;
+}
+.signature em {
+  font-size: 30px;
+  color: var(--text);
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
+:global([data-theme="light"]) .aboutPage {
+  --lavender: #65528f;
+  --sage: #456b59;
+}
+@media (max-width: 1100px) {
+  .heroGrid {
+    gap: 60px;
+  }
+  .introduction h1 > span {
+    right: 0;
+    font-size: 45px;
+  }
+  .photo {
+    height: 430px;
+  }
+  .storyGrid {
+    gap: 65px;
+  }
+  .workCopy {
+    padding: 22px;
+  }
+  .workCopy h3 {
+    font-size: 21px;
+  }
+}
+@media (max-width: 800px) {
+  .container {
+    padding-inline: 28px;
+  }
+  .hero {
+    padding-top: 145px;
+  }
+  .heroGrid {
+    gap: 40px;
+    padding-block: 45px 55px;
+  }
+  .introduction h1 {
+    font-size: 69px;
+  }
+  .introduction h1 > span {
+    font-size: 32px;
+    right: -5px;
+    bottom: 0;
+  }
+  .introduction > p:not(.kicker) {
+    font-size: 16px;
+    margin-top: 26px;
+  }
+  .photo {
+    height: 370px;
+    border-radius: 130px 130px 10px 10px;
+  }
+  .portraitNote {
+    padding: 12px 17px;
+    font-size: 11px;
+    right: 0;
+  }
+  .portraitNote em {
+    font-size: 13px;
+  }
+  .portrait figcaption {
+    font-size: 8px;
+  }
+  .heroLinks {
+    gap: 14px;
+  }
+  .heroLinks a {
+    font-size: 11px;
+  }
+  .storyGrid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .storyLine {
+    display: none;
+  }
+  .journey,
+  .thinking {
+    padding-block: 85px;
+  }
+  .story {
+    max-width: 650px;
+  }
+  .works {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .work {
+    display: grid;
+    grid-template-columns: 0.8fr 1fr;
+  }
+  .workVisual {
+    height: auto;
+    min-height: 240px;
+  }
+  .workCopy {
+    padding: 28px;
+  }
+  .workSection {
+    padding-block: 80px;
+  }
+  .workCopy h3 {
+    font-size: 25px;
+  }
+  .sectionHeading > p {
+    font-size: 12px;
+  }
+  .connect {
+    padding-block: 85px 60px;
+  }
+}
+@media (max-width: 540px) {
+  .container {
+    padding-inline: 22px;
+  }
+  .hero {
+    padding-top: 120px;
+  }
+  .masthead {
+    font-size: 9px;
+    gap: 15px;
+  }
+  .heroGrid {
+    grid-template-columns: 1fr;
+    gap: 42px;
+    padding-top: 35px;
+  }
+  .introduction h1 {
+    font-size: 80px;
+  }
+  .introduction h1 > span {
+    right: 20px;
+    font-size: 42px;
+  }
+  .introduction > p:not(.kicker) {
+    font-size: 16px;
+    max-width: 340px;
+  }
+  .heroLinks {
+    gap: 25px;
+  }
+  .heroLinks a {
+    font-size: 12px;
+  }
+  .portrait {
+    max-width: 350px;
+    width: 100%;
+    margin: auto;
+    padding-bottom: 40px;
+    padding-right: 12px;
+  }
+  .photo {
+    height: 390px;
+    max-width: none;
+    border-radius: 150px 150px 10px 10px;
+  }
+  .portrait figcaption {
+    font-size: 9px;
+  }
+  .portraitNote {
+    right: -5px;
+    bottom: 0;
+  }
+  .heroBottom {
+    flex-direction: column;
+    gap: 10px;
+    padding-block: 24px;
+    font-size: 10px;
+  }
+  .kicker {
+    font-size: 10px !important;
+  }
+  .aboutPage h2 {
+    font-size: 38px;
+  }
+  .journey,
+  .thinking {
+    padding-block: 70px;
+  }
+  .storyGrid {
+    gap: 32px;
+  }
+  .story .lead {
+    font-size: 23px;
+    line-height: 1.6;
+  }
+  .story > p {
+    font-size: 15px;
+  }
+  .storyAside {
+    padding-left: 18px;
+    gap: 12px;
+  }
+  .storyAside p {
+    font-size: 16px;
+  }
+  .sectionHeading {
+    flex-direction: column;
+    align-items: start;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+  .sectionHeading > p {
+    font-size: 14px;
+    max-width: 320px;
+  }
+  .work {
+    display: flex;
+  }
+  .workVisual {
+    min-height: 0;
+    height: 200px;
+  }
+  .workCopy {
+    padding: 25px;
+  }
+  .workCopy h3 {
+    font-size: 24px;
+  }
+  .workCopy p {
+    font-size: 14px;
+  }
+  .workStatus {
+    font-size: 10px;
+  }
+  .workSection {
+    padding-block: 70px;
+  }
+  .principles h3 {
+    font-size: 16px;
+  }
+  .principles p {
+    font-size: 13px;
+  }
+  .connect {
+    padding-top: 70px;
+  }
+  .connect h2 {
+    font-size: 50px;
+  }
+  .connect .container > p:not(.kicker) {
+    font-size: 15px;
+  }
+  .signature {
+    margin-top: 60px;
+    font-size: 10px;
+    gap: 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .aboutPage * {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}

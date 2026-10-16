@@ -1869,3 +1869,666 @@
     transition: none !important;
   }
 }
+/* Creative direction v2: restrained lavender, sage, and editorial depth. */
+.home {
+  --bg: #0d0d11;
+  --surface: #1b1b22;
+  --text: #f3f0f5;
+  --muted: #b2acbb;
+  --line: #ffffff20;
+  --accent: #b8a9ef;
+  --paper: #e8e2d7;
+}
+.home[data-theme="light"] {
+  --bg: #f5f2ec;
+  --surface: #ebe7e0;
+  --text: #29262f;
+  --muted: #625d68;
+  --line: #29262f25;
+  --accent: #65528f;
+  --paper: #f3eee5;
+}
+.home .eyebrow {
+  font-size: 11px;
+}
+.heroRole {
+  background: linear-gradient(
+    105deg,
+    #b2acbb 0%,
+    #b2acbb 38%,
+    #e8dcff 48%,
+    #b2acbb 58%,
+    #b2acbb 100%
+  );
+  background-size: 250% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent !important;
+  animation: roleShimmer 16s ease-in-out infinite;
+}
+.home[data-theme="light"] .heroRole {
+  background-image: linear-gradient(
+    105deg,
+    #625d68 0%,
+    #625d68 38%,
+    #71519f 48%,
+    #625d68 58%,
+    #625d68 100%
+  );
+}
+@keyframes roleShimmer {
+  0%,
+  70% {
+    background-position: 100% 0;
+  }
+  88%,
+  100% {
+    background-position: 0 0;
+  }
+}
+.heroWhisper {
+  margin-top: 28px !important;
+  font-size: 12px;
+  letter-spacing: 0.025em;
+}
+.orb {
+  position: absolute;
+  right: -2%;
+  top: 85px;
+  width: 255px;
+  height: 255px;
+  z-index: 0;
+}
+.orbBody {
+  position: absolute;
+  inset: 15%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 28% 27%, #ece4ff98, transparent 30%),
+    radial-gradient(circle at 67% 75%, #8dada166, transparent 43%),
+    radial-gradient(circle at 42% 45%, #9686d8b0, #5a52774d 62%, #15131e 85%);
+  box-shadow:
+    inset -12px -17px 32px #0d0d1180,
+    inset 1px 1px 3px #e2d8ff90,
+    0 0 55px #9686d814;
+  animation: orbBreath 12s ease-in-out infinite;
+}
+.orbitOne,
+.orbitTwo {
+  position: absolute;
+  display: block;
+  border: 1px solid #b8a9ef38;
+  border-radius: 50%;
+  width: 112%;
+  height: 68%;
+  left: -6%;
+  top: 16%;
+  animation: orbitTurn 28s linear infinite;
+}
+.orbitTwo {
+  width: 108%;
+  height: 92%;
+  left: -4%;
+  top: 4%;
+  border-color: #a8c4b82d;
+  animation-duration: 32s;
+  animation-direction: reverse;
+}
+.orbitOne i,
+.orbitTwo i {
+  position: absolute;
+  left: 5%;
+  top: 19%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #d7c9f4;
+  box-shadow: 0 0 12px #c8b5fb88;
+}
+.orbitTwo i {
+  background: #a8c4b8;
+  width: 4px;
+  height: 4px;
+  left: 93%;
+  top: 33%;
+}
+@keyframes orbitTurn {
+  from {
+    transform: rotate(-28deg);
+  }
+  to {
+    transform: rotate(332deg);
+  }
+}
+@keyframes orbBreath {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(-7px);
+    opacity: 1;
+  }
+}
+.ideaSheet {
+  left: -8px;
+  top: 75px;
+  width: 65%;
+  z-index: 2;
+  padding: 26px;
+}
+.architecture {
+  top: 12px;
+  right: 0;
+  z-index: 1;
+  background: var(--surface);
+}
+.writingFragment {
+  z-index: 3;
+  background: #292f2d;
+  border-color: #a8c4b830;
+}
+.ideaSheet .dynamicNote {
+  margin-block: 18px 20px;
+  display: block;
+  min-height: 120px;
+  position: relative;
+  color: #34322e;
+}
+.ideaSheet .dynamicNote > span {
+  display: block;
+  min-width: 0;
+  width: 100%;
+  max-width: 200px;
+  padding-right: 5px;
+  font-family: Georgia, serif;
+  font-size: 31px;
+  line-height: 1.25;
+  letter-spacing: -0.035em;
+}
+.ideaSheet .dynamicNote button {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  width: 35px;
+  height: 35px;
+  border-color: #34322e30;
+  font-family: inherit;
+  color: #34322e;
+  font-size: 11px;
+  line-height: 1;
+}
+.ideaSheet .dynamicWord {
+  min-height: 85px;
+}
+.section:not(.hero) {
+  position: relative;
+}
+.section:not(.hero):before {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent), transparent);
+  position: absolute;
+  top: 0;
+  left: max(40px, calc((100vw - 1160px) / 2));
+  opacity: 0.55;
+}
+.home [data-arrived="true"][data-reveal="soft"] {
+  animation: softReveal 0.6s ease-out both;
+}
+.home [data-arrived="true"][data-reveal="heading"] h2 {
+  animation: headingReveal 0.65s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.home [data-arrived="true"][data-reveal="line"] {
+  animation: lineReveal 0.6s ease-out both;
+}
+@keyframes softReveal {
+  from {
+    opacity: 0.65;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes headingReveal {
+  from {
+    opacity: 0.5;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lineReveal {
+  from {
+    transform: translateY(6px);
+  }
+  to {
+    transform: none;
+  }
+}
+.home[data-motion-paused="true"] *,
+.home[data-motion-paused="true"] *:before,
+.home[data-motion-paused="true"] *:after {
+  animation-play-state: paused !important;
+}
+.newsletterForm input:not([type="checkbox"]) {
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
+}
+.newsletterForm input:not([type="checkbox"]):focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px #9686d812;
+  background: var(--bg);
+}
+.newsletterSuccess {
+  border-left: 2px solid #a8c4b8;
+  padding-left: 25px;
+}
+.credentialSection {
+  margin-top: 90px;
+}
+.credentialSection .credentials {
+  margin-top: 0;
+}
+.credentialHighlights {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 25px;
+}
+.credentialHighlights a {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--text);
+  transition:
+    border-color 0.2s,
+    transform 0.2s;
+  min-width: 0;
+}
+.credentialHighlights a:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+}
+.credentialHighlights img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+.credentialHighlights a > span {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  min-width: 0;
+}
+.credentialHighlights strong {
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 500;
+}
+.credentialHighlights small {
+  font-size: 10px;
+  color: var(--muted);
+}
+.credentialHighlights a > b {
+  font-weight: 400;
+  font-size: 14px;
+  color: var(--muted);
+  margin-left: auto;
+}
+.credentialStatus {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.8;
+}
+.home[data-theme="light"] .orbBody {
+  box-shadow:
+    inset -12px -17px 32px #50406520,
+    inset 1px 1px 3px #f7f2ff,
+    0 0 55px #9686d814;
+}
+.home[data-theme="light"] .orbitOne {
+  border-color: #65528f45;
+}
+.home[data-theme="light"] .orbitTwo {
+  border-color: #456b5945;
+}
+@media (max-width: 1100px) {
+  .orb {
+    width: 220px;
+    height: 220px;
+    right: -6%;
+  }
+  .ideaSheet .dynamicNote > span {
+    font-size: 27px;
+  }
+  .ideaSheet {
+    padding: 22px;
+  }
+  .credentialHighlights {
+    gap: 10px;
+  }
+  .credentialHighlights a {
+    padding: 16px;
+    gap: 12px;
+  }
+  .credentialHighlights img {
+    width: 44px;
+    height: 44px;
+  }
+}
+@media (max-width: 800px) {
+  .credentialHighlights {
+    grid-template-columns: 1fr;
+  }
+  .credentialHighlights a {
+    padding: 20px;
+  }
+  .credentialHighlights img {
+    width: 52px;
+    height: 52px;
+  }
+  .credentialSection {
+    margin-top: 65px;
+  }
+  .credentialHighlights strong {
+    font-size: 14px;
+  }
+  .credentialHighlights small {
+    font-size: 11px;
+  }
+  .section:not(.hero):before {
+    left: 28px;
+  }
+}
+@media (max-width: 600px) {
+  .home .eyebrow {
+    font-size: 10px;
+  }
+  .orb {
+    width: 240px;
+    height: 240px;
+    right: 0;
+    top: 75px;
+  }
+  .ideaSheet {
+    left: 0;
+    width: 64%;
+    top: 75px;
+    padding: 25px;
+  }
+  .ideaSheet .dynamicNote > span {
+    font-size: 30px;
+  }
+  .ideaSheet .dynamicNote {
+    min-height: 115px;
+  }
+  .composition {
+    margin-top: 35px;
+  }
+  .architecture {
+    width: 65%;
+    right: 0;
+    top: 10px;
+  }
+  .writingFragment {
+    bottom: 25px;
+  }
+  .section:not(.hero):before {
+    left: 22px;
+  }
+  .credentialSection {
+    margin-top: 55px;
+  }
+  .heroWhisper {
+    font-size: 12px;
+  }
+}
+@media (max-width: 390px) {
+  .orb {
+    width: 205px;
+    height: 205px;
+    right: -8px;
+  }
+  .ideaSheet {
+    padding: 22px;
+  }
+  .ideaSheet .dynamicNote > span {
+    font-size: 27px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home *,
+  .home *:before,
+  .home *:after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .heroRole {
+    background: none;
+    color: var(--muted) !important;
+  }
+  .ideaSheet .dynamicNote button {
+    display: none;
+  }
+}
+
+.composition .orb {
+  top: 55px;
+  right: -20px;
+  width: 270px;
+  height: 270px;
+}
+.composition .ideaSheet {
+  top: 130px;
+  left: -10px;
+  width: 62%;
+}
+.composition .writingFragment {
+  bottom: 0;
+  width: 72%;
+  right: -5px;
+}
+@media (max-width: 1100px) and (min-width: 601px) {
+  .composition .orb {
+    width: 230px;
+    height: 230px;
+    right: -15px;
+  }
+  .composition .ideaSheet {
+    top: 120px;
+    padding: 22px;
+  }
+}
+@media (max-width: 600px) {
+  .composition .orb {
+    top: 50px;
+    right: -10px;
+    width: 250px;
+    height: 250px;
+  }
+  .composition .ideaSheet {
+    top: 125px;
+    left: 0;
+    width: 63%;
+  }
+  .composition .writingFragment {
+    bottom: 10px;
+    width: 70%;
+    right: 0;
+  }
+}
+.home :is(h1, h2, h3) {
+  word-spacing: 0.04em;
+}
+.composition .orb {
+  top: 0;
+  right: -12px;
+  width: 250px;
+  height: 250px;
+}
+.composition .architecture {
+  top: 15px;
+  left: 0;
+  right: auto;
+  width: 60%;
+  transform: rotate(-4deg);
+}
+.composition .ideaSheet {
+  top: 145px;
+  left: 5px;
+  width: 62%;
+}
+.composition .writingFragment {
+  bottom: 0;
+  right: 0;
+  width: 68%;
+  padding: 24px;
+}
+@media (max-width: 1100px) and (min-width: 601px) {
+  .composition .orb {
+    width: 220px;
+    height: 220px;
+    right: -8px;
+  }
+  .composition .architecture {
+    width: 62%;
+    padding: 16px;
+  }
+  .composition .architecture i {
+    font-size: 9px;
+    padding: 4px;
+  }
+  .composition .ideaSheet {
+    left: 0;
+  }
+}
+@media (max-width: 600px) {
+  .composition {
+    min-height: 450px;
+    height: 450px;
+  }
+  .composition .orb {
+    width: 245px;
+    height: 245px;
+    top: 0;
+    right: -8px;
+  }
+  .composition .architecture {
+    width: 60%;
+    top: 10px;
+    left: 0;
+    padding: 17px;
+  }
+  .composition .architecture i {
+    font-size: 10px;
+    padding: 5px;
+  }
+  .composition .ideaSheet {
+    top: 145px;
+    left: 10px;
+    width: 63%;
+    padding: 23px;
+  }
+  .composition .writingFragment {
+    bottom: 0;
+    width: 67%;
+    padding: 22px;
+  }
+}
+/* Keep both notes readable and the pause control within the visible paper. */
+.composition .ideaSheet {
+  width: 52%;
+  left: 5px;
+  padding: 23px;
+  top: 145px;
+}
+.composition .ideaSheet .dynamicNote {
+  min-height: 135px;
+  margin-block: 20px 22px;
+}
+.composition .ideaSheet .dynamicNote > span {
+  font-size: 27px;
+  line-height: 1.22;
+  max-width: 100%;
+  padding: 0;
+}
+.composition .ideaSheet .dynamicNote button {
+  left: 0;
+  right: auto;
+  bottom: -13px;
+}
+.composition .writingFragment {
+  width: 55%;
+  right: -10px;
+  padding: 22px;
+}
+.composition .writingFragment p {
+  font-size: 23px;
+}
+.composition figcaption {
+  bottom: -38px;
+  left: 0;
+  right: auto;
+  max-width: 100%;
+  font-size: 10px;
+}
+@media (max-width: 1100px) and (min-width: 601px) {
+  .composition .ideaSheet {
+    padding: 18px;
+    left: 0;
+  }
+  .composition .ideaSheet .dynamicNote > span {
+    font-size: 23px;
+  }
+  .composition .writingFragment {
+    padding: 18px;
+  }
+  .composition .writingFragment p {
+    font-size: 21px;
+  }
+}
+@media (max-width: 600px) {
+  .composition .ideaSheet {
+    width: 53%;
+    left: 8px;
+    padding: 20px;
+    top: 145px;
+  }
+  .composition .ideaSheet .dynamicNote > span {
+    font-size: 25px;
+  }
+  .composition .writingFragment {
+    width: 55%;
+    right: -7px;
+    padding: 20px;
+  }
+  .composition .writingFragment p {
+    font-size: 22px;
+  }
+  .composition figcaption {
+    font-size: 9px;
+    bottom: -32px;
+  }
+}
+.credentialMetadata {
+  font-size: 12px !important;
+  color: var(--muted) !important;
+  line-height: 1.8 !important;
+  margin-top: 14px !important;
+}

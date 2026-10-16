@@ -10,6 +10,9 @@ type Credential = {
   issuer?: string;
   category?: string;
   pages?: string[];
+  issuedAt?: string;
+  verificationUnavailable?: boolean;
+  verificationNote?: string;
 };
 const items: Credential[] = [
   ...credentials.certificates,
@@ -57,26 +60,55 @@ export function CredentialsGallery() {
   };
   const close = () => dialog.current?.close();
   return (
-    <div id="certifications" className={styles.credentials}>
-      <div>
-        <p className={styles.eyebrow}>Sertifikasi &amp; bekal profesional</p>
-        <p>
-          Google AI Professional · IBM Product Management
-          <br />
-          Business Analysis · Product Marketing
-        </p>
+    <section id="certifications" className={styles.credentialSection}>
+      <div className={styles.credentials}>
+        <div>
+          <p className={styles.eyebrow}>Sertifikasi &amp; bekal profesional</p>
+          <p>
+            Google AI Professional · IBM Product Management
+            <br />
+            Business Analysis · Product Marketing
+          </p>
+        </div>
+        <button
+          className={styles.textLink}
+          type="button"
+          onClick={() => {
+            setSelected(null);
+            setOpen(true);
+            dialog.current?.showModal();
+          }}
+        >
+          Lihat semua sertifikasi <span aria-hidden="true">→</span>
+        </button>
       </div>
-      <button
-        className={styles.textLink}
-        type="button"
-        onClick={() => {
-          setSelected(null);
-          setOpen(true);
-          dialog.current?.showModal();
-        }}
-      >
-        Lihat semua sertifikasi <span aria-hidden="true">→</span>
-      </button>
+      <div className={styles.credentialHighlights}>
+        {[
+          credentials.badges[10],
+          credentials.badges[12],
+          credentials.badges[0],
+        ].map((item, i) => (
+          <a
+            key={item.title}
+            href={sourceLink(item.link)!}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              src={item.image}
+              alt={"Lencana " + item.title}
+              width={64}
+              height={64}
+            />
+            <span>
+              <small>{i === 0 ? "Google" : "IBM"} · Lencana digital</small>
+              <strong>{item.title}</strong>
+              <small>Lihat kredensial penerbit</small>
+            </span>
+            <b aria-hidden="true">↗</b>
+          </a>
+        ))}
+      </div>
       <dialog
         ref={dialog}
         className={styles.credentialDialog}
@@ -112,6 +144,25 @@ export function CredentialsGallery() {
             <h2 id="credentials-title">
               {current ? current.title : "Sertifikasi & bekal profesional"}
             </h2>
+            {current && (
+              <p className={styles.credentialMetadata}>
+                {current.issuer}
+                {current.issuedAt && (
+                  <>
+                    {" "}
+                    ·{" "}
+                    <time dateTime={current.issuedAt}>
+                      {new Date(current.issuedAt).toLocaleDateString("id-ID", {
+                        day: "numeric",
+                        month: "long",
+                        year: "numeric",
+                        timeZone: "UTC",
+                      })}
+                    </time>
+                  </>
+                )}
+              </p>
+            )}
           </div>
           <button
             autoFocus
@@ -206,14 +257,21 @@ export function CredentialsGallery() {
               >
                 Buka gambar asli ↗
               </a>
-              {sourceLink(current.link) && (
+              {sourceLink(current.link) && !current.verificationUnavailable && (
                 <a
                   href={sourceLink(current.link)!}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Sumber sertifikasi ↗
+                  Verifikasi di penerbit ↗
                 </a>
+              )}
+              {(!sourceLink(current.link) ||
+                current.verificationUnavailable) && (
+                <span className={styles.credentialStatus}>
+                  {current.verificationNote ||
+                    "Dokumen tersedia; tautan verifikasi penerbit belum tersedia."}
+                </span>
               )}
               <button
                 type="button"
@@ -248,6 +306,6 @@ export function CredentialsGallery() {
           </div>
         )}
       </dialog>
-    </div>
+    </section>
   );
 }

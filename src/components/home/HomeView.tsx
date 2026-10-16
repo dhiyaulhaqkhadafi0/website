@@ -15,14 +15,19 @@ function BuilderComposition() {
       aria-label="Dari ide menjadi produk: tulisan, antarmuka, dan sistem"
     >
       <div className={styles.compositionAxis} aria-hidden="true" />
+      <div className={styles.orb} aria-hidden="true">
+        <div className={styles.orbBody} />
+        <span className={styles.orbitOne}>
+          <i />
+        </span>
+        <span className={styles.orbitTwo}>
+          <i />
+        </span>
+      </div>
       <span className={styles.compositionIndex}>CATATAN PROSES / 01</span>
       <div className={styles.ideaSheet}>
         <span>Berawal dari ide kecil.</span>
-        <p>
-          Buat sesuatu
-          <br />
-          <em>yang berguna.</em>
-        </p>
+        <DynamicNote />
         <div aria-hidden="true">01 / Mulai sederhana</div>
       </div>
       <div className={styles.architecture}>
@@ -75,7 +80,7 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
         <div className={styles.container}>
           <div className={styles.heroGrid}>
             <div>
-              <p className={styles.eyebrow}>
+              <p className={styles.eyebrow + " " + styles.heroRole}>
                 AI-Assisted Product Engineer &amp; Digital Builder
               </p>
               <h1>
@@ -96,7 +101,9 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
                   Kenali Saya <span aria-hidden="true">→</span>
                 </Link>
               </div>
-              <DynamicNote />
+              <p className={styles.heroWhisper}>
+                Terus belajar. Terus berkarya.
+              </p>
             </div>
             <BuilderComposition />
           </div>
@@ -112,7 +119,7 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
         id="intent"
         className={`${styles.section} ${styles.intent}`}
         aria-labelledby="intent-title"
-        data-reveal
+        data-reveal="line"
       >
         <div className={styles.container}>
           <h2 id="intent-title">Mulai dari yang kamu butuhkan.</h2>
@@ -146,7 +153,7 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
         id="featured-work"
         className={`${styles.section} ${styles.featured}`}
         aria-labelledby="featured-title"
-        data-reveal
+        data-reveal="heading"
       >
         <div className={styles.container}>
           <span id="produk" className={styles.anchor} />
@@ -256,7 +263,7 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
       <section
         className={`${styles.section} ${styles.freelance}`}
         aria-labelledby="freelance-preview-title"
-        data-reveal
+        data-reveal="soft"
       >
         <div className={`${styles.container} ${styles.freelanceGrid}`}>
           <div>
@@ -301,7 +308,7 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
         id="knowledge"
         className={`${styles.section} ${styles.knowledge}`}
         aria-labelledby="knowledge-title"
-        data-reveal
+        data-reveal="line"
       >
         <div className={styles.container}>
           <div className={styles.sectionHead}>
@@ -378,14 +385,14 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
         id="about"
         className={`${styles.section} ${styles.about}`}
         aria-labelledby="about-title"
-        data-reveal
+        data-reveal="soft"
       >
         <div className={styles.container}>
           <div className={styles.aboutGrid}>
             <figure className={styles.portrait}>
               <Image
                 src="/assets/my-profile.jpg"
-                alt="Daffa Dhiyaulhaq Khadafi"
+                alt="Khadafi, digital builder"
                 fill
                 sizes="(max-width: 600px) 80vw, 360px"
               />
@@ -432,7 +439,7 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
         id="newsletter"
         className={`${styles.section} ${styles.conversion}`}
         aria-labelledby="newsletter-title"
-        data-reveal
+        data-reveal="line"
       >
         <div className={styles.container}>
           <NewsletterSection />

@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllPosts } from "@/lib/mdx";
-import { RESOURCES_DATA } from "@/content/resources-data";
+import { LEARNING_RESOURCES } from "@/content/learning-resources";
 import {
   PUBLISHED_RESOURCES,
   resourceHref,
@@ -98,8 +98,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     };
   });
 
-  const resourceRoutes: MetadataRoute.Sitemap = RESOURCES_DATA.map((item) => {
-    const validDate = getValidDate(item.updatedAt);
+  const resourceRoutes: MetadataRoute.Sitemap = LEARNING_RESOURCES.filter(r => r.internalPath && r.status === "published").map((item) => {
+    const validDate = getValidDate(item.verifiedAt);
     return {
       url: `${siteUrl}/resources/${item.slug}`,
       ...(validDate ? { lastModified: validDate } : {}),

@@ -21,7 +21,7 @@ import { useAccountDestination } from "./useAccountDestination";
 
 export function Navbar() {
   const pathname = usePathname() || "";
-  const inHome = pathname === "/";
+  const inHome = pathname === "/" || pathname === "/about" || pathname === "/resources" || pathname.startsWith("/resources/");
   const account = useAccountDestination();
   const reduced = useReducedMotion();
   const inFreelance = pathname === "/freelance" || pathname.startsWith("/freelance/");

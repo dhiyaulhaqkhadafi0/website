@@ -1,0 +1,752 @@
+.readingPage {
+  padding: 145px 0 110px;
+  color: var(--text);
+  font-size: 16px;
+}
+.container {
+  max-width: 1240px;
+  padding-inline: 40px;
+  margin: auto;
+}
+.readingPage :is(h1, h2, h3, p, ol, ul) {
+  margin: 0;
+}
+.readingPage em {
+  font-family: Georgia, serif;
+  font-weight: 400;
+}
+.readingPage :is(a, button, input, textarea):focus-visible {
+  outline: 2px solid #b8a9ef;
+  outline-offset: 5px;
+}
+.readingPage button {
+  cursor: pointer;
+}
+.back {
+  display: inline-flex;
+  gap: 14px;
+  color: var(--muted);
+  font-size: 12px;
+  min-height: 44px;
+  align-items: center;
+  margin-bottom: 40px;
+}
+.articleHeader {
+  max-width: 900px;
+  padding-bottom: 52px;
+}
+.kicker {
+  font-size: 11px !important;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 20px !important;
+  line-height: 1.7;
+}
+.articleHeader h1 {
+  font-size: clamp(40px, 4.7vw, 64px);
+  font-weight: 550;
+  line-height: 1.1;
+  letter-spacing: -0.055em;
+  max-width: 850px;
+}
+.dek {
+  font-size: 18px !important;
+  line-height: 1.8;
+  max-width: 710px;
+  color: var(--muted);
+  margin-block: 28px !important;
+}
+.metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  font-size: 11px;
+  color: var(--muted);
+  padding-block: 22px;
+  border-block: 1px solid var(--line);
+  max-width: 760px;
+}
+.jump {
+  display: inline-flex;
+  justify-content: space-between;
+  gap: 45px;
+  align-items: center;
+  background: #b8a9ef;
+  color: #241b34;
+  padding: 13px 20px;
+  font-size: 13px;
+  border-radius: 7px;
+  margin-top: 28px;
+  min-height: 48px;
+}
+.readingLayout {
+  display: grid;
+  grid-template-columns: 245px minmax(0, 720px);
+  gap: 70px;
+  align-items: start;
+  border-top: 1px solid var(--line);
+  padding-top: 54px;
+}
+.toc {
+  position: sticky;
+  top: 105px;
+}
+.toc ol {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.toc li a {
+  display: flex;
+  gap: 12px;
+  padding-block: 9px;
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.toc li a:hover {
+  color: var(--text);
+}
+.toc a > span {
+  font-family: Georgia, serif;
+  font-size: 12px;
+  color: #b8a9ef;
+}
+.intro {
+  font-size: 21px;
+  line-height: 1.8;
+  color: var(--text) !important;
+  margin-bottom: 50px !important;
+}
+.readingBody {
+  min-width: 0;
+}
+.proseSection {
+  margin-bottom: 44px;
+  scroll-margin-top: 115px;
+}
+.readingBody h2 {
+  font-size: 28px;
+  line-height: 1.3;
+  font-weight: 550;
+  letter-spacing: -0.025em;
+  margin-bottom: 24px;
+}
+.readingBody :is(p, li) {
+  font-size: 16px;
+  line-height: 1.95;
+  color: var(--muted);
+}
+.proseSection > p + p {
+  margin-top: 18px;
+}
+.proseSection ul {
+  padding-left: 20px;
+  margin-top: 20px;
+}
+.proseSection li {
+  padding-left: 6px;
+  margin-block: 10px;
+}
+.proseSection li::marker {
+  color: #a8c4b8;
+}
+.workspace {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 34px;
+  margin-top: 55px;
+  scroll-margin-top: 110px;
+}
+.workspaceHeading {
+  display: flex;
+  justify-content: space-between;
+  gap: 25px;
+}
+.workspaceHeading h2 {
+  font-size: 34px;
+  margin-bottom: 15px;
+}
+.workspaceHeading > span {
+  font-size: 25px;
+  color: #b8a9ef;
+}
+.workspaceNote {
+  font-size: 12px !important;
+  line-height: 1.8 !important;
+}
+.template {
+  margin-top: 28px;
+}
+.template > label {
+  display: block;
+  font-size: 13px;
+  margin-bottom: 14px;
+  color: var(--text);
+}
+.template textarea {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 20px;
+  width: 100%;
+  resize: vertical;
+  min-height: 300px;
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1.85;
+}
+.template textarea:focus {
+  border-color: #b8a9ef;
+  outline-offset: 3px;
+}
+.toolActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 25px;
+}
+.toolActions > button {
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: var(--text);
+}
+.toolActions .primaryButton {
+  background: var(--text);
+  color: var(--bg);
+  border-color: var(--text);
+}
+.quietButton {
+  font-size: 11px;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  min-height: 44px;
+  margin-top: 8px;
+}
+.toolStatus {
+  font-size: 12px !important;
+  min-height: 24px;
+  margin-top: 16px !important;
+  color: var(--text) !important;
+}
+.checklist {
+  margin-top: 30px;
+}
+.progressLabel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 14px;
+}
+.progressLabel h3 {
+  font-size: 16px;
+  font-weight: 500;
+}
+.progressLabel > span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.checklist progress {
+  display: block;
+  width: 100%;
+  height: 4px;
+  accent-color: #a8c4b8;
+}
+.checklist fieldset {
+  border: 0;
+  padding: 22px 0 10px;
+  margin: 0;
+  border-bottom: 1px solid var(--line);
+}
+.checklist legend {
+  padding-top: 28px;
+  font-size: 12px;
+  color: #a8c4b8;
+  font-weight: 600;
+}
+.checklist label {
+  display: flex;
+  align-items: start;
+  gap: 12px;
+  padding: 11px 0;
+  cursor: pointer;
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+.checklist input {
+  accent-color: #a8c4b8;
+  flex-shrink: 0;
+  margin-top: 4px;
+  width: 18px;
+  height: 18px;
+}
+.checklist input:checked + span {
+  color: var(--text);
+}
+.promptList {
+  margin-top: 25px;
+  border-top: 1px solid var(--line);
+}
+.promptList details {
+  border-bottom: 1px solid var(--line);
+  padding-block: 8px;
+}
+.promptList summary {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  cursor: pointer;
+  list-style: none;
+  padding: 15px 0;
+  min-height: 75px;
+}
+.promptList summary::-webkit-details-marker {
+  display: none;
+}
+.promptList summary > span:first-child {
+  font-size: 14px;
+  font-family: Georgia, serif;
+  color: var(--muted);
+}
+.promptList summary > span:last-child {
+  margin-left: auto;
+  color: #b8a9ef;
+  font-size: 23px;
+}
+.promptList summary small {
+  font-size: 10px;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 7px;
+}
+.promptList summary strong {
+  font-size: 16px;
+  font-weight: 500;
+}
+.promptList details[open] summary > span:last-child {
+  transform: rotate(45deg);
+}
+.promptList pre,
+.example pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font:
+    12px/1.95 ui-monospace,
+    SFMono-Regular,
+    Consolas,
+    monospace;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--text);
+}
+.copyPrompt {
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  margin-block: 14px;
+}
+.copyPrompt button {
+  font-size: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  min-height: 44px;
+}
+.copyPrompt > span {
+  font-size: 11px;
+  color: var(--muted);
+}
+.example {
+  margin-top: 60px;
+  scroll-margin-top: 110px;
+}
+.example h2 {
+  font-size: 34px;
+}
+.example > p:not(.kicker) {
+  font-size: 13px;
+  margin-bottom: 22px;
+}
+.example pre {
+  font-size: 13px;
+  line-height: 2;
+}
+.readingClosing {
+  padding-block: 65px 30px;
+}
+.readingClosing p {
+  font-size: 28px;
+  line-height: 1.45;
+  color: var(--text);
+}
+.readingClosing em {
+  color: #a8c4b8;
+}
+.readingClosing > span {
+  font-size: 12px;
+  display: block;
+  margin-top: 20px;
+  color: var(--muted);
+}
+.related {
+  margin-top: 70px;
+  border-top: 1px solid var(--line);
+  padding-top: 60px;
+}
+.related > h2 {
+  font-size: 38px;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+.related > div {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+.related a {
+  padding: 25px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  color: var(--text);
+}
+.related small {
+  font-size: 10px;
+  color: var(--muted);
+}
+.related h3 {
+  font-size: 20px;
+  font-weight: 500;
+  margin-block: 18px 28px;
+  line-height: 1.3;
+}
+.related a > span {
+  font-size: 12px;
+  margin-top: auto;
+  color: var(--muted);
+}
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  clip: rect(0, 0, 0, 0);
+  overflow: hidden;
+}
+@media (max-width: 1050px) {
+  .readingLayout {
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 40px;
+  }
+  .toc li a {
+    font-size: 10px;
+  }
+  .workspace {
+    padding: 28px;
+  }
+}
+@media (max-width: 800px) {
+  .container {
+    padding-inline: 28px;
+  }
+  .readingLayout {
+    grid-template-columns: 1fr;
+    gap: 35px;
+    padding-top: 35px;
+  }
+  .toc {
+    position: static;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 30px;
+  }
+  .toc ol {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 25px;
+  }
+  .toc li a {
+    font-size: 11px;
+  }
+  .related > div {
+    grid-template-columns: 1fr;
+  }
+  .related a {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+  }
+  .related a small {
+    grid-column: 1/-1;
+  }
+  .related h3 {
+    margin: 8px 0;
+  }
+  .related a > span {
+    align-self: center;
+  }
+  .intro {
+    font-size: 20px !important;
+  }
+}
+@media (max-width: 540px) {
+  .readingPage {
+    padding-top: 110px;
+    padding-bottom: 75px;
+  }
+  .container {
+    padding-inline: 22px;
+  }
+  .back {
+    margin-bottom: 28px;
+  }
+  .articleHeader {
+    padding-bottom: 36px;
+  }
+  .articleHeader h1 {
+    font-size: 39px;
+  }
+  .dek {
+    font-size: 16px !important;
+    margin-block: 22px !important;
+  }
+  .metadata {
+    gap: 10px 18px;
+    font-size: 10px;
+    line-height: 1.8;
+    padding-block: 18px;
+  }
+  .readingBody h2 {
+    font-size: 25px;
+  }
+  .readingBody :is(p, li) {
+    font-size: 15px;
+  }
+  .toc ol {
+    grid-template-columns: 1fr;
+  }
+  .toc li a {
+    min-height: 40px;
+    font-size: 12px;
+  }
+  .workspace {
+    padding: 24px 18px;
+    margin-inline: -5px;
+  }
+  .workspaceHeading h2 {
+    font-size: 29px;
+  }
+  .workspaceNote {
+    font-size: 12px !important;
+  }
+  .toolActions {
+    flex-direction: column;
+  }
+  .toolActions > button {
+    justify-content: space-between;
+    font-size: 12px;
+  }
+  .template textarea {
+    font-size: 11px;
+    padding: 14px;
+  }
+  .checklist label {
+    font-size: 13px;
+    gap: 10px;
+  }
+  .progressLabel {
+    align-items: start;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .promptList summary {
+    gap: 15px;
+  }
+  .promptList summary strong {
+    font-size: 15px;
+  }
+  .promptList pre,
+  .example pre {
+    padding: 18px;
+    font-size: 11px;
+  }
+  .example h2 {
+    font-size: 29px;
+  }
+  .related a {
+    display: flex;
+  }
+  .related a > span {
+    align-self: start;
+  }
+  .readingClosing p {
+    font-size: 26px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .readingPage * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
+@media print {
+  :global(body):has(.readingPage) {
+    background: white !important;
+    color: black !important;
+  }
+  :global(body):has(.readingPage) :global(header),
+  :global(body):has(.readingPage) :global(footer),
+  :global(body):has(.readingPage) :global([role="dialog"]) {
+    display: none !important;
+  }
+  :global(body):has(.readingPage) :global(button),
+  .back,
+  .jump,
+  .toc,
+  .related,
+  .toolStatus,
+  .copyPrompt {
+    display: none !important;
+  }
+  :global(body):has(.readingPage) :global([data-theme]) {
+    background: white !important;
+    color: black !important;
+  }
+  .readingPage {
+    padding: 0;
+    color: black;
+    --bg: white;
+    --surface: white;
+    --text: black;
+    --muted: #333;
+    --line: #bbb;
+  }
+  .container {
+    padding: 0;
+    max-width: none;
+  }
+  .readingLayout {
+    display: block;
+    border: 0;
+    padding: 0;
+  }
+  .articleHeader {
+    padding-bottom: 25px;
+  }
+  .articleHeader h1 {
+    font-size: 30px;
+  }
+  .readingBody :is(p, li) {
+    font-size: 11pt;
+    line-height: 1.6;
+  }
+  .readingBody h2 {
+    font-size: 17pt;
+    break-after: avoid;
+  }
+  .proseSection {
+    margin-bottom: 25px;
+  }
+  .workspace {
+    padding: 0;
+    border: 0;
+    break-before: page;
+  }
+  .workspaceNote {
+    font-size: 10pt !important;
+  }
+  .template textarea {
+    height: auto;
+    min-height: 600px;
+    border: 1px solid #aaa;
+    font-size: 9pt;
+    overflow: visible;
+  }
+  .checklist label {
+    break-inside: avoid;
+    color: black;
+  }
+  .checklist legend {
+    color: black;
+  }
+  .checklist input {
+    appearance: auto;
+  }
+  .promptList details {
+    display: block;
+  }
+  .promptList details > pre {
+    display: block !important;
+  }
+  .promptList pre,
+  .example pre {
+    background: white;
+    color: black;
+    font-size: 9pt;
+    box-decoration-break: clone;
+  }
+  .readingClosing {
+    padding-block: 25px;
+  }
+  .kicker {
+    color: #555;
+  }
+  .metadata {
+    color: #555;
+  }
+}
+
+.printTemplate {
+  display: none;
+}
+@media print {
+  .template textarea {
+    display: none;
+  }
+  .printTemplate {
+    display: block;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    font: 9pt/1.6 monospace;
+    color: black;
+    background: white;
+    border: 1px solid #bbb;
+    padding: 15px;
+  }
+}
+@page {
+  size: A4;
+  margin: 16mm 15mm;
+}
+.readingPage .readingBody h2 {
+  margin-bottom: 24px;
+}
+.readingPage .readingBody .workspaceHeading h2 {
+  margin-bottom: 16px;
+}
+@media print {
+  .readingPage .readingBody h2 {
+    margin-bottom: 18px;
+  }
+  .readingPage .readingBody .workspaceHeading h2 {
+    margin-bottom: 16px;
+  }
+}
