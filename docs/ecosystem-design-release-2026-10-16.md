@@ -26,7 +26,7 @@ Navigasi dan footer global digunakan bersama. Footer existing, autentikasi, back
 | Cache R2 | 60 entry build terunggah; entry lama dipertahankan |
 | Public assets | 55 file terunggah, 396 sudah tersedia |
 | Pemindaian kredensial | 187 file teks publik/cache, dua kredensial privat lokal, nol kecocokan |
-| GitHub | **Belum dipush.** Peninjauan izin otomatis menolak perubahan branch `main` karena izin deployment tidak dianggap sebagai izin terpisah untuk push ke branch utama. |
+| GitHub | Source aplikasi dan laporan rilis telah tersinkron ke `main` serta `codex/ecosystem-design` setelah persetujuan eksplisit pengguna. Kedua remote branch diverifikasi menunjuk commit yang sama. |
 | Production database | Tidak ada migrasi atau lead percobaan yang ditulis; pemeriksaan hosted hanya baca. |
 
 Deployment Cloudflare selesai dengan exit code 0. Binding ASSETS, IMAGES, Worker self-reference, dan R2 existing tetap digunakan dengan `--keep-vars`. Checkout utama yang memiliki pekerjaan lain tidak direset atau ditimpa.
@@ -117,6 +117,6 @@ Pengamatan tersebut berasal dari Chrome tanpa throttling dan dengan reduced moti
 - Hosted signed-in owner CRUD, pembelian/settlement, semua akun/media kursus pihak ketiga, audit WCAG menyeluruh, dan browser selain Chromium tidak diuji.
 - Sampel MDX filesystem legacy `/blog/mantra-pertama` merupakan keterbatasan existing Worker; artikel database yang ditemukan dari halaman Blog berfungsi.
 - Tidak ada schema migration, perubahan secret, aktivasi produk berbayar, atau data customer yang diubah.
-- Deployment production telah selesai dan domain diverifikasi. GitHub main menunggu izin terpisah akibat penolakan automatic approval review.
+- Deployment production telah selesai dan domain diverifikasi. Source dan laporan rilis telah disinkronkan ke GitHub `main` serta `codex/ecosystem-design`; pembaruan laporan setelah deployment hanya mengubah dokumentasi.
 
 Bukti tersanitasi: `release-manifest.json`, `r2-upload.json`, `deployments-after.json`, `production-http.json`, `newsletter-verification.json`, `hosted-read-only.json`, `credentials-audit.json`, `external-links.json`, `production/verification.json`, dan log build/deploy di `artifacts/redesign/`.
