@@ -1,11 +1,15 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { SERVICES } from "@/content/shop";
 import { BUDGETS, INQUIRY_CONSENT, TIMELINES } from "@/lib/service-inquiry";
 import s from "./shop.module.css";
+const subscribeHydration = () => () => {};
+const clientHydrated = () => true;
+const serverHydrated = () => false;
 export function ServiceInquiry({ service = "" }: { service?: string }) {
+  const hydrated = useSyncExternalStore(subscribeHydration, clientHydrated, serverHydrated);
   const form = useRef<HTMLFormElement>(null),
     requestId = useRef<string>(""),
     submitted = useRef<string>("");
@@ -107,6 +111,7 @@ export function ServiceInquiry({ service = "" }: { service?: string }) {
           <form
             ref={form}
             className={s.inquiryForm}
+            method="post" action="/api/services/inquiries"
             onSubmit={submit}
             aria-busy={state === "sending"}
           >
@@ -214,13 +219,14 @@ export function ServiceInquiry({ service = "" }: { service?: string }) {
             <button
               type="submit"
               className={s.button}
-              disabled={state === "sending"}
+              disabled={!hydrated || state === "sending"}
             >
               {state === "sending"
                 ? "Menyimpan brief..."
                 : "Kirim brief proyek"}
               <ArrowUpRight />
             </button>
+            <noscript><p className={s.formNote}>Aktifkan JavaScript untuk mengirim formulir, atau hubungi Khadafi melalui tautan email di atas.</p></noscript>
             <p id="brief-note" className={s.formNote}>
               Tulis 20–3.000 karakter. Jangan sertakan kata sandi, kunci API,
               dokumen identitas, atau data sensitif klien. Brief tersimpan
