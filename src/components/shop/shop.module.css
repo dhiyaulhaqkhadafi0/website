@@ -1,4 +1,6 @@
 .shell.shell {
+  min-height: 100vh;
+  min-height: 100svh;
   --bg: #0d0d11;
   --surface: #18181e;
   --text: #f3f0f5;
