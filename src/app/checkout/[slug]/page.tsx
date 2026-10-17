@@ -1,12 +1,14 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
-  pageUser,
+  requireUser,
+  SESSION_COOKIE,
   publishedProduct,
   commerceConfigured,
 } from "@/lib/commerce-server";
 import { CheckoutForm } from "@/components/commerce/CheckoutForm";
 import s from "@/components/commerce/commerce.module.css";
+import { cookies } from "next/headers";
 export default async function Page({
   params,
 }: {
@@ -15,7 +17,8 @@ export default async function Page({
   const { slug } = await params;
   const p = await publishedProduct(slug);
   if (!p) notFound();
-  const auth = await pageUser("/checkout/" + slug);
+  const token = (await cookies()).get(SESSION_COOKIE)?.value;
+  const auth = token ? await requireUser(new Request("https://khadafidaffa.com", { headers: { authorization: "Bearer " + token } })) : null;
   return (
     <>
       <div className={s.breadcrumb}>
@@ -28,8 +31,8 @@ export default async function Page({
       </div>
       <CheckoutForm
         product={p}
-        email={auth.user.email || ""}
-        name={auth.user.user_metadata?.display_name || ""}
+        email={auth?.ok ? auth.user.email || "" : ""}
+        name={auth?.ok ? auth.user.user_metadata?.display_name || "" : ""}
         available={commerceConfigured(p.price > 0)}
       />
     </>

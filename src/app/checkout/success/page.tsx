@@ -3,16 +3,19 @@ import { Check, Clock, ArrowUpRight } from "lucide-react";
 import { pageUser } from "@/lib/commerce-server";
 import { money, statusLabel, type Order } from "@/lib/commerce-types";
 import s from "@/components/commerce/commerce.module.css";
+import { guestOrder } from "@/lib/guest-order";
+import { GuestDownloads } from "@/components/commerce/GuestDownloads";
 export default async function Page({
   searchParams,
 }: {
   searchParams: Promise<{ order?: string }>;
 }) {
   const { order } = await searchParams;
-  const auth = await pageUser(
+  const guest = order ? await guestOrder(order) : null;
+  const auth = guest ? null : await pageUser(
     "/checkout/success" + (order ? "?order=" + encodeURIComponent(order) : ""),
   );
-  const { data } = order
+  const { data } = guest ? { data: guest } : order && auth
     ? await auth.client
         .from("commerce_orders")
         .select("*,commerce_order_items(*)")
@@ -22,6 +25,7 @@ export default async function Page({
     : { data: null };
   const o = data as Order | null;
   const paid = o?.status === "paid";
+  const endedTitle = o ? { failed: "Pembayaran belum berhasil.", expired: "Waktu pembayaran berakhir.", cancelled: "Pesanan dibatalkan.", refunded: "Pembayaran dikembalikan.", pending: "Menunggu konfirmasi.", paid: "Bekalmu sudah siap." }[o.status] : "Periksa pesananmu.";
   return (
     <section className={s.success}>
       <div className={s.successIcon}>{paid ? <Check /> : <Clock />}</div>
@@ -31,7 +35,7 @@ export default async function Page({
           ? "Bekalmu sudah siap."
           : o?.status === "pending"
             ? "Menunggu konfirmasi."
-            : "Periksa pesananmu."}
+            : endedTitle}
       </h1>
       <p className={s.lead}>
         {paid
@@ -54,20 +58,23 @@ export default async function Page({
             </div>
           </dl>
           <small>Pesanan {o.id.slice(0, 8).toUpperCase()}</small>
+          {guest && <p className={s.note}>Akses pesanan tersimpan di browser ini selama 30 hari. Untuk perangkat lain, masuk melalui email pembeli yang sama. Simpan nomor pesanan untuk bantuan.</p>}
+          {guest && paid && o.commerce_order_items.map(item => <GuestDownloads key={item.product_id} order={o.id} product={item.product_id} />)}
         </div>
       )}
       <div className={s.actions}>
         <Link
-          href={paid ? "/account/library" : "/account/orders"}
+          href={guest ? "/login?returnTo=" + encodeURIComponent(paid ? "/account/library" : "/account/orders") : paid ? "/account/library" : "/account/orders"}
           className={s.button}
         >
-          {paid ? "Buka library" : "Lihat pesanan"} <ArrowUpRight />
+          {guest ? "Akses melalui email" : paid ? "Buka library" : "Lihat pesanan"} <ArrowUpRight />
         </Link>
         {o?.status === "pending" && (
           <a className={s.secondary} href={"/checkout/success?order=" + o.id}>
             Periksa status kembali
           </a>
         )}
+        {o?.status === "pending" && o.payment_url && /^https:\/\/app(?:\.sandbox)?\.midtrans\.com\//.test(o.payment_url) && <a className={s.secondary} href={o.payment_url}>Lanjutkan pembayaran <ArrowUpRight /></a>}
       </div>
     </section>
   );

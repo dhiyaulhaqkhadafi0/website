@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- CMS covers support validated HTTPS URLs without an image proxy allowlist. */
 import s from "./commerce.module.css";
+import { ProductImage } from "./ProductImage";
+import { CREATOR_NAME } from "@/lib/product-media";
 export function BookCover({
   name,
   cover,
@@ -11,9 +13,9 @@ export function BookCover({
 }) {
   return (
     <figure className={s.bookScene} aria-label={"Cover " + name}>
-      <div className={s.book}>
+      <div className={`${s.book} ${cover?.includes("mockup") ? s.mockupBook : ""}`}>
         {cover ? (
-          <img src={cover} alt={name} width={600} height={900} loading="lazy" />
+          <ProductImage src={cover} alt={name} />
         ) : (
           <div className={s.bookFallback}>
             <small>KHADAFI / DIGITAL EDITION</small>
@@ -21,7 +23,7 @@ export function BookCover({
             <div className={s.bookMark} aria-hidden="true">
               ↗
             </div>
-            <small>DAFFA KHADAFI</small>
+            <small>{CREATOR_NAME}</small>
           </div>
         )}
       </div>

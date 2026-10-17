@@ -7,6 +7,8 @@ import { supabase } from "@/lib/supabase";
 import { CATEGORIES, type Product } from "@/lib/commerce-types";
 import { commerceApi } from "./client-api";
 import { BookCover } from "./BookCover";
+import { ProductImage } from "./ProductImage";
+import { CREATOR_NAME } from "@/lib/product-media";
 import s from "./commerce.module.css";
 type ProductFile = {
   id: string;
@@ -22,6 +24,8 @@ const blank = {
   category: "Ebook",
   price: 0,
   cover_url: "",
+  creator_name: CREATOR_NAME,
+  gallery: [],
   featured: false,
   status: "draft",
   included: [],
@@ -78,18 +82,19 @@ export function ProductEditor({
       setBusy(false);
     }
   }
-  async function upload(file: File | undefined, cover = false) {
+  async function upload(file: File | undefined, cover = false, gallery = false) {
     if (!file) return;
-    if (!initial && !cover) {
+    if (!initial && !cover && !gallery) {
       setError("Simpan draft terlebih dahulu sebelum mengunggah file.");
       return;
     }
-    if (file.size > (cover ? 10 : 50) * 1024 * 1024) {
-      setError("Ukuran maksimum " + (cover ? "10" : "50") + " MB.");
+    const image = cover || gallery;
+    if (file.size > (image ? 10 : 50) * 1024 * 1024) {
+      setError("Ukuran maksimum " + (image ? "10" : "50") + " MB.");
       return;
     }
     if (
-      cover
+      image
         ? !["image/png", "image/jpeg", "image/webp"].includes(file.type)
         : ![
             "application/pdf",
@@ -104,23 +109,33 @@ export function ProductEditor({
     setError("");
     setNotice("");
     const path =
-      (cover ? "commerce-covers" : initial!.id) +
+      (image ? "commerce-covers" : initial!.id) +
       "/" +
       crypto.randomUUID() +
       "." +
-      (cover
+      (image
         ? file.type.split("/")[1]
         : file.type === "application/pdf"
           ? "pdf"
           : "zip");
-    const bucket = cover ? "blog-media" : "commerce-files";
+    const bucket = image ? "blog-media" : "commerce-files";
     try {
+      if (image) {
+        const bitmap = await createImageBitmap(file);
+        const valid = bitmap.width >= 200 && bitmap.height >= 200 && bitmap.width <= 12000 && bitmap.height <= 12000;
+        bitmap.close();
+        if (!valid) throw new Error("Dimensi gambar harus 200–12.000 px pada kedua sisi.");
+      }
       const { error } = await supabase.storage
         .from(bucket)
         .upload(path, file, { upsert: false, contentType: file.type });
       if (error)
         throw new Error("Upload gagal. Periksa koneksi dan izin storage.");
-      if (cover) {
+      if (gallery) {
+        setP(prev => ({ ...prev, gallery: [...(prev.gallery || []), { url: supabase.storage.from(bucket).getPublicUrl(path).data.publicUrl, alt: file.name.replace(/\.[^.]+$/, "") }].slice(0, 12) }));
+        dirty.current = true;
+        setNotice("Preview diunggah. Simpan produk untuk menerapkannya.");
+      } else if (cover) {
         field(
           "cover_url",
           supabase.storage.from(bucket).getPublicUrl(path).data.publicUrl,
@@ -184,6 +199,7 @@ export function ProductEditor({
         <section className={s.editorSection}>
           <h2>01 / Informasi produk</h2>
           <div className={s.form}>
+            <label>Nama kreator<input maxLength={180} required value={p.creator_name || CREATOR_NAME} onChange={e => field("creator_name", e.target.value)} /></label>
             <label>
               Nama produk
               <input
@@ -276,6 +292,21 @@ export function ProductEditor({
           </div>
         </section>
         <section className={s.editorSection}>
+          <h2>Galeri & preview produk</h2>
+          <p className={s.note}>Maksimal 12 gambar publik, PNG/JPEG/WebP, 10 MB per gambar. Unggah hanya cuplikan yang boleh dilihat sebelum pembelian.</p>
+          <label>Tambahkan beberapa gambar<input type="file" multiple accept="image/png,image/jpeg,image/webp" disabled={uploading || (p.gallery?.length || 0) >= 12} onChange={async e => { const selected = Array.from(e.target.files || []); if (selected.length + (p.gallery?.length || 0) > 12) { setError("Galeri maksimal 12 gambar."); return; } for (const file of selected) await upload(file, false, true); e.target.value = ""; }} /></label>
+          <div className={s.mediaEditor}>{(p.gallery || []).map((media, index) => <div key={media.url + index}>
+            <ProductImage src={media.url} alt={media.alt || p.name} />
+            <label>Alt text<input maxLength={180} value={media.alt} onChange={e => field("gallery", (p.gallery || []).map((m, i) => i === index ? { ...m, alt: e.target.value } : m))} /></label>
+            <div className={s.mediaActions}>
+              <button type="button" disabled={index === 0} onClick={() => { const next = [...(p.gallery || [])]; [next[index - 1], next[index]] = [next[index], next[index - 1]]; field("gallery", next); }}>← Geser</button>
+              <button type="button" disabled={index === (p.gallery?.length || 0) - 1} onClick={() => { const next = [...(p.gallery || [])]; [next[index], next[index + 1]] = [next[index + 1], next[index]]; field("gallery", next); }}>Geser →</button>
+              <button type="button" onClick={() => { field("cover_url", media.url); field("gallery", (p.gallery || []).filter((_, i) => i !== index).concat(p.cover_url ? [{ url: p.cover_url, alt: p.name + " — cover" }] : [])); }}>Jadikan cover</button>
+              <button type="button" onClick={() => field("gallery", (p.gallery || []).filter((_, i) => i !== index))}>Hapus preview</button>
+            </div>
+          </div>)}</div>
+        </section>
+        <section className={s.editorSection}>
           <h2>03 / File produk privat</h2>
           <p className={s.note}>
           PDF atau ZIP, maksimum 50 MB. File baru ditambahkan tanpa mengganti
@@ -312,7 +343,7 @@ export function ProductEditor({
           <h2>04 / Halaman produk</h2>
           <div className={s.form}>
             <label>
-              Tentang produk
+              Tentang produk · pisahkan paragraf dengan baris kosong; gunakan ## Judul, **tebal**, dan - daftar
               <textarea
                 maxLength={15000}
                 value={p.description}

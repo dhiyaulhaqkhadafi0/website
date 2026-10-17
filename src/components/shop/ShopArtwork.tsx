@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { ProductImage } from "@/components/commerce/ProductImage";
 import type { ShopItem } from "@/content/shop";
 import s from "./shop.module.css";
 export function ShopArtwork({
@@ -11,25 +11,9 @@ export function ShopArtwork({
   if (item.artwork === "book")
     return (
       <div className={`${s.artwork} ${s.bookArt}`}>
-        <div className={s.book}>
-          {item.cover?.startsWith("/") ? (
-            <Image
-              src={item.cover}
-              alt={item.title}
-              width={900}
-              height={1350}
-              sizes="(max-width: 700px) 65vw, 320px"
-              priority={priority}
-            />
-          ) : item.cover ? (
-            <Image
-              unoptimized
-              src={item.cover}
-              alt={item.title}
-              width={600}
-              height={900}
-              loading={priority ? "eager" : "lazy"}
-            />
+        <div className={`${s.book} ${item.cover?.includes("mockup") ? s.mockupBook : ""}`}>
+          {item.cover ? (
+            <ProductImage src={item.cover} alt={item.title} eager={priority} />
           ) : (
             <div className={s.textCover}>
               <small>KHADAFI / DIGITAL EDITION</small>

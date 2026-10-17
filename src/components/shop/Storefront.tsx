@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { publishedProducts } from "@/lib/commerce-server";
+import { CREATOR_NAME } from "@/lib/product-media";
 import { CURATED_TOOLS, SERVICES, originalItem } from "@/content/shop";
 import { readFilters, type ShopFilters } from "@/lib/shop-discovery";
 import { ShopArtwork } from "./ShopArtwork";
@@ -186,7 +187,7 @@ export async function Storefront({
               ini menyatukan bekal yang kubuat, tools yang relevan, dan cara
               kita bisa membangun bersama.
             </p>
-            <small>DAFFA KHADAFI / INDEPENDENT BUILDER</small>
+            <small>{CREATOR_NAME} / INDEPENDENT BUILDER</small>
             <div className={s.actions}>
               <Link href="/about" className={s.textLink}>
                 Kenali pembuatnya <ArrowUpRight />
@@ -210,9 +211,9 @@ export async function Storefront({
             <details className={s.faq}>
               <summary>Apakah produk original sudah bisa dibeli?</summary>
               <p>
-                Formula Profitable Blueprint masih disiapkan dan belum dijual.
+                {products.length > 0 ? "Produk original yang tersedia dapat kamu lihat di koleksi." : "Formula Profitable Blueprint masih disiapkan."}
                 Produk yang siap akan memiliki halaman detail, informasi akses,
-                serta checkout yang aktif. Untuk sekarang, kamu bisa menggunakan
+                serta informasi checkout. Kamu juga bisa menggunakan
                 panduan gratis di{" "}
                 <Link href="/resources">Learning Library</Link>.
               </p>

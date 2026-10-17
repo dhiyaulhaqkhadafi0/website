@@ -22,7 +22,7 @@ function load(file, imports = {}) {
   )(m, m.exports, (name) => imports[name] || require(name));
   return m.exports;
 }
-const catalog = load("src/content/shop.ts"),
+const catalog = load("src/content/shop.ts", { "@/lib/product-media": load("src/lib/product-media.ts") }),
   discovery = load("src/lib/shop-discovery.ts"),
   validation = load("src/lib/service-inquiry.ts", {
     "@/content/shop": catalog,
@@ -236,11 +236,11 @@ async function run() {
     "33 responsive layouts across 11 routes at 375/768/1440: HTTP 200, one H1, canonical, no overflow, correct dark palette",
   );
   await navigate(base + "/products", { waitUntil: "networkidle" });
-  const cards = page.locator("a[data-offering]");
+  const cards = page.locator("article[data-offering]");
   assert.equal(await cards.count(), 7);
   await page.getByLabel("Cari koleksi", { exact: true }).fill("OPENAI");
   await page.waitForFunction(
-    () => document.querySelectorAll("a[data-offering]").length === 1,
+    () => document.querySelectorAll("article[data-offering]").length === 1,
   );
   assert.match(await cards.first().innerText(), /ChatGPT/);
   assert.match(page.url(), /q=OPENAI/);
@@ -248,7 +248,7 @@ async function run() {
     .getByRole("button", { name: "Hapus pencarian", exact: true })
     .click();
   await page.waitForFunction(
-    () => document.querySelectorAll("a[data-offering]").length === 7,
+    () => document.querySelectorAll("article[data-offering]").length === 7,
   );
   await page.getByRole("button", { name: /Affiliate Picks/ }).click();
   assert.equal(await cards.count(), 4);

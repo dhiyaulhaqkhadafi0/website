@@ -1,4 +1,5 @@
 import type { Product } from "@/lib/commerce-types";
+import { CREATOR_NAME, mediaUrl } from "@/lib/product-media";
 export type OfferingType = "original" | "recommended" | "service";
 export type ShopItem = {
   id: string;
@@ -346,7 +347,7 @@ export function originalItem(product: Product): ShopItem {
     title: product.name,
     description: product.short_description,
     type: "original",
-    provider: "Khadafi",
+    provider: product.creator_name || CREATOR_NAME,
     topic: product.category === "Ebook" ? "Ebooks" : "Digital Business",
     format: product.category,
     tags: [product.category, "original", "digital"],
@@ -361,7 +362,7 @@ export function originalItem(product: Product): ShopItem {
             maximumFractionDigits: 0,
           }).format(product.price),
     artwork: "book",
-    cover: product.cover_url,
+    cover: mediaUrl(product.cover_url),
     updatedAt: product.updated_at,
   };
 }

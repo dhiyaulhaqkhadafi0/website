@@ -10,7 +10,9 @@ import {
   commerceConfigured,
 } from "@/lib/commerce-server";
 import { money, type Product } from "@/lib/commerce-types";
-import { BookCover } from "@/components/commerce/BookCover";
+import { ProductGallery } from "@/components/commerce/ProductGallery";
+import { ProductText } from "@/components/commerce/ProductText";
+import { CREATOR_NAME, mediaUrl } from "@/lib/product-media";
 import s from "@/components/commerce/commerce.module.css";
 export const dynamic = "force-dynamic";
 type Props = {
@@ -47,7 +49,7 @@ export async function generateMetadata({
       title: p.name,
       description: p.short_description,
       url: "/products/" + p.slug,
-      images: p.cover_url ? [{ url: p.cover_url, alt: p.name }] : [],
+      images: p.cover_url ? [{ url: mediaUrl(p.cover_url), alt: p.name }] : [],
     },
   };
 }
@@ -68,13 +70,15 @@ export default async function ProductPage({ params, searchParams }: Props) {
   } else p = await publishedProduct(slug);
   if (!p) notFound();
   const draft = preview === "1";
+  const included = p.included.filter(item => !/^apa yang akan kamu pelajari\s*:?\s*$/i.test(item));
   const available = commerceConfigured(p.price > 0);
   const schema = {
     "@context": "https://schema.org",
     "@type": "Product",
     name: p.name,
     description: p.short_description,
-    image: p.cover_url || undefined,
+    image: mediaUrl(p.cover_url) || undefined,
+    author: { "@type": "Person", name: p.creator_name || CREATOR_NAME },
     brand: { "@type": "Brand", name: "Khadafi" },
     offers: {
       "@type": "Offer",
@@ -109,11 +113,12 @@ export default async function ProductPage({ params, searchParams }: Props) {
       )}
       <section className={s.detailHero}>
         <div className={s.heroGrid}>
-          <BookCover name={p.name} cover={p.cover_url} />
+          <ProductGallery name={p.name} cover={p.cover_url} gallery={p.gallery} />
           <div>
-            <span className={s.eyebrow}>{p.category} / BY DAFFA KHADAFI</span>
+            <span className={s.eyebrow}>{p.category} / {p.creator_name || CREATOR_NAME}</span>
             <h1>{p.name}</h1>
-            <p className={s.lead}>{p.short_description}</p>
+            <p className={s.lead}>{p.short_description.length > 240 ? p.short_description.slice(0, 237).replace(/\s+\S*$/, "") + "…" : p.short_description}</p>
+            {p.short_description.length > 240 && <details className={s.heroSummary}><summary>Baca ringkasan lengkap</summary><ProductText text={p.short_description} /></details>}
             <div className={s.price}>{money(p.price)}</div>
             <div className={s.actions}>
               {draft ? (
@@ -126,7 +131,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
                   <ArrowUpRight />
                 </Link>
               ) : (
-                <span className={s.badge}>Penjualan belum dibuka</span>
+                <Link href={"/checkout/" + p.slug} className={s.button}>Lihat checkout <ArrowUpRight /></Link>
               )}
               <a href="#tentang-produk" className={s.secondary}>
                 Lihat lebih dekat ↓
@@ -138,12 +143,12 @@ export default async function ProductPage({ params, searchParams }: Props) {
           </div>
         </div>
       </section>
-      <section id="tentang-produk" className={s.detailSections}>
+      <section id="tentang-produk" className={`${s.detailSections} ${s.productOverview}`}>
         <div>
           <span className={s.eyebrow}>01 / THE IDEA</span>
           <h2>Tentang produk ini.</h2>
         </div>
-        <div className={s.prose}>{p.description || p.short_description}</div>
+        <ProductText text={p.description || p.short_description} />
       </section>
       {p.included.length > 0 && (
         <section className={s.detailSections}>
@@ -151,14 +156,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
             <span className={s.eyebrow}>02 / WHAT&apos;S INSIDE</span>
             <h2>Bekal yang kamu dapat.</h2>
           </div>
-          <ol className={s.list}>
-            {p.included.map((item, i) => (
-              <li key={i}>
-                <span>{String(i + 1).padStart(2, "0")}</span>
-                <p>{item}</p>
-              </li>
-            ))}
-          </ol>
+          <div className={s.moduleList}>{Array.from({ length: Math.ceil(included.length / 4) }, (_, group) => <details key={group} className={s.faq} open={group === 0}><summary>Bagian {String(group + 1).padStart(2, "0")} · Materi {group * 4 + 1}–{Math.min(group * 4 + 4, included.length)}</summary><ul>{included.slice(group * 4, group * 4 + 4).map((item, i) => <li key={i}>{item.replace(/^\d+[.)]\s*/, "")}</li>)}</ul></details>)}</div>
         </section>
       )}
       {p.preview && (
@@ -167,7 +165,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
             <span className={s.eyebrow}>A CLOSER LOOK</span>
             <h2>Cuplikan dari dalam.</h2>
           </div>
-          <div className={s.prose}>{p.preview}</div>
+          <ProductText text={p.preview} />
         </section>
       )}
       {p.audience && (
@@ -176,7 +174,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
             <span className={s.eyebrow}>FOR YOUR JOURNEY</span>
             <h2>Cocok untukmu?</h2>
           </div>
-          <div className={s.prose}>{p.audience}</div>
+          <ProductText text={p.audience} />
         </section>
       )}
       <section className={s.detailSections}>
@@ -188,8 +186,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
           <details className={s.faq}>
             <summary>Bagaimana cara mengakses produk?</summary>
             <p>
-              Masuk atau buat akun, lalu selesaikan checkout. Setelah pesanan
-              dikonfirmasi, produk akan tersedia di library akunmu.
+              Isi nama dan email di checkout, lalu selesaikan pembayaran. Akses tersedia di halaman pesanan setelah pembayaran terkonfirmasi. Untuk library di perangkat lain, masuk melalui email pembeli yang sama.
             </p>
           </details>
           <details className={s.faq}>
@@ -215,7 +212,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
           <details className={s.faq}>
             <summary>Siapa yang membuat produk ini?</summary>
             <p>
-              Daffa Khadafi, builder independen dan AI-Assisted Product
+              {p.creator_name || CREATOR_NAME}, builder independen dan AI-Assisted Product
               Engineer. <Link href="/about">Kenali lebih jauh ↗</Link>
             </p>
           </details>
@@ -230,9 +227,9 @@ export default async function ProductPage({ params, searchParams }: Props) {
             {p.name} · {money(p.price)}
           </p>
         </div>
-        {!draft && available && (
+        {!draft && (
           <Link className={s.button} href={"/checkout/" + p.slug}>
-            Dapatkan produk <ArrowUpRight />
+            Lanjut ke checkout <ArrowUpRight />
           </Link>
         )}
       </div>

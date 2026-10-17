@@ -2532,3 +2532,9 @@
   line-height: 1.8 !important;
   margin-top: 14px !important;
 }
+
+/* Signature role: luminous metal and a single, restrained reveal. */
+.home .heroRole { display: inline-block; position: relative; font-size: clamp(11px, 1.08vw, 14px); font-weight: 600; line-height: 1.8; letter-spacing: .12em; background-image: linear-gradient(105deg, #b6a2cf 8%, #eee4fa 32%, #c5ad86 48%, #fff8eb 53%, #b6a2cf 68%); background-size: 250% 100%; animation: signatureSweep 3.8s ease-out 1 both; filter: drop-shadow(0 0 16px #c4afe52e); padding-bottom: 15px; border-bottom: 1px solid #b9addf4d; }
+.home[data-theme="light"] .heroRole { background-image: linear-gradient(105deg, #695579 8%, #876494 32%, #785b32 48%, #40334f 53%, #695579 68%); border-color: #76568b40; }
+@keyframes signatureSweep { from { background-position: 100% 0; } to { background-position: 0% 0; } }
+@media (prefers-reduced-motion: reduce) { .home .heroRole { animation: none !important; background-position: 0 0; } }

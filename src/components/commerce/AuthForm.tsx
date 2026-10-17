@@ -1,11 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowUpRight, LoaderCircle } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { syncSession } from "./SessionBridge";
 import s from "./commerce.module.css";
+const subscribeHydration = () => () => {};
 export function AuthForm({
   returnTo,
   register = false,
@@ -14,9 +15,11 @@ export function AuthForm({
   register?: boolean;
 }) {
   const router = useRouter();
+  const hydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const [emailOnly, setEmailOnly] = useState(false);
   const [space, setSpace] = useState<"auto" | "member" | "founder">(
     returnTo.startsWith("/studio") ? "founder" : "auto",
   );
@@ -65,6 +68,12 @@ export function AuthForm({
     const email = String(form.get("email"));
     const password = String(form.get("password"));
     try {
+      if (emailOnly && !register) {
+        const { error } = await supabase.auth.signInWithOtp({ email, options: { shouldCreateUser: false, emailRedirectTo: window.location.origin + "/login?returnTo=" + encodeURIComponent(returnTo) } });
+        if (error) throw new Error("Tautan masuk belum dapat dikirim. Coba lagi atau masuk dengan password.");
+        setNotice("Jika email terdaftar, tautan masuk akan dikirim. Buka tautan di email untuk mengakses pembelianmu.");
+        return;
+      }
       const { data, error } = register
         ? await supabase.auth.signUp({
             email,
@@ -145,6 +154,7 @@ export function AuthForm({
       )}
       <form
         className={s.form}
+        method="post"
         onSubmit={submit}
         aria-label={register ? "Daftar akun" : "Masuk akun"}
       >
@@ -165,7 +175,7 @@ export function AuthForm({
             placeholder="kamu@email.com"
           />
         </label>
-        <label>
+        {(!emailOnly || register) && <label>
           Password
           <input
             type="password"
@@ -176,7 +186,8 @@ export function AuthForm({
             required
             placeholder={register ? "Minimal 8 karakter" : "Password akunmu"}
           />
-        </label>
+        </label>}
+        {!register && <button type="button" className={s.secondary} onClick={() => { setEmailOnly(v => !v); setError(""); setNotice(""); }}>{emailOnly ? "Gunakan password" : "Masuk lewat tautan email"}</button>}
         {register && (
           <label className={s.check}>
             <input type="checkbox" required />
@@ -196,7 +207,7 @@ export function AuthForm({
             {notice}
           </div>
         )}
-        <button className={s.button} disabled={busy}>
+        <button className={s.button} disabled={!hydrated || busy}>
           {busy ? <LoaderCircle className={s.spin} /> : <ArrowUpRight />}
           {busy ? "Memproses…" : register ? "Buat akun" : "Masuk"}
         </button>

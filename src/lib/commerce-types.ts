@@ -1,3 +1,4 @@
+import { CREATOR_NAME, mediaUrl, type ProductMedia } from "./product-media";
 export const CATEGORIES = [
   "Ebook",
   "Guide",
@@ -16,6 +17,8 @@ export type Product = {
   price: number;
   currency: "IDR";
   cover_url: string;
+  creator_name?: string;
+  gallery?: ProductMedia[];
   status: "draft" | "published" | "archived";
   featured: boolean;
   included: string[];
@@ -126,7 +129,9 @@ export function validateProduct(input: unknown) {
     throw new Error("Harga harus berupa rupiah bulat yang valid.");
   if (!["draft", "published", "archived"].includes(String(p.status)))
     throw new Error("Status tidak valid.");
-  const cover_url = str("cover_url", 2048);
+  const cover_input = str("cover_url", 2048);
+  const cover_url = mediaUrl(cover_input);
+  if (cover_input && !cover_url) throw new Error("Gunakan URL HTTPS, path situs, atau storage key gambar yang valid.");
   if (
     cover_url &&
     !(cover_url.startsWith("/") && !cover_url.startsWith("//")) &&
@@ -135,7 +140,7 @@ export function validateProduct(input: unknown) {
     throw new Error("URL cover tidak valid.");
   if (
     !Array.isArray(p.included) ||
-    p.included.length > 30 ||
+    p.included.length > 60 ||
     p.included.some((v) => typeof v !== "string" || v.length > 400)
   )
     throw new Error("Daftar isi tidak valid.");
@@ -146,6 +151,8 @@ export function validateProduct(input: unknown) {
     price: Number(p.price),
     status: p.status as Product["status"],
     cover_url,
+    creator_name: typeof p.creator_name === "string" && p.creator_name.trim() ? str("creator_name", 180) : CREATOR_NAME,
+    ...(p.gallery === undefined ? {} : { gallery: validateGallery(p.gallery) }),
     featured: p.featured === true,
     short_description: str("short_description", 500),
     description: str("description", 15000),
@@ -155,4 +162,13 @@ export function validateProduct(input: unknown) {
     seo_description: str("seo_description", 320),
     included: p.included.map((v) => v.trim()).filter(Boolean),
   };
+}
+export function validateGallery(input: unknown): ProductMedia[] {
+  if (!Array.isArray(input) || input.length > 12) throw new Error("Galeri maksimal 12 gambar.");
+  return input.map((item) => {
+    if (!item || typeof item !== "object" || typeof item.url !== "string" || item.url.length > 2048 || typeof item.alt !== "string" || item.alt.length > 180) throw new Error("Media galeri tidak valid.");
+    const url = mediaUrl(item.url);
+    if (!url) throw new Error("Alamat gambar galeri tidak valid.");
+    return { url, alt: item.alt.trim() };
+  });
 }

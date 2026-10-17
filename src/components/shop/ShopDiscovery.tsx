@@ -7,6 +7,7 @@ import {
   X,
   SlidersHorizontal,
   ArrowDown,
+  Send,
 } from "lucide-react";
 import { OFFERING_LABELS, type ShopItem } from "@/content/shop";
 import {
@@ -216,7 +217,7 @@ export function ShopDiscovery({
           dan karya yang terus bertumbuh.
         </p>
       </div>
-      <div className={s.searchBox}>
+      <form className={s.searchBox} role="search" onSubmit={e => { e.preventDefault(); update({ ...filters, q: input }); }}>
         <Search aria-hidden="true" />
         <label className={s.srOnly} htmlFor="shop-search">
           Cari koleksi
@@ -244,10 +245,9 @@ export function ShopDiscovery({
           >
             <X />
           </button>
-        ) : (
-          <kbd hidden={!hydrated}>⌘ / Ctrl K</kbd>
-        )}
-      </div>
+        ) : null}
+        <button className={s.searchSend} type="submit" disabled={!hydrated} aria-label="Cari koleksi"><Send aria-hidden="true" /></button>
+      </form>
       <div className={s.primaryFilters} aria-label="Jenis koleksi">
         {Object.entries(OFFERING_LABELS).map(([key, label]) => (
           <button
@@ -340,13 +340,12 @@ export function ShopDiscovery({
       {results.length ? (
         <div className={s.cardGrid}>
           {results.map((item, index) => (
-            <Link
-              href={item.href}
+            <article
               key={item.id}
               className={s.card}
               data-offering={item.type}
             >
-              <ShopArtwork item={item} />
+              <Link href={item.href} aria-label={"Lihat " + item.title}><ShopArtwork item={item} /></Link>
               <div className={s.cardBody}>
                 <div className={s.cardMeta}>
                   <span>
@@ -359,18 +358,20 @@ export function ShopDiscovery({
                   <span>{String(index + 1).padStart(2, "0")}</span>
                 </div>
                 <h3>
-                  {item.title}
+                  <Link href={item.href}>{item.title}</Link>
                   <ArrowUpRight aria-hidden="true" />
                 </h3>
                 <p>{item.description}</p>
+                <details className={s.cardSummary}><summary>Ringkasan</summary><div><p>{item.description}</p><Link href={item.href}>Lihat detail <ArrowUpRight size={14} /></Link></div></details>
                 <div className={s.cardFoot}>
                   <span>
                     {item.provider} · {item.format}
                   </span>
                   <strong>{item.priceLabel}</strong>
+                  <Link href={item.href} className={s.cardCta}>{item.type === "original" ? "Lihat produk" : item.type === "service" ? "Jelajahi layanan" : "Kenali tool"} <ArrowUpRight size={15} /></Link>
                 </div>
               </div>
-            </Link>
+            </article>
           ))}
         </div>
       ) : (
