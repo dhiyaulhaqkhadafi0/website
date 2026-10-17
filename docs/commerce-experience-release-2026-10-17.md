@@ -45,3 +45,25 @@ No real payment, email delivery or hosted owner upload is claimed tested. Email 
 Previous production Worker version captured for rollback: `92d9106c-6e72-40fe-b5d7-72552c491383`.
 
 Deployment version, final production acceptance and payment configuration status are recorded below after release.
+
+## Verified production release
+
+| Evidence | Result |
+|---|---|
+| Domain | https://khadafidaffa.com/products |
+| App source | `d48250dfaf06838b9171fcf7488a5f9959ea8ead`, pushed atomically to GitHub `main` and `codex/studio-shop` |
+| Build ID | `DwJibYYpwd0_ULFCp3C9o`, verified from live `/BUILD_ID` |
+| Worker version | `9c670428-eeb3-4a0c-8589-b60f8dfdf227` |
+| Worker startup | 22 ms; gzip 2804.63 KiB |
+| Bindings | ASSETS, IMAGES, WORKER_SELF_REFERENCE, NEXT_INC_CACHE_R2_BUCKET preserved; deploy uses `--keep-vars` |
+| Public media | Mockup 443231 bytes, contents 226664 bytes, sample 136148 bytes; all live HTTP 200 before database activation |
+| Hosted product | Full creator name, final mockup, two gallery entries plus primary image, 32 chapter labels; price and private file unchanged |
+| Browser acceptance | 7 groups, 18 dark/light layouts, 3 real thumbnails, zero uncaught browser errors |
+| HTTP acceptance | 22 checks pass: ecosystem pages, published article heading, media, auth redirects, invalid guest requests, origin and commerce no-store headers |
+| Payment readiness | Live server key absent; paid checkout closed; no real transaction tested |
+
+Final artifacts are in `artifacts/commerce-experience/production/verification.json` and `http-verification.json`. The uploaded private PDF's filename and size (23208642 bytes) match the local compressed source used for the previews. Its multipart storage ETag is not claimed to be a whole-file MD5 match.
+
+The HTTP harness reads the rendered article H1 instead of treating Next's embedded fallback text as a visible 404. It records the legacy Studio unauthorized response's absent cache header separately; commerce responses are required and verified to include `private, no-store`. Authenticated Studio responses use their existing private response path. No production customer, test identity, order, payment or lead was created by acceptance.
+
+Current external blocker: the user indicated they would configure Midtrans, but the last live check still returned unavailable integration and a closed checkout. Deployment is complete; production settlement, merchant channel availability and automatic email delivery remain unverified. No provider readiness is inferred from UI labels or local mocks.
