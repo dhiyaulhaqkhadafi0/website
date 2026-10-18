@@ -1,3 +1,30 @@
+## BLOCKER: real Sandbox payment SUCCESS but webhook not delivered (second test)
+
+User-provided evidence after the optional `override_notification_url` was added: official Mandiri VA Simulator shows **Payment Success** on another Rp59,000 sandbox order, while the new local in-memory order (`541689cd...`, truncated) remained **PENDING / NO**. Node logs confirmed the new Checkout creation included `additional_info.override_notification_url`, but still showed **no incoming webhook requests after payment**. Prior DOKU Back Office screenshots showed a paid Mandiri Checkout and an empty Notification Center for the exact invoice. Public unsigned POST to the tunnel was logged as HTTP 401 by the Node process, proving public routing works. Conclusion: real signed webhook delivery has **not** been observed or verified. Do not claim automatic entitlement; production is unchanged.
+
+**Stop making new Sandbox payments.** DOKU's official **Non-SNAP GET Check Status API** is a documented fallback: `https://api-sandbox.doku.com/orders/v1/status/{invoice}`, using GET HMAC without Digest; DOKU recommends waiting 60 seconds after payment. Use `scripts/check-doku-sandbox-status.mjs` on an **existing** paid `KS...` invoice to check the provider status without exposing secrets or creating a new charge.
+
+Open a separate PowerShell terminal while the current Node smoke server remains running:
+
+```powershell
+$env:DOKU_CLIENT_ID = Read-Host "DOKU Sandbox Client ID"
+$secret = Read-Host "Sandbox Active Secret Key" -AsSecureString
+$env:DOKU_SANDBOX_INVOICE = Read-Host "Existing paid KS... invoice from DOKU Checkout Orders"
+try {
+    $env:DOKU_SECRET_KEY = [System.Net.NetworkCredential]::new("", $secret).Password
+    node "E:\khadafi-doku-feature\scripts\check-doku-sandbox-status.mjs"
+} finally {
+    Remove-Item Env:\DOKU_CLIENT_ID,Env:\DOKU_SECRET_KEY,Env:\DOKU_SANDBOX_INVOICE -ErrorAction SilentlyContinue
+    Remove-Variable secret -ErrorAction SilentlyContinue
+}
+```
+
+**Strict limitations:** This read-only API check can independently confirm DOKU's stored status, NOT repair the webhook or update local memory, Supabase, entitlement or PDF. The next phase needs DOKU to trace whether notifications were generated, what endpoint they targeted, what HTTP delivery code was seen, and whether Sandbox Notification Center should show the events.
+
+Escalate via official [DOKU Merchant Support](https://www.doku.com/customer-support) or [DOKU Help Center](https://help.doku.com/id/support/home): provide merchant client ID, Sandbox environment, test invoice (privately to DOKU only), date/time, Rp59,000, Mandiri VA channel, the preconfigured staging notification URL, Checkout API optional `additional_info.override_notification_url`, and report that no webhook reached the test endpoint and Notification Center has no entry. Share **NO active secret key, virtual account credentials, or checkout access URL**. Do not reconfigure production, merge PR, or change real customer data.
+
+---
+
 ## DOKU Back Office confirms SUCCESS, Notification Center has no record (2026-10-19 WIB)
 
 User-provided screenshots of DOKU Sandbox show that one Checkout order of Rp59,000:
