@@ -12,7 +12,7 @@ export function isAllowedDokuCheckoutUrl(
   try {
     const url = new URL(value);
     if (url.protocol !== "https:" || url.username || url.password ||
-      url.port || url.hash || url.searchParams.has("redirect")) return false;
+      url.port) return false;
     return production
       ? url.hostname === DOKU_PRODUCTION_CHECKOUT_HOST
       : DOKU_SANDBOX_CHECKOUT_HOSTS.some((host) => url.hostname === host);
