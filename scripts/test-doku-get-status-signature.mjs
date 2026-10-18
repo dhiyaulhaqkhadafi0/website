@@ -48,9 +48,12 @@ const wrongDigestResponse = expectedSignature([
   "Request-Target:" + target,
   "Digest:" + createHash("sha256").update('{"order":{}}').digest("base64"),
 ]);
-assert.equal(verifySignedGetResponse(new Headers({
-  ...Object.fromEntries(headers), Signature: wrongDigestResponse,
-}), target, requestId, clientId, secret), false);
+const signedWithWrongDigest = new Headers(headers);
+signedWithWrongDigest.set("Signature", wrongDigestResponse);
+assert.equal(
+  verifySignedGetResponse(signedWithWrongDigest, target, requestId, clientId, secret),
+  false,
+);
 console.log("PASS: extra POST-only Digest is NOT accepted for GET response");
 
 const missing = new Headers(headers);
