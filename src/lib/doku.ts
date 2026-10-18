@@ -1,5 +1,6 @@
 import "server-only";
 import { createHash, createHmac, timingSafeEqual } from "node:crypto";
+import { isAllowedDokuCheckoutUrl } from "./doku-checkout-host";
 
 const CHECKOUT_PATH = "/checkout/v1/payment";
 export const DOKU_WEBHOOK_PATH = "/api/commerce/doku/webhook";
@@ -149,11 +150,8 @@ export async function createDokuCheckout(input: {
     typeof result?.response?.payment?.url !== "string") {
     throw new Error("DOKU response does not match the order");
   }
-  const url = new URL(result.response.payment.url);
-  if (url.protocol !== "https:" || url.username || url.password ||
-    !((production && url.hostname === "jokul.doku.com") ||
-      (!production && url.hostname === "sandbox.doku.com"))) {
+  if (!isAllowedDokuCheckoutUrl(result.response.payment.url, production)) {
     throw new Error("Unexpected DOKU checkout URL");
   }
-  return url.toString();
+  return new URL(result.response.payment.url).toString();
 }
