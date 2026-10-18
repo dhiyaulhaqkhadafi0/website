@@ -8,6 +8,7 @@ import {
 import { createServiceRoleClient } from "@/lib/supabase";
 import { grantGuestOrder, guestFingerprint } from "@/lib/guest-order";
 import { createDokuCheckout } from "@/lib/doku";
+import { isAllowedDokuCheckoutUrl } from "@/lib/doku-checkout-host";
 export async function POST(request: Request) {
   if (!sameOrigin(request)) return json({ error: "Origin tidak diizinkan." }, 403);
   const auth = request.headers.has("authorization") ? await requireUser(request) : null;
@@ -74,12 +75,11 @@ export async function POST(request: Request) {
   if (order.provider !== "doku") return json({ error: "Pesanan masih memakai gateway lama. Mulai pesanan baru." }, 409);
   if (order.payment_url) {
     try {
-      const saved = new URL(order.payment_url);
-      if (saved.protocol !== "https:" ||
-        !["sandbox.doku.com", "jokul.doku.com"].includes(saved.hostname)) {
-        throw new Error("Invalid checkout URL");
-      }
-      return json({ order_id: order.id, payment_url: saved.href });
+      if (!isAllowedDokuCheckoutUrl(
+        order.payment_url,
+        process.env.DOKU_IS_PRODUCTION === "true",
+      )) throw new Error("Invalid checkout URL");
+      return json({ order_id: order.id, payment_url: new URL(order.payment_url).href });
     } catch { return json({ error: "Link pembayaran tidak valid." }, 409); }
   }
   try {
