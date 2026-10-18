@@ -67,7 +67,7 @@ if (!clientId || !secretKey) {
       throw new Error('Invoice, nominal, atau payment URL tidak sesuai');
     }
     const url = new URL(paymentUrl);
-    if (url.protocol !== 'https:' || url.hostname !== 'sandbox.doku.com' ||
+    if (url.protocol !== 'https:' || !['sandbox.doku.com', 'staging.doku.com'].includes(url.hostname) ||
         url.username || url.password || url.port) {
       // Print ONLY the hostname for diagnosis. Full checkout URL includes a
       // bearer-like payment token and must never be logged or pasted in chat.
