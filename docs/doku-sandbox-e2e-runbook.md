@@ -1,3 +1,13 @@
+## Checkout API PASS but browser stayed on localhost — fixed in commit f12c58d
+
+Observed two local server log lines `PASS: new Rp59000 DOKU Sandbox Checkout created` but no browser redirect. The API and invoice validation worked; two **unpaid** test checkout orders were created in the temporary memory store. The original HTML had a 10-second meta refresh that could interrupt the form, and a `form-action 'self'` CSP that can block a browser's cross-site redirect chain.
+
+The revised script removes automatic meta refresh and makes POST `/checkout` show an explicit **Buka Pembayaran DOKU Sandbox** button on a success page. That button follows a unique, one-time `/open/{token}` localhost link that redirects via GET to the validated DOKU HTTPS checkout, keeping the sensitive payment URL only in Node memory. The link expires after ten minutes. Local dashboard status may be refreshed manually.
+
+To apply the update, stop only the Node test process with Ctrl+C (Cloudflare Tunnel service remains healthy), fetch/switch feature branch to the latest draft commit, and restart the Node script with Sandbox credentials. Do NOT pay a previous invoice: restarting loses the old in-memory test orders. Make ONE new checkout and click the explicit open-payment link once; keep Node running through the Mandiri VA simulation so the signed webhook can settle that exact test order. The original production Worker and databases are unaffected.
+
+---
+
 ## Browser checkout 'Access was denied' (localhost) — fix
 
 The dashboard root `GET http://127.0.0.1:8789/` returned HTTP 200; the user reported `Access was denied` after clicking the `Create Rp59.000 Sandbox checkout` button **without a browser redirect or any terminal log**. The initial localhost dashboard POST handler was rejecting the form when its `Origin` header was absent or `null` (possible under browser privacy/referrer settings). The handler now uses a **random hidden CSRF token per server start**, validates loopback IP and Host, and rejects cross-site Fetch Metadata, without requiring Origin to be present; it logs sanitized rejection reasons to help diagnosis.
