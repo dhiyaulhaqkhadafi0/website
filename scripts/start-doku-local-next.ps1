@@ -7,9 +7,9 @@ if (-not (Test-Path -LiteralPath $cfg)) {
   throw "Missing isolated .env.local. Run scripts/prepare-doku-local-env.ps1 first."
 }
 $contents = Get-Content -LiteralPath $cfg -Raw
-if ($contents -notmatch '(?m)^DOKU_LOCAL_STAGING_ONLY=true$' -or
-    $contents -notmatch '(?m)^DOKU_IS_PRODUCTION=false$' -or
-    $contents -notmatch '(?m)^NEXT_PUBLIC_SUPABASE_URL=http://(?:localhost|127\.0\.0\.1):54321$') {
+if ($contents -notmatch '(?m)^DOKU_LOCAL_STAGING_ONLY=true\r?$' -or
+    $contents -notmatch '(?m)^DOKU_IS_PRODUCTION=false\r?$' -or
+    $contents -notmatch '(?m)^NEXT_PUBLIC_SUPABASE_URL=http://(?:localhost|127\.0\.0\.1):54321\r?$') {
   throw "STOP: Unsafe environment (local-only guard missing)."
 }
 $binary = Join-Path $FeatureRoot "node_modules\.bin\next.cmd"
