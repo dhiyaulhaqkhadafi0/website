@@ -74,7 +74,7 @@ export default async function Page({
             Periksa status kembali
           </a>
         )}
-        {o?.status === "pending" && o.payment_url && /^https:\/\/app(?:\.sandbox)?\.midtrans\.com\//.test(o.payment_url) && <a className={s.secondary} href={o.payment_url}>Lanjutkan pembayaran <ArrowUpRight /></a>}
+        {o?.status === "pending" && o.payment_url && /^https:\/\/(?:sandbox\.doku\.com|jokul\.doku\.com)\//.test(o.payment_url) || /^https:\/\/app(?:\.sandbox)?\.midtrans\.com\//.test(o.payment_url) && <a className={s.secondary} href={o.payment_url}>Lanjutkan pembayaran <ArrowUpRight /></a>}
       </div>
     </section>
   );
