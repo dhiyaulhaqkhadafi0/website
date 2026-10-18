@@ -38,7 +38,12 @@ export async function POST(request: Request) {
   if (product.price > 0) {
     const expectedHost = new URL(process.env.DOKU_SITE_ORIGIN || "https://invalid.example").host;
     const requestHost = request.headers.get("host") || new URL(request.url).host;
-    if (requestHost !== expectedHost) return json({ error: "Checkout belum aktif pada domain ini." }, 503);
+    const localCheckout = process.env.DOKU_LOCAL_STAGING_ONLY === "true" &&
+      process.env.DOKU_IS_PRODUCTION !== "true" &&
+      ["localhost:3000", "127.0.0.1:3000"].includes(requestHost);
+    if (requestHost !== expectedHost && !localCheckout) {
+      return json({ error: "Checkout belum aktif pada domain ini." }, 503);
+    }
   }
   const db = createServiceRoleClient();
   let user = auth?.ok ? auth.user : null;
