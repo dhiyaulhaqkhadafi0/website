@@ -72,3 +72,20 @@ The next safe operation does NOT need Docker or Next.js:
 The script calls only api-sandbox.doku.com, creates a sandbox checkout session with Rp59,000 but no real charge, verifies response invoice/amount/host and prints NO secrets or full checkout URL.
 
 Note: database port mapping 0.0.0.0:54322 was observed while running; before any future run, review Windows Firewall/network exposure and never forward PostgreSQL, Auth, Studio or Storage publicly. A future end-to-end HTTPS callback must expose ONLY the app-level webhook, with local Supabase never accessible directly from the internet.
+
+## 7. DOKU Sandbox hostname observation and strict URL fix
+
+On 2026-10-18 the authenticated POST to api-sandbox.doku.com returned a successful Checkout API response (invoice/amount Rp59,000 matched), but the link host was **staging.doku.com** rather than the **sandbox.doku.com** hostname in current DOKU Checkout documentation. Official DOKU documentation also uses staging.doku.com for other DOKU sandbox services; the actual merchant response established the checkout hostname for this test account.
+
+- src/lib/doku-checkout-host.ts now permits exactly sandbox.doku.com and staging.doku.com when DOKU_IS_PRODUCTION=false; production permits only jokul.doku.com.
+- This exact allowlist is applied to checkout creation and stored payment links and to the success and orders pages. Never enable *.doku.com wildcards or non-DOKU domains.
+- scripts/test-doku-sandbox-api.mjs accepts those two specific Sandbox hostnames; it does not print full payment URLs.
+- scripts/test-doku-checkout-host.mjs checks allowed and denied host cases without external calls, on Node.js 24+.
+
+Next operator steps (Docker stays stopped):
+1. git fetch/switch detached worktree to latest feature/doku-sandbox-checkout.
+2. node scripts/test-doku-checkout-host.mjs (no secrets).
+3. Re-enter Sandbox DOKU credentials into private PowerShell environment and run node scripts/test-doku-sandbox-api.mjs once; remove credentials from environment immediately after.
+4. Share only PASS/FAILED; no full checkout links or credentials.
+
+A 200 response creating a checkout link is not a completed payment, and does not validate DOKU signed webhook, local application checkout, or fulfillment.
