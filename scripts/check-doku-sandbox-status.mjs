@@ -2,7 +2,8 @@
 // Does NOT create invoices, payments, webhooks, entitlements or orders.
 // Requires Node 24+ and DOKU Sandbox credentials in the process environment.
 // Docs: GET /orders/v1/status/{invoice}; HMAC GET signature has NO Digest.
-import { createHmac, randomUUID, createHash, timingSafeEqual } from "node:crypto";
+import { randomUUID } from "node:crypto";
+import { signedGetRequest, verifySignedGetResponse } from "./lib/doku-nonsnap-get-signature.mjs";
 
 const clientId = process.env.DOKU_CLIENT_ID || "";
 const secretKey = process.env.DOKU_SECRET_KEY || "";
@@ -15,25 +16,6 @@ function stop(reason) {
   process.exitCode = 1;
 }
 
-function responseSignatureIsValid(headers, raw, target, id, secret) {
-  const received = headers.get("signature");
-  if (!received) return true; // Some successful responses omit signature.
-  const timestamp = headers.get("response-timestamp") || "";
-  const signedId = headers.get("request-id") || id;
-  const signedClient = headers.get("client-id") || clientId;
-  if (!timestamp || signedId !== id || signedClient !== clientId) return false;
-  const payload = [
-    "Client-Id:" + clientId,
-    "Request-Id:" + id,
-    "Response-Timestamp:" + timestamp,
-    "Request-Target:" + target,
-    "Digest:" + createHash("sha256").update(raw, "utf8").digest("base64"),
-  ].join("\n");
-  const expected = "HMACSHA256=" + createHmac("sha256", secret).update(payload).digest("base64");
-  const a = Buffer.from(received);
-  const b = Buffer.from(expected);
-  return a.length === b.length && timingSafeEqual(a, b);
-}
 
 if (prodVars.some(v => process.env[v] === "true")) {
   stop("Production environment detected; Sandbox read-only script refused.");
@@ -45,15 +27,8 @@ if (prodVars.some(v => process.env[v] === "true")) {
   const target = "/orders/v1/status/" + encodeURIComponent(invoice);
   const requestId = randomUUID();
   const timestamp = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
-  // GET request: do NOT append Digest (official DOKU Non-SNAP signature spec).
-  const canonical = [
-    "Client-Id:" + clientId,
-    "Request-Id:" + requestId,
-    "Request-Timestamp:" + timestamp,
-    "Request-Target:" + target,
-  ].join("\n");
-  const hmac = "HMACSHA256=" +
-    createHmac("sha256", secretKey).update(canonical).digest("base64");
+  // GET request & response HMACs exclude Digest per official DOKU Non-SNAP spec.
+  const hmac = signedGetRequest(clientId, requestId, timestamp, target, secretKey);
   try {
     console.log("Checking EXISTING Rp59.000 checkout through DOKU Sandbox status API...");
     const response = await fetch("https://api-sandbox.doku.com" + target, {
@@ -72,8 +47,8 @@ if (prodVars.some(v => process.env[v] === "true")) {
     let parsed;
     try { parsed = JSON.parse(raw); } catch { throw new Error("Response is not JSON"); }
     if (!response.ok) throw new Error("Check Status API HTTP " + response.status);
-    if (!responseSignatureIsValid(response.headers, raw, target, requestId, secretKey)) {
-      throw new Error("DOKU status response signature mismatch");
+    if (!verifySignedGetResponse(response.headers, target, requestId, clientId, secretKey)) {
+      throw new Error("DOKU status response signature absent, incorrect, or header mismatch");
     }
     // DOKU documentation models status output like a notification body.
     const payload = parsed?.response?.transaction && parsed?.response?.order
