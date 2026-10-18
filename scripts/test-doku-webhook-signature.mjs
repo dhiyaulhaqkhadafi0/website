@@ -56,4 +56,4 @@ tampered.set("Client-Id", clientId);
 tampered.set("Request-Timestamp", "not-a-time");
 assert.equal(verifyDokuHmacSignature(tampered, payload, clientId, secret, path), false);
 
-console.log("PASS: 12 DOKU HMAC + invoice security assertions (fake credentials; no network)");
+console.log("PASS: DOKU HMAC + invoice security assertions (fake credentials; no network)");
