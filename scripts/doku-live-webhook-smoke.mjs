@@ -4,7 +4,7 @@
 // Test orders and their paid status exist ONLY in memory, not in the website DB.
 // Node >= 24. Reads sandbox keys from process environment, never prints them.
 import { createServer } from "node:http";
-import { randomUUID } from "node:crypto";
+import { randomUUID, timingSafeEqual } from "node:crypto";
 import {
   dokuInvoice, orderIdFromDokuInvoice, signature, sameSignature,
   verifyDokuHmacSignature,
@@ -21,6 +21,9 @@ const clientId = process.env.DOKU_CLIENT_ID || "";
 const secretKey = process.env.DOKU_SECRET_KEY || "";
 const orders = new Map();
 let working = false;
+// A random token in the local-only form prevents cross-site checkout creation.
+// Do not depend on Origin headers: some browser privacy modes omit or null them.
+const checkoutFormToken = randomUUID().replaceAll("-", "") + randomUUID().replaceAll("-", "");
 
 if (process.env.DOKU_IS_PRODUCTION === "true" ||
     !clientId || !secretKey || secretKey.length < 12 ||
@@ -55,7 +58,9 @@ function html() {
     "button{padding:14px 22px;cursor:pointer}</style><h1>DOKU Sandbox Webhook Test</h1>" +
     "<p>Only in-memory test orders. No real database, customer, or ebook access.</p>" +
     "<p>First configure a trusted public HTTPS notification URL to the webhook-only tunnel.</p>" +
-    "<form method='POST' action='/checkout'><button>Create Rp59.000 Sandbox checkout</button></form>" +
+    "<form method='POST' action='/checkout'>" +
+    "<input type='hidden' name='csrf' value='" + checkoutFormToken + "'>" +
+    "<button>Create Rp59.000 Sandbox checkout</button></form>" +
     "<h2>Webhook outcomes (auto refreshes)</h2><table><tr><th>Order prefix</th>" +
     "<th>Amount</th><th>Status</th><th>Verified DOKU SUCCESS?</th></tr>" +
     rows + "</table><p>Only local dashboard: http://127.0.0.1:8789</p></html>";
@@ -188,9 +193,51 @@ const dashboard = createServer(async (request, response) => {
     return;
   }
   if (request.method === "POST" && request.url === "/checkout") {
-    if (request.headers.origin !== "http://" + HOST + ":" + DASHBOARD_PORT ||
-        working || orders.size >= 5) {
-      response.writeHead(403); response.end(); return;
+    // Only the loopback dashboard can create a checkout. Browsers may omit
+    // Origin or send "null" on form submission under strict privacy policies.
+    // Instead enforce a secret CSRF form token plus Fetch Metadata checks.
+    const fetchSite = request.headers["sec-fetch-site"];
+    if (fetchSite && fetchSite !== "same-origin" && fetchSite !== "none") {
+      audit("REJECTED local checkout: cross-site request");
+      response.writeHead(403, { "Cache-Control": "no-store" });
+      response.end("Access denied: cross-site request");
+      return;
+    }
+    if (working || orders.size >= 5) {
+      audit("REJECTED local checkout: busy or test-order limit reached");
+      response.writeHead(409, { "Cache-Control": "no-store" });
+      response.end("Checkout busy or test-order limit reached");
+      return;
+    }
+    if (!String(request.headers["content-type"] || "").toLowerCase()
+      .startsWith("application/x-www-form-urlencoded")) {
+      audit("REJECTED local checkout: unexpected form content type");
+      response.writeHead(403, { "Cache-Control": "no-store" });
+      response.end("Access denied: invalid form");
+      return;
+    }
+    const chunks = [];
+    let bytes = 0;
+    for await (const part of request) {
+      bytes += part.length;
+      if (bytes > 2048) {
+        response.writeHead(413, { "Cache-Control": "no-store" });
+        response.end("Form too large");
+        return;
+      }
+      chunks.push(part);
+    }
+    const submittedToken = new URLSearchParams(
+      Buffer.concat(chunks).toString("utf8"),
+    ).get("csrf") || "";
+    const actual = Buffer.from(submittedToken);
+    const expected = Buffer.from(checkoutFormToken);
+    if (actual.length !== expected.length ||
+        !timingSafeEqual(actual, expected)) {
+      audit("REJECTED local checkout: invalid CSRF form token");
+      response.writeHead(403, { "Cache-Control": "no-store" });
+      response.end("Access denied: refresh dashboard before trying again");
+      return;
     }
     working = true;
     try {
