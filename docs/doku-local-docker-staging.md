@@ -50,3 +50,25 @@ Supabase docs:
 https://supabase.com/docs/guides/local-development/cli/getting-started
 https://supabase.com/docs/guides/local-development/cli-workflows
 https://supabase.com/docs/reference/cli/supabase-start
+
+## 6. Checkpoint 2026-10-18: SQL smoke PASS; next light DOKU API probe
+
+The user ran the local PostgreSQL-only Supabase stack. All 4 local migrations applied and the SQL smoke test (scripts/test-doku-local-db.ps1) PASSED:
+- correct Rp59,000 pending DOKU order
+- no entitlement before payment
+- idempotent create and payment callback
+- exactly one entitlement after paid
+- rollback removed synthetic records
+The user then stopped the local database safely. This is *not* a full API/webhook end-to-end test.
+
+The paid checkout gate in src/lib/commerce-server.ts has since been corrected to use dokuConfigured() instead of requiring legacy Midtrans settings.
+
+The next safe operation does NOT need Docker or Next.js:
+1. Sync feature/doku-sandbox-checkout worktree.
+2. Set DOKU_CLIENT_ID and DOKU_SECRET_KEY in the *current PowerShell process* using Sandbox credentials and private prompts; never commit or paste to chat.
+3. Run node scripts/test-doku-sandbox-api.mjs.
+4. Remove both environment variables after the run.
+5. Share only PASS/FAILED lines, not keys, URL tokens or raw API payloads.
+The script calls only api-sandbox.doku.com, creates a sandbox checkout session with Rp59,000 but no real charge, verifies response invoice/amount/host and prints NO secrets or full checkout URL.
+
+Note: database port mapping 0.0.0.0:54322 was observed while running; before any future run, review Windows Firewall/network exposure and never forward PostgreSQL, Auth, Studio or Storage publicly. A future end-to-end HTTPS callback must expose ONLY the app-level webhook, with local Supabase never accessible directly from the internet.
