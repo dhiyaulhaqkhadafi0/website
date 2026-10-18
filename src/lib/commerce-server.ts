@@ -10,6 +10,7 @@ import { createClient } from "@supabase/supabase-js";
 import { requireBlogAdmin } from "./blog-auth";
 import { safeReturnTo, type Product } from "./commerce-types";
 import { hasSameOrigin } from "./request-origin";
+import { dokuConfigured } from "./doku";
 export const SESSION_COOKIE = "khadafi-access";
 export const json = (data: unknown, status = 200) =>
   Response.json(data, {
