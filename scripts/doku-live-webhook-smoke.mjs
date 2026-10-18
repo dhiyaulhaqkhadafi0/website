@@ -17,6 +17,10 @@ const HOST = "127.0.0.1";
 const WEBHOOK_PORT = 8788;
 const DASHBOARD_PORT = 8789;
 const API_PATH = "/checkout/v1/payment";
+// Sandbox-only experiment: explicit HTTPS notification destination on the request.
+// Must match the path already registered on DOKU Sandbox Back Office.
+const SANDBOX_NOTIFICATION_URL =
+  "https://doku-staging.khadafidaffa.com/api/commerce/doku/webhook";
 const clientId = process.env.DOKU_CLIENT_ID || "";
 const secretKey = process.env.DOKU_SECRET_KEY || "";
 const orders = new Map();
@@ -73,6 +77,7 @@ async function createCheckout() {
   const body = JSON.stringify({
     order: { amount, invoice_number: invoice, currency: "IDR", auto_redirect: false },
     payment: { payment_due_date: 60 },
+    additional_info: { override_notification_url: SANDBOX_NOTIFICATION_URL },
   });
   const requestId = randomUUID();
   const timestamp = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
@@ -114,6 +119,7 @@ async function createCheckout() {
   }
   orders.set(id, { id, amount, paid: false, signedSuccessReceived: false });
   audit("PASS: new Rp59000 DOKU Sandbox Checkout created; full payment URL was not logged");
+  audit("INFO: new Checkout request specified the dedicated Sandbox Notification URL explicitly");
   return url;
 }
 const deps = {
