@@ -68,8 +68,14 @@ if (!clientId || !secretKey) {
     }
     const url = new URL(paymentUrl);
     if (url.protocol !== 'https:' || url.hostname !== 'sandbox.doku.com' ||
-        url.username || url.password) {
-      throw new Error('Host checkout Sandbox tidak sesuai');
+        url.username || url.password || url.port) {
+      // Print ONLY the hostname for diagnosis. Full checkout URL includes a
+      // bearer-like payment token and must never be logged or pasted in chat.
+      const host = /^[a-z0-9.-]{1,253}$/i.test(url.hostname) ? url.hostname : '(invalid hostname)';
+      console.error('DIAGNOSTIC: DOKU returned checkout hostname: ' + host);
+      console.error('DIAGNOSTIC: HTTPS=' + (url.protocol === 'https:') +
+                    ', default port=' + !url.port);
+      throw new Error('Host checkout Sandbox tidak sesuai daftar host yang diizinkan; link diblokir.');
     }
     console.log('PASS: Kredensial Sandbox diterima dan checkout dibuat.');
     console.log('PASS: Invoice dan nominal Rp59.000 sesuai.');
