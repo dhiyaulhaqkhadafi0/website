@@ -1,3 +1,30 @@
+# LOW-RAM OPTION: DOKU browser simulator smoke test (no Docker)
+
+If the machine has only ~1 GB RAM free, do not run minimal Supabase + Next.js. Instead, use `scripts/open-doku-sandbox-checkout.mjs`, which reuses DOKU's authenticated API and the exact strict URL host validator. It requires only Node 24 and temporary Sandbox credentials; the DOKU checkout link stays in memory, not on screen or disk.
+
+```powershell
+git -C "E:\khadafi-doku-feature" fetch origin feature/doku-sandbox-checkout
+git -C "E:\khadafi-doku-feature" switch --detach origin/feature/doku-sandbox-checkout
+$env:DOKU_CLIENT_ID = Read-Host "Sandbox Client ID"
+$secret = Read-Host "Sandbox Active Secret Key" -AsSecureString
+try {
+  $env:DOKU_SECRET_KEY = [System.Net.NetworkCredential]::new("", $secret).Password
+  node "E:\khadafi-doku-feature\scripts\open-doku-sandbox-checkout.mjs"
+} finally {
+  Remove-Item Env:\DOKU_CLIENT_ID -ErrorAction SilentlyContinue
+  Remove-Item Env:\DOKU_SECRET_KEY -ErrorAction SilentlyContinue
+  Remove-Variable secret -ErrorAction SilentlyContinue
+}
+```
+
+The script will display a one-time `http://127.0.0.1:<random-port>/open/<random-id>` link. Open this LOCAL link in Chrome within ten minutes; the local process redirects the browser once to the authenticated Sandbox checkout link on `staging.doku.com` / `sandbox.doku.com`.
+
+Only use payment channels enabled in this merchant's Sandbox account. If Mandiri VA appears, take its SANDBOX VA number to the official DOKU Mandiri Payment Simulator, never an actual bank app. If the merchant doesn't offer Mandiri, do not invent a VA or attempt real payment.
+
+**This is only a DOKU hosted-page and Payment Simulator smoke test. It does NOT create a `commerce_orders` record and has NO app webhook/entitlement**, so do not claim full purchase, callback, access to digital files or webhook passed. DOKU can send notifications only to a separately configured public Notification URL, and this path creates no app order or callback. Keep production worker and database unchanged. Stop here once payment simulator results are recorded; finish full E2E later on a machine/staging host with enough resources.
+
+---
+
 # Khadafi Studio — DOKU Sandbox Local E2E Operator Guide
 
 Status: **prepared in draft PR only**. Do NOT assume HTTP webhook, real VA simulation, Cloudflare Tunnel, or download E2E have passed. No production database or merchant configuration was changed by the scripts.
