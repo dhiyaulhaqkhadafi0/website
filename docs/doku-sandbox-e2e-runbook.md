@@ -1,3 +1,24 @@
+## NEXT: HTTP webhook contract (low RAM, no Docker)
+
+After DOKU confirmed the sandbox Mandiri VA payment, the next step is **not** to repeat the payment. A shared pure HTTP handler (`src/lib/doku-webhook-handler.ts`) is called by the real Next.js route `/api/commerce/doku/webhook`.
+
+Run this in PowerShell:
+
+```powershell
+git -C "E:\khadafi-doku-feature" fetch origin feature/doku-sandbox-checkout
+git -C "E:\khadafi-doku-feature" switch --detach origin/feature/doku-sandbox-checkout
+node "E:\khadafi-doku-feature\scripts\test-doku-webhook-http.mjs"
+```
+
+This binds an ephemeral **loopback-only** Node HTTP server and exercises the same handler using synthetic HMAC-signed Mandiri VA JSON and an injected fake order store. It covers unsigned or tampered notifications, status handling, wrong invoice/amount, retries after database errors, a valid SUCCESS, duplicate SUCCESS, and protection of an unrelated unpaid order. It needs no real merchant credentials, Supabase API, cloud resources, DOKU account, payments, or production changes.
+
+Expected end line after the test has actually passed:
+`SUCCESS: 15 HTTP webhook contract tests passed; no database or live gateway used.`
+
+**Important limit:** Passing this test does not prove DOKU's real notification reaches the website, nor that the real PostgreSQL RPC and private PDF work together. Those remain blocked by staging runtime availability/host RAM and require a subsequent isolated end-to-end test. Do not merge the draft PR solely on this result.
+
+---
+
 ## Sandbox payment milestone — 2026-10-18 (user-verified screenshots)
 
 **PASS — DOKU hosted Checkout and Mandiri VA Payment Simulator** using the standalone low-RAM script `scripts/open-doku-sandbox-checkout.mjs`. The user observed:
