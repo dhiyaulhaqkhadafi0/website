@@ -1,3 +1,20 @@
+## Sandbox payment milestone — 2026-10-18 (user-verified screenshots)
+
+**PASS — DOKU hosted Checkout and Mandiri VA Payment Simulator** using the standalone low-RAM script `scripts/open-doku-sandbox-checkout.mjs`. The user observed:
+
+- DOKU Sandbox hosted checkout at `staging.doku.com` with Rp59,000 and Mandiri VA issued;
+- successful inquiry of the test VA at the official DOKU Mandiri VA simulator, matching Rp59,000;
+- simulator displayed **Payment Success**;
+- DOKU hosted Checkout displayed **Payment Successful**, matching Rp59,000 and Virtual Account Mandiri.
+
+**No real money was transferred.** Do not store or reproduce the test VA, full invoice, access URLs, API credentials, or screenshots in repository text.
+
+**Not yet validated:** DOKU webhook delivered to a Khadafi endpoint, signed notification parsing, local/isolated commerce order transitions, private PDF access and full app/DB end-to-end. The standalone script generated a DOKU invoice without creating any application order. Do not merge the draft PR or deploy Sandbox config to production.
+
+**Resource blocker:** 8 GB Windows host with only ~0.56–1.05 GB free RAM during Supabase startup; do not force the full local stack. Consider an isolated staging runtime or offline webhook HTTP contract test as a next incremental step. Preserve local database volumes.
+
+---
+
 # LOW-RAM OPTION: DOKU browser simulator smoke test (no Docker)
 
 If the machine has only ~1 GB RAM free, do not run minimal Supabase + Next.js. Instead, use `scripts/open-doku-sandbox-checkout.mjs`, which reuses DOKU's authenticated API and the exact strict URL host validator. It requires only Node 24 and temporary Sandbox credentials; the DOKU checkout link stays in memory, not on screen or disk.
