@@ -32,6 +32,11 @@ export async function POST(request: Request) {
     return json({ error: "Data checkout tidak valid." }, 400);
   const product = await publishedProduct(p.slug);
   if (!product) return json({ error: "Produk tidak tersedia." }, 404);
+  if (product.price > 0) {
+    const expectedHost = new URL(process.env.DOKU_SITE_ORIGIN || "https://invalid.example").host;
+    const requestHost = request.headers.get("host") || new URL(request.url).host;
+    if (requestHost !== expectedHost) return json({ error: "Checkout belum aktif pada domain ini." }, 503);
+  }
   if (!commerceConfigured(product.price > 0))
     return json(
       {
