@@ -6,6 +6,14 @@ import { createClient } from '@supabase/supabase-js';
 const fallbackSupabaseUrl = 'https://mykgtajanxczdnzekycl.supabase.co';
 const fallbackSupabasePublishableKey = 'sb_publishable_WOicVaI6VxFP0g4X0dJrlA_LX4hBCGI';
 
+// In the DOKU local staging workflow, NEVER fall back to the production database.
+if (process.env.DOKU_LOCAL_STAGING_ONLY === 'true' &&
+    !['http://127.0.0.1:54321', 'http://localhost:54321'].includes(
+      process.env.NEXT_PUBLIC_SUPABASE_URL || '',
+    )) {
+  throw new Error('Unsafe DOKU local staging: Supabase must be localhost:54321.');
+}
+
 export const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || fallbackSupabaseUrl;
 export const supabasePublishableKey =
   process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
