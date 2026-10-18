@@ -1,3 +1,36 @@
+## LIVE DOKU-signed webhook smoke test (low RAM, no database)
+
+The user has reported **PASS: 15 HTTP webhook contract tests**. Those are synthetic test signatures, NOT actual DOKU delivery.
+
+The separate `scripts/doku-live-webhook-smoke.mjs` now provides a low-RAM real-notification test using the **same HMAC verification and HTTP handler** as the Next.js route, and an isolated in-memory test order store. It binds:
+- `127.0.0.1:8788`: ONLY `POST /api/commerce/doku/webhook` (everything else is 404). Route ONLY this port through a dedicated, authenticated admin-managed Cloudflare Tunnel public hostname `doku-staging.khadafidaffa.com`, with NO Cloudflare Access login challenge on the DOKU notification endpoint.
+- `127.0.0.1:8789`: local-only human status page + manual new Sandbox checkout. Do NOT publish this port.
+
+From an updated feature worktree, no Docker needed:
+
+```powershell
+$env:DOKU_CLIENT_ID = Read-Host "Sandbox Client ID"
+$secret = Read-Host "Sandbox Active Secret Key" -AsSecureString
+try {
+  $env:DOKU_SECRET_KEY = [System.Net.NetworkCredential]::new("", $secret).Password
+  node "E:\khadafi-doku-feature\scripts\doku-live-webhook-smoke.mjs"
+} finally {
+  Remove-Item Env:\DOKU_CLIENT_ID -ErrorAction SilentlyContinue
+  Remove-Item Env:\DOKU_SECRET_KEY -ErrorAction SilentlyContinue
+  Remove-Variable secret -ErrorAction SilentlyContinue
+}
+```
+
+Leave terminal open. Verify `http://127.0.0.1:8789/` is local status UI and the webhook port rejects GET (404) and unsigned POST (401). Do NOT click Create Checkout until the named tunnel is healthy, the HTTPS webhook URL returns 401 to unsigned POST, and **the DOKU SANDBOX Back Office Mandiri VA Notification URL** is configured to exactly `https://doku-staging.khadafidaffa.com/api/commerce/doku/webhook`. Do not change production merchant/worker settings.
+
+Once ready, create a NEW Rp59,000 Checkout using the button on the local dashboard. It sends only to `api-sandbox.doku.com`, validates order/amount/strict hostname, and redirects to hosted DOKU. Pick Mandiri VA and use the official sandbox simulator. The server marks the synthetic order PAID in memory only when an authentically signed DOKU SUCCESS arrives. Watch terminal and local dashboard.
+
+**Limits:** No Supabase orders, no real e-book entitlements, no real customer data, no real money, no production changes. This test is a genuine DOKU notification-delivery check, but still NOT full commerce E2E. Do not claim live webhook success until test has run and its output confirms it. Do not reuse earlier paid checkout: it was created before the webhook was connected and is not part of this in-memory test order.
+
+After the test, STOP (Ctrl+C) the Node server and `cloudflared` and remove/disable the dedicated tunnel route to eliminate unintended public exposure.
+
+---
+
 ## NEXT: HTTP webhook contract (low RAM, no Docker)
 
 After DOKU confirmed the sandbox Mandiri VA payment, the next step is **not** to repeat the payment. A shared pure HTTP handler (`src/lib/doku-webhook-handler.ts`) is called by the real Next.js route `/api/commerce/doku/webhook`.
