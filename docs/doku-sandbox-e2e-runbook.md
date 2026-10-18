@@ -1,3 +1,20 @@
+## DOKU Back Office confirms SUCCESS, Notification Center has no record (2026-10-19 WIB)
+
+User-provided screenshots of DOKU Sandbox show that one Checkout order of Rp59,000:
+- appears in Reports > Checkout Orders with status **Lunas**;
+- shows Mandiri VA transaction history **SUCCESS**, local time 2026-10-19 00:51:26 WIB;
+- has no `order.callback_url` (shown as `-`), which is browser navigation, NOT the HTTP Notification URL and is optional for Mandiri;
+- shows no record when searching HTTP Notification Center by invoice;
+- remains `PENDING / NO` in local in-memory dashboard.
+
+A manual **unsigned POST** to the public staging webhook through Cloudflare returns **401 Invalid DOKU signature** *and logs HTTP status 401 in the active local Node process*, confirming Cloudflare -> local webhook routing and signature rejection work. This does NOT prove real DOKU notification delivery.
+
+The Sandbox Mandiri Non-SNAP API v1.1 Payment Notification URL was visibly configured to the correct dedicated HTTPS staging endpoint. Existing test Checkout requests omitted the optional `additional_info.override_notification_url`. Per official DOKU Checkout docs this may override per-channel Notification URL if the same notification path was configured in Back Office. This is only a **diagnostic experiment**, not proven to fix any root cause. In commit 61d90b3 the standalone *Sandbox-only* smoke test now sets `additional_info.override_notification_url` to the exact pre-registered HTTPS staging webhook path; NO production files were changed.
+
+**Next choice:** Since no original DOKU notification appears in Back Office, contact DOKU technical support with the paid Sandbox invoice and timeline to trace delivery, before repeating further paid simulations. If repeating one final no-money Sandbox experiment, restart the Node smoke server after syncing the branch, create a fresh local test order, confirm explicit override was requested, simulate Mandiri VA again once, and inspect HTTP Notification Center + local logs. Restart loses old in-memory order and must never be mistaken for a production payment. Do not expose keys or URLs with checkout tokens. Production stays unchanged; draft PR remains unmerged.
+
+---
+
 ## Checkout API PASS but browser stayed on localhost — fixed in commit f12c58d
 
 Observed two local server log lines `PASS: new Rp59000 DOKU Sandbox Checkout created` but no browser redirect. The API and invoice validation worked; two **unpaid** test checkout orders were created in the temporary memory store. The original HTML had a 10-second meta refresh that could interrupt the form, and a `form-action 'self'` CSP that can block a browser's cross-site redirect chain.
