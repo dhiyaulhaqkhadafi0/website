@@ -1,3 +1,18 @@
+## Browser checkout 'Access was denied' (localhost) — fix
+
+The dashboard root `GET http://127.0.0.1:8789/` returned HTTP 200; the user reported `Access was denied` after clicking the `Create Rp59.000 Sandbox checkout` button **without a browser redirect or any terminal log**. The initial localhost dashboard POST handler was rejecting the form when its `Origin` header was absent or `null` (possible under browser privacy/referrer settings). The handler now uses a **random hidden CSRF token per server start**, validates loopback IP and Host, and rejects cross-site Fetch Metadata, without requiring Origin to be present; it logs sanitized rejection reasons to help diagnosis.
+
+To apply the change:
+1. Keep the Cloudflare Tunnel Windows service running. On the Node console, press **Ctrl+C** to stop the existing script (this does not touch the saved DOKU Sandbox Notification URL).
+2. Run `git -C "E:\khadafi-doku-feature" fetch origin feature/doku-sandbox-checkout` then `git -C "E:\khadafi-doku-feature" switch --detach origin/feature/doku-sandbox-checkout`.
+3. Re-run `doku-live-webhook-smoke.mjs` with **SANDBOX** credentials entered privately as above. Do not post secrets in chat.
+4. Open `http://127.0.0.1:8789/` in Chrome directly and reload to obtain the fresh CSRF form token. Click Create Checkout ONCE. The local terminal should log `PASS: new Rp59000 DOKU Sandbox Checkout created` and Chrome should redirect to the `staging.doku.com` checkout.
+5. If it still fails, capture only HTTP status and sanitized `REJECTED local checkout` or `FAILED: checkout creation` log, never a complete DOKU payment URL or credentials.
+
+Do not make another simulated payment until this browser button successfully creates a new in-memory test order and the public webhook relay remains healthy.
+
+---
+
 ## LIVE DOKU-signed webhook smoke test (low RAM, no database)
 
 The user has reported **PASS: 15 HTTP webhook contract tests**. Those are synthetic test signatures, NOT actual DOKU delivery.
