@@ -13,13 +13,13 @@ export function dokuInvoice(orderId: string): string {
 
 export function orderIdFromDokuInvoice(invoice: string): string | null {
   if (!/^KS[0-9A-Z]{1,25}$/.test(invoice)) return null;
-  let value = 0n;
+  let value = BigInt(0);
   for (const char of invoice.slice(2)) {
     const digit = parseInt(char, 36);
     if (Number.isNaN(digit)) return null;
-    value = value * 36n + BigInt(digit);
+    value = value * BigInt(36) + BigInt(digit);
   }
-  if (value > (1n << 128n) - 1n) return null;
+  if (value > (BigInt(1) << BigInt(128)) - BigInt(1)) return null;
   const hex = value.toString(16).padStart(32, "0");
   const id = hex.slice(0, 8) + "-" + hex.slice(8, 12) + "-" + hex.slice(12, 16) + "-" + hex.slice(16, 20) + "-" + hex.slice(20);
   return dokuInvoice(id) === invoice ? id : null;
