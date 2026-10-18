@@ -15,6 +15,9 @@ function credentials() {
 export function dokuConfigured() {
   const production = process.env.DOKU_IS_PRODUCTION === "true";
   const origin = process.env.DOKU_SITE_ORIGIN || "";
+  if (process.env.DOKU_LOCAL_STAGING_ONLY === "true" &&
+      (production || !["http://127.0.0.1:54321", "http://localhost:54321"]
+        .includes(process.env.NEXT_PUBLIC_SUPABASE_URL || ""))) return false;
   // Sandbox must always use an explicitly configured non-production Supabase.
   // src/lib/supabase.ts has a legacy production URL fallback; do not use it here.
   const dbOrigin = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
@@ -46,13 +49,17 @@ export async function createDokuCheckout(input: {
   const { clientId, secretKey } = credentials();
   const production = process.env.DOKU_IS_PRODUCTION === "true";
   const invoice = dokuInvoice(input.orderId);
+  // Only on the isolated single-machine staging setup: DOKU's Back to Merchant
+  // button returns to localhost, while DOKU webhook traffic uses the public tunnel.
+  const callbackOrigin = process.env.DOKU_LOCAL_STAGING_ONLY === "true"
+    ? "http://localhost:3000" : process.env.DOKU_SITE_ORIGIN;
   const body = JSON.stringify({
     order: {
       amount: input.amount,
       invoice_number: invoice,
       currency: "IDR",
-      callback_url: process.env.DOKU_SITE_ORIGIN + "/checkout/success?order=" + input.orderId,
-      callback_url_result: process.env.DOKU_SITE_ORIGIN + "/checkout/success?order=" + input.orderId,
+      callback_url: callbackOrigin + "/checkout/success?order=" + input.orderId,
+      callback_url_result: callbackOrigin + "/checkout/success?order=" + input.orderId,
       auto_redirect: false,
     },
     payment: { payment_due_date: 60 },
