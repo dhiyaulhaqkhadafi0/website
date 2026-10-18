@@ -21,6 +21,7 @@ const clientId = process.env.DOKU_CLIENT_ID || "";
 const secretKey = process.env.DOKU_SECRET_KEY || "";
 const orders = new Map();
 let working = false;
+const checkoutLinks = new Map(); // Random local-only, single-use browser redirects.
 // A random token in the local-only form prevents cross-site checkout creation.
 // Do not depend on Origin headers: some browser privacy modes omit or null them.
 const checkoutFormToken = randomUUID().replaceAll("-", "") + randomUUID().replaceAll("-", "");
@@ -52,7 +53,7 @@ function html() {
       "</td><td>" + (o.signed_success_received ? "YES" : "NO") + "</td></tr>").join("")
     : "<tr><td colspan='4'>No test order created yet</td></tr>";
   return "<!doctype html><html lang='id'><meta charset='utf-8'>" +
-    "<meta http-equiv='refresh' content='10'><title>Khadafi DOKU Sandbox Test</title>" +
+    "<title>Khadafi DOKU Sandbox Test</title>" +
     "<style>body{font:16px system-ui;margin:3em auto;max-width:750px;line-height:1.6}" +
     "table{border-collapse:collapse;width:100%}td,th{border:1px solid #ddd;padding:12px}" +
     "button{padding:14px 22px;cursor:pointer}</style><h1>DOKU Sandbox Webhook Test</h1>" +
@@ -61,7 +62,7 @@ function html() {
     "<form method='POST' action='/checkout'>" +
     "<input type='hidden' name='csrf' value='" + checkoutFormToken + "'>" +
     "<button>Create Rp59.000 Sandbox checkout</button></form>" +
-    "<h2>Webhook outcomes (auto refreshes)</h2><table><tr><th>Order prefix</th>" +
+    "<h2>Webhook outcomes (refresh manually to update)</h2><table><tr><th>Order prefix</th>" +
     "<th>Amount</th><th>Status</th><th>Verified DOKU SUCCESS?</th></tr>" +
     rows + "</table><p>Only local dashboard: http://127.0.0.1:8789</p></html>";
 }
@@ -192,6 +193,28 @@ const dashboard = createServer(async (request, response) => {
     response.end(html());
     return;
   }
+  // Explicit local link avoids browser form-action restrictions on external
+  // redirect chains. The payment URL stays server-side, and the link is
+  // a random, single-use token with a short expiration.
+  if (request.method === "GET" && request.url?.startsWith("/open/")) {
+    const token = request.url.slice("/open/".length);
+    const entry = checkoutLinks.get(token);
+    checkoutLinks.delete(token);
+    if (!entry || Date.now() > entry.expiresAt) {
+      response.writeHead(404, { "Cache-Control": "no-store" });
+      response.end("Link expired. Return to local dashboard.");
+      return;
+    }
+    response.writeHead(302, {
+      "Location": entry.url,
+      "Cache-Control": "no-store",
+      "Referrer-Policy": "no-referrer",
+      "X-Content-Type-Options": "nosniff",
+    });
+    response.end();
+    audit("INFO: opened DOKU Sandbox checkout from local one-time link");
+    return;
+  }
   if (request.method === "POST" && request.url === "/checkout") {
     // Only the loopback dashboard can create a checkout. Browsers may omit
     // Origin or send "null" on form submission under strict privacy policies.
@@ -242,11 +265,33 @@ const dashboard = createServer(async (request, response) => {
     working = true;
     try {
       const url = await createCheckout();
-      response.writeHead(303, {
-        Location: url, "Cache-Control": "no-store",
+      const token = randomUUID().replaceAll("-", "") + randomUUID().replaceAll("-", "");
+      checkoutLinks.set(token, { url, expiresAt: Date.now() + 10 * 60 * 1000 });
+      // Do NOT redirect a submitted form directly to an external URL:
+      // browsers enforce form-action CSP across redirect hops.
+      // Serve a page with an explicit localhost link. No DOKU token is
+      // rendered in HTML, stored on disk, or logged.
+      response.writeHead(200, {
+        "Content-Type": "text/html; charset=utf-8",
+        "Cache-Control": "no-store",
         "Referrer-Policy": "no-referrer",
+        "X-Content-Type-Options": "nosniff",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'",
       });
-      response.end();
+      response.end(
+        "<!doctype html><html lang='id'><meta charset='utf-8'>" +
+        "<title>DOKU Sandbox Checkout Ready</title>" +
+        "<style>body{font:16px system-ui;margin:3em auto;max-width:700px;line-height:1.7}" +
+        "a{display:inline-block;padding:14px 20px;background:#222;color:#fff;border-radius:8px}</style>" +
+        "<h1>Checkout DOKU Sandbox berhasil dibuat</h1>" +
+        "<p>Rp59.000 &mdash; percobaan, tanpa transfer bank sungguhan.</p>" +
+        "<p><a href='/open/" + token + "'>Buka Pembayaran DOKU Sandbox</a></p>" +
+        "<p>Tautan lokal ini hanya berlaku sekali, selama 10 menit. " +
+        "Gunakan simulator resmi Mandiri VA; jangan membayar dengan aplikasi bank nyata.</p>" +
+        "<p>Jika link kedaluwarsa, buka dashboard lokal lagi. " +
+        "Pantau status di <a href='/'>Dashboard lokal</a> setelah simulasi.</p></html>",
+      );
+      audit("INFO: one-time local payment link ready for user click");
     } catch (error) {
       audit("FAILED: checkout creation " + (error instanceof Error ? error.message : "unknown"));
       response.writeHead(502, { "Content-Type": "text/plain", "Cache-Control": "no-store" });
