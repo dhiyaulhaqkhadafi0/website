@@ -84,10 +84,6 @@ export function sameOrigin(request: Request) {
 export function commerceConfigured(paid = false) {
   return Boolean(
     process.env.SUPABASE_SERVICE_ROLE_KEY &&
-      (!paid ||
-        (process.env.MIDTRANS_SERVER_KEY &&
-          process.env.MIDTRANS_ENABLED === "true" &&
-          (process.env.NODE_ENV !== "production" ||
-            process.env.MIDTRANS_IS_PRODUCTION === "true"))),
+      (!paid || dokuConfigured()),
   );
 }
