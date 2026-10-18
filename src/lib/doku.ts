@@ -58,6 +58,10 @@ function credentials() {
 export function dokuConfigured() {
   const production = process.env.DOKU_IS_PRODUCTION === "true";
   const origin = process.env.DOKU_SITE_ORIGIN || "";
+  // Sandbox must always use an explicitly configured non-production Supabase.
+  // src/lib/supabase.ts has a legacy production URL fallback; do not use it here.
+  const dbOrigin = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
+  if (!production && (!dbOrigin || /mykgtajanxczdnzekycl\.supabase\.co/i.test(dbOrigin))) return false;
   try {
     const url = new URL(origin);
     const validOrigin = url.protocol === "https:" && url.origin === origin && !url.username && !url.password;
