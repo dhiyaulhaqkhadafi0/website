@@ -1,3 +1,19 @@
+## Fixed diagnostic Check Status signature mismatch (2026-10-19)
+
+On a previously paid Rp59,000 Sandbox invoice, `scripts/check-doku-sandbox-status.mjs` returned `DOKU status response signature mismatch`. The diagnostic script had a local bug: its **GET request** signature correctly omitted `Digest`, but its **GET response** verifier incorrectly added `Digest` when calculating DOKU HMAC. Official Non-SNAP signature documentation says `Digest` is for POST; it does not belong in GET response HMAC canonicalization.
+
+Fix in the draft branch: `scripts/lib/doku-nonsnap-get-signature.mjs` shares strict request and response GET HMAC signing/verifying without `Digest`, requires the response signature header rather than accepting it when missing, and validates client ID, request ID, response timestamp and signature in constant time. `scripts/test-doku-get-status-signature.mjs` is a synthetic offline regression test. No real app entitlement/database/webhook code was changed.
+
+Run in PowerShell after syncing the feature branch:
+
+```powershell
+node "E:\khadafi-doku-feature\scripts\test-doku-get-status-signature.mjs"
+```
+
+Then retry the read-only status command using the **same existing, paid Sandbox invoice**. Do NOT simulate another payment or restart the Node webhook process. If the Check Status API still rejects the response signature, stop and collect ONLY harmless diagnostics such as which expected response headers are present, never expose raw headers, body with VA information, checkout URLs or secret keys. Never bypass HMAC verification to mark a sale paid.
+
+---
+
 ## BLOCKER: real Sandbox payment SUCCESS but webhook not delivered (second test)
 
 User-provided evidence after the optional `override_notification_url` was added: official Mandiri VA Simulator shows **Payment Success** on another Rp59,000 sandbox order, while the new local in-memory order (`541689cd...`, truncated) remained **PENDING / NO**. Node logs confirmed the new Checkout creation included `additional_info.override_notification_url`, but still showed **no incoming webhook requests after payment**. Prior DOKU Back Office screenshots showed a paid Mandiri Checkout and an empty Notification Center for the exact invoice. Public unsigned POST to the tunnel was logged as HTTP 401 by the Node process, proving public routing works. Conclusion: real signed webhook delivery has **not** been observed or verified. Do not claim automatic entitlement; production is unchanged.
