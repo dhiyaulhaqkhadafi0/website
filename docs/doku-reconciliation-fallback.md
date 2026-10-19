@@ -1,3 +1,19 @@
+## Verified offline reconciliation test — user laptop, 2026-10-19
+
+The user synced draft commit `d024af1` and ran:
+
+```powershell
+node "E:\khadafi-doku-feature\scripts\test-doku-reconciliation.mjs"
+```
+
+**PASS**: signed Sandbox Check Status SUCCESS, malformed/tampered status rejection, mismatched signed payment amount not triggering settlement, all non-SUCCESS statuses locked, invalid order/provider/URL/age skipped, wrong bank channel rejected, failed persistence not granting access, repeated SUCCESS idempotent, and batch capped at ten. Final line:
+
+`SUCCESS: DOKU reconciliation offline tests passed; no live gateway or DB touched`
+
+The Node `MODULE_TYPELESS_PACKAGE_JSON` warning is nonfatal. This verified the **offline mocks and algorithm**, not a real PostgreSQL fulfillment flow or automated job. The existing isolated local SQL test had already passed and rolled back; its results are distinct from this run. Due to RAM constraints, do not run full Supabase/Next.js until a safe isolated staging runtime is available. Draft PR remains unmerged; never set reconciliation enable flags in production.
+
+---
+
 ## Offline regression fix — status amount vs. DB order total (2026-10-19)
 
 The user's first `node scripts/test-doku-reconciliation.mjs` execution on commit `40765d6` passed its initial authenticated fake Sandbox Check Status response, then failed at `AssertionError: Missing expected rejection`. The problem was a faulty assertion, **not evidence of unauthorized entitlement**: the status API helper authentically returns a positive integer amount (including a valid signed value different from the expected product price); only the reconciliation layer has access to the local database order total and must reject the mismatch before calling the privileged RPC.
