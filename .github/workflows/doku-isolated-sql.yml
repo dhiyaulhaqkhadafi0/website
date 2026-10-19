@@ -1,0 +1,93 @@
+# DOKU Sandbox database integration test on temporary GitHub runner.
+# ONLY fake data; never calls remote Supabase, DOKU API or Cloudflare.
+# Free standard runner because this repository is public (not a larger runner).
+name: DOKU Isolated SQL Entitlement Test
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - '.github/workflows/doku-isolated-sql.yml'
+      - 'supabase_commerce.sql'
+      - 'supabase/migrations/20261017051124_commerce_media_guest_checkout.sql'
+      - 'supabase/migrations/20261018094500_doku_checkout_sandbox.sql'
+      - 'scripts/prepare-doku-local-schema.ps1'
+      - 'scripts/test-doku-local-db.ps1'
+
+permissions:
+  contents: read
+
+jobs:
+  isolated-database:
+    if: ${{ github.event.pull_request.number == 4 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'feature/doku-sandbox-checkout' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    env:
+      DOKU_ENABLED: 'false'
+      DOKU_IS_PRODUCTION: 'false'
+      DOKU_PRODUCTION_APPROVED: 'false'
+      DOKU_RECONCILE_ENABLED: 'false'
+      GITHUB_ACTIONS: 'true'
+    steps:
+      - name: Read-only checkout (without persisting GitHub credentials)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Node.js 24 for Supabase CLI
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Refuse credentials or production identifiers
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${GITHUB_REPOSITORY}" = "dhiyaulhaqkhadafi0/website"
+          test -z "${DOKU_CLIENT_ID:-}"
+          test -z "${DOKU_SECRET_KEY:-}"
+          test -z "${SUPABASE_SERVICE_ROLE_KEY:-}"
+          test -z "${SUPABASE_ACCESS_TOKEN:-}"
+          test -z "${NEXT_PUBLIC_SUPABASE_URL:-}"
+          echo "PASS: isolated CI has no live Supabase/DOKU credentials"
+      - name: Initialize disposable Supabase workspace (NOT project in cloud)
+        shell: bash
+        run: |
+          set -euo pipefail
+          STAGE="$RUNNER_TEMP/khadafi-doku-staging-db"
+          mkdir -p "$STAGE"
+          cd "$STAGE"
+          npx --yes supabase@latest init --yes >/dev/null
+          grep -Eq '^project_id[[:space:]]*=[[:space:]]*"khadafi-doku-staging-db"' supabase/config.toml
+          echo "PASS: isolated local CLI project was initialized"
+      - name: Prepare EXACTLY four local Commerce migrations
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          & ./scripts/prepare-doku-local-schema.ps1 -StagingRoot "$env:RUNNER_TEMP/khadafi-doku-staging-db"
+          if ($LASTEXITCODE -ne 0) { throw 'Migration preparation failed' }
+      - name: Start minimized local Supabase on ephemeral GitHub runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/khadafi-doku-staging-db"
+          # Supabase CLI start may print LOCAL dev keys. Never leak those logs.
+          if ! npx --yes supabase@latest start -x realtime,imgproxy,mailpit,postgres-meta,studio,edge-runtime,logflare,vector,supavisor > "$RUNNER_TEMP/doku-start.log" 2>&1; then
+            echo "FAILED: disposable Supabase stack could not start (raw logs kept private in runner)"
+            docker ps -a --format '{{.Names}}: {{.Status}}'
+            exit 1
+          fi
+          echo "PASS: minimized disposable Supabase Docker stack launched"
+      - name: Run real local PostgreSQL checkout/entitlement/rollback test
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          & ./scripts/test-doku-local-db.ps1
+          if ($LASTEXITCODE -ne 0) { throw 'Database integration test failed' }
+      - name: Stop disposable local test stack
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          cd "$RUNNER_TEMP/khadafi-doku-staging-db" 2>/dev/null || exit 0
+          npx --yes supabase@latest stop >/dev/null 2>&1
+          echo "Temporary runner stack stopped; GitHub will discard the entire runner"
