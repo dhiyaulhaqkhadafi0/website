@@ -127,7 +127,12 @@ jobs:
             echo "FAILED: npm ci on disposable runner"; exit 1;
           }
           echo "PASS: Next.js and Supabase SDK installed locally"
-      - name: Start REAL Next.js locally without DOKU network
+      - name: Start REAL Next.js with INERT synthetic DOKU HMAC only
+        env:
+          DOKU_ENABLED: 'true'
+          DOKU_CLIENT_ID: 'BRN-CI-FAKE-ONLY'
+          DOKU_SECRET_KEY: 'CI-FAKE-HMAC-KEY-NOT-A-DOKU-SECRET'
+          DOKU_SITE_ORIGIN: 'https://doku-staging.khadafidaffa.com'
         shell: bash
         run: |
           set -euo pipefail
@@ -145,7 +150,12 @@ jobs:
           done
           test "$found" = "1" || { echo "FAILED: local Next download endpoint unavailable"; exit 1; }
           echo "PASS: actual Next.js download endpoint online at private loopback only"
-      - name: Test private PDF access before/after payment and revocation
+      - name: Test fake HMAC webhook to real order and private PDF (no DOKU API)
+        env:
+          DOKU_ENABLED: 'true'
+          DOKU_CLIENT_ID: 'BRN-CI-FAKE-ONLY'
+          DOKU_SECRET_KEY: 'CI-FAKE-HMAC-KEY-NOT-A-DOKU-SECRET'
+          DOKU_SITE_ORIGIN: 'https://doku-staging.khadafidaffa.com'
         shell: bash
         run: node scripts/test-doku-private-pdf-e2e.mjs
       - name: Stop disposable Next.js
