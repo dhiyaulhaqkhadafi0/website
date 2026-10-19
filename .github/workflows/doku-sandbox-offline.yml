@@ -1,0 +1,61 @@
+# FREE GitHub-hosted standard runner for a PUBLIC repository.
+# Verification only: no checkout/payment creation, no cloud deployment, no DB.
+name: DOKU Sandbox Offline Verification
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - '.github/workflows/doku-sandbox-offline.yml'
+      - 'scripts/test-doku-*.mjs'
+      - 'scripts/lib/doku-nonsnap-get-signature.mjs'
+      - 'src/lib/doku-*.ts'
+      - 'src/app/api/commerce/doku/**'
+      - 'src/app/api/internal/commerce/doku/**'
+
+permissions:
+  contents: read
+
+jobs:
+  offline-doku-tests:
+    # Never run automatically for another PR or a fork.
+    if: ${{ github.event.pull_request.number == 4 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'feature/doku-sandbox-checkout' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      # Fail closed if mistakenly inherited from a wider deployment context.
+      DOKU_ENABLED: 'false'
+      DOKU_IS_PRODUCTION: 'false'
+      DOKU_PRODUCTION_APPROVED: 'false'
+      DOKU_RECONCILE_ENABLED: 'false'
+    steps:
+      - name: Checkout pull-request source (read-only)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Install Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Verify no DOKU live/payment credentials were injected
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -z "${DOKU_CLIENT_ID:-}" || { echo "DOKU credentials unexpectedly configured"; exit 1; }
+          test -z "${DOKU_SECRET_KEY:-}" || { echo "DOKU credentials unexpectedly configured"; exit 1; }
+          test -z "${SUPABASE_SERVICE_ROLE_KEY:-}" || { echo "Supabase credentials unexpectedly configured"; exit 1; }
+          test -z "${DOKU_SANDBOX_INVOICE:-}" || { echo "A live invoice unexpectedly configured"; exit 1; }
+          echo "PASS: credential-free and database-free test context"
+      - name: Validate checkout URLs and invoice HMAC
+        run: |
+          node scripts/test-doku-checkout-host.mjs
+          node scripts/test-doku-webhook-signature.mjs
+      - name: Verify HTTP webhook handler (offline localhost only)
+        run: node scripts/test-doku-webhook-http.mjs
+      - name: Verify status GET response signatures
+        run: node scripts/test-doku-get-status-signature.mjs
+      - name: Verify reconciliation/entitlement decision engine
+        run: node scripts/test-doku-reconciliation.mjs
+      - name: Confirmation
+        run: echo "PASS - all DOKU offline tests; no DOKU API, no DB, no secrets, no deployment"
