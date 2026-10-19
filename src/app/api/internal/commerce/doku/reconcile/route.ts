@@ -62,7 +62,7 @@ export async function POST(request: Request) {
       .not("payment_url", "is", null)
       .lte("created_at", new Date(now - 3 * 60 * 1000).toISOString())
       .gte("created_at", new Date(now - 7 * 24 * 60 * 60 * 1000).toISOString())
-      .order("created_at", { ascending: true })
+      .order("created_at", { ascending: false })
       .limit(10);
     if (error || !data) return reply({ error: "Staging database unavailable" }, 503);
     const { clientId, secretKey } = {
