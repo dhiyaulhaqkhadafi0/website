@@ -14,6 +14,10 @@ on:
       - 'supabase/migrations/20261018094500_doku_checkout_sandbox.sql'
       - 'scripts/prepare-doku-local-schema.ps1'
       - 'scripts/test-doku-local-db.ps1'
+      - 'scripts/test-doku-private-pdf-e2e.mjs'
+      - 'src/app/api/commerce/download/route.ts'
+      - 'src/app/api/commerce/guest-download/route.ts'
+      - 'src/lib/guest-order.ts'
 
 permissions:
   contents: read
@@ -22,13 +26,15 @@ jobs:
   isolated-database:
     if: ${{ github.event.pull_request.number == 4 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'feature/doku-sandbox-checkout' }}
     runs-on: ubuntu-24.04
-    timeout-minutes: 18
+    timeout-minutes: 30
     env:
       DOKU_ENABLED: 'false'
       DOKU_IS_PRODUCTION: 'false'
       DOKU_PRODUCTION_APPROVED: 'false'
       DOKU_RECONCILE_ENABLED: 'false'
       GITHUB_ACTIONS: 'true'
+      DOKU_LOCAL_STAGING_ONLY: 'true'
+      NEXT_TELEMETRY_DISABLED: '1'
     steps:
       - name: Read-only checkout (without persisting GitHub credentials)
         uses: actions/checkout@v4
@@ -86,6 +92,71 @@ jobs:
           $ErrorActionPreference = 'Stop'
           & ./scripts/test-doku-local-db.ps1
           if ($LASTEXITCODE -ne 0) { throw 'Database integration test failed' }
+      - name: Obtain EPHEMERAL local Supabase keys privately
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/khadafi-doku-staging-db"
+          # CLI emits local dev secrets. Never print them in GitHub logs/artifacts.
+          npx --yes supabase@latest status -o env > "$RUNNER_TEMP/isolated-supabase.env" 2>/dev/null
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          info = {}
+          for raw in (Path(os.environ["RUNNER_TEMP"]) / "isolated-supabase.env").read_text().splitlines():
+              line = raw.strip()
+              if line and not line.startswith("#") and "=" in line:
+                  key, val = line.split("=", 1)
+                  info[key.strip()] = val.strip().strip("'\"")
+          if info.get("API_URL") != "http://127.0.0.1:54321":
+              raise SystemExit("STOP: expected ONLY loopback Supabase API")
+          if len(info.get("ANON_KEY", "")) < 40 or len(info.get("SERVICE_ROLE_KEY", "")) < 40:
+              raise SystemExit("STOP: temporary Supabase local keys missing")
+          with open(os.environ["GITHUB_ENV"], "a") as f:
+              f.write("NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321\n")
+              f.write("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=" + info["ANON_KEY"] + "\n")
+              f.write("SUPABASE_SERVICE_ROLE_KEY=" + info["SERVICE_ROLE_KEY"] + "\n")
+          print("PASS: ephemeral loopback Supabase credentials loaded privately")
+          PY
+          rm -f "$RUNNER_TEMP/isolated-supabase.env"
+      - name: Install dependencies for REAL Next API endpoint smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --no-fund > "$RUNNER_TEMP/doku-npm-install.log" 2>&1 || {
+            echo "FAILED: npm ci on disposable runner"; exit 1;
+          }
+          echo "PASS: Next.js and Supabase SDK installed locally"
+      - name: Start REAL Next.js locally without DOKU network
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./node_modules/.bin/next dev --hostname 127.0.0.1 --port 3000 > "$RUNNER_TEMP/doku-next.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/doku-next.pid"
+          # Unauthenticated download endpoint MUST return HTTP 401; this
+          # confirms our real Next API has booted without hitting production.
+          found=0
+          for i in $(seq 1 90); do
+            code="$(curl -sS -m 3 -o /dev/null -w '%{http_code}' \
+              -X POST "http://127.0.0.1:3000/api/commerce/download" \
+              -H 'Content-Type: application/json' -d '{}' 2>/dev/null || true)"
+            if [ "$code" = "401" ]; then found=1; break; fi
+            sleep 2
+          done
+          test "$found" = "1" || { echo "FAILED: local Next download endpoint unavailable"; exit 1; }
+          echo "PASS: actual Next.js download endpoint online at private loopback only"
+      - name: Test private PDF access before/after payment and revocation
+        shell: bash
+        run: node scripts/test-doku-private-pdf-e2e.mjs
+      - name: Stop disposable Next.js
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          if test -f "$RUNNER_TEMP/doku-next.pid"; then
+            kill "$(cat "$RUNNER_TEMP/doku-next.pid")" 2>/dev/null || true
+          fi
+          echo "Temporary Next.js stopped"
       - name: Stop disposable local test stack
         if: always()
         shell: bash
