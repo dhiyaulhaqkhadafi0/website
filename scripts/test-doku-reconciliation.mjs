@@ -61,14 +61,23 @@ assert.deepEqual(valid, {
 });
 console.log("PASS: signed DOKU Sandbox Check Status SUCCESS verified");
 
-for (const bad of [
-  { unsigned: true }, { tamper: true }, { httpStatus: 401 },
-  { invoice: dokuInvoice(randomUUID()) }, { amount: 59001 },
-  { status: "NOT_A_DOKU_STATUS" }, { currency: "USD" },
+for (const [label, bad] of [
+  ["unsigned", { unsigned: true }],
+  ["tampered signature", { tamper: true }],
+  ["HTTP error", { httpStatus: 401 }],
+  ["wrong invoice", { invoice: dokuInvoice(randomUUID()) }],
+  ["unknown status", { status: "NOT_A_DOKU_STATUS" }],
+  ["wrong currency", { currency: "USD" }],
 ]) {
-  await assert.rejects(() => check(bad));
+  await assert.rejects(() => check(bad), undefined, label);
 }
-console.log("PASS: bad signature/HTTP/invoice/amount/status/currency rejected");
+// The status client authenticates the provider response and validates amount
+// shape; it cannot know the database order total. A different positive amount
+// must be rejected by reconciliation BEFORE calling privileged settlement.
+const unexpectedAmount = await check({ amount: 59001 });
+assert.equal(unexpectedAmount.amount, 59001);
+console.log("PASS: signed status client rejects bad signature/HTTP/invoice/status/currency");
+console.log("PASS: signed mismatching amount remains visible to reconciliation");
 
 const paid = new Set();
 const records = new Map([[uuid, makeRow()]]);
