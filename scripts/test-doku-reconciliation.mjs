@@ -132,15 +132,17 @@ assert.equal(summary.failed, 1);
 assert.equal(paid.size, 0);
 console.log("PASS: unexpected DOKU channel cannot unlock product");
 
+// Exercise a properly HMAC-signed (but wrong-amount) provider response
+// through the real status parser AND the reconciliation decision engine.
 summary = await reconcilePendingDokuOrders([makeRow()], {
   ...deps("SUCCESS"),
-  checkStatus: async i => ({ invoice: i, amount: 58000, status: "SUCCESS",
-    channel: "VIRTUAL_ACCOUNT_BANK_MANDIRI" }),
+  checkStatus: () => check({ amount: 59001 }),
 }, now);
+assert.equal(summary.checked, 1);
 assert.equal(summary.paid, 0);
 assert.equal(summary.failed, 1);
 assert.equal(paid.size, 0);
-console.log("PASS: mismatch amount prevents settlement");
+console.log("PASS: signed mismatch amount prevents settlement");
 
 summary = await reconcilePendingDokuOrders([makeRow()], deps("SUCCESS", { dbError: true }), now);
 assert.equal(summary.paid, 0);
