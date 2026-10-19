@@ -1,3 +1,15 @@
+## End-to-end SYNTHETIC signed webhook → REAL Next → DB → PDF (2026-10-19)
+
+**PASS** on disposable GitHub Actions runner: https://github.com/dhiyaulhaqkhadafi0/website/actions/runs/39207319512 — PR #4, commit `a3cd7f9`.
+
+This run builds on the previous private-PDF E2E. Instead of calling the privileged payment RPC directly to simulate completion, the test now sends fake HMAC-signed **HTTP POST** to the actual local Next route `/api/commerce/doku/webhook` using a CI-only inert Client ID and fake secret; the real route verifies HMAC and calls the real Supabase RPC. It then checks paid order persistence, a single entitlement after repeated SUCCESS, and downloads the actual synthetic private PDF via the authenticated user/guest route. No DOKU API traffic is generated and these are NOT genuine provider-generated notifications.
+
+Verified safeguards: unsigned/forged/wrong-path signatures rejected (401), signed FAILED ignored (2xx without settlement), wrong amount or unknown invoice causes non-2xx (503) with no entitlement, valid signed SUCCESS settles (2xx) and retry stays idempotent. Unpaid, other user, tampered guest cookie and expired/revoked authorization protections remain independently tested. Real DOKU webhook delivery remains unresolved and requires Support.
+
+Security gates: only on ephemeral GitHub-hosted runner, localhost Next and Supabase; CI-only fake credentials set on individual Next/start and test steps, never project secrets; root job defaults `DOKU_ENABLED=false`. No new Supabase hosted project, paid DOKU simulation, production keys, merge, database migration or deployment.
+
+---
+
 # Khadafi Studio — Private PDF Download E2E (zero-cost CI)
 
 **As of 2026-10-19: GitHub Actions PASS**, using real Next.js HTTP handlers + isolated Supabase Auth, Postgres, REST and Storage in the ephemeral standard Ubuntu GitHub runner. This was NOT a live DOKU payment or production/hosted Supabase test.
