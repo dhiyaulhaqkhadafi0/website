@@ -96,7 +96,7 @@ export async function checkDokuSandboxStatus(
   const amount = Number(order?.amount);
   const status = transaction?.status;
   if (order?.invoice_number !== invoice || !Number.isSafeInteger(amount) ||
-      amount <= 0 || (order.currency != null && order.currency !== "IDR") ||
+      amount <= 0 || (order?.currency != null && order.currency !== "IDR") ||
       typeof status !== "string" || !STATES.has(status as DokuPaymentStatus)) {
     throw new Error("DOKU status invoice, amount, currency, or state mismatch");
   }
