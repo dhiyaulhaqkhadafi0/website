@@ -6,7 +6,7 @@
 import assert from "node:assert/strict";
 import { createHmac, randomUUID } from "node:crypto";
 import { createClient } from "@supabase/supabase-js";
-import { dokuInvoice } from "../src/lib/doku-security.ts";
+import { dokuInvoice, signature as dokuSignature } from "../src/lib/doku-security.ts";
 
 const base = "http://127.0.0.1:3000";
 const api = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -16,10 +16,13 @@ const fail = reason => { throw new Error(reason); };
 if (process.env.GITHUB_ACTIONS !== "true" ||
     process.env.DOKU_LOCAL_STAGING_ONLY !== "true" ||
     process.env.DOKU_IS_PRODUCTION !== "false" ||
-    process.env.DOKU_ENABLED !== "false" ||
+    process.env.DOKU_ENABLED !== "true" ||
+    process.env.DOKU_CLIENT_ID !== "BRN-CI-FAKE-ONLY" ||
+    process.env.DOKU_SECRET_KEY !== "CI-FAKE-HMAC-KEY-NOT-A-DOKU-SECRET" ||
+    process.env.DOKU_SITE_ORIGIN !== "https://doku-staging.khadafidaffa.com" ||
     api !== "http://127.0.0.1:54321" ||
     !anonKey || !serviceKey || anonKey.length < 40 || serviceKey.length < 40 ||
-    process.env.SUPABASE_ACCESS_TOKEN || process.env.DOKU_SECRET_KEY) {
+    process.env.SUPABASE_ACCESS_TOKEN) {
   fail("STOP: synthetic PDF test is restricted to disposable GitHub runner + local Supabase");
 }
 const admin = createClient(api, serviceKey, {
@@ -144,27 +147,64 @@ const direct = await fetch(api + "/storage/v1/object/public/commerce-files/" + s
 assert.notEqual(direct.status, 200);
 console.log("PASS: actual private Storage bucket denies anonymous public access and URL creation");
 
-// Simulates only a previously AUTHENTICATED provider-success decision.
-// The RPC is privileged: real app calls it only after verifying DOKU signature.
+// This is an INERT synthetic notification delivered to the REAL Next.js
+// POST /api/commerce/doku/webhook route, using CI-only fake HMAC credentials.
+// NO request is sent to DOKU and no real payment/transaction is simulated there.
 const reference = dokuInvoice(order.id);
-await admin.rpc("commerce_set_payment_doku", {
-  p_order: order.id, p_total: 58000, p_reference: reference,
-}).then(x => assert.ok(x.error, "Wrong payment amount must be rejected"));
+const webhookPath = "/api/commerce/doku/webhook";
+function signedWebhookPayload(amount = 59000, status = "SUCCESS", invoice = reference) {
+  return JSON.stringify({
+    service: { id: "VIRTUAL_ACCOUNT" },
+    channel: { id: "VIRTUAL_ACCOUNT_BANK_MANDIRI" },
+    order: { invoice_number: invoice, amount },
+    transaction: { status, date: new Date().toISOString() },
+  });
+}
+async function notify(payload, { tamper = false, wrongPath = false, unsigned = false } = {}) {
+  const requestId = randomUUID();
+  const timestamp = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
+  const headers = {
+    "Content-Type": "application/json",
+    "Client-Id": process.env.DOKU_CLIENT_ID,
+    "Request-Id": requestId,
+    "Request-Timestamp": timestamp,
+  };
+  if (!unsigned) headers.Signature = tamper ? "HMACSHA256=forged" : dokuSignature(
+    process.env.DOKU_CLIENT_ID, requestId, timestamp,
+    wrongPath ? "/api/incorrect" : webhookPath,
+    payload, process.env.DOKU_SECRET_KEY,
+  );
+  const response = await fetch(base + webhookPath, {
+    method: "POST",
+    headers, body: payload,
+    redirect: "manual", signal: AbortSignal.timeout(15000),
+  });
+  assert.match(response.headers.get("cache-control") || "", /no-store/i);
+  return response.status;
+}
+const successPayload = signedWebhookPayload();
+assert.equal(await notify(successPayload, { unsigned: true }), 401);
+assert.equal(await notify(successPayload, { tamper: true }), 401);
+assert.equal(await notify(successPayload, { wrongPath: true }), 401);
+assert.equal(await notify(signedWebhookPayload(59000, "FAILED")), 200);
+assert.equal(await notify(signedWebhookPayload(58000, "SUCCESS")), 503);
+assert.equal(await notify(signedWebhookPayload(59000, "SUCCESS", dokuInvoice(randomUUID()))), 503);
 
 let access = await post(userPath, own, { token: jwtA });
 assert.equal(access.status, 403);
 const eBefore = must(await admin.from("commerce_entitlements")
   .select("id").eq("order_id", order.id), "query pre-payment entitlements");
 assert.equal(eBefore.length, 0);
+console.log("PASS: real webhook rejects unsigned/forged/wrong-target, ignores FAILED and denies bad invoice/amount");
 
-const settled = await admin.rpc("commerce_set_payment_doku", {
-  p_order: order.id, p_total: 59000, p_reference: reference,
-});
-if (settled.error) fail("Failed to apply simulated validated payment RPC");
-const repeated = await admin.rpc("commerce_set_payment_doku", {
-  p_order: order.id, p_total: 59000, p_reference: reference,
-});
-if (repeated.error) fail("Idempotent repeat settlement failed");
+// Only a valid HMAC-signed SUCCESS may settle the order by calling the
+// actual Next.js route -> service role DOKU RPC -> entitlement creation.
+assert.equal(await notify(successPayload), 200);
+assert.equal(await notify(successPayload), 200);
+const paidOrder = must(await admin.from("commerce_orders")
+  .select("status,payment_reference").eq("id", order.id).single(), "read paid order");
+assert.equal(paidOrder.status, "paid");
+assert.equal(paidOrder.payment_reference, reference);
 const eAfter = must(await admin.from("commerce_entitlements")
   .select("id,user_id,resource_id,status")
   .eq("order_id", order.id), "query post-payment entitlements");
@@ -172,7 +212,7 @@ assert.equal(eAfter.length, 1);
 assert.equal(eAfter[0].user_id, a.id);
 assert.equal(eAfter[0].resource_id, product.id);
 assert.equal(eAfter[0].status, "active");
-console.log("PASS: wrong amount rejected; valid settlement and retry produce ONE active entitlement");
+console.log("PASS: REAL HTTP signed webhook SUCCESS updates order and repeated delivery grants ONE entitlement");
 
 access = await post(userPath, own, { token: jwtA });
 assert.equal(access.status, 200);
@@ -220,5 +260,5 @@ assert.equal((await post(userPath, own, { token: jwtA })).status, 403);
 assert.equal((await post(guestPath, guest, { cookie: guestCookie(order.id) })).status, 403);
 console.log("PASS: revoked entitlement prevents new signed download URLs");
 
-console.log("SUCCESS: isolated REAL Next.js -> Supabase Auth/PG/Storage/private-PDF test passed");
+console.log("SUCCESS: real Next.js signed synthetic webhook -> Supabase PG entitlement -> private PDF E2E PASSED");
 console.log("No DOKU payment was created; data exists only in disposable CI runner.");
