@@ -64,7 +64,10 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           & ./scripts/prepare-doku-local-schema.ps1 -StagingRoot "$env:RUNNER_TEMP/khadafi-doku-staging-db"
-          if ($LASTEXITCODE -ne 0) { throw 'Migration preparation failed' }
+          # The preparation is PowerShell-only and throws on errors. $LASTEXITCODE
+          # can be $null if no native executable was called; do not misread it as a failure.
+          $count = @(Get-ChildItem "$env:RUNNER_TEMP/khadafi-doku-staging-db/supabase/migrations" -Filter '*.sql').Count
+          if ($count -ne 4) { throw "Expected exactly 4 migrations; found $count" }
       - name: Start minimized local Supabase on ephemeral GitHub runner
         shell: bash
         run: |
