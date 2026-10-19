@@ -1,3 +1,16 @@
+## Offline regression fix — status amount vs. DB order total (2026-10-19)
+
+The user's first `node scripts/test-doku-reconciliation.mjs` execution on commit `40765d6` passed its initial authenticated fake Sandbox Check Status response, then failed at `AssertionError: Missing expected rejection`. The problem was a faulty assertion, **not evidence of unauthorized entitlement**: the status API helper authentically returns a positive integer amount (including a valid signed value different from the expected product price); only the reconciliation layer has access to the local database order total and must reject the mismatch before calling the privileged RPC.
+
+The updated test now checks:
+- Fake signed status amount 59,001 can be parsed and returned (no unwarranted rejection);
+- Real reconciliation engine compares it with the local order total 59,000, records a failed match, grants no entitlement, and **does not call the privileged settlement function**.
+- Bad HMAC, HTTP, invoice, currency and invalid status remain rejected immediately.
+
+The feature code and production remain unchanged; this was a test-only fix on the draft branch. Re-run using updated draft HEAD; this test must pass on the user's laptop before proceeding to staging database E2E.
+
+---
+
 # Khadafi Studio — DOKU Sandbox reconciliation fallback
 
 **Scope:** feature branch `feature/doku-sandbox-checkout`, draft PR #4 only. Prepared for isolated local staging; NOT activated in Cloudflare production or any database.
