@@ -1,0 +1,18 @@
+{
+  "version": "3.0",
+  "assets": [
+    {
+      "id": "monetization-80-guide",
+      "title": "80 Jalur Monetisasi Bisnis Digital",
+      "description": "Panduan offline seluruh jalur, contoh pembeli, langkah awal, risiko dan simulasi berlabel.",
+      "audience": "public",
+      "format": "PDF",
+      "path": "monetization/80_Jalur_Monetisasi_Bisnis_Digital.pdf",
+      "size_bytes": 120858,
+      "sha256": "0ba9a947432c026f4b9226c43c964cfd4a9e4ba9c8574c8caa41e9a74304f244",
+      "pages": 31,
+      "public_url": "/downloads/monetization/80_Jalur_Monetisasi_Bisnis_Digital.pdf",
+      "access": "free_anonymous"
+    }
+  ]
+}

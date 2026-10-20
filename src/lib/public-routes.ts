@@ -38,6 +38,7 @@ export function isPublicDestination(href: string) {
   if (!href.startsWith("/") || href.startsWith("//")) return false;
   const path = href.split(/[?#]/)[0];
   return (
+ /^\/freelance\/tools\/(service-business-system|monetisasi)\/[a-z0-9-]+$/.test(path) ||
     (PUBLIC_PATHS as readonly string[]).includes(path) ||
     /^\/(blog|products|services|resources|freelance\/direktori|freelance\/tools)\/[a-z0-9-]+$/.test(
       path,

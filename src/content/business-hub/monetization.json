@@ -1,0 +1,3332 @@
+{
+  "version": "3.0",
+  "title": "80 Jalur Monetisasi Bisnis Digital",
+  "language": "id",
+  "source": "Lampiran pengguna Pasted text.txt",
+  "simulation_notice": "Seluruh angka merupakan simulasi penerimaan kotor bulanan berdasarkan asumsi harga, komisi, royalti atau RPM dan volume. Bukan data rata-rata, tarif pasar, proyeksi atau jaminan penghasilan. Belum dikurangi biaya, pajak, komisi platform dan waktu kerja; penerimaan Rp0 tetap mungkin.",
+  "categories": [
+    {
+      "id": "jasa-digital",
+      "title": "Jasa digital",
+      "intro": "Menjual keterampilan atau penyelesaian masalah kepada pelanggan.",
+      "first": 1,
+      "last": 10,
+      "steps": [
+        "Tentukan hasil, jumlah pekerjaan dan batas revisi.",
+        "Tawarkan pilot berbayar dengan scope kecil kepada calon klien yang relevan."
+      ],
+      "risks": [
+        "Kapasitas pengerjaan dan waktu mencari klien.",
+        "Revisi, biaya tools dan pekerjaan di luar scope."
+      ]
+    },
+    {
+      "id": "produk-digital",
+      "title": "Produk digital",
+      "intro": "Menjual file, template atau materi yang dapat digunakan banyak pembeli.",
+      "first": 11,
+      "last": 20,
+      "steps": [
+        "Uji kegunaan versi kecil kepada calon pengguna.",
+        "Tentukan format, lisensi, harga dan proses dukungan sebelum menjual."
+      ],
+      "risks": [
+        "Distribusi dan biaya mendapatkan pembeli.",
+        "Pembaruan, dukungan serta izin atas aset yang digunakan."
+      ]
+    },
+    {
+      "id": "creator-economy",
+      "title": "Konten dan audiens",
+      "intro": "Menghasilkan penerimaan dari distribusi konten, audiens atau akses.",
+      "first": 21,
+      "last": 30,
+      "steps": [
+        "Tentukan niche dan alasan audiens mengikuti kontenmu.",
+        "Periksa kelayakan monetisasi dan ketentuan kanal sebelum memasang penawaran."
+      ],
+      "risks": [
+        "Pertumbuhan serta kepercayaan audiens.",
+        "Perubahan kelayakan, distribusi dan ketentuan platform."
+      ]
+    },
+    {
+      "id": "information-business",
+      "title": "Informasi dan riset",
+      "intro": "Mengubah informasi yang boleh digunakan menjadi bantuan pengambilan keputusan.",
+      "first": 31,
+      "last": 40,
+      "steps": [
+        "Validasi siapa yang membutuhkan informasi dan bagaimana dipakai.",
+        "Catat sumber, izin pemakaian, tanggal pembaruan dan metode verifikasi."
+      ],
+      "risks": [
+        "Kualitas, kebaruan dan izin penggunaan informasi.",
+        "Privasi serta waktu kurasi dan verifikasi."
+      ]
+    },
+    {
+      "id": "software-ai",
+      "title": "Software dan AI",
+      "intro": "Menawarkan perangkat lunak, integrasi atau fungsi teknologi.",
+      "first": 41,
+      "last": 50,
+      "steps": [
+        "Uji satu masalah dengan prototipe kecil.",
+        "Hitung biaya berjalan, dukungan dan batas penggunaan sebelum menetapkan harga."
+      ],
+      "risks": [
+        "Server, API/AI, keamanan dan pemeliharaan.",
+        "Kebutuhan dukungan serta ketentuan distribusi platform."
+      ]
+    },
+    {
+      "id": "digital-assets-ip",
+      "title": "Aset digital dan lisensi",
+      "intro": "Memberikan hak penggunaan karya sesuai lisensi yang disepakati.",
+      "first": 51,
+      "last": 60,
+      "steps": [
+        "Pastikan kepemilikan karya serta izin unsur pihak ketiga.",
+        "Tentukan cakupan lisensi, kanal distribusi dan batas pemakaian."
+      ],
+      "risks": [
+        "Kepemilikan hak serta izin model, musik atau aset pihak ketiga.",
+        "Penjualan yang tidak rutin dan pembagian royalti."
+      ]
+    },
+    {
+      "id": "b2b",
+      "title": "Solusi B2B",
+      "intro": "Membantu organisasi menyelesaikan pekerjaan atau memperbaiki proses.",
+      "first": 61,
+      "last": 70,
+      "steps": [
+        "Temukan kebutuhan dan pengambil keputusan di organisasi.",
+        "Sepakati scope, kriteria penerimaan, pembayaran dan penggunaan data."
+      ],
+      "risks": [
+        "Siklus keputusan dan pembayaran organisasi.",
+        "Kebutuhan bukti kemampuan dan koordinasi pemangku kepentingan."
+      ]
+    },
+    {
+      "id": "niche",
+      "title": "Model niche",
+      "intro": "Pilihan khusus yang memerlukan kecocokan kebutuhan, kemampuan atau jaringan.",
+      "first": 71,
+      "last": 80,
+      "steps": [
+        "Cari pembeli serta prasyarat khusus model ini.",
+        "Uji transaksi atau pilot kecil sebelum membangun distribusi yang besar."
+      ],
+      "risks": [
+        "Permintaan yang sempit dan prasyarat teknis atau jaringan.",
+        "Kualitas, izin data dan validasi hasil sesuai model."
+      ]
+    }
+  ],
+  "mechanism_labels": {
+    "jasa": "Jasa",
+    "produk": "Produk",
+    "berulang": "Berulang",
+    "lisensi": "Lisensi",
+    "komisi-referral": "Komisi & referral",
+    "iklan-sponsor": "Iklan & sponsor",
+    "jual-aset": "Jual aset",
+    "dukungan-acara": "Dukungan & acara"
+  },
+  "items": [
+    {
+      "id": "m80-01",
+      "number": 1,
+      "slug": "social-media-management",
+      "title": "Social Media Management",
+      "definition": "Mengelola akun media sosial milik UMKM atau brand.",
+      "category_id": "jasa-digital",
+      "buyer_example": "UMKM atau brand",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Buat contoh kalender konten satu minggu untuk satu jenis usaha.",
+        "Tentukan hasil, jumlah pekerjaan dan batas revisi.",
+        "Tawarkan pilot berbayar dengan scope kecil kepada calon klien yang relevan.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kapasitas pengerjaan dan waktu mencari klien.",
+        "Revisi, biaya tools dan pekerjaan di luar scope."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "klien",
+        "unit_receipt_idr": 1500000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 3000000,
+        "formula_text": "2 klien x Rp1.500.000 = Rp3.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-02",
+      "number": 2,
+      "slug": "short-form-video-editing",
+      "title": "Short-Form Video Editing",
+      "definition": "Mengedit video TikTok, Reels, atau Shorts.",
+      "category_id": "jasa-digital",
+      "buyer_example": "Kreator atau tim konten",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Edit tiga klip demonstrasi dari rekaman milik sendiri atau yang diizinkan.",
+        "Tentukan hasil, jumlah pekerjaan dan batas revisi.",
+        "Tawarkan pilot berbayar dengan scope kecil kepada calon klien yang relevan.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kapasitas pengerjaan dan waktu mencari klien.",
+        "Revisi, biaya tools dan pekerjaan di luar scope."
+      ],
+      "simulation": {
+        "quantity": 12,
+        "quantity_unit": "video",
+        "unit_receipt_idr": 150000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1800000,
+        "formula_text": "12 video x Rp150.000 = Rp1.800.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-03",
+      "number": 3,
+      "slug": "ugc-creator",
+      "title": "UGC Creator",
+      "definition": "Membuat video promosi autentik untuk brand, tanpa harus menjadi influencer.",
+      "category_id": "jasa-digital",
+      "buyer_example": "Brand yang membutuhkan materi promosi",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Buat video demonstrasi produk dengan naskah dan izin penggunaan yang jelas.",
+        "Tentukan hasil, jumlah pekerjaan dan batas revisi.",
+        "Tawarkan pilot berbayar dengan scope kecil kepada calon klien yang relevan.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kapasitas pengerjaan dan waktu mencari klien.",
+        "Revisi, biaya tools dan pekerjaan di luar scope."
+      ],
+      "simulation": {
+        "quantity": 5,
+        "quantity_unit": "video",
+        "unit_receipt_idr": 400000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2000000,
+        "formula_text": "5 video x Rp400.000 = Rp2.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-04",
+      "number": 4,
+      "slug": "content-repurposing",
+      "title": "Content Repurposing",
+      "definition": "Mengubah video panjang, podcast, atau webinar menjadi banyak konten pendek.",
+      "category_id": "jasa-digital",
+      "buyer_example": "Podcaster atau pembuat webinar",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Tunjukkan satu video panjang yang diubah menjadi tiga klip dan satu ringkasan.",
+        "Tentukan hasil, jumlah pekerjaan dan batas revisi.",
+        "Tawarkan pilot berbayar dengan scope kecil kepada calon klien yang relevan.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kapasitas pengerjaan dan waktu mencari klien.",
+        "Revisi, biaya tools dan pekerjaan di luar scope."
+      ],
+      "simulation": {
+        "quantity": 4,
+        "quantity_unit": "paket",
+        "unit_receipt_idr": 750000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 3000000,
+        "formula_text": "4 paket x Rp750.000 = Rp3.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-05",
+      "number": 5,
+      "slug": "copywriting",
+      "title": "Copywriting",
+      "definition": "Menulis teks promosi yang mendorong pembelian atau pendaftaran.",
+      "category_id": "jasa-digital",
+      "buyer_example": "Bisnis dengan kebutuhan promosi",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Buat satu contoh halaman penawaran beserta alasan pilihan pesannya.",
+        "Tentukan hasil, jumlah pekerjaan dan batas revisi.",
+        "Tawarkan pilot berbayar dengan scope kecil kepada calon klien yang relevan.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kapasitas pengerjaan dan waktu mencari klien.",
+        "Revisi, biaya tools dan pekerjaan di luar scope."
+      ],
+      "simulation": {
+        "quantity": 3,
+        "quantity_unit": "proyek",
+        "unit_receipt_idr": 750000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2250000,
+        "formula_text": "3 proyek x Rp750.000 = Rp2.250.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-06",
+      "number": 6,
+      "slug": "landing-page-development",
+      "title": "Landing Page Development",
+      "definition": "Membuat halaman website untuk menjual atau mengumpulkan calon pelanggan.",
+      "category_id": "jasa-digital",
+      "buyer_example": "Usaha dengan penawaran spesifik",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Bangun demo satu landing page dengan form dan tombol kontak yang diuji.",
+        "Tentukan hasil, jumlah pekerjaan dan batas revisi.",
+        "Tawarkan pilot berbayar dengan scope kecil kepada calon klien yang relevan.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kapasitas pengerjaan dan waktu mencari klien.",
+        "Revisi, biaya tools dan pekerjaan di luar scope."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "proyek",
+        "unit_receipt_idr": 2000000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 4000000,
+        "formula_text": "2 proyek x Rp2.000.000 = Rp4.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": "Skenario Rp2 juta per proyek ini berbeda dari simulasi scope landing page Rp3,85 juta di Service Business System. Keduanya ilustrasi, bukan rate card Khadafi."
+    },
+    {
+      "id": "m80-07",
+      "number": 7,
+      "slug": "local-seo-services",
+      "title": "Local SEO Services",
+      "definition": "Mengoptimalkan website dan Google Business Profile bisnis lokal.",
+      "category_id": "jasa-digital",
+      "buyer_example": "Bisnis lokal yang memenuhi ketentuan listing",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Audit informasi bisnis dan susun perbaikan profil tanpa menjanjikan ranking.",
+        "Tentukan hasil, jumlah pekerjaan dan batas revisi.",
+        "Tawarkan pilot berbayar dengan scope kecil kepada calon klien yang relevan.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kapasitas pengerjaan dan waktu mencari klien.",
+        "Revisi, biaya tools dan pekerjaan di luar scope."
+      ],
+      "simulation": {
+        "quantity": 4,
+        "quantity_unit": "klien",
+        "unit_receipt_idr": 500000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2000000,
+        "formula_text": "4 klien x Rp500.000 = Rp2.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-08",
+      "number": 8,
+      "slug": "email-whatsapp-marketing-setup",
+      "title": "Email & WhatsApp Marketing Setup",
+      "definition": "Membuat alur follow-up otomatis untuk pelanggan yang sudah memberikan izin.",
+      "category_id": "jasa-digital",
+      "buyer_example": "Bisnis dengan kontak pelanggan berizin",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Gambar alur follow-up dan uji dengan data sintetis serta pilihan berhenti.",
+        "Tentukan hasil, jumlah pekerjaan dan batas revisi.",
+        "Tawarkan pilot berbayar dengan scope kecil kepada calon klien yang relevan.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kapasitas pengerjaan dan waktu mencari klien.",
+        "Revisi, biaya tools dan pekerjaan di luar scope."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "proyek",
+        "unit_receipt_idr": 1250000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2500000,
+        "formula_text": "2 proyek x Rp1.250.000 = Rp2.500.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-09",
+      "number": 9,
+      "slug": "ai-automation-services",
+      "title": "AI Automation Services",
+      "definition": "Membuat otomatisasi pekerjaan bisnis dengan AI dan aplikasi workflow.",
+      "category_id": "jasa-digital",
+      "buyer_example": "Tim dengan pekerjaan repetitif",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Demonstrasikan satu alur input sampai output, termasuk kegagalan dan pemulihan.",
+        "Tentukan hasil, jumlah pekerjaan dan batas revisi.",
+        "Tawarkan pilot berbayar dengan scope kecil kepada calon klien yang relevan.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kapasitas pengerjaan dan waktu mencari klien.",
+        "Revisi, biaya tools dan pekerjaan di luar scope."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "proyek",
+        "unit_receipt_idr": 2000000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 4000000,
+        "formula_text": "2 proyek x Rp2.000.000 = Rp4.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-10",
+      "number": 10,
+      "slug": "analytics-dashboard-services",
+      "title": "Analytics Dashboard Services",
+      "definition": "Membuat dashboard penjualan, iklan, atau operasional dari data klien.",
+      "category_id": "jasa-digital",
+      "buyer_example": "Tim penjualan atau operasional",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Buat dashboard dari data sintetis dan jelaskan definisi setiap metrik.",
+        "Tentukan hasil, jumlah pekerjaan dan batas revisi.",
+        "Tawarkan pilot berbayar dengan scope kecil kepada calon klien yang relevan.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kapasitas pengerjaan dan waktu mencari klien.",
+        "Revisi, biaya tools dan pekerjaan di luar scope."
+      ],
+      "simulation": {
+        "quantity": 3,
+        "quantity_unit": "proyek",
+        "unit_receipt_idr": 1000000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 3000000,
+        "formula_text": "3 proyek x Rp1.000.000 = Rp3.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-11",
+      "number": 11,
+      "slug": "ebook-publishing",
+      "title": "Ebook Publishing",
+      "definition": "Menjual buku digital yang mengajarkan keterampilan tertentu.",
+      "category_id": "produk-digital",
+      "buyer_example": "Pembaca dengan masalah yang spesifik",
+      "mechanisms": [
+        "produk"
+      ],
+      "first_steps": [
+        "Uji outline dan satu bab contoh kepada calon pembaca sebelum menulis panjang.",
+        "Uji kegunaan versi kecil kepada calon pengguna.",
+        "Tentukan format, lisensi, harga dan proses dukungan sebelum menjual.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Distribusi dan biaya mendapatkan pembeli.",
+        "Pembaruan, dukungan serta izin atas aset yang digunakan."
+      ],
+      "simulation": {
+        "quantity": 25,
+        "quantity_unit": "pembeli",
+        "unit_receipt_idr": 79000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1975000,
+        "formula_text": "25 pembeli x Rp79.000 = Rp1.975.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-12",
+      "number": 12,
+      "slug": "digital-workbook",
+      "title": "Digital Workbook",
+      "definition": "Menjual buku latihan, checklist, atau panduan praktis yang bisa diisi.",
+      "category_id": "produk-digital",
+      "buyer_example": "Pembelajar atau praktisi",
+      "mechanisms": [
+        "produk"
+      ],
+      "first_steps": [
+        "Buat satu latihan yang menghasilkan keputusan atau pekerjaan nyata.",
+        "Uji kegunaan versi kecil kepada calon pengguna.",
+        "Tentukan format, lisensi, harga dan proses dukungan sebelum menjual.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Distribusi dan biaya mendapatkan pembeli.",
+        "Pembaruan, dukungan serta izin atas aset yang digunakan."
+      ],
+      "simulation": {
+        "quantity": 30,
+        "quantity_unit": "pembeli",
+        "unit_receipt_idr": 29000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 870000,
+        "formula_text": "30 pembeli x Rp29.000 = Rp870.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-13",
+      "number": 13,
+      "slug": "canva-template-store",
+      "title": "Canva Template Store",
+      "definition": "Menjual template desain siap edit untuk bisnis dan konten.",
+      "category_id": "produk-digital",
+      "buyer_example": "UMKM atau kreator konten",
+      "mechanisms": [
+        "produk"
+      ],
+      "first_steps": [
+        "Buat paket kecil untuk satu kebutuhan desain dan periksa lisensi setiap aset.",
+        "Uji kegunaan versi kecil kepada calon pengguna.",
+        "Tentukan format, lisensi, harga dan proses dukungan sebelum menjual.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Distribusi dan biaya mendapatkan pembeli.",
+        "Pembaruan, dukungan serta izin atas aset yang digunakan."
+      ],
+      "simulation": {
+        "quantity": 20,
+        "quantity_unit": "paket",
+        "unit_receipt_idr": 59000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1180000,
+        "formula_text": "20 paket x Rp59.000 = Rp1.180.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-14",
+      "number": 14,
+      "slug": "notion-template-business",
+      "title": "Notion Template Business",
+      "definition": "Menjual sistem produktivitas, CRM, atau manajemen bisnis.",
+      "category_id": "produk-digital",
+      "buyer_example": "Profesional atau tim kecil",
+      "mechanisms": [
+        "produk"
+      ],
+      "first_steps": [
+        "Bangun satu alur kerja lengkap dan uji pemakaiannya dengan pengguna.",
+        "Uji kegunaan versi kecil kepada calon pengguna.",
+        "Tentukan format, lisensi, harga dan proses dukungan sebelum menjual.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Distribusi dan biaya mendapatkan pembeli.",
+        "Pembaruan, dukungan serta izin atas aset yang digunakan."
+      ],
+      "simulation": {
+        "quantity": 20,
+        "quantity_unit": "template",
+        "unit_receipt_idr": 99000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1980000,
+        "formula_text": "20 template x Rp99.000 = Rp1.980.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-15",
+      "number": 15,
+      "slug": "spreadsheet-calculator",
+      "title": "Spreadsheet Calculator",
+      "definition": "Menjual kalkulator keuangan, harga jasa, investasi, atau laporan usaha.",
+      "category_id": "produk-digital",
+      "buyer_example": "Freelancer atau pemilik usaha",
+      "mechanisms": [
+        "produk"
+      ],
+      "first_steps": [
+        "Buat kalkulator satu masalah dan uji formula serta input tidak valid.",
+        "Uji kegunaan versi kecil kepada calon pengguna.",
+        "Tentukan format, lisensi, harga dan proses dukungan sebelum menjual.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Distribusi dan biaya mendapatkan pembeli.",
+        "Pembaruan, dukungan serta izin atas aset yang digunakan."
+      ],
+      "simulation": {
+        "quantity": 15,
+        "quantity_unit": "produk",
+        "unit_receipt_idr": 149000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2235000,
+        "formula_text": "15 produk x Rp149.000 = Rp2.235.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-16",
+      "number": 16,
+      "slug": "professional-document-kits",
+      "title": "Professional Document Kits",
+      "definition": "Menjual bundle CV, proposal, kontrak, invoice, dan dokumen operasional.",
+      "category_id": "produk-digital",
+      "buyer_example": "Pencari kerja atau penyedia jasa",
+      "mechanisms": [
+        "produk"
+      ],
+      "first_steps": [
+        "Susun satu paket dokumen dengan instruksi, contoh berlabel dan format editable.",
+        "Uji kegunaan versi kecil kepada calon pengguna.",
+        "Tentukan format, lisensi, harga dan proses dukungan sebelum menjual.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Distribusi dan biaya mendapatkan pembeli.",
+        "Pembaruan, dukungan serta izin atas aset yang digunakan."
+      ],
+      "simulation": {
+        "quantity": 25,
+        "quantity_unit": "paket",
+        "unit_receipt_idr": 49000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1225000,
+        "formula_text": "25 paket x Rp49.000 = Rp1.225.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-17",
+      "number": 17,
+      "slug": "website-template-marketplace",
+      "title": "Website Template Marketplace",
+      "definition": "Membuat tema website, misalnya untuk Framer atau WordPress.",
+      "category_id": "produk-digital",
+      "buyer_example": "Pemilik website atau agensi",
+      "mechanisms": [
+        "produk"
+      ],
+      "first_steps": [
+        "Buat satu template yang responsive dan mudah diedit oleh pembeli.",
+        "Uji kegunaan versi kecil kepada calon pengguna.",
+        "Tentukan format, lisensi, harga dan proses dukungan sebelum menjual.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Distribusi dan biaya mendapatkan pembeli.",
+        "Pembaruan, dukungan serta izin atas aset yang digunakan."
+      ],
+      "simulation": {
+        "quantity": 5,
+        "quantity_unit": "template",
+        "unit_receipt_idr": 500000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2500000,
+        "formula_text": "5 template x Rp500.000 = Rp2.500.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-18",
+      "number": 18,
+      "slug": "ui-ux-design-assets",
+      "title": "UI/UX Design Assets",
+      "definition": "Menjual UI kit, komponen desain, dan design system.",
+      "category_id": "produk-digital",
+      "buyer_example": "Designer atau product team",
+      "mechanisms": [
+        "produk"
+      ],
+      "first_steps": [
+        "Bangun komponen dengan variasi, struktur dan dokumentasi penggunaan.",
+        "Uji kegunaan versi kecil kepada calon pengguna.",
+        "Tentukan format, lisensi, harga dan proses dukungan sebelum menjual.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Distribusi dan biaya mendapatkan pembeli.",
+        "Pembaruan, dukungan serta izin atas aset yang digunakan."
+      ],
+      "simulation": {
+        "quantity": 4,
+        "quantity_unit": "paket",
+        "unit_receipt_idr": 450000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1800000,
+        "formula_text": "4 paket x Rp450.000 = Rp1.800.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-19",
+      "number": 19,
+      "slug": "preset-lut-packs",
+      "title": "Preset & LUT Packs",
+      "definition": "Menjual pengaturan warna untuk foto dan video.",
+      "category_id": "produk-digital",
+      "buyer_example": "Fotografer atau editor video",
+      "mechanisms": [
+        "produk"
+      ],
+      "first_steps": [
+        "Buat preset orisinal lalu tunjukkan hasil sebelum/sesudah pada beberapa kondisi.",
+        "Uji kegunaan versi kecil kepada calon pengguna.",
+        "Tentukan format, lisensi, harga dan proses dukungan sebelum menjual.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Distribusi dan biaya mendapatkan pembeli.",
+        "Pembaruan, dukungan serta izin atas aset yang digunakan."
+      ],
+      "simulation": {
+        "quantity": 12,
+        "quantity_unit": "paket",
+        "unit_receipt_idr": 75000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 900000,
+        "formula_text": "12 paket x Rp75.000 = Rp900.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-20",
+      "number": 20,
+      "slug": "recorded-micro-course",
+      "title": "Recorded Micro-Course",
+      "definition": "Menjual kelas video singkat untuk menyelesaikan satu masalah spesifik.",
+      "category_id": "produk-digital",
+      "buyer_example": "Pembelajar dengan kebutuhan terbatas",
+      "mechanisms": [
+        "produk"
+      ],
+      "first_steps": [
+        "Uji satu pelajaran pendek yang menyelesaikan satu tugas spesifik.",
+        "Uji kegunaan versi kecil kepada calon pengguna.",
+        "Tentukan format, lisensi, harga dan proses dukungan sebelum menjual.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Distribusi dan biaya mendapatkan pembeli.",
+        "Pembaruan, dukungan serta izin atas aset yang digunakan."
+      ],
+      "simulation": {
+        "quantity": 15,
+        "quantity_unit": "murid",
+        "unit_receipt_idr": 199000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2985000,
+        "formula_text": "15 murid x Rp199.000 = Rp2.985.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-21",
+      "number": 21,
+      "slug": "affiliate-marketing",
+      "title": "Affiliate Marketing",
+      "definition": "Mendapat komisi ketika audiens membeli produk melalui referensimu.",
+      "category_id": "creator-economy",
+      "buyer_example": "Audiens yang mempertimbangkan produk",
+      "mechanisms": [
+        "komisi-referral"
+      ],
+      "first_steps": [
+        "Buat ulasan berbasis penggunaan dan ungkap hubungan affiliate.",
+        "Tentukan niche dan alasan audiens mengikuti kontenmu.",
+        "Periksa kelayakan monetisasi dan ketentuan kanal sebelum memasang penawaran.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Pertumbuhan serta kepercayaan audiens.",
+        "Perubahan kelayakan, distribusi dan ketentuan platform."
+      ],
+      "simulation": {
+        "quantity": 20,
+        "quantity_unit": "transaksi",
+        "unit_receipt_idr": 30000,
+        "unit_label": "Komisi asumsi per unit",
+        "divisor": 1,
+        "total_idr": 600000,
+        "formula_text": "20 transaksi x Rp30.000 = Rp600.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-22",
+      "number": 22,
+      "slug": "recurring-saas-affiliate",
+      "title": "Recurring SaaS Affiliate",
+      "definition": "Mendapat komisi berulang dari langganan software yang direferensikan.",
+      "category_id": "creator-economy",
+      "buyer_example": "Pengguna software yang cocok",
+      "mechanisms": [
+        "komisi-referral",
+        "berulang"
+      ],
+      "first_steps": [
+        "Periksa syarat komisi berulang dan buat tutorial yang membantu pemakaian.",
+        "Tentukan niche dan alasan audiens mengikuti kontenmu.",
+        "Periksa kelayakan monetisasi dan ketentuan kanal sebelum memasang penawaran.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Pertumbuhan serta kepercayaan audiens.",
+        "Perubahan kelayakan, distribusi dan ketentuan platform."
+      ],
+      "simulation": {
+        "quantity": 20,
+        "quantity_unit": "pengguna aktif",
+        "unit_receipt_idr": 50000,
+        "unit_label": "Komisi asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1000000,
+        "formula_text": "20 pengguna aktif x Rp50.000 = Rp1.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": "Syarat validasi, kelayakan komisi dan pembayaran bergantung pada program. Nominal ini bukan tarif resmi."
+    },
+    {
+      "id": "m80-23",
+      "number": 23,
+      "slug": "sponsored-content",
+      "title": "Sponsored Content",
+      "definition": "Menerima bayaran untuk mempromosikan brand dalam konten.",
+      "category_id": "creator-economy",
+      "buyer_example": "Brand yang relevan dengan audiens",
+      "mechanisms": [
+        "iklan-sponsor"
+      ],
+      "first_steps": [
+        "Siapkan satu konsep sponsor dan contoh konten dengan pengungkapan kerja sama.",
+        "Tentukan niche dan alasan audiens mengikuti kontenmu.",
+        "Periksa kelayakan monetisasi dan ketentuan kanal sebelum memasang penawaran.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Pertumbuhan serta kepercayaan audiens.",
+        "Perubahan kelayakan, distribusi dan ketentuan platform."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "kerja sama",
+        "unit_receipt_idr": 750000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1500000,
+        "formula_text": "2 kerja sama x Rp750.000 = Rp1.500.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-24",
+      "number": 24,
+      "slug": "paid-newsletter",
+      "title": "Paid Newsletter",
+      "definition": "Menjual langganan informasi khusus melalui email.",
+      "category_id": "creator-economy",
+      "buyer_example": "Pembaca dengan kebutuhan informasi rutin",
+      "mechanisms": [
+        "berulang"
+      ],
+      "first_steps": [
+        "Kirim edisi contoh dan uji alasan orang mau membayar untuk edisi berikutnya.",
+        "Tentukan niche dan alasan audiens mengikuti kontenmu.",
+        "Periksa kelayakan monetisasi dan ketentuan kanal sebelum memasang penawaran.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Pertumbuhan serta kepercayaan audiens.",
+        "Perubahan kelayakan, distribusi dan ketentuan platform."
+      ],
+      "simulation": {
+        "quantity": 40,
+        "quantity_unit": "pelanggan",
+        "unit_receipt_idr": 35000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1400000,
+        "formula_text": "40 pelanggan x Rp35.000 = Rp1.400.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-25",
+      "number": 25,
+      "slug": "private-membership",
+      "title": "Private Membership",
+      "definition": "Menjual akses ke materi dan komunitas eksklusif.",
+      "category_id": "creator-economy",
+      "buyer_example": "Anggota dengan kebutuhan berulang",
+      "mechanisms": [
+        "berulang"
+      ],
+      "first_steps": [
+        "Tentukan manfaat berkala dan kapasitas pelayanan sebelum membuka keanggotaan.",
+        "Tentukan niche dan alasan audiens mengikuti kontenmu.",
+        "Periksa kelayakan monetisasi dan ketentuan kanal sebelum memasang penawaran.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Pertumbuhan serta kepercayaan audiens.",
+        "Perubahan kelayakan, distribusi dan ketentuan platform."
+      ],
+      "simulation": {
+        "quantity": 30,
+        "quantity_unit": "anggota",
+        "unit_receipt_idr": 50000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1500000,
+        "formula_text": "30 anggota x Rp50.000 = Rp1.500.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-26",
+      "number": 26,
+      "slug": "live-streaming-tips",
+      "title": "Live Streaming Tips",
+      "definition": "Menerima dukungan sukarela dari penonton live.",
+      "category_id": "creator-economy",
+      "buyer_example": "Penonton live",
+      "mechanisms": [
+        "dukungan-acara"
+      ],
+      "first_steps": [
+        "Uji format siaran yang bernilai; dukungan penonton selalu bersifat sukarela.",
+        "Tentukan niche dan alasan audiens mengikuti kontenmu.",
+        "Periksa kelayakan monetisasi dan ketentuan kanal sebelum memasang penawaran.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Pertumbuhan serta kepercayaan audiens.",
+        "Perubahan kelayakan, distribusi dan ketentuan platform."
+      ],
+      "simulation": {
+        "quantity": 20,
+        "quantity_unit": "tip",
+        "unit_receipt_idr": 25000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 500000,
+        "formula_text": "20 tip x Rp25.000 = Rp500.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-27",
+      "number": 27,
+      "slug": "youtube-ad-revenue",
+      "title": "YouTube Ad Revenue",
+      "definition": "Mendapat bagi hasil iklan dari konten yang memenuhi syarat.",
+      "category_id": "creator-economy",
+      "buyer_example": "Penonton serta pengiklan melalui platform",
+      "mechanisms": [
+        "iklan-sponsor"
+      ],
+      "first_steps": [
+        "Bangun konten orisinal dan periksa kelayakan program monetisasi kanal.",
+        "Tentukan niche dan alasan audiens mengikuti kontenmu.",
+        "Periksa kelayakan monetisasi dan ketentuan kanal sebelum memasang penawaran.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Pertumbuhan serta kepercayaan audiens.",
+        "Perubahan kelayakan, distribusi dan ketentuan platform."
+      ],
+      "simulation": {
+        "quantity": 100000,
+        "quantity_unit": "views",
+        "unit_receipt_idr": 10000,
+        "unit_label": "RPM asumsi per 1.000 tayangan",
+        "divisor": 1000,
+        "total_idr": 1000000,
+        "formula_text": "100.000 views x Rp10.000 / 1.000 = Rp1.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": "RPM adalah asumsi simulasi, bukan tarif resmi platform. Tayangan tidak otomatis memenuhi syarat monetisasi."
+    },
+    {
+      "id": "m80-28",
+      "number": 28,
+      "slug": "website-display-ads",
+      "title": "Website Display Ads",
+      "definition": "Menampilkan iklan di artikel atau website yang memiliki trafik.",
+      "category_id": "creator-economy",
+      "buyer_example": "Pengunjung website serta pengiklan",
+      "mechanisms": [
+        "iklan-sponsor"
+      ],
+      "first_steps": [
+        "Uji konten yang bermanfaat, kualitas trafik dan dampak iklan pada pengalaman baca.",
+        "Tentukan niche dan alasan audiens mengikuti kontenmu.",
+        "Periksa kelayakan monetisasi dan ketentuan kanal sebelum memasang penawaran.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Pertumbuhan serta kepercayaan audiens.",
+        "Perubahan kelayakan, distribusi dan ketentuan platform."
+      ],
+      "simulation": {
+        "quantity": 50000,
+        "quantity_unit": "pageviews",
+        "unit_receipt_idr": 5000,
+        "unit_label": "RPM asumsi per 1.000 tayangan",
+        "divisor": 1000,
+        "total_idr": 250000,
+        "formula_text": "50.000 pageviews x Rp5.000 / 1.000 = Rp250.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": "RPM adalah asumsi simulasi, bukan tarif resmi platform. Tayangan tidak otomatis memenuhi syarat monetisasi."
+    },
+    {
+      "id": "m80-29",
+      "number": 29,
+      "slug": "podcast-sponsorship",
+      "title": "Podcast Sponsorship",
+      "definition": "Menjual slot promosi dalam episode podcast.",
+      "category_id": "creator-economy",
+      "buyer_example": "Brand yang ingin menjangkau pendengar",
+      "mechanisms": [
+        "iklan-sponsor"
+      ],
+      "first_steps": [
+        "Buat media kit dengan data audiens yang benar dan contoh penempatan sponsor.",
+        "Tentukan niche dan alasan audiens mengikuti kontenmu.",
+        "Periksa kelayakan monetisasi dan ketentuan kanal sebelum memasang penawaran.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Pertumbuhan serta kepercayaan audiens.",
+        "Perubahan kelayakan, distribusi dan ketentuan platform."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "sponsor",
+        "unit_receipt_idr": 500000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1000000,
+        "formula_text": "2 sponsor x Rp500.000 = Rp1.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-30",
+      "number": 30,
+      "slug": "paid-live-workshop",
+      "title": "Paid Live Workshop",
+      "definition": "Mengadakan pelatihan online berbayar untuk audiens.",
+      "category_id": "creator-economy",
+      "buyer_example": "Peserta dengan target belajar tertentu",
+      "mechanisms": [
+        "dukungan-acara"
+      ],
+      "first_steps": [
+        "Jual pilot workshop dengan hasil belajar, jadwal dan kapasitas yang jelas.",
+        "Tentukan niche dan alasan audiens mengikuti kontenmu.",
+        "Periksa kelayakan monetisasi dan ketentuan kanal sebelum memasang penawaran.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Pertumbuhan serta kepercayaan audiens.",
+        "Perubahan kelayakan, distribusi dan ketentuan platform."
+      ],
+      "simulation": {
+        "quantity": 30,
+        "quantity_unit": "peserta",
+        "unit_receipt_idr": 79000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2370000,
+        "formula_text": "30 peserta x Rp79.000 = Rp2.370.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-31",
+      "number": 31,
+      "slug": "niche-job-board",
+      "title": "Niche Job Board",
+      "definition": "Membuat situs lowongan khusus industri tertentu, lalu menjual slot lowongan premium kepada perusahaan.",
+      "category_id": "information-business",
+      "buyer_example": "Perusahaan yang merekrut niche tertentu",
+      "mechanisms": [],
+      "first_steps": [
+        "Kurasi lowongan sah dan wawancarai pemberi kerja tentang kebutuhan listing.",
+        "Validasi siapa yang membutuhkan informasi dan bagaimana dipakai.",
+        "Catat sumber, izin pemakaian, tanggal pembaruan dan metode verifikasi.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kualitas, kebaruan dan izin penggunaan informasi.",
+        "Privasi serta waktu kurasi dan verifikasi."
+      ],
+      "simulation": {
+        "quantity": 4,
+        "quantity_unit": "lowongan",
+        "unit_receipt_idr": 350000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1400000,
+        "formula_text": "4 lowongan x Rp350.000 = Rp1.400.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-32",
+      "number": 32,
+      "slug": "premium-business-directory",
+      "title": "Premium Business Directory",
+      "definition": "Membuat direktori vendor atau bisnis dan menawarkan listing unggulan.",
+      "category_id": "information-business",
+      "buyer_example": "Vendor atau bisnis pada niche tertentu",
+      "mechanisms": [],
+      "first_steps": [
+        "Buat direktori kecil terverifikasi dengan label listing berbayar yang jelas.",
+        "Validasi siapa yang membutuhkan informasi dan bagaimana dipakai.",
+        "Catat sumber, izin pemakaian, tanggal pembaruan dan metode verifikasi.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kualitas, kebaruan dan izin penggunaan informasi.",
+        "Privasi serta waktu kurasi dan verifikasi."
+      ],
+      "simulation": {
+        "quantity": 10,
+        "quantity_unit": "listing",
+        "unit_receipt_idr": 100000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1000000,
+        "formula_text": "10 listing x Rp100.000 = Rp1.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-33",
+      "number": 33,
+      "slug": "qualified-lead-generation",
+      "title": "Qualified Lead Generation",
+      "definition": "Menghasilkan prospek berkualitas yang bersedia dihubungi penyedia jasa.",
+      "category_id": "information-business",
+      "buyer_example": "Penyedia jasa dengan kriteria prospek jelas",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Sepakati definisi lead valid dan persetujuan untuk dihubungi sebelum menjalankan.",
+        "Validasi siapa yang membutuhkan informasi dan bagaimana dipakai.",
+        "Catat sumber, izin pemakaian, tanggal pembaruan dan metode verifikasi.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kualitas, kebaruan dan izin penggunaan informasi.",
+        "Privasi serta waktu kurasi dan verifikasi."
+      ],
+      "simulation": {
+        "quantity": 15,
+        "quantity_unit": "lead",
+        "unit_receipt_idr": 100000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1500000,
+        "formula_text": "15 lead x Rp100.000 = Rp1.500.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": "Periksa izin penggunaan sumber, privasi, persetujuan yang relevan dan kualitas data. Tidak memuat atau menjual data pribadi mentah."
+    },
+    {
+      "id": "m80-34",
+      "number": 34,
+      "slug": "newsletter-ad-inventory",
+      "title": "Newsletter Ad Inventory",
+      "definition": "Menjual slot sponsor dalam newsletter niche, terpisah dari biaya langganan pembaca.",
+      "category_id": "information-business",
+      "buyer_example": "Pengiklan yang cocok dengan newsletter",
+      "mechanisms": [
+        "iklan-sponsor"
+      ],
+      "first_steps": [
+        "Siapkan satu slot sponsor dengan data distribusi dan pelabelan yang jujur.",
+        "Validasi siapa yang membutuhkan informasi dan bagaimana dipakai.",
+        "Catat sumber, izin pemakaian, tanggal pembaruan dan metode verifikasi.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kualitas, kebaruan dan izin penggunaan informasi.",
+        "Privasi serta waktu kurasi dan verifikasi."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "sponsor",
+        "unit_receipt_idr": 500000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1000000,
+        "formula_text": "2 sponsor x Rp500.000 = Rp1.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-35",
+      "number": 35,
+      "slug": "industry-research-reports",
+      "title": "Industry Research Reports",
+      "definition": "Menjual laporan tren, persaingan, dan peluang dalam industri tertentu.",
+      "category_id": "information-business",
+      "buyer_example": "Bisnis atau praktisi industri",
+      "mechanisms": [],
+      "first_steps": [
+        "Buat contoh ringkasan riset dengan sumber, metode dan tanggal pemeriksaan.",
+        "Validasi siapa yang membutuhkan informasi dan bagaimana dipakai.",
+        "Catat sumber, izin pemakaian, tanggal pembaruan dan metode verifikasi.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kualitas, kebaruan dan izin penggunaan informasi.",
+        "Privasi serta waktu kurasi dan verifikasi."
+      ],
+      "simulation": {
+        "quantity": 10,
+        "quantity_unit": "laporan",
+        "unit_receipt_idr": 300000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 3000000,
+        "formula_text": "10 laporan x Rp300.000 = Rp3.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-36",
+      "number": 36,
+      "slug": "custom-market-mapping",
+      "title": "Custom Market Mapping",
+      "definition": "Membuat pemetaan kompetitor, pelanggan potensial, atau pasar untuk bisnis.",
+      "category_id": "information-business",
+      "buyer_example": "Tim bisnis yang mencari gambaran pasar",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Petakan satu segmen kecil dengan kriteria, sumber dan batas cakupan.",
+        "Validasi siapa yang membutuhkan informasi dan bagaimana dipakai.",
+        "Catat sumber, izin pemakaian, tanggal pembaruan dan metode verifikasi.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kualitas, kebaruan dan izin penggunaan informasi.",
+        "Privasi serta waktu kurasi dan verifikasi."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "proyek",
+        "unit_receipt_idr": 1500000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 3000000,
+        "formula_text": "2 proyek x Rp1.500.000 = Rp3.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-37",
+      "number": 37,
+      "slug": "talent-referral-network",
+      "title": "Talent Referral Network",
+      "definition": "Menghubungkan kandidat berkualitas dengan perusahaan dan menerima referral fee sesuai kesepakatan.",
+      "category_id": "information-business",
+      "buyer_example": "Perusahaan dan kandidat yang sesuai",
+      "mechanisms": [
+        "komisi-referral"
+      ],
+      "first_steps": [
+        "Bangun proses rujukan dengan izin kandidat dan syarat komisi tertulis.",
+        "Validasi siapa yang membutuhkan informasi dan bagaimana dipakai.",
+        "Catat sumber, izin pemakaian, tanggal pembaruan dan metode verifikasi.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kualitas, kebaruan dan izin penggunaan informasi.",
+        "Privasi serta waktu kurasi dan verifikasi."
+      ],
+      "simulation": {
+        "quantity": 1,
+        "quantity_unit": "penempatan",
+        "unit_receipt_idr": 3000000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 3000000,
+        "formula_text": "1 penempatan x Rp3.000.000 = Rp3.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": "Periksa izin penggunaan sumber, privasi, persetujuan yang relevan dan kualitas data. Tidak memuat atau menjual data pribadi mentah."
+    },
+    {
+      "id": "m80-38",
+      "number": 38,
+      "slug": "curated-data-products",
+      "title": "Curated Data Products",
+      "definition": "Mengolah data publik yang boleh digunakan menjadi dataset siap analisis.",
+      "category_id": "information-business",
+      "buyer_example": "Analis atau pengembang",
+      "mechanisms": [
+        "produk"
+      ],
+      "first_steps": [
+        "Buat dataset kecil berlisensi jelas dengan kamus data dan pemeriksaan kualitas.",
+        "Validasi siapa yang membutuhkan informasi dan bagaimana dipakai.",
+        "Catat sumber, izin pemakaian, tanggal pembaruan dan metode verifikasi.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kualitas, kebaruan dan izin penggunaan informasi.",
+        "Privasi serta waktu kurasi dan verifikasi."
+      ],
+      "simulation": {
+        "quantity": 20,
+        "quantity_unit": "dataset",
+        "unit_receipt_idr": 149000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2980000,
+        "formula_text": "20 dataset x Rp149.000 = Rp2.980.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": "Periksa izin penggunaan sumber, privasi, persetujuan yang relevan dan kualitas data. Tidak memuat atau menjual data pribadi mentah."
+    },
+    {
+      "id": "m80-39",
+      "number": 39,
+      "slug": "procurement-alert-service",
+      "title": "Procurement Alert Service",
+      "definition": "Menjual langganan notifikasi peluang tender atau pengadaan dari informasi yang sah dan tersedia publik.",
+      "category_id": "information-business",
+      "buyer_example": "Bisnis yang mencari peluang pengadaan",
+      "mechanisms": [
+        "berulang"
+      ],
+      "first_steps": [
+        "Uji buletin peluang dari sumber publik yang sah dengan tautan sumber.",
+        "Validasi siapa yang membutuhkan informasi dan bagaimana dipakai.",
+        "Catat sumber, izin pemakaian, tanggal pembaruan dan metode verifikasi.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kualitas, kebaruan dan izin penggunaan informasi.",
+        "Privasi serta waktu kurasi dan verifikasi."
+      ],
+      "simulation": {
+        "quantity": 20,
+        "quantity_unit": "anggota",
+        "unit_receipt_idr": 99000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1980000,
+        "formula_text": "20 anggota x Rp99.000 = Rp1.980.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-40",
+      "number": 40,
+      "slug": "industry-benchmark-reports",
+      "title": "Industry Benchmark Reports",
+      "definition": "Menjual laporan perbandingan metrik bisnis dengan data agregat yang diperoleh secara sah.",
+      "category_id": "information-business",
+      "buyer_example": "Organisasi yang membutuhkan pembanding",
+      "mechanisms": [],
+      "first_steps": [
+        "Tetapkan definisi metrik dan gunakan data agregat yang sah serta dapat dijelaskan.",
+        "Validasi siapa yang membutuhkan informasi dan bagaimana dipakai.",
+        "Catat sumber, izin pemakaian, tanggal pembaruan dan metode verifikasi.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kualitas, kebaruan dan izin penggunaan informasi.",
+        "Privasi serta waktu kurasi dan verifikasi."
+      ],
+      "simulation": {
+        "quantity": 4,
+        "quantity_unit": "laporan",
+        "unit_receipt_idr": 750000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 3000000,
+        "formula_text": "4 laporan x Rp750.000 = Rp3.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": "Periksa izin penggunaan sumber, privasi, persetujuan yang relevan dan kualitas data. Tidak memuat atau menjual data pribadi mentah."
+    },
+    {
+      "id": "m80-41",
+      "number": 41,
+      "slug": "micro-saas",
+      "title": "Micro-SaaS",
+      "definition": "Membuat aplikasi sederhana untuk menyelesaikan satu masalah spesifik.",
+      "category_id": "software-ai",
+      "buyer_example": "Pengguna dengan masalah berulang",
+      "mechanisms": [
+        "berulang"
+      ],
+      "first_steps": [
+        "Uji satu fitur berbayar pada kelompok kecil sebelum menambah fitur.",
+        "Uji satu masalah dengan prototipe kecil.",
+        "Hitung biaya berjalan, dukungan dan batas penggunaan sebelum menetapkan harga.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Server, API/AI, keamanan dan pemeliharaan.",
+        "Kebutuhan dukungan serta ketentuan distribusi platform."
+      ],
+      "simulation": {
+        "quantity": 30,
+        "quantity_unit": "pengguna",
+        "unit_receipt_idr": 99000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2970000,
+        "formula_text": "30 pengguna x Rp99.000 = Rp2.970.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-42",
+      "number": 42,
+      "slug": "vertical-saas",
+      "title": "Vertical SaaS",
+      "definition": "Membuat software khusus industri, misalnya CRM untuk agen properti.",
+      "category_id": "software-ai",
+      "buyer_example": "Pelaku pada satu industri",
+      "mechanisms": [
+        "berulang"
+      ],
+      "first_steps": [
+        "Wawancarai alur industri dan uji satu pekerjaan inti dengan calon pengguna.",
+        "Uji satu masalah dengan prototipe kecil.",
+        "Hitung biaya berjalan, dukungan dan batas penggunaan sebelum menetapkan harga.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Server, API/AI, keamanan dan pemeliharaan.",
+        "Kebutuhan dukungan serta ketentuan distribusi platform."
+      ],
+      "simulation": {
+        "quantity": 10,
+        "quantity_unit": "bisnis",
+        "unit_receipt_idr": 350000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 3500000,
+        "formula_text": "10 bisnis x Rp350.000 = Rp3.500.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-43",
+      "number": 43,
+      "slug": "ai-chatbot-as-a-service",
+      "title": "AI Chatbot as a Service",
+      "definition": "Menjual layanan chatbot AI untuk customer service atau operasional.",
+      "category_id": "software-ai",
+      "buyer_example": "Bisnis dengan pertanyaan pelanggan berulang",
+      "mechanisms": [
+        "berulang"
+      ],
+      "first_steps": [
+        "Uji chatbot dari materi berizin dengan eskalasi manusia dan batas jawaban.",
+        "Uji satu masalah dengan prototipe kecil.",
+        "Hitung biaya berjalan, dukungan dan batas penggunaan sebelum menetapkan harga.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Server, API/AI, keamanan dan pemeliharaan.",
+        "Kebutuhan dukungan serta ketentuan distribusi platform."
+      ],
+      "simulation": {
+        "quantity": 5,
+        "quantity_unit": "klien",
+        "unit_receipt_idr": 350000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1750000,
+        "formula_text": "5 klien x Rp350.000 = Rp1.750.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-44",
+      "number": 44,
+      "slug": "paid-api-business",
+      "title": "Paid API Business",
+      "definition": "Menjual akses API untuk fungsi data, analisis, atau layanan software.",
+      "category_id": "software-ai",
+      "buyer_example": "Pengembang atau tim produk",
+      "mechanisms": [
+        "berulang"
+      ],
+      "first_steps": [
+        "Buat endpoint demo dengan autentikasi, dokumentasi dan batas pemakaian.",
+        "Uji satu masalah dengan prototipe kecil.",
+        "Hitung biaya berjalan, dukungan dan batas penggunaan sebelum menetapkan harga.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Server, API/AI, keamanan dan pemeliharaan.",
+        "Kebutuhan dukungan serta ketentuan distribusi platform."
+      ],
+      "simulation": {
+        "quantity": 10,
+        "quantity_unit": "pelanggan",
+        "unit_receipt_idr": 200000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2000000,
+        "formula_text": "10 pelanggan x Rp200.000 = Rp2.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-45",
+      "number": 45,
+      "slug": "browser-extension",
+      "title": "Browser Extension",
+      "definition": "Membuat ekstensi Chrome dengan fitur premium.",
+      "category_id": "software-ai",
+      "buyer_example": "Pengguna browser dengan tugas khusus",
+      "mechanisms": [
+        "berulang"
+      ],
+      "first_steps": [
+        "Uji satu fungsi dan periksa izin browser serta kebijakan distribusinya.",
+        "Uji satu masalah dengan prototipe kecil.",
+        "Hitung biaya berjalan, dukungan dan batas penggunaan sebelum menetapkan harga.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Server, API/AI, keamanan dan pemeliharaan.",
+        "Kebutuhan dukungan serta ketentuan distribusi platform."
+      ],
+      "simulation": {
+        "quantity": 40,
+        "quantity_unit": "pelanggan",
+        "unit_receipt_idr": 49000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1960000,
+        "formula_text": "40 pelanggan x Rp49.000 = Rp1.960.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-46",
+      "number": 46,
+      "slug": "wordpress-plugin-business",
+      "title": "WordPress Plugin Business",
+      "definition": "Menjual plugin atau lisensi fitur tambahan untuk website.",
+      "category_id": "software-ai",
+      "buyer_example": "Pemilik website WordPress",
+      "mechanisms": [
+        "lisensi"
+      ],
+      "first_steps": [
+        "Bangun plugin kecil dan uji kompatibilitas serta pembaruan.",
+        "Uji satu masalah dengan prototipe kecil.",
+        "Hitung biaya berjalan, dukungan dan batas penggunaan sebelum menetapkan harga.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Server, API/AI, keamanan dan pemeliharaan.",
+        "Kebutuhan dukungan serta ketentuan distribusi platform."
+      ],
+      "simulation": {
+        "quantity": 10,
+        "quantity_unit": "lisensi",
+        "unit_receipt_idr": 199000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1990000,
+        "formula_text": "10 lisensi x Rp199.000 = Rp1.990.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-47",
+      "number": 47,
+      "slug": "shopify-app-development",
+      "title": "Shopify App Development",
+      "definition": "Membuat aplikasi yang membantu pemilik toko Shopify.",
+      "category_id": "software-ai",
+      "buyer_example": "Pemilik toko Shopify",
+      "mechanisms": [
+        "berulang"
+      ],
+      "first_steps": [
+        "Validasi satu masalah toko dan periksa ketentuan registrasi serta penagihan.",
+        "Uji satu masalah dengan prototipe kecil.",
+        "Hitung biaya berjalan, dukungan dan batas penggunaan sebelum menetapkan harga.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Server, API/AI, keamanan dan pemeliharaan.",
+        "Kebutuhan dukungan serta ketentuan distribusi platform."
+      ],
+      "simulation": {
+        "quantity": 10,
+        "quantity_unit": "toko",
+        "unit_receipt_idr": 250000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2500000,
+        "formula_text": "10 toko x Rp250.000 = Rp2.500.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-48",
+      "number": 48,
+      "slug": "figma-plugin-monetization",
+      "title": "Figma Plugin Monetization",
+      "definition": "Membuat plugin produktivitas atau desain dengan fitur berbayar.",
+      "category_id": "software-ai",
+      "buyer_example": "Designer atau tim Figma",
+      "mechanisms": [
+        "berulang"
+      ],
+      "first_steps": [
+        "Uji plugin untuk satu tugas desain dan periksa mekanisme pembayaran yang diizinkan.",
+        "Uji satu masalah dengan prototipe kecil.",
+        "Hitung biaya berjalan, dukungan dan batas penggunaan sebelum menetapkan harga.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Server, API/AI, keamanan dan pemeliharaan.",
+        "Kebutuhan dukungan serta ketentuan distribusi platform."
+      ],
+      "simulation": {
+        "quantity": 25,
+        "quantity_unit": "pelanggan",
+        "unit_receipt_idr": 49000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1225000,
+        "formula_text": "25 pelanggan x Rp49.000 = Rp1.225.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-49",
+      "number": 49,
+      "slug": "automation-workflow-packs",
+      "title": "Automation Workflow Packs",
+      "definition": "Menjual workflow n8n, Make, atau Zapier siap pakai.",
+      "category_id": "software-ai",
+      "buyer_example": "Pengguna tools automasi",
+      "mechanisms": [
+        "produk"
+      ],
+      "first_steps": [
+        "Buat workflow berisi instruksi setup, kebutuhan kredensial dan penanganan error.",
+        "Uji satu masalah dengan prototipe kecil.",
+        "Hitung biaya berjalan, dukungan dan batas penggunaan sebelum menetapkan harga.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Server, API/AI, keamanan dan pemeliharaan.",
+        "Kebutuhan dukungan serta ketentuan distribusi platform."
+      ],
+      "simulation": {
+        "quantity": 10,
+        "quantity_unit": "paket",
+        "unit_receipt_idr": 199000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1990000,
+        "formula_text": "10 paket x Rp199.000 = Rp1.990.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-50",
+      "number": 50,
+      "slug": "white-label-software",
+      "title": "White-Label Software",
+      "definition": "Menjual lisensi aplikasi yang boleh diberi merek oleh bisnis pembeli.",
+      "category_id": "software-ai",
+      "buyer_example": "Agensi atau bisnis yang ingin merek sendiri",
+      "mechanisms": [
+        "lisensi"
+      ],
+      "first_steps": [
+        "Tentukan hak rebranding, lisensi, dukungan dan batas distribusi ulang.",
+        "Uji satu masalah dengan prototipe kecil.",
+        "Hitung biaya berjalan, dukungan dan batas penggunaan sebelum menetapkan harga.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Server, API/AI, keamanan dan pemeliharaan.",
+        "Kebutuhan dukungan serta ketentuan distribusi platform."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "lisensi",
+        "unit_receipt_idr": 2000000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 4000000,
+        "formula_text": "2 lisensi x Rp2.000.000 = Rp4.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-51",
+      "number": 51,
+      "slug": "stock-photography",
+      "title": "Stock Photography",
+      "definition": "Melisensikan foto orisinal kepada pembeli di marketplace stok.",
+      "category_id": "digital-assets-ip",
+      "buyer_example": "Pembeli lisensi foto",
+      "mechanisms": [
+        "lisensi"
+      ],
+      "first_steps": [
+        "Buat koleksi kecil foto orisinal dengan metadata serta izin subjek yang diperlukan.",
+        "Pastikan kepemilikan karya serta izin unsur pihak ketiga.",
+        "Tentukan cakupan lisensi, kanal distribusi dan batas pemakaian.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kepemilikan hak serta izin model, musik atau aset pihak ketiga.",
+        "Penjualan yang tidak rutin dan pembagian royalti."
+      ],
+      "simulation": {
+        "quantity": 100,
+        "quantity_unit": "lisensi",
+        "unit_receipt_idr": 7000,
+        "unit_label": "Royalti asumsi per lisensi",
+        "divisor": 1,
+        "total_idr": 700000,
+        "formula_text": "100 lisensi x Rp7.000 = Rp700.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-52",
+      "number": 52,
+      "slug": "stock-footage",
+      "title": "Stock Footage",
+      "definition": "Menjual lisensi video B-roll, drone, atau footage sinematik.",
+      "category_id": "digital-assets-ip",
+      "buyer_example": "Editor video atau brand",
+      "mechanisms": [
+        "lisensi"
+      ],
+      "first_steps": [
+        "Buat koleksi footage orisinal dengan informasi teknis dan hak penggunaan.",
+        "Pastikan kepemilikan karya serta izin unsur pihak ketiga.",
+        "Tentukan cakupan lisensi, kanal distribusi dan batas pemakaian.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kepemilikan hak serta izin model, musik atau aset pihak ketiga.",
+        "Penjualan yang tidak rutin dan pembagian royalti."
+      ],
+      "simulation": {
+        "quantity": 10,
+        "quantity_unit": "lisensi",
+        "unit_receipt_idr": 50000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 500000,
+        "formula_text": "10 lisensi x Rp50.000 = Rp500.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-53",
+      "number": 53,
+      "slug": "vector-icon-assets",
+      "title": "Vector & Icon Assets",
+      "definition": "Menjual desain ikon atau ilustrasi digital.",
+      "category_id": "digital-assets-ip",
+      "buyer_example": "Designer atau pembuat produk",
+      "mechanisms": [
+        "lisensi"
+      ],
+      "first_steps": [
+        "Buat satu set ikon konsisten dan dokumentasikan lisensi serta format file.",
+        "Pastikan kepemilikan karya serta izin unsur pihak ketiga.",
+        "Tentukan cakupan lisensi, kanal distribusi dan batas pemakaian.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kepemilikan hak serta izin model, musik atau aset pihak ketiga.",
+        "Penjualan yang tidak rutin dan pembagian royalti."
+      ],
+      "simulation": {
+        "quantity": 20,
+        "quantity_unit": "paket",
+        "unit_receipt_idr": 79000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1580000,
+        "formula_text": "20 paket x Rp79.000 = Rp1.580.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-54",
+      "number": 54,
+      "slug": "3d-assets-marketplace",
+      "title": "3D Assets Marketplace",
+      "definition": "Menjual model 3D untuk game, animasi, atau aplikasi.",
+      "category_id": "digital-assets-ip",
+      "buyer_example": "Pengembang game atau animator",
+      "mechanisms": [
+        "lisensi"
+      ],
+      "first_steps": [
+        "Buat model 3D dengan spesifikasi, preview dan uji impor.",
+        "Pastikan kepemilikan karya serta izin unsur pihak ketiga.",
+        "Tentukan cakupan lisensi, kanal distribusi dan batas pemakaian.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kepemilikan hak serta izin model, musik atau aset pihak ketiga.",
+        "Penjualan yang tidak rutin dan pembagian royalti."
+      ],
+      "simulation": {
+        "quantity": 8,
+        "quantity_unit": "aset",
+        "unit_receipt_idr": 200000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1600000,
+        "formula_text": "8 aset x Rp200.000 = Rp1.600.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-55",
+      "number": 55,
+      "slug": "font-licensing",
+      "title": "Font Licensing",
+      "definition": "Membuat font sendiri dan menjual lisensi penggunaannya.",
+      "category_id": "digital-assets-ip",
+      "buyer_example": "Designer atau pemilik brand",
+      "mechanisms": [
+        "lisensi"
+      ],
+      "first_steps": [
+        "Uji font orisinal pada beberapa ukuran dan tentukan jenis lisensinya.",
+        "Pastikan kepemilikan karya serta izin unsur pihak ketiga.",
+        "Tentukan cakupan lisensi, kanal distribusi dan batas pemakaian.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kepemilikan hak serta izin model, musik atau aset pihak ketiga.",
+        "Penjualan yang tidak rutin dan pembagian royalti."
+      ],
+      "simulation": {
+        "quantity": 10,
+        "quantity_unit": "lisensi",
+        "unit_receipt_idr": 150000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1500000,
+        "formula_text": "10 lisensi x Rp150.000 = Rp1.500.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-56",
+      "number": 56,
+      "slug": "sound-effects-packs",
+      "title": "Sound Effects Packs",
+      "definition": "Menjual paket suara orisinal untuk editor dan pengembang game.",
+      "category_id": "digital-assets-ip",
+      "buyer_example": "Editor atau pengembang game",
+      "mechanisms": [
+        "lisensi"
+      ],
+      "first_steps": [
+        "Rekam efek suara orisinal, rapikan level dan beri metadata pencarian.",
+        "Pastikan kepemilikan karya serta izin unsur pihak ketiga.",
+        "Tentukan cakupan lisensi, kanal distribusi dan batas pemakaian.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kepemilikan hak serta izin model, musik atau aset pihak ketiga.",
+        "Penjualan yang tidak rutin dan pembagian royalti."
+      ],
+      "simulation": {
+        "quantity": 10,
+        "quantity_unit": "paket",
+        "unit_receipt_idr": 99000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 990000,
+        "formula_text": "10 paket x Rp99.000 = Rp990.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-57",
+      "number": 57,
+      "slug": "music-licensing",
+      "title": "Music Licensing",
+      "definition": "Melisensikan musik orisinal untuk video, podcast, atau iklan.",
+      "category_id": "digital-assets-ip",
+      "buyer_example": "Pembuat video, podcast atau iklan",
+      "mechanisms": [
+        "lisensi"
+      ],
+      "first_steps": [
+        "Buat contoh musik orisinal dan rincikan penggunaan yang dicakup lisensi.",
+        "Pastikan kepemilikan karya serta izin unsur pihak ketiga.",
+        "Tentukan cakupan lisensi, kanal distribusi dan batas pemakaian.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kepemilikan hak serta izin model, musik atau aset pihak ketiga.",
+        "Penjualan yang tidak rutin dan pembagian royalti."
+      ],
+      "simulation": {
+        "quantity": 8,
+        "quantity_unit": "lisensi",
+        "unit_receipt_idr": 150000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1200000,
+        "formula_text": "8 lisensi x Rp150.000 = Rp1.200.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-58",
+      "number": 58,
+      "slug": "content-syndication",
+      "title": "Content Syndication",
+      "definition": "Melisensikan artikel atau tulisan orisinal kepada penerbit lain.",
+      "category_id": "digital-assets-ip",
+      "buyer_example": "Penerbit atau media",
+      "mechanisms": [
+        "lisensi"
+      ],
+      "first_steps": [
+        "Pilih tulisan orisinal dengan hak yang dapat dilisensikan dan tentukan eksklusivitas.",
+        "Pastikan kepemilikan karya serta izin unsur pihak ketiga.",
+        "Tentukan cakupan lisensi, kanal distribusi dan batas pemakaian.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kepemilikan hak serta izin model, musik atau aset pihak ketiga.",
+        "Penjualan yang tidak rutin dan pembagian royalti."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "lisensi",
+        "unit_receipt_idr": 750000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1500000,
+        "formula_text": "2 lisensi x Rp750.000 = Rp1.500.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-59",
+      "number": 59,
+      "slug": "character-ip-licensing",
+      "title": "Character IP Licensing",
+      "definition": "Melisensikan karakter ilustrasi orisinal untuk produk atau kampanye brand.",
+      "category_id": "digital-assets-ip",
+      "buyer_example": "Brand atau produsen",
+      "mechanisms": [
+        "lisensi"
+      ],
+      "first_steps": [
+        "Susun panduan karakter orisinal dan batas penggunaan untuk calon pemegang lisensi.",
+        "Pastikan kepemilikan karya serta izin unsur pihak ketiga.",
+        "Tentukan cakupan lisensi, kanal distribusi dan batas pemakaian.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kepemilikan hak serta izin model, musik atau aset pihak ketiga.",
+        "Penjualan yang tidak rutin dan pembagian royalti."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "lisensi",
+        "unit_receipt_idr": 1000000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2000000,
+        "formula_text": "2 lisensi x Rp1.000.000 = Rp2.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-60",
+      "number": 60,
+      "slug": "educational-content-licensing",
+      "title": "Educational Content Licensing",
+      "definition": "Menjual lisensi penggunaan materi belajar kepada sekolah, komunitas, atau perusahaan.",
+      "category_id": "digital-assets-ip",
+      "buyer_example": "Sekolah, komunitas atau perusahaan",
+      "mechanisms": [
+        "lisensi"
+      ],
+      "first_steps": [
+        "Uji modul orisinal dan tentukan jumlah pengguna serta hak modifikasinya.",
+        "Pastikan kepemilikan karya serta izin unsur pihak ketiga.",
+        "Tentukan cakupan lisensi, kanal distribusi dan batas pemakaian.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Kepemilikan hak serta izin model, musik atau aset pihak ketiga.",
+        "Penjualan yang tidak rutin dan pembagian royalti."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "lisensi",
+        "unit_receipt_idr": 2000000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 4000000,
+        "formula_text": "2 lisensi x Rp2.000.000 = Rp4.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-61",
+      "number": 61,
+      "slug": "executive-ghostwriting",
+      "title": "Executive Ghostwriting",
+      "definition": "Menulis konten LinkedIn atau newsletter atas nama pemimpin perusahaan.",
+      "category_id": "b2b",
+      "buyer_example": "Pemimpin perusahaan atau profesional",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Buat contoh tulisan dari wawancara berizin dan selaraskan suara penulis.",
+        "Temukan kebutuhan dan pengambil keputusan di organisasi.",
+        "Sepakati scope, kriteria penerimaan, pembayaran dan penggunaan data.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Siklus keputusan dan pembayaran organisasi.",
+        "Kebutuhan bukti kemampuan dan koordinasi pemangku kepentingan."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "klien",
+        "unit_receipt_idr": 2500000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 5000000,
+        "formula_text": "2 klien x Rp2.500.000 = Rp5.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-62",
+      "number": 62,
+      "slug": "appointment-setting",
+      "title": "Appointment Setting",
+      "definition": "Menghasilkan jadwal pertemuan penjualan berkualitas untuk perusahaan.",
+      "category_id": "b2b",
+      "buyer_example": "Tim penjualan B2B",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Definisikan meeting valid, kualifikasi, pembatalan dan cara menghitung fee.",
+        "Temukan kebutuhan dan pengambil keputusan di organisasi.",
+        "Sepakati scope, kriteria penerimaan, pembayaran dan penggunaan data.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Siklus keputusan dan pembayaran organisasi.",
+        "Kebutuhan bukti kemampuan dan koordinasi pemangku kepentingan."
+      ],
+      "simulation": {
+        "quantity": 10,
+        "quantity_unit": "meeting",
+        "unit_receipt_idr": 300000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 3000000,
+        "formula_text": "10 meeting x Rp300.000 = Rp3.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-63",
+      "number": 63,
+      "slug": "b2b-referral-partnership",
+      "title": "B2B Referral Partnership",
+      "definition": "Mendapat komisi dari mempertemukan perusahaan dengan penyedia jasa atau software.",
+      "category_id": "b2b",
+      "buyer_example": "Bisnis yang membutuhkan mitra",
+      "mechanisms": [
+        "komisi-referral",
+        "jasa"
+      ],
+      "first_steps": [
+        "Periksa kecocokan pihak dan sepakati pemicu komisi serta pengungkapannya.",
+        "Temukan kebutuhan dan pengambil keputusan di organisasi.",
+        "Sepakati scope, kriteria penerimaan, pembayaran dan penggunaan data.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Siklus keputusan dan pembayaran organisasi.",
+        "Kebutuhan bukti kemampuan dan koordinasi pemangku kepentingan."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "referral sukses",
+        "unit_receipt_idr": 2000000,
+        "unit_label": "Komisi asumsi per unit",
+        "divisor": 1,
+        "total_idr": 4000000,
+        "formula_text": "2 referral sukses x Rp2.000.000 = Rp4.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-64",
+      "number": 64,
+      "slug": "white-label-digital-agency",
+      "title": "White-Label Digital Agency",
+      "definition": "Menyediakan jasa produksi digital untuk agensi lain dengan merek mereka.",
+      "category_id": "b2b",
+      "buyer_example": "Agensi yang membutuhkan kapasitas produksi",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Tawarkan pilot dengan scope, kerahasiaan dan aturan penggunaan portofolio.",
+        "Temukan kebutuhan dan pengambil keputusan di organisasi.",
+        "Sepakati scope, kriteria penerimaan, pembayaran dan penggunaan data.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Siklus keputusan dan pembayaran organisasi.",
+        "Kebutuhan bukti kemampuan dan koordinasi pemangku kepentingan."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "proyek",
+        "unit_receipt_idr": 3000000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 6000000,
+        "formula_text": "2 proyek x Rp3.000.000 = Rp6.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-65",
+      "number": 65,
+      "slug": "ad-creative-testing-service",
+      "title": "Ad Creative Testing Service",
+      "definition": "Membuat dan menguji beberapa variasi materi iklan.",
+      "category_id": "b2b",
+      "buyer_example": "Tim iklan atau brand",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Buat rencana variasi dan metrik uji; pisahkan biaya produksi dari belanja iklan.",
+        "Temukan kebutuhan dan pengambil keputusan di organisasi.",
+        "Sepakati scope, kriteria penerimaan, pembayaran dan penggunaan data.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Siklus keputusan dan pembayaran organisasi.",
+        "Kebutuhan bukti kemampuan dan koordinasi pemangku kepentingan."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "proyek",
+        "unit_receipt_idr": 1500000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 3000000,
+        "formula_text": "2 proyek x Rp1.500.000 = Rp3.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-66",
+      "number": 66,
+      "slug": "recruitment-funnel-setup",
+      "title": "Recruitment Funnel Setup",
+      "definition": "Membuat sistem landing page, formulir, dan seleksi awal kandidat.",
+      "category_id": "b2b",
+      "buyer_example": "Tim perekrutan",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Uji form dan alur kandidat dengan data sintetis serta pemberitahuan data yang sesuai.",
+        "Temukan kebutuhan dan pengambil keputusan di organisasi.",
+        "Sepakati scope, kriteria penerimaan, pembayaran dan penggunaan data.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Siklus keputusan dan pembayaran organisasi.",
+        "Kebutuhan bukti kemampuan dan koordinasi pemangku kepentingan."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "proyek",
+        "unit_receipt_idr": 2000000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 4000000,
+        "formula_text": "2 proyek x Rp2.000.000 = Rp4.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": "Periksa izin penggunaan sumber, privasi, persetujuan yang relevan dan kualitas data. Tidak memuat atau menjual data pribadi mentah."
+    },
+    {
+      "id": "m80-67",
+      "number": 67,
+      "slug": "website-accessibility-audit",
+      "title": "Website Accessibility Audit",
+      "definition": "Mengaudit kemudahan akses website bagi pengguna dengan kebutuhan berbeda.",
+      "category_id": "b2b",
+      "buyer_example": "Pemilik website atau product team",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Buat contoh audit berbasis kriteria yang relevan; bedakan temuan dan sertifikasi.",
+        "Temukan kebutuhan dan pengambil keputusan di organisasi.",
+        "Sepakati scope, kriteria penerimaan, pembayaran dan penggunaan data.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Siklus keputusan dan pembayaran organisasi.",
+        "Kebutuhan bukti kemampuan dan koordinasi pemangku kepentingan."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "audit",
+        "unit_receipt_idr": 1500000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 3000000,
+        "formula_text": "2 audit x Rp1.500.000 = Rp3.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-68",
+      "number": 68,
+      "slug": "conversion-rate-optimization-audit",
+      "title": "Conversion Rate Optimization Audit",
+      "definition": "Menganalisis penyebab pengunjung website tidak membeli atau mendaftar.",
+      "category_id": "b2b",
+      "buyer_example": "Bisnis dengan alur pembelian online",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Audit satu alur dengan data dan hipotesis; jangan menjanjikan kenaikan konversi.",
+        "Temukan kebutuhan dan pengambil keputusan di organisasi.",
+        "Sepakati scope, kriteria penerimaan, pembayaran dan penggunaan data.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Siklus keputusan dan pembayaran organisasi.",
+        "Kebutuhan bukti kemampuan dan koordinasi pemangku kepentingan."
+      ],
+      "simulation": {
+        "quantity": 3,
+        "quantity_unit": "audit",
+        "unit_receipt_idr": 1000000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 3000000,
+        "formula_text": "3 audit x Rp1.000.000 = Rp3.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-69",
+      "number": 69,
+      "slug": "crm-implementation-service",
+      "title": "CRM Implementation Service",
+      "definition": "Mengimplementasikan dan mengonfigurasi sistem pengelolaan pelanggan.",
+      "category_id": "b2b",
+      "buyer_example": "Tim penjualan atau layanan pelanggan",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Petakan proses lalu uji konfigurasi CRM kecil dengan ID dan akses yang jelas.",
+        "Temukan kebutuhan dan pengambil keputusan di organisasi.",
+        "Sepakati scope, kriteria penerimaan, pembayaran dan penggunaan data.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Siklus keputusan dan pembayaran organisasi.",
+        "Kebutuhan bukti kemampuan dan koordinasi pemangku kepentingan."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "proyek",
+        "unit_receipt_idr": 2500000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 5000000,
+        "formula_text": "2 proyek x Rp2.500.000 = Rp5.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-70",
+      "number": 70,
+      "slug": "technical-documentation-service",
+      "title": "Technical Documentation Service",
+      "definition": "Membuat dokumentasi produk, API, SOP teknis, atau panduan pengguna.",
+      "category_id": "b2b",
+      "buyer_example": "Tim software atau operasional",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Tulis contoh panduan yang diuji oleh pengguna yang tidak ikut membuatnya.",
+        "Temukan kebutuhan dan pengambil keputusan di organisasi.",
+        "Sepakati scope, kriteria penerimaan, pembayaran dan penggunaan data.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Siklus keputusan dan pembayaran organisasi.",
+        "Kebutuhan bukti kemampuan dan koordinasi pemangku kepentingan."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "proyek",
+        "unit_receipt_idr": 1500000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 3000000,
+        "formula_text": "2 proyek x Rp1.500.000 = Rp3.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-71",
+      "number": 71,
+      "slug": "paid-newsletter-referrals",
+      "title": "Paid Newsletter Referrals",
+      "definition": "Mendapat bayaran dari mengirim subscriber baru yang terverifikasi kepada newsletter lain.",
+      "category_id": "niche",
+      "buyer_example": "Pengelola newsletter dengan program rujukan",
+      "mechanisms": [
+        "komisi-referral"
+      ],
+      "first_steps": [
+        "Periksa validasi subscriber, kriteria penolakan dan syarat pembayaran program.",
+        "Cari pembeli serta prasyarat khusus model ini.",
+        "Uji transaksi atau pilot kecil sebelum membangun distribusi yang besar.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Permintaan yang sempit dan prasyarat teknis atau jaringan.",
+        "Kualitas, izin data dan validasi hasil sesuai model."
+      ],
+      "simulation": {
+        "quantity": 50,
+        "quantity_unit": "subscriber",
+        "unit_receipt_idr": 15000,
+        "unit_label": "Komisi asumsi per unit",
+        "divisor": 1,
+        "total_idr": 750000,
+        "formula_text": "50 subscriber x Rp15.000 = Rp750.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": "Syarat validasi, kelayakan komisi dan pembayaran bergantung pada program. Nominal ini bukan tarif resmi."
+    },
+    {
+      "id": "m80-72",
+      "number": 72,
+      "slug": "website-flipping",
+      "title": "Website Flipping",
+      "definition": "Membuat atau meningkatkan website, kemudian menjual kepemilikannya.",
+      "category_id": "niche",
+      "buyer_example": "Pembeli website",
+      "mechanisms": [
+        "jual-aset"
+      ],
+      "first_steps": [
+        "Buat atau perbaiki website dan siapkan bukti trafik, pendapatan, hak serta biaya yang benar.",
+        "Cari pembeli serta prasyarat khusus model ini.",
+        "Uji transaksi atau pilot kecil sebelum membangun distribusi yang besar.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Permintaan yang sempit dan prasyarat teknis atau jaringan.",
+        "Kualitas, izin data dan validasi hasil sesuai model."
+      ],
+      "simulation": {
+        "quantity": 1,
+        "quantity_unit": "website",
+        "unit_receipt_idr": 4000000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 4000000,
+        "formula_text": "1 website x Rp4.000.000 = Rp4.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": "Penjualan website merupakan transaksi yang dapat tidak rutin. Contoh bulanan ini tidak berarti penjualan akan terjadi setiap bulan."
+    },
+    {
+      "id": "m80-73",
+      "number": 73,
+      "slug": "ai-model-evaluation-services",
+      "title": "AI Model Evaluation Services",
+      "definition": "Menguji atau mengevaluasi kualitas jawaban dan perilaku model AI untuk klien.",
+      "category_id": "niche",
+      "buyer_example": "Tim pengembang atau penyedia AI",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Latih penilaian dengan rubrik, contoh tugas dan pemeriksaan konsistensi.",
+        "Cari pembeli serta prasyarat khusus model ini.",
+        "Uji transaksi atau pilot kecil sebelum membangun distribusi yang besar.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Permintaan yang sempit dan prasyarat teknis atau jaringan.",
+        "Kualitas, izin data dan validasi hasil sesuai model."
+      ],
+      "simulation": {
+        "quantity": 10,
+        "quantity_unit": "jam",
+        "unit_receipt_idr": 150000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1500000,
+        "formula_text": "10 jam x Rp150.000 = Rp1.500.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-74",
+      "number": 74,
+      "slug": "ai-workflow-context-kits",
+      "title": "AI Workflow & Context Kits",
+      "definition": "Menjual paket instruksi, template, dan sistem AI siap implementasi untuk pekerjaan tertentu.",
+      "category_id": "niche",
+      "buyer_example": "Praktisi yang membutuhkan alur AI",
+      "mechanisms": [
+        "produk"
+      ],
+      "first_steps": [
+        "Buat kit untuk satu pekerjaan dengan instruksi, contoh input dan pemeriksaan output.",
+        "Cari pembeli serta prasyarat khusus model ini.",
+        "Uji transaksi atau pilot kecil sebelum membangun distribusi yang besar.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Permintaan yang sempit dan prasyarat teknis atau jaringan.",
+        "Kualitas, izin data dan validasi hasil sesuai model."
+      ],
+      "simulation": {
+        "quantity": 20,
+        "quantity_unit": "paket",
+        "unit_receipt_idr": 99000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1980000,
+        "formula_text": "20 paket x Rp99.000 = Rp1.980.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-75",
+      "number": 75,
+      "slug": "independent-product-qa",
+      "title": "Independent Product QA",
+      "definition": "Menjual jasa pengujian fitur, bug, dan kualitas aplikasi.",
+      "category_id": "niche",
+      "buyer_example": "Tim produk atau pemilik aplikasi",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Uji satu fitur dan susun bug report yang dapat direproduksi.",
+        "Cari pembeli serta prasyarat khusus model ini.",
+        "Uji transaksi atau pilot kecil sebelum membangun distribusi yang besar.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Permintaan yang sempit dan prasyarat teknis atau jaringan.",
+        "Kualitas, izin data dan validasi hasil sesuai model."
+      ],
+      "simulation": {
+        "quantity": 4,
+        "quantity_unit": "proyek",
+        "unit_receipt_idr": 500000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2000000,
+        "formula_text": "4 proyek x Rp500.000 = Rp2.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-76",
+      "number": 76,
+      "slug": "research-participant-recruitment",
+      "title": "Research Participant Recruitment",
+      "definition": "Merekrut responden riset yang memenuhi kriteria dan memberi persetujuan.",
+      "category_id": "niche",
+      "buyer_example": "Peneliti atau organisasi riset",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Tetapkan kriteria responden, persetujuan, insentif dan validasi tanpa memalsukan partisipan.",
+        "Cari pembeli serta prasyarat khusus model ini.",
+        "Uji transaksi atau pilot kecil sebelum membangun distribusi yang besar.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Permintaan yang sempit dan prasyarat teknis atau jaringan.",
+        "Kualitas, izin data dan validasi hasil sesuai model."
+      ],
+      "simulation": {
+        "quantity": 10,
+        "quantity_unit": "responden valid",
+        "unit_receipt_idr": 100000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1000000,
+        "formula_text": "10 responden valid x Rp100.000 = Rp1.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": "Periksa izin penggunaan sumber, privasi, persetujuan yang relevan dan kualitas data. Tidak memuat atau menjual data pribadi mentah."
+    },
+    {
+      "id": "m80-77",
+      "number": 77,
+      "slug": "digital-product-onboarding",
+      "title": "Digital Product Onboarding",
+      "definition": "Membantu pelanggan mengonfigurasi dan menggunakan software yang sudah dibeli.",
+      "category_id": "niche",
+      "buyer_example": "Pengguna software yang membutuhkan bantuan",
+      "mechanisms": [
+        "jasa"
+      ],
+      "first_steps": [
+        "Tawarkan satu sesi setup dengan hasil, akses dan batas dukungan yang jelas.",
+        "Cari pembeli serta prasyarat khusus model ini.",
+        "Uji transaksi atau pilot kecil sebelum membangun distribusi yang besar.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Permintaan yang sempit dan prasyarat teknis atau jaringan.",
+        "Kualitas, izin data dan validasi hasil sesuai model."
+      ],
+      "simulation": {
+        "quantity": 6,
+        "quantity_unit": "sesi",
+        "unit_receipt_idr": 250000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1500000,
+        "formula_text": "6 sesi x Rp250.000 = Rp1.500.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [
+        "fondasi",
+        "harga",
+        "bukti",
+        "kesepakatan",
+        "operasional",
+        "pertumbuhan"
+      ],
+      "editorial_tags": [
+        "Jalur jasa"
+      ],
+      "special_note": null
+    },
+    {
+      "id": "m80-78",
+      "number": 78,
+      "slug": "embeddable-widget-licensing",
+      "title": "Embeddable Widget Licensing",
+      "definition": "Menjual lisensi widget seperti kalkulator, formulir, atau booking untuk website lain.",
+      "category_id": "niche",
+      "buyer_example": "Pemilik website atau agensi",
+      "mechanisms": [
+        "berulang",
+        "lisensi"
+      ],
+      "first_steps": [
+        "Buat widget yang bisa dipasang dan tetapkan lisensi, keamanan serta batas penggunaan.",
+        "Cari pembeli serta prasyarat khusus model ini.",
+        "Uji transaksi atau pilot kecil sebelum membangun distribusi yang besar.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Permintaan yang sempit dan prasyarat teknis atau jaringan.",
+        "Kualitas, izin data dan validasi hasil sesuai model."
+      ],
+      "simulation": {
+        "quantity": 10,
+        "quantity_unit": "website",
+        "unit_receipt_idr": 100000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1000000,
+        "formula_text": "10 website x Rp100.000 = Rp1.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-79",
+      "number": 79,
+      "slug": "business-sop-licensing",
+      "title": "Business SOP Licensing",
+      "definition": "Menjual lisensi paket sistem operasional bisnis kepada organisasi lain.",
+      "category_id": "niche",
+      "buyer_example": "Organisasi dengan kebutuhan operasional",
+      "mechanisms": [
+        "lisensi"
+      ],
+      "first_steps": [
+        "Uji SOP pada proses nyata lalu tentukan hak penggunaan dan modifikasinya.",
+        "Cari pembeli serta prasyarat khusus model ini.",
+        "Uji transaksi atau pilot kecil sebelum membangun distribusi yang besar.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Permintaan yang sempit dan prasyarat teknis atau jaringan.",
+        "Kualitas, izin data dan validasi hasil sesuai model."
+      ],
+      "simulation": {
+        "quantity": 5,
+        "quantity_unit": "lisensi",
+        "unit_receipt_idr": 399000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 1995000,
+        "formula_text": "5 lisensi x Rp399.000 = Rp1.995.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": null
+    },
+    {
+      "id": "m80-80",
+      "number": 80,
+      "slug": "synthetic-dataset-licensing",
+      "title": "Synthetic Dataset Licensing",
+      "definition": "Menjual dataset sintetis yang dibuat dan divalidasi untuk kebutuhan pengembangan atau pengujian software.",
+      "category_id": "niche",
+      "buyer_example": "Pengembang atau penguji software",
+      "mechanisms": [
+        "lisensi"
+      ],
+      "first_steps": [
+        "Buat dataset sintetis kecil dan uji kualitas, risiko kebocoran serta izin sumbernya.",
+        "Cari pembeli serta prasyarat khusus model ini.",
+        "Uji transaksi atau pilot kecil sebelum membangun distribusi yang besar.",
+        "Catat respons calon pembeli dan putuskan melanjutkan, memperkecil scope atau mengganti sasaran."
+      ],
+      "risks": [
+        "Permintaan yang sempit dan prasyarat teknis atau jaringan.",
+        "Kualitas, izin data dan validasi hasil sesuai model."
+      ],
+      "simulation": {
+        "quantity": 2,
+        "quantity_unit": "lisensi",
+        "unit_receipt_idr": 1000000,
+        "unit_label": "Penerimaan asumsi per unit",
+        "divisor": 1,
+        "total_idr": 2000000,
+        "formula_text": "2 lisensi x Rp1.000.000 = Rp2.000.000",
+        "period": "bulan",
+        "status": "ilustrasi_aritmetika_bukan_proyeksi"
+      },
+      "source_reference": "Lampiran pengguna Pasted text.txt, 20 Oktober 2026",
+      "related_sbs_pillars": [],
+      "editorial_tags": [],
+      "special_note": "Periksa izin penggunaan sumber, privasi, persetujuan yang relevan dan kualitas data. Tidak memuat atau menjual data pribadi mentah."
+    }
+  ],
+  "platform_policy_note": "Klaim kebijakan, fee, persentase royalti dan status pendaftaran platform dari catatan lampiran tidak dimasukkan sebagai fakta terkini. Verifikasi pada sumber resmi sebelum menambahkannya.",
+  "editorial_tag_note": "Buyer, langkah awal dan risiko adalah panduan editorial untuk menguji kebutuhan, bukan jaminan kecocokan atau pendapatan."
+}

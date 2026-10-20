@@ -1,0 +1,289 @@
+[
+  {
+    "path": "README_Pengguna.md",
+    "url": "/downloads/service-business-system/README_Pengguna.md",
+    "format": "MD",
+    "size_bytes": 2724,
+    "sha256": "fda8a2bd378c09de23ab3939f640461c46aa0d2fe9703db935d128e86b21b4f5"
+  },
+  {
+    "path": "calculators/03_Freelance_Rate_Calculator.xlsx",
+    "url": "/downloads/service-business-system/calculators/03_Freelance_Rate_Calculator.xlsx",
+    "format": "XLSX",
+    "size_bytes": 6633,
+    "sha256": "a8e08608fc19c281b807d86611134cd031c264c29bd70009c02e3b31576d55a8"
+  },
+  {
+    "path": "calculators/09_Client_and_Project_Tracker.xlsx",
+    "url": "/downloads/service-business-system/calculators/09_Client_and_Project_Tracker.xlsx",
+    "format": "XLSX",
+    "size_bytes": 36885,
+    "sha256": "4496972cbd054ee2007fca891b8352b1630bd68e1e3ea6672c51e2ffab3b9a9e"
+  },
+  {
+    "path": "playbook/01_Service_Business_Playbook.pdf",
+    "url": "/downloads/service-business-system/playbook/01_Service_Business_Playbook.pdf",
+    "format": "PDF",
+    "size_bytes": 122919,
+    "sha256": "6fc3d4fff048ca2a99c2665cf5751e066145fa055b57781b78736cfaa0c5d720"
+  },
+  {
+    "path": "release/Service_Business_System_V2_Inti_Gratis.zip",
+    "url": "/downloads/service-business-system/release/Service_Business_System_V2_Inti_Gratis.zip",
+    "format": "ZIP",
+    "size_bytes": 1603682,
+    "sha256": "3dabfa953ed2addfda265f9ab25da8e59a3573ed7ab70e682ffdc7b6a322c945"
+  },
+  {
+    "path": "release/Service_Business_System_V2_Lengkap_Gratis.zip",
+    "url": "/downloads/service-business-system/release/Service_Business_System_V2_Lengkap_Gratis.zip",
+    "format": "ZIP",
+    "size_bytes": 1903011,
+    "sha256": "da046ce6182a6915a165137734162e13b2eda659208a253c56af2e5fa87f66dd"
+  },
+  {
+    "path": "templates/02_Service_Positioning_Worksheet.docx",
+    "url": "/downloads/service-business-system/templates/02_Service_Positioning_Worksheet.docx",
+    "format": "DOCX",
+    "size_bytes": 39496,
+    "sha256": "c68fc2017d45aad485b03f6d9ce48b4794290a1b4b1350668ef90c133096532f"
+  },
+  {
+    "path": "templates/02_Service_Positioning_Worksheet.pdf",
+    "url": "/downloads/service-business-system/templates/02_Service_Positioning_Worksheet.pdf",
+    "format": "PDF",
+    "size_bytes": 75597,
+    "sha256": "352bc3d871e85270e5dc02921989e12dc5e0339d3d49d5b39d90ba20258fc11e"
+  },
+  {
+    "path": "templates/04_Service_Package_Builder.docx",
+    "url": "/downloads/service-business-system/templates/04_Service_Package_Builder.docx",
+    "format": "DOCX",
+    "size_bytes": 40335,
+    "sha256": "45976fd7c0a1a39b324a30ffb74589912247fb79186a365efc23780c4e4f0c55"
+  },
+  {
+    "path": "templates/04_Service_Package_Builder.pdf",
+    "url": "/downloads/service-business-system/templates/04_Service_Package_Builder.pdf",
+    "format": "PDF",
+    "size_bytes": 110339,
+    "sha256": "f28e976b0b24e0c5daed8c1eda3e8588c00c7f42bae69bb4dce1d63ccd460b71"
+  },
+  {
+    "path": "templates/05_Client_Brief_Form.docx",
+    "url": "/downloads/service-business-system/templates/05_Client_Brief_Form.docx",
+    "format": "DOCX",
+    "size_bytes": 39502,
+    "sha256": "1496bba2411f41711f5f4227a65bb4582572a4da945429dbe005e379104826c2"
+  },
+  {
+    "path": "templates/05_Client_Brief_Form.pdf",
+    "url": "/downloads/service-business-system/templates/05_Client_Brief_Form.pdf",
+    "format": "PDF",
+    "size_bytes": 75229,
+    "sha256": "187ec6765b95e06f34c4ca75fedeef33bc27d4131a48917a17da35bd68f93313"
+  },
+  {
+    "path": "templates/06_Proposal_dan_Quotation.docx",
+    "url": "/downloads/service-business-system/templates/06_Proposal_dan_Quotation.docx",
+    "format": "DOCX",
+    "size_bytes": 40469,
+    "sha256": "cd5ede555379a407feaeb8d47e3e2ad1d1564ce6061b17d7589c630f11687cab"
+  },
+  {
+    "path": "templates/06_Proposal_dan_Quotation.pdf",
+    "url": "/downloads/service-business-system/templates/06_Proposal_dan_Quotation.pdf",
+    "format": "PDF",
+    "size_bytes": 112813,
+    "sha256": "fc53712e6a569a777e4b64e7ed807540b16fe6c430a19f905e68c79781391204"
+  },
+  {
+    "path": "templates/07_SPK_dan_Statement_of_Work.docx",
+    "url": "/downloads/service-business-system/templates/07_SPK_dan_Statement_of_Work.docx",
+    "format": "DOCX",
+    "size_bytes": 43132,
+    "sha256": "da18ce7c62a906fc2973ce9724edcd1da9808541f0670e4ea0be585d6b313fb0"
+  },
+  {
+    "path": "templates/07_SPK_dan_Statement_of_Work.pdf",
+    "url": "/downloads/service-business-system/templates/07_SPK_dan_Statement_of_Work.pdf",
+    "format": "PDF",
+    "size_bytes": 140879,
+    "sha256": "f7d0007c29aed67a897d8dbda5c482b8611131602298b6fc5eb28ba17f2874be"
+  },
+  {
+    "path": "templates/08_Freelance_Invoice.docx",
+    "url": "/downloads/service-business-system/templates/08_Freelance_Invoice.docx",
+    "format": "DOCX",
+    "size_bytes": 40319,
+    "sha256": "070f7a8f020d10966b5e331de68b161dc365c123454d20acbc448b452e169073"
+  },
+  {
+    "path": "templates/08_Freelance_Invoice.pdf",
+    "url": "/downloads/service-business-system/templates/08_Freelance_Invoice.pdf",
+    "format": "PDF",
+    "size_bytes": 108707,
+    "sha256": "1f6c1065d56ca4fa2779ceeadbaea1b38a2e6116fbd39fa1e4cd459109382831"
+  },
+  {
+    "path": "templates/10_Project_Handover_Checklist.docx",
+    "url": "/downloads/service-business-system/templates/10_Project_Handover_Checklist.docx",
+    "format": "DOCX",
+    "size_bytes": 40141,
+    "sha256": "3f98d96e612515399f7bea342f3f07ee29f6f7622077b4df3ba7b7178be0601d"
+  },
+  {
+    "path": "templates/10_Project_Handover_Checklist.pdf",
+    "url": "/downloads/service-business-system/templates/10_Project_Handover_Checklist.pdf",
+    "format": "PDF",
+    "size_bytes": 98414,
+    "sha256": "c6221c9ff256015f4ff5e1a90e1ed3ca6bb0f39f46276594fbb74da69308aa32"
+  },
+  {
+    "path": "templates/11_Service_Catalog_dan_Rate_Card.docx",
+    "url": "/downloads/service-business-system/templates/11_Service_Catalog_dan_Rate_Card.docx",
+    "format": "DOCX",
+    "size_bytes": 40249,
+    "sha256": "5f8ee374cb7a56fae2f284560ec4fa07c0ee63d64e9b6859ac877eee6ee9c21b"
+  },
+  {
+    "path": "templates/11_Service_Catalog_dan_Rate_Card.pdf",
+    "url": "/downloads/service-business-system/templates/11_Service_Catalog_dan_Rate_Card.pdf",
+    "format": "PDF",
+    "size_bytes": 105960,
+    "sha256": "447a41da01aaaa224b918c27572cad9ba7bbdfd33c9df6dd3d92dc4d4c88a5af"
+  },
+  {
+    "path": "templates/12_Portfolio_Case_Study_dan_Service_Page.docx",
+    "url": "/downloads/service-business-system/templates/12_Portfolio_Case_Study_dan_Service_Page.docx",
+    "format": "DOCX",
+    "size_bytes": 39414,
+    "sha256": "ee9b0b5e14eb0c6d0efa2d3cd3aca0afe10c075a126b70137e756f9eb16f7150"
+  },
+  {
+    "path": "templates/12_Portfolio_Case_Study_dan_Service_Page.pdf",
+    "url": "/downloads/service-business-system/templates/12_Portfolio_Case_Study_dan_Service_Page.pdf",
+    "format": "PDF",
+    "size_bytes": 76420,
+    "sha256": "a940d342e4652bf3ab8b5622555588a9fd3d12d52f320be307f8c7ae1ef47a5a"
+  },
+  {
+    "path": "templates/13_Lead_Generation_dan_Follow_Up_Kit.docx",
+    "url": "/downloads/service-business-system/templates/13_Lead_Generation_dan_Follow_Up_Kit.docx",
+    "format": "DOCX",
+    "size_bytes": 39929,
+    "sha256": "3d3ce6d98bdedb7c86e00d6153c2ab0cd41e5254ea102156886ef1351eab25c0"
+  },
+  {
+    "path": "templates/13_Lead_Generation_dan_Follow_Up_Kit.pdf",
+    "url": "/downloads/service-business-system/templates/13_Lead_Generation_dan_Follow_Up_Kit.pdf",
+    "format": "PDF",
+    "size_bytes": 94666,
+    "sha256": "e9b6ad5cb7d0c93cf36499c81af640c1e26e780fdaf9519189c998a93882d8cb"
+  },
+  {
+    "path": "templates/14_Project_Timeline_dan_SOP.docx",
+    "url": "/downloads/service-business-system/templates/14_Project_Timeline_dan_SOP.docx",
+    "format": "DOCX",
+    "size_bytes": 40240,
+    "sha256": "342d5049ceee53007c8cb7897fc0129cbb4f046950a54503e84cbc3874cfb7dc"
+  },
+  {
+    "path": "templates/14_Project_Timeline_dan_SOP.pdf",
+    "url": "/downloads/service-business-system/templates/14_Project_Timeline_dan_SOP.pdf",
+    "format": "PDF",
+    "size_bytes": 112544,
+    "sha256": "36a813e3fec646b7a929c2403bf8f5bf3f25898283bb3902c7d484d30dec3885"
+  },
+  {
+    "path": "templates/15_Service_Policies_dan_Change_Request.docx",
+    "url": "/downloads/service-business-system/templates/15_Service_Policies_dan_Change_Request.docx",
+    "format": "DOCX",
+    "size_bytes": 39949,
+    "sha256": "a8bc578d26434d6baaf7425e643deb46af0cff449cdd61c062d3ba5a11800206"
+  },
+  {
+    "path": "templates/15_Service_Policies_dan_Change_Request.pdf",
+    "url": "/downloads/service-business-system/templates/15_Service_Policies_dan_Change_Request.pdf",
+    "format": "PDF",
+    "size_bytes": 96309,
+    "sha256": "3d78b3cb2a8650ba73cfcb17319d31c3826e61542693dd88d3fa8fd7e0c247b3"
+  },
+  {
+    "path": "templates/16_Client_Feedback_dan_Retention.docx",
+    "url": "/downloads/service-business-system/templates/16_Client_Feedback_dan_Retention.docx",
+    "format": "DOCX",
+    "size_bytes": 39791,
+    "sha256": "97aafeb9711af5f9cd7862dc9aa3b6261cff752aff1c0f8dd77774801baf1851"
+  },
+  {
+    "path": "templates/16_Client_Feedback_dan_Retention.pdf",
+    "url": "/downloads/service-business-system/templates/16_Client_Feedback_dan_Retention.pdf",
+    "format": "PDF",
+    "size_bytes": 91535,
+    "sha256": "6561cf327037ee9d635d5558f10ca71418e611e3242ea2f63040187f8be26a4a"
+  },
+  {
+    "path": "templates/17_NDA_Opsional.docx",
+    "url": "/downloads/service-business-system/templates/17_NDA_Opsional.docx",
+    "format": "DOCX",
+    "size_bytes": 39409,
+    "sha256": "6953ae819b555c24f353c1b4c20e10287e975c54752c5d9201056c8f71ee394b"
+  },
+  {
+    "path": "templates/17_NDA_Opsional.pdf",
+    "url": "/downloads/service-business-system/templates/17_NDA_Opsional.pdf",
+    "format": "PDF",
+    "size_bytes": 76108,
+    "sha256": "4201a4c31875f6056799d18586159a6868f0b054e68874323374f0b90c44a369"
+  },
+  {
+    "path": "templates/18_Maintenance_dan_SLA_Opsional.docx",
+    "url": "/downloads/service-business-system/templates/18_Maintenance_dan_SLA_Opsional.docx",
+    "format": "DOCX",
+    "size_bytes": 39524,
+    "sha256": "eb7219ce979539ab6e5947ea20f11f65f2025c33a048659fba3fe2f1bc0f95ae"
+  },
+  {
+    "path": "templates/18_Maintenance_dan_SLA_Opsional.pdf",
+    "url": "/downloads/service-business-system/templates/18_Maintenance_dan_SLA_Opsional.pdf",
+    "format": "PDF",
+    "size_bytes": 88045,
+    "sha256": "7a305e501339075b462649c36beae9de29ed7d5db325ad1f04b69452ac396a5b"
+  },
+  {
+    "path": "templates/19_Data_Processing_Worksheet_Opsional.docx",
+    "url": "/downloads/service-business-system/templates/19_Data_Processing_Worksheet_Opsional.docx",
+    "format": "DOCX",
+    "size_bytes": 39494,
+    "sha256": "b40bd3babe73ad95c7435b26e7c15836e048394b686c41618138ff1b19414f7a"
+  },
+  {
+    "path": "templates/19_Data_Processing_Worksheet_Opsional.pdf",
+    "url": "/downloads/service-business-system/templates/19_Data_Processing_Worksheet_Opsional.pdf",
+    "format": "PDF",
+    "size_bytes": 80647,
+    "sha256": "5c27aa23760932e54979c5d3ce56f8c49704928b40ae3c01caef88279536601f"
+  },
+  {
+    "path": "tools-directory/Free_Tools_Directory.csv",
+    "url": "/downloads/service-business-system/tools-directory/Free_Tools_Directory.csv",
+    "format": "CSV",
+    "size_bytes": 4733,
+    "sha256": "0cdc96260b69b5ed6c2bac727776773493081105f2f86cdfb76b603d751987a9"
+  },
+  {
+    "path": "tools-directory/Free_Tools_Directory.json",
+    "url": "/downloads/service-business-system/tools-directory/Free_Tools_Directory.json",
+    "format": "JSON",
+    "size_bytes": 6393,
+    "sha256": "b9d0ebac3feb7e96275b8d9ec783aded2f5d87f2e7911df68adfbac94fc1bdd2"
+  },
+  {
+    "path": "tools-directory/Free_Tools_Directory.pdf",
+    "url": "/downloads/service-business-system/tools-directory/Free_Tools_Directory.pdf",
+    "format": "PDF",
+    "size_bytes": 77444,
+    "sha256": "608fab6aaf5969c4511331078080329b908065a720c2822b6e2f25320d0690de"
+  }
+]

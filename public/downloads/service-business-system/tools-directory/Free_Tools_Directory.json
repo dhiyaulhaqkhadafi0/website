@@ -1,0 +1,122 @@
+[
+  {
+    "name": "LibreOffice",
+    "stage": "Dokumen dan invoice",
+    "url": "https://www.libreoffice.org/",
+    "status": "Gratis dan open source",
+    "limit": "Aplikasi desktop; kolaborasi simultan dan tampilan DOCX kompleks perlu diuji.",
+    "use": "Buka DOCX dengan Writer atau XLSX dengan Calc, edit salinannya, lalu periksa hasil sebelum ekspor PDF.",
+    "source": "https://www.libreoffice.org/",
+    "why": "Pilihan tanpa langganan untuk mengedit template toolkit.",
+    "verified_on": "2026-10-19",
+    "verification": "Pemeriksaan informasi pada situs resmi; bukan pengujian akun atau audit keamanan."
+  },
+  {
+    "name": "Tally",
+    "stage": "Brief dan feedback",
+    "url": "https://tally.so/",
+    "status": "Freemium; form dan respons gratis mengikuti fair use",
+    "limit": "Upload gratis maksimum 10 MB per file. Domain kustom dan penghapusan branding termasuk fitur berbayar.",
+    "use": "Salin pertanyaan Client Brief, tambahkan pemberitahuan privasi, uji pengiriman, lalu bagikan tautan form.",
+    "source": "https://tally.so/pricing",
+    "why": "Mengumpulkan kebutuhan tanpa membangun sistem form sendiri.",
+    "verified_on": "2026-10-19",
+    "verification": "Pemeriksaan informasi pada situs resmi; bukan pengujian akun atau audit keamanan."
+  },
+  {
+    "name": "Notion",
+    "stage": "SOP dan catatan proyek",
+    "url": "https://www.notion.com/",
+    "status": "Freemium; Free tersedia",
+    "limit": "Free: unggahan 5 MB per file; riwayat 7 hari; blok kolaborasi terbatas untuk 2+ anggota.",
+    "use": "Buat halaman privat per proyek, simpan SOP dan keputusan, lalu bagikan hanya halaman yang diperlukan.",
+    "source": "https://www.notion.com/pricing",
+    "why": "Menyatukan catatan dan petunjuk kerja; tidak wajib bila folder biasa sudah cukup.",
+    "verified_on": "2026-10-19",
+    "verification": "Pemeriksaan informasi pada situs resmi; bukan pengujian akun atau audit keamanan."
+  },
+  {
+    "name": "Trello",
+    "stage": "Timeline dan tugas",
+    "url": "https://trello.com/",
+    "status": "Freemium; Free tersedia",
+    "limit": "Free: sampai 10 board dan 10 kolaborator per Workspace; lampiran 10 MB per file; 250 command run per bulan.",
+    "use": "Buat daftar Backlog, Dikerjakan, Review, dan Selesai. Setiap kartu berisi hasil, pemilik, serta tenggat.",
+    "source": "https://trello.com/pricing",
+    "why": "Memantau pekerjaan dan hambatan secara visual.",
+    "verified_on": "2026-10-19",
+    "verification": "Pemeriksaan informasi pada situs resmi; bukan pengujian akun atau audit keamanan."
+  },
+  {
+    "name": "Clockify",
+    "stage": "Pencatatan waktu",
+    "url": "https://clockify.me/",
+    "status": "Freemium; Free tersedia",
+    "limit": "Halaman harga saat diperiksa membatasi Free sampai 5 pengguna. Jangan memakai klaim lama unlimited users.",
+    "use": "Buat proyek dan tugas, catat waktu briefing sampai handover, lalu bandingkan jam aktual dengan estimasi.",
+    "source": "https://clockify.me/pricing",
+    "why": "Membantu memperbaiki estimasi jam dari pekerjaan nyata.",
+    "verified_on": "2026-10-19",
+    "verification": "Pemeriksaan informasi pada situs resmi; bukan pengujian akun atau audit keamanan."
+  },
+  {
+    "name": "Calendly",
+    "stage": "Jadwal discovery",
+    "url": "https://calendly.com/",
+    "status": "Freemium; Free tersedia",
+    "limit": "Free: satu jenis acara dan satu koneksi kalender. Automasi dan beberapa integrasi memerlukan paket berbayar.",
+    "use": "Buat satu sesi discovery, atur jam tersedia dan jeda, uji zona waktu, lalu bagikan hanya saat relevan.",
+    "source": "https://calendly.com/pricing",
+    "why": "Mengurangi bolak-balik memilih jam pertemuan.",
+    "verified_on": "2026-10-19",
+    "verification": "Pemeriksaan informasi pada situs resmi; bukan pengujian akun atau audit keamanan."
+  },
+  {
+    "name": "Canva",
+    "stage": "Portofolio dan materi layanan",
+    "url": "https://www.canva.com/",
+    "status": "Freemium; Free tersedia",
+    "limit": "Aset premium, sebagian AI, ekspor tertentu, dan fitur brand lanjutan tidak seluruhnya tersedia gratis.",
+    "use": "Susun studi kasus dari karya sendiri. Pakai aset berlisensi sesuai penggunaan dan ekspor PDF untuk dicek.",
+    "source": "https://www.canva.com/pricing/",
+    "why": "Membuat presentasi layanan yang mudah diperbarui.",
+    "verified_on": "2026-10-19",
+    "verification": "Pemeriksaan informasi pada situs resmi; bukan pengujian akun atau audit keamanan."
+  },
+  {
+    "name": "Photopea",
+    "stage": "Persiapan aset dan visual",
+    "url": "https://www.photopea.com/",
+    "status": "Editor online gratis tersedia",
+    "limit": "Bergantung pada kemampuan perangkat dan browser; tidak otomatis memberi lisensi atas gambar yang diedit.",
+    "use": "Buka gambar milikmu, rapikan ukuran, simpan master, lalu ekspor JPG atau PNG sesuai kebutuhan.",
+    "source": "https://www.photopea.com/",
+    "why": "Menyunting aset tanpa instalasi aplikasi desktop.",
+    "verified_on": "2026-10-19",
+    "verification": "Pemeriksaan informasi pada situs resmi; bukan pengujian akun atau audit keamanan."
+  },
+  {
+    "name": "OBS Studio",
+    "stage": "Demo dan handover",
+    "url": "https://obsproject.com/",
+    "status": "Gratis dan open source",
+    "limit": "Membutuhkan pengaturan sumber dan audio; bukan layanan penyimpanan atau berbagi video bawaan.",
+    "use": "Rekam jendela aplikasi dan narasi panduan. Periksa layar agar tidak ada informasi rahasia, lalu bagikan melalui kanal aman.",
+    "source": "https://obsproject.com/",
+    "why": "Membuat panduan pemakaian hasil proyek.",
+    "verified_on": "2026-10-19",
+    "verification": "Pemeriksaan informasi pada situs resmi; bukan pengujian akun atau audit keamanan."
+  },
+  {
+    "name": "Make",
+    "stage": "Automasi operasional",
+    "url": "https://www.make.com/",
+    "status": "Freemium; Free tersedia",
+    "limit": "Free: 1.000 credits per bulan dan 1 MB data store. Biaya layanan pihak ketiga atau AI tetap dapat berlaku.",
+    "use": "Uji alur form ke pencatatan dengan data sintetis, tambahkan penanganan error, dan pantau kuota sebelum dipakai.",
+    "source": "https://www.make.com/pricing",
+    "why": "Dipakai setelah proses manual terbukti; tidak diperlukan untuk klien pertama.",
+    "verified_on": "2026-10-19",
+    "verification": "Pemeriksaan informasi pada situs resmi; bukan pengujian akun atau audit keamanan."
+  }
+]

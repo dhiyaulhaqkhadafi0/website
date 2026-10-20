@@ -1,3 +1,4 @@
+import { sbs, monetization, chapterHref, pathwayHref } from '@/content/business-hub';
 import type { MetadataRoute } from "next";
 import { CURATED_TOOLS, SERVICES } from "@/content/shop";
 import { getAllPosts } from "@/lib/mdx";
@@ -124,6 +125,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Ensure /studio and draft routes are NEVER included
   const freelanceRoutes: MetadataRoute.Sitemap = [
+ ...sbs.chapters.map(c=>({url:siteUrl+chapterHref(c.slug),changeFrequency:'monthly' as const,priority:0.75})),
+ ...monetization.items.map(i=>({url:siteUrl+pathwayHref(i.slug),changeFrequency:'monthly' as const,priority:0.7})),
     {
       url: `${siteUrl}/freelance/direktori`,
       changeFrequency: "monthly",

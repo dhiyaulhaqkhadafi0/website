@@ -1,5 +1,6 @@
 "use client";
 
+import { FreelanceBusinessTeaser } from './BusinessHubShared';
 import { useState } from "react";
 import { MotionConfig } from "framer-motion";
 import { ReadingProgress } from "./ReadingProgress";
@@ -66,7 +67,7 @@ export function FreelanceHubView() {
 
       <div className={styles.connector} aria-hidden="true">03 / Terus bergerak <span /></div>
       {/* 5. CLOSING CTA */}
-      <FreelanceSubscribe />
+      <FreelanceBusinessTeaser/><FreelanceSubscribe />
       <div id="hub-end">
       <FreelanceClosingCTA
         onOpenInquiry={handleOpenInquiry}
