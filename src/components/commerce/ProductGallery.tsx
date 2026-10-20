@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { ArrowLeft, ArrowRight, Expand, Minus, Plus, RotateCcw, X } from "lucide-react";
 import { ProductImage } from "./ProductImage";
 import { BookCover } from "./BookCover";
@@ -15,6 +15,18 @@ export function ProductGallery({ name, cover, gallery = [] }: { name: string; co
   const canvas = useRef<HTMLDivElement>(null), touch = useRef(0);
   const drag = useRef<{ x: number; y: number; left: number; top: number } | null>(null);
   const current = images[index] || images[0];
+  useEffect(() => {
+    const element = canvas.current;
+    if (!element) return;
+    const wheel = (event: WheelEvent) => {
+      if (!event.ctrlKey) return;
+      event.preventDefault();
+      setZoom(value => levels[Math.max(0, Math.min(levels.length - 1, levels.indexOf(value) + (event.deltaY > 0 ? -1 : 1)))]);
+      element.scrollTo({ left: 0, top: 0 });
+    };
+    element.addEventListener("wheel", wheel, { passive: false });
+    return () => element.removeEventListener("wheel", wheel);
+  }, []);
   function scale(value: number) { setZoom(value); canvas.current?.scrollTo({ left: 0, top: 0 }); }
   function move(delta: number) { if (images.length) setIndex(i => (i + delta + images.length) % images.length); scale(100); }
   function step(delta: number) { scale(levels[Math.max(0, Math.min(levels.length - 1, levels.indexOf(zoom) + delta))]); }
@@ -43,7 +55,6 @@ export function ProductGallery({ name, cover, gallery = [] }: { name: string; co
       </div>
       <p className={s.zoomHelp}>100% = gambar utuh sesuai ruang layar. Saat diperbesar, geser untuk melihat detail.</p>
       <div ref={canvas} className={s.lightboxCanvas} tabIndex={0} role="region" aria-label="Gambar produk, area geser saat diperbesar"
-        onWheel={e => { if (e.ctrlKey) { e.preventDefault(); step(e.deltaY > 0 ? -1 : 1); } }}
         onPointerDown={e => { if (zoom <= 100 || e.pointerType !== "mouse") return; drag.current = { x: e.clientX, y: e.clientY, left: e.currentTarget.scrollLeft, top: e.currentTarget.scrollTop }; e.currentTarget.setPointerCapture(e.pointerId); e.preventDefault(); }}
         onPointerMove={e => { if (drag.current) { e.currentTarget.scrollLeft = drag.current.left - (e.clientX - drag.current.x); e.currentTarget.scrollTop = drag.current.top - (e.clientY - drag.current.y); } }}
         onPointerUp={() => { drag.current = null; }} onPointerCancel={() => { drag.current = null; }}>
