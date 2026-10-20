@@ -231,6 +231,12 @@ async function main() {
       .click();
   await page.getByText("Maksimal tiga jalur.", { exact: false }).waitFor();
   await count(page, "#bandingkan thead th", 4);
+  await page.setViewportSize({width:390,height:960});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
+  assert.equal(await page.locator('#bandingkan table').evaluate(t=>t.parentElement.scrollWidth>t.parentElement.clientWidth),true);
+  await page.locator('#bandingkan').scrollIntoViewIfNeeded();
+  await page.screenshot({path:path.join(out,'compare-mobile.png'),fullPage:false});
+  await page.setViewportSize({width:1440,height:1000});
   await page
     .getByRole("button", {
       name: "Hapus Social Media Management dari perbandingan",
