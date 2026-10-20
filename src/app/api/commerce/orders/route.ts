@@ -7,6 +7,8 @@ import {
 } from "@/lib/commerce-server";
 import { createServiceRoleClient } from "@/lib/supabase";
 import { grantGuestOrder, guestFingerprint } from "@/lib/guest-order";
+import { createDokuCheckout } from "@/lib/doku";
+import { isAllowedDokuCheckoutUrl } from "@/lib/doku-checkout-host";
 export async function POST(request: Request) {
   if (!sameOrigin(request)) return json({ error: "Origin tidak diizinkan." }, 403);
   const auth = request.headers.has("authorization") ? await requireUser(request) : null;
@@ -32,13 +34,17 @@ export async function POST(request: Request) {
   const product = await publishedProduct(p.slug);
   if (!product) return json({ error: "Produk tidak tersedia." }, 404);
   if (!commerceConfigured(product.price > 0))
-    return json(
-      {
-        error:
-          "Checkout belum dibuka. Silakan kembali setelah pembayaran diaktifkan.",
-      },
-      503,
-    );
+    return json({ error: "Checkout belum dibuka. Silakan kembali setelah pembayaran diaktifkan." }, 503);
+  if (product.price > 0) {
+    const expectedHost = new URL(process.env.DOKU_SITE_ORIGIN || "https://invalid.example").host;
+    const requestHost = request.headers.get("host") || new URL(request.url).host;
+    const localCheckout = process.env.DOKU_LOCAL_STAGING_ONLY === "true" &&
+      process.env.DOKU_IS_PRODUCTION !== "true" &&
+      ["localhost:3000", "127.0.0.1:3000"].includes(requestHost);
+    if (requestHost !== expectedHost && !localCheckout) {
+      return json({ error: "Checkout belum aktif pada domain ini." }, 503);
+    }
+  }
   const db = createServiceRoleClient();
   let user = auth?.ok ? auth.user : null;
   if (!user) {
@@ -51,7 +57,7 @@ export async function POST(request: Request) {
     if (identity.error || !identity.data.user || identity.data.user.is_anonymous) return json({ error: "Checkout email belum tersedia. Coba masuk ke akunmu." }, 503);
     user = identity.data.user;
   }
-  const { data, error } = await db.rpc("commerce_create_order", {
+  const { data, error } = await db.rpc(product.price > 0 ? "commerce_create_order_doku" : "commerce_create_order", {
     p_user: user.id,
     p_product: product.id,
     p_name: p.name.trim(),
@@ -71,75 +77,33 @@ export async function POST(request: Request) {
       { error: "Pesanan ini sudah berakhir. Mulai checkout baru." },
       409,
     );
-  if (order.payment_url)
-    return json({ order_id: order.id, payment_url: order.payment_url });
-  const production = process.env.MIDTRANS_IS_PRODUCTION === "true";
+  if (order.provider !== "doku") return json({ error: "Pesanan masih memakai gateway lama. Mulai pesanan baru." }, 409);
+  if (order.payment_url) {
+    try {
+      if (!isAllowedDokuCheckoutUrl(
+        order.payment_url,
+        process.env.DOKU_IS_PRODUCTION === "true",
+      )) throw new Error("Invalid checkout URL");
+      return json({ order_id: order.id, payment_url: new URL(order.payment_url).href });
+    } catch { return json({ error: "Link pembayaran tidak valid." }, 409); }
+  }
   try {
-    const response = await fetch(
-      production
-        ? "https://app.midtrans.com/snap/v1/transactions"
-        : "https://app.sandbox.midtrans.com/snap/v1/transactions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Idempotency-Key": order.id,
-          Authorization:
-            "Basic " +
-            Buffer.from(process.env.MIDTRANS_SERVER_KEY + ":").toString(
-              "base64",
-            ),
-        },
-        body: JSON.stringify({
-          transaction_details: {
-            order_id: order.id,
-            gross_amount: order.total,
-          },
-          item_details: [
-            {
-              id: product.id,
-              price: order.total,
-              quantity: 1,
-              name: product.name.slice(0, 50),
-            },
-          ],
-          customer_details: {
-            first_name: p.name.trim(),
-            email: user.email,
-          },
-          callbacks: {
-            finish:
-              "https://khadafidaffa.com/checkout/success?order=" + order.id,
-          },
-        }),
-        signal: AbortSignal.timeout(15000),
-      },
-    );
-    const transaction = await response.json();
-    if (!response.ok || typeof transaction.redirect_url !== "string")
-      throw new Error("Gateway unavailable");
-    const url = new URL(transaction.redirect_url);
-    if (
-      url.protocol !== "https:" ||
-      url.hostname !==
-        (production ? "app.midtrans.com" : "app.sandbox.midtrans.com")
-    )
-      throw new Error("Invalid gateway");
+    const checkoutUrl = await createDokuCheckout({
+      orderId: order.id,
+      amount: order.total,
+      email: user.email || "",
+      name: p.name.trim(),
+    });
     const { error: saveError } = await db
       .from("commerce_orders")
-      .update({ payment_url: url.href })
-      .eq("id", order.id);
+      .update({ payment_url: checkoutUrl })
+      .eq("id", order.id).eq("provider", "doku").eq("status", "pending");
     if (saveError) throw new Error("Order update failed");
-    return json({ order_id: order.id, payment_url: url.href });
+    return json({ order_id: order.id, payment_url: checkoutUrl });
   } catch {
-    return json(
-      {
-        error:
-          "Pembayaran belum dapat dibuka. Coba lagi; pesanan yang sama akan digunakan.",
-      },
-      502,
-    );
+    return json({
+      error: "Pembayaran DOKU belum dapat dibuka. Coba lagi; pesanan yang sama akan digunakan.",
+    }, 502);
   }
 }
 export async function GET(request: Request) {

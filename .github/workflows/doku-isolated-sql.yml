@@ -1,0 +1,177 @@
+# DOKU Sandbox database integration test on temporary GitHub runner.
+# ONLY fake data; never calls remote Supabase, DOKU API or Cloudflare.
+# Free standard runner because this repository is public (not a larger runner).
+name: DOKU Isolated SQL Entitlement Test
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened]
+    paths:
+      - '.github/workflows/doku-isolated-sql.yml'
+      - 'supabase_commerce.sql'
+      - 'supabase/migrations/20261017051124_commerce_media_guest_checkout.sql'
+      - 'supabase/migrations/20261018094500_doku_checkout_sandbox.sql'
+      - 'scripts/prepare-doku-local-schema.ps1'
+      - 'scripts/test-doku-local-db.ps1'
+      - 'scripts/test-doku-private-pdf-e2e.mjs'
+      - 'src/app/api/commerce/download/route.ts'
+      - 'src/app/api/commerce/guest-download/route.ts'
+      - 'src/lib/guest-order.ts'
+
+permissions:
+  contents: read
+
+jobs:
+  isolated-database:
+    if: ${{ github.event.pull_request.number == 4 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'feature/doku-sandbox-checkout' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      DOKU_ENABLED: 'false'
+      DOKU_IS_PRODUCTION: 'false'
+      DOKU_PRODUCTION_APPROVED: 'false'
+      DOKU_RECONCILE_ENABLED: 'false'
+      GITHUB_ACTIONS: 'true'
+      DOKU_LOCAL_STAGING_ONLY: 'true'
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - name: Read-only checkout (without persisting GitHub credentials)
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Node.js 24 for Supabase CLI
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Refuse credentials or production identifiers
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "${GITHUB_REPOSITORY}" = "dhiyaulhaqkhadafi0/website"
+          test -z "${DOKU_CLIENT_ID:-}"
+          test -z "${DOKU_SECRET_KEY:-}"
+          test -z "${SUPABASE_SERVICE_ROLE_KEY:-}"
+          test -z "${SUPABASE_ACCESS_TOKEN:-}"
+          test -z "${NEXT_PUBLIC_SUPABASE_URL:-}"
+          echo "PASS: isolated CI has no live Supabase/DOKU credentials"
+      - name: Initialize disposable Supabase workspace (NOT project in cloud)
+        shell: bash
+        run: |
+          set -euo pipefail
+          STAGE="$RUNNER_TEMP/khadafi-doku-staging-db"
+          mkdir -p "$STAGE"
+          cd "$STAGE"
+          npx --yes supabase@latest init --yes >/dev/null
+          grep -Eq '^project_id[[:space:]]*=[[:space:]]*"khadafi-doku-staging-db"' supabase/config.toml
+          echo "PASS: isolated local CLI project was initialized"
+      - name: Prepare EXACTLY four local Commerce migrations
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          & ./scripts/prepare-doku-local-schema.ps1 -StagingRoot "$env:RUNNER_TEMP/khadafi-doku-staging-db"
+          # The preparation is PowerShell-only and throws on errors. $LASTEXITCODE
+          # can be $null if no native executable was called; do not misread it as a failure.
+          $count = @(Get-ChildItem "$env:RUNNER_TEMP/khadafi-doku-staging-db/supabase/migrations" -Filter '*.sql').Count
+          if ($count -ne 4) { throw "Expected exactly 4 migrations; found $count" }
+      - name: Start minimized local Supabase on ephemeral GitHub runner
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/khadafi-doku-staging-db"
+          # Supabase CLI start may print LOCAL dev keys. Never leak those logs.
+          if ! npx --yes supabase@latest start -x realtime,imgproxy,mailpit,postgres-meta,studio,edge-runtime,logflare,vector,supavisor > "$RUNNER_TEMP/doku-start.log" 2>&1; then
+            echo "FAILED: disposable Supabase stack could not start (raw logs kept private in runner)"
+            docker ps -a --format '{{.Names}}: {{.Status}}'
+            exit 1
+          fi
+          echo "PASS: minimized disposable Supabase Docker stack launched"
+      - name: Run real local PostgreSQL checkout/entitlement/rollback test
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          & ./scripts/test-doku-local-db.ps1
+          if ($LASTEXITCODE -ne 0) { throw 'Database integration test failed' }
+      - name: Obtain EPHEMERAL local Supabase keys privately
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/khadafi-doku-staging-db"
+          # CLI emits local dev secrets. Never print them in GitHub logs/artifacts.
+          npx --yes supabase@latest status -o env > "$RUNNER_TEMP/isolated-supabase.env" 2>/dev/null
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+          info = {}
+          for raw in (Path(os.environ["RUNNER_TEMP"]) / "isolated-supabase.env").read_text().splitlines():
+              line = raw.strip()
+              if line and not line.startswith("#") and "=" in line:
+                  key, val = line.split("=", 1)
+                  info[key.strip()] = val.strip().strip("'\"")
+          if info.get("API_URL") != "http://127.0.0.1:54321":
+              raise SystemExit("STOP: expected ONLY loopback Supabase API")
+          if len(info.get("ANON_KEY", "")) < 40 or len(info.get("SERVICE_ROLE_KEY", "")) < 40:
+              raise SystemExit("STOP: temporary Supabase local keys missing")
+          with open(os.environ["GITHUB_ENV"], "a") as f:
+              f.write("NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321\n")
+              f.write("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=" + info["ANON_KEY"] + "\n")
+              f.write("SUPABASE_SERVICE_ROLE_KEY=" + info["SERVICE_ROLE_KEY"] + "\n")
+          print("PASS: ephemeral loopback Supabase credentials loaded privately")
+          PY
+          rm -f "$RUNNER_TEMP/isolated-supabase.env"
+      - name: Install dependencies for REAL Next API endpoint smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm ci --no-audit --no-fund > "$RUNNER_TEMP/doku-npm-install.log" 2>&1 || {
+            echo "FAILED: npm ci on disposable runner"; exit 1;
+          }
+          echo "PASS: Next.js and Supabase SDK installed locally"
+      - name: Start REAL Next.js with INERT synthetic DOKU HMAC only
+        env:
+          DOKU_ENABLED: 'true'
+          DOKU_CLIENT_ID: 'BRN-CI-FAKE-ONLY'
+          DOKU_SECRET_KEY: 'CI-FAKE-HMAC-KEY-NOT-A-DOKU-SECRET'
+          DOKU_SITE_ORIGIN: 'https://doku-staging.khadafidaffa.com'
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./node_modules/.bin/next dev --hostname 127.0.0.1 --port 3000 > "$RUNNER_TEMP/doku-next.log" 2>&1 &
+          echo $! > "$RUNNER_TEMP/doku-next.pid"
+          # Unauthenticated download endpoint MUST return HTTP 401; this
+          # confirms our real Next API has booted without hitting production.
+          found=0
+          for i in $(seq 1 90); do
+            code="$(curl -sS -m 3 -o /dev/null -w '%{http_code}' \
+              -X POST "http://127.0.0.1:3000/api/commerce/download" \
+              -H 'Content-Type: application/json' -d '{}' 2>/dev/null || true)"
+            if [ "$code" = "401" ]; then found=1; break; fi
+            sleep 2
+          done
+          test "$found" = "1" || { echo "FAILED: local Next download endpoint unavailable"; exit 1; }
+          echo "PASS: actual Next.js download endpoint online at private loopback only"
+      - name: Test fake HMAC webhook to real order and private PDF (no DOKU API)
+        env:
+          DOKU_ENABLED: 'true'
+          DOKU_CLIENT_ID: 'BRN-CI-FAKE-ONLY'
+          DOKU_SECRET_KEY: 'CI-FAKE-HMAC-KEY-NOT-A-DOKU-SECRET'
+          DOKU_SITE_ORIGIN: 'https://doku-staging.khadafidaffa.com'
+        shell: bash
+        run: node scripts/test-doku-private-pdf-e2e.mjs
+      - name: Stop disposable Next.js
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          if test -f "$RUNNER_TEMP/doku-next.pid"; then
+            kill "$(cat "$RUNNER_TEMP/doku-next.pid")" 2>/dev/null || true
+          fi
+          echo "Temporary Next.js stopped"
+      - name: Stop disposable local test stack
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          cd "$RUNNER_TEMP/khadafi-doku-staging-db" 2>/dev/null || exit 0
+          npx --yes supabase@latest stop >/dev/null 2>&1
+          echo "Temporary runner stack stopped; GitHub will discard the entire runner"

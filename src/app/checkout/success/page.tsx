@@ -5,6 +5,7 @@ import { money, statusLabel, type Order } from "@/lib/commerce-types";
 import s from "@/components/commerce/commerce.module.css";
 import { guestOrder } from "@/lib/guest-order";
 import { GuestDownloads } from "@/components/commerce/GuestDownloads";
+import { isAllowedDokuCheckoutUrl } from "@/lib/doku-checkout-host";
 export default async function Page({
   searchParams,
 }: {
@@ -74,7 +75,7 @@ export default async function Page({
             Periksa status kembali
           </a>
         )}
-        {o?.status === "pending" && o.payment_url && /^https:\/\/app(?:\.sandbox)?\.midtrans\.com\//.test(o.payment_url) && <a className={s.secondary} href={o.payment_url}>Lanjutkan pembayaran <ArrowUpRight /></a>}
+        {o?.status === "pending" && o.payment_url && ((o.provider === "doku" && isAllowedDokuCheckoutUrl(o.payment_url, process.env.DOKU_IS_PRODUCTION === "true")) || (o.provider === "midtrans" && /^https:\/\/app(?:\.sandbox)?\.midtrans\.com\//.test(o.payment_url))) && <a className={s.secondary} href={o.payment_url}>Lanjutkan pembayaran <ArrowUpRight /></a>}
       </div>
     </section>
   );

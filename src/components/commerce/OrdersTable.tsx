@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { money, statusLabel, type Order } from "@/lib/commerce-types";
+import { isAllowedDokuCheckoutUrl } from "@/lib/doku-checkout-host";
 import s from "./commerce.module.css";
 export function OrdersTable({
   orders,
@@ -59,7 +60,7 @@ export function OrdersTable({
                     Detail ↗
                   </Link>
                 )}
-                {!studio && o.status === "pending" && o.payment_url && (
+                {!studio && o.status === "pending" && o.payment_url && (o.provider === "doku" ? isAllowedDokuCheckoutUrl(o.payment_url, process.env.DOKU_IS_PRODUCTION === "true") : /^https:\/\/app(?:\.sandbox)?\.midtrans\.com\//.test(o.payment_url)) && (
                   <>
                     <br />
                     <a href={o.payment_url}>Lanjut bayar ↗</a>
