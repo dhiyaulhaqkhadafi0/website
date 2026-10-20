@@ -2,7 +2,7 @@
 # Run after the KHADAFI local Supabase API services are started.
 param(
   [string]$StagingRoot = "E:\khadafi-doku-staging-db",
-  [string]$FeatureRoot = "E:\khadafi-doku-feature"
+  [string]$FeatureRoot = (Split-Path -Parent $PSScriptRoot)
 )
 $ErrorActionPreference = "Stop"
 $configPath = Join-Path $StagingRoot "supabase\config.toml"
@@ -49,6 +49,7 @@ $lines = @(
   "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=$anon"
   "SUPABASE_SERVICE_ROLE_KEY=$service"
   "DOKU_ENABLED=false"
+  "PAYMENTS_ENABLED=false"
   "DOKU_IS_PRODUCTION=false"
   "DOKU_PRODUCTION_APPROVED=false"
   "# Proposed hostname; NOT active until Cloudflare tunnel is configured."

@@ -135,6 +135,7 @@ jobs:
         run: |
           set -euo pipefail
           node scripts/test-doku-checkout.cjs
+          node scripts/test-doku-job.cjs
           npm install --prefix "$RUNNER_TEMP/doku-pglite" --no-audit --no-fund @electric-sql/pglite@0.5.9 >/dev/null
           PGLITE_MODULE="$RUNNER_TEMP/doku-pglite/node_modules/@electric-sql/pglite" node scripts/test-doku-safety-db.cjs
       - name: Start REAL Next.js with INERT synthetic DOKU HMAC only
