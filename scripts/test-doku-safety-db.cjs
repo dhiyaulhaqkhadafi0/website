@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const assert=require('node:assert/strict'),fs=require('node:fs');
 const {PGlite}=require(process.env.PGLITE_MODULE || '@electric-sql/pglite');
 (async()=>{
  const db=new PGlite(); let checks=0; const pass=name=>{checks++;console.log('PASS '+name)};

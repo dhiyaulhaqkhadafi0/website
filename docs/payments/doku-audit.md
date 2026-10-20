@@ -47,3 +47,7 @@ Lihat doku-test-evidence.md, doku-config-checklist.md dan doku-go-live-runbook.m
 - `src/components/commerce/ProductGallery.tsx:10`: galeri, percentage zoom, pan, touch dan keyboard.
 
 Privilege production read-only diperiksa: service_role tidak punya SELECT langsung pada auth.users/blog_admin_emails. Helper private QA mengatasi kebutuhan itu secara terbatas; SQL test menjalankan free-QA RPC sebagai role service_role dan PASS. Perubahan grant/helper hanya ada di migration lokal/CI.
+
+## Temuan lint baseline
+
+Pemeriksaan penuh 21 Oktober 2026 WIB menghasilkan 21 error di 17 file blog/Studio/Freelance/resources/library lama. Semuanya unchanged terhadap baseline gabungan `393c4d9`; contoh `src/components/blog/ArticleEngagementBar.tsx:29`, `src/components/studio/StudioTableToolbar.tsx:60`, `src/components/studio/tiptap-extensions/EditorialFigure.ts:4`, `src/lib/gemini-provider.ts:66`. Dicatat FAIL_LEGACY, bukan disamarkan sebagai PASS. Lint seluruh diff payment kemudian bersih tanpa warning/error. Pembersihan kode lama lintas modul tetap pekerjaan terpisah; no deployment sebelum gates yang disepakati terselesaikan.

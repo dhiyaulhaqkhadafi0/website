@@ -113,6 +113,7 @@ try {
   });
   let result = await send(event(), { "Content-Type": "application/json" });
   check("unsigned SUCCESS rejected 401", () => assert.equal(result.status, 401));
+  assert.equal(numberOfPersists, 0, "Unsigned event must never reach persistence");
   result = await send(event(unpaidInvoice, 59000, "FAILED"));
   check("signed FAILED safely ignored", () => {
     assert.equal(result.status, 200);

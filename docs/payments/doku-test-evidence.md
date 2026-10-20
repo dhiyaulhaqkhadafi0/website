@@ -85,3 +85,11 @@ Draft PR: https://github.com/dhiyaulhaqkhadafi0/website/pull/5. Base `codex/free
 - Verifikasi production penutup: Worker `5c1ff734-95fd-4c63-9e91-eb6a6398381c` masih menerima 100% traffic; tidak berubah dari sebelum tugas ini. Checkout existing disabled. No deployment/migration/live payment.
 
 **Kesimpulan: implementasi lokal dan QA aplikasi PASS; NO-GO untuk penjualan publik sampai sandbox asli, staging/scheduler hosted, QRIS ACTIVE dan satu pembayaran live yang disetujui terbukti.** Semua status provider asli pada tabel awal tetap BLOCKED/NOT_TESTED. Tidak ada klaim GO-LIVE READY.
+
+## Lint repository penuh — FAIL (21 Oktober 2026 WIB)
+
+`node node_modules/eslint/bin/eslint.js .` selesai dengan exit 1: **21 error dan 86 warning** pada pemeriksaan awal penuh. Ke-21 error terdapat dalam **17 file baseline yang sama persis dengan commit gabungan awal `393c4d9`**, bukan file yang diubah patch payment. Dibuktikan dengan `git diff 393c4d9 -- <setiap file error>` yang kosong; artefak lint-scope-verification.json menyimpan daftar lengkap. Contoh: ArticleEngagementBar.tsx:29 (setState in effect), StudioTableToolbar.tsx:60 (prefer-const), EditorialFigure.ts:4 dan gemini-provider.ts:66 (explicit any).
+
+Tiga warning milik diff dibersihkan: wrapper memakai named default object, import tak terpakai di SQL test dihapus, counter HTTP test kini memastikan event unsigned tidak pernah mencapai persistence. Lint **seluruh file JS/TS yang berubah terhadap `393c4d9`** kemudian exit 0 tanpa warning/error (patch-lint-final.log). HTTP contract test tetap PASS, dan wrapper final kembali lolos Wrangler dry-run. Perubahan pembersihan ini tidak mengubah aplikasi Next yang sudah dibangun; hanya deklarasi export ekuivalen dan tes.
+
+Jadi status yang benar: **PATCH_LINT=PASS**, **REPOSITORY_LINT=FAIL_LEGACY**. Tidak mengklaim repository-wide lint bersih; tidak memperluas refactor ke blog/Studio unrelated. Ini dicatat sebagai temuan terpisah dalam NO-GO report, selain external provider/staging gates.
