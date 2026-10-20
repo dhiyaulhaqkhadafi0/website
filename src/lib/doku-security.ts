@@ -54,6 +54,7 @@ export function verifyDokuHmacSignature(
   clientId: string,
   secretKey: string,
   webhookPath: string,
+  nowMs = Date.now(),
 ): boolean {
   if (body.length > 32768) return false;
   const receivedClient = headers.get("client-id") || "";
@@ -63,6 +64,10 @@ export function verifyDokuHmacSignature(
   if (receivedClient !== clientId || !requestId || requestId.length > 128 ||
     !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/.test(timestamp) ||
     !provided.startsWith("HMACSHA256=")) return false;
+  // Cover DOKU's documented 12-hour automatic retry schedule plus skew.
+  // Durable event IDs/hashes deduplicate delivery inside this bounded window.
+  const age = nowMs - Date.parse(timestamp);
+  if (!Number.isFinite(age) || age < -5 * 60_000 || age > 13 * 60 * 60_000) return false;
   const expected = signature(clientId, requestId, timestamp, webhookPath, body, secretKey);
   return sameSignature(expected, provided);
 }

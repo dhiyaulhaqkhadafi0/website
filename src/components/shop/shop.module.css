@@ -2007,3 +2007,12 @@
 @media (max-width: 900px) { .discovery { margin-inline: -20px; padding: 42px 24px; } }
 @media (max-width: 600px) { .discovery { margin: 24px -8px 60px; padding: 34px 18px; border-radius: 18px; } .searchBox { gap: 10px; height: 64px; } .searchBox input { font-size: 13px; } .card .artwork { height: 250px; } .cardBody { padding: 22px; } .cardGrid { gap: 24px; } }
 @media (prefers-reduced-motion: reduce) { .searchBox::before { animation: none !important; } .card:hover, .card:focus-within, .searchBox .searchSend:hover { transform: none; } }
+/* Original ebook: generous complete mockup, quiet frame and keyboard parity. */
+.card[data-offering="original"] { border: 1px solid #b7a4c966; background: linear-gradient(135deg,#fffdf8,#f5f0e8); box-shadow: 0 5px 10px #49365705,0 20px 48px #4936570d; }
+.card[data-offering="original"] > a { position: relative; }
+.card[data-offering="original"] > a::after { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(115deg,transparent 25%,#ffffff38 45%,transparent 65%); opacity:0; transform:translateX(-80%); transition:transform .65s,opacity .65s; }
+.card[data-offering="original"]:is(:hover,:focus-within) > a::after { transform:translateX(80%); opacity:1; }
+.card[data-offering="original"] .artwork { height:clamp(290px,27vw,370px); }
+.card[data-offering="original"] .bookArt .mockupBook { width:94%; height:94%; max-width:440px; }
+.card[data-offering="original"]:focus-within { outline:2px solid #9b80b5; outline-offset:4px; }
+@media(prefers-reduced-motion:reduce) { .card[data-offering="original"] > a::after { transition:none; transform:none; opacity:0; } }

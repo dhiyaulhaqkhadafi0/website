@@ -77,6 +77,7 @@ BEGIN
     RAISE EXCEPTION 'Idempotent checkout created a second order';
   END IF;
 
+  PERFORM public.commerce_claim_doku_checkout(v_order.id, 'sandbox', 'KSTESTLOCAL001');
   PERFORM public.commerce_set_payment_doku(v_order.id, 59000, 'KSTESTLOCAL001');
   PERFORM public.commerce_set_payment_doku(v_order.id, 59000, 'KSTESTLOCAL001');
 

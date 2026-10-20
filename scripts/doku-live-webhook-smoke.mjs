@@ -128,12 +128,13 @@ const deps = {
   decodeInvoice: orderIdFromDokuInvoice,
   invoiceForOrder: dokuInvoice,
   canSettle: () => true,
-  settle: async (id, amount, reference) => {
+  persist: async ({orderId: id, amount, reference, status}) => {
     const row = orders.get(id);
     if (!row || row.amount !== amount || dokuInvoice(id) !== reference) {
       audit("REJECTED: signed notification did not match test order/amount");
       throw new Error("Unknown test order or incorrect amount");
     }
+    if (status !== "SUCCESS") return;
     if (!row.paid) {
       row.paid = true;
       row.signedSuccessReceived = true;

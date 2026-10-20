@@ -2,7 +2,6 @@ import { createHmac, randomUUID, timingSafeEqual } from "node:crypto";
 
 // Sandbox-only server function. Never accept a caller-supplied URL or invoice
 // from a browser. A checkout must already exist in our isolated order database.
-const STATUS_ORIGIN = "https://api-sandbox.doku.com";
 export type DokuPaymentStatus =
   "PENDING" | "SUCCESS" | "FAILED" | "EXPIRED" | "REFUNDED" | "TIMEOUT" | "REDIRECT";
 const STATES = new Set<DokuPaymentStatus>([
@@ -39,9 +38,10 @@ function canonicalResponse(clientId: string, requestId: string, time: string, ta
   ].join("\n");
 }
 
-export async function checkDokuSandboxStatus(
+export async function checkDokuStatus(
   invoice: string,
   credentials: { clientId: string; secretKey: string },
+  production = false,
   requestFetch: FetchLike = fetch,
 ): Promise<VerifiedDokuStatus> {
   if (!/^KS[0-9A-Z]{1,25}$/.test(invoice)) throw new Error("Invalid DOKU invoice");
@@ -50,7 +50,7 @@ export async function checkDokuSandboxStatus(
   const target = "/orders/v1/status/" + invoice;
   const requestId = randomUUID();
   const time = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
-  const response = await requestFetch(STATUS_ORIGIN + target, {
+  const response = await requestFetch((production ? "https://api.doku.com" : "https://api-sandbox.doku.com") + target, {
     method: "GET",
     headers: {
       "Client-Id": credentials.clientId,
@@ -106,4 +106,8 @@ export async function checkDokuSandboxStatus(
     status: status as DokuPaymentStatus,
     channel: typeof channel?.id === "string" ? channel.id : null,
   };
+}
+// Preserve the audited sandbox-only API for old scripts and fixtures.
+export function checkDokuSandboxStatus(invoice: string, credentials: { clientId: string; secretKey: string }, requestFetch: FetchLike = fetch) {
+  return checkDokuStatus(invoice, credentials, false, requestFetch);
 }

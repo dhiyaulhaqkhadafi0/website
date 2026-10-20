@@ -31,13 +31,14 @@ const dependencies = {
   decodeInvoice: orderIdFromDokuInvoice,
   invoiceForOrder: dokuInvoice,
   canSettle: () => databaseEnabled,
-  settle: async (id, amount, reference) => {
+  persist: async ({orderId: id, amount, reference, status}) => {
     numberOfPersists++;
     if (forceDatabaseError) throw new Error("Simulated DB unavailable");
     const row = orders.get(id);
     if (!row || row.total !== amount || reference !== dokuInvoice(id)) {
       throw new Error("Incorrect invoice/amount or unknown order");
     }
+    if(status !== "SUCCESS") return;
     row.status = "paid";
     row.references.add(reference);
     entitlements.add(id);
@@ -67,7 +68,7 @@ const server = createServer(async (incoming, outgoing) => {
 function event(invoiceNumber = invoice, amount = 59000, status = "SUCCESS") {
   return JSON.stringify({
     service: { id: "VIRTUAL_ACCOUNT" },
-    channel: { id: "VIRTUAL_ACCOUNT_MANDIRI" },
+    channel: { id: "VIRTUAL_ACCOUNT_BANK_MANDIRI" },
     order: { invoice_number: invoiceNumber, amount },
     transaction: {
       status,

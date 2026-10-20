@@ -7,14 +7,18 @@ import {
 } from "@/lib/commerce-server";
 import { createServiceRoleClient } from "@/lib/supabase";
 import { grantGuestOrder, guestFingerprint } from "@/lib/guest-order";
-import { createDokuCheckout } from "@/lib/doku";
-import { isAllowedDokuCheckoutUrl } from "@/lib/doku-checkout-host";
+import { checkoutForDokuOrder } from "@/lib/doku-order-checkout";
+import { readLimitedBody } from "@/lib/doku-webhook-handler";
 export async function POST(request: Request) {
   if (!sameOrigin(request)) return json({ error: "Origin tidak diizinkan." }, 403);
   const auth = request.headers.has("authorization") ? await requireUser(request) : null;
   if (auth && !auth.ok) return auth.response;
+  if (!auth && process.env.COMMERCE_GUEST_CHECKOUT_ENABLED !== "true")
+    return json({ error: "Masuk ke akun untuk membeli dan menyimpan akses ebook." }, 401);
   if (Number(request.headers.get("content-length")) > 4096) return json({ error: "Data terlalu besar." }, 413);
-  const raw = await request.text();
+  let raw: string;
+  try { raw = await readLimitedBody(request, 4096); }
+  catch { return json({ error: "Data terlalu besar." }, 413); }
   if (raw.length > 4096) return json({ error: "Data terlalu besar." }, 413);
   let p;
   try { p = JSON.parse(raw); } catch { return json({ error: "Data checkout tidak valid." }, 400); }
@@ -78,31 +82,12 @@ export async function POST(request: Request) {
       409,
     );
   if (order.provider !== "doku") return json({ error: "Pesanan masih memakai gateway lama. Mulai pesanan baru." }, 409);
-  if (order.payment_url) {
-    try {
-      if (!isAllowedDokuCheckoutUrl(
-        order.payment_url,
-        process.env.DOKU_IS_PRODUCTION === "true",
-      )) throw new Error("Invalid checkout URL");
-      return json({ order_id: order.id, payment_url: new URL(order.payment_url).href });
-    } catch { return json({ error: "Link pembayaran tidak valid." }, 409); }
-  }
   try {
-    const checkoutUrl = await createDokuCheckout({
-      orderId: order.id,
-      amount: order.total,
-      email: user.email || "",
-      name: p.name.trim(),
-    });
-    const { error: saveError } = await db
-      .from("commerce_orders")
-      .update({ payment_url: checkoutUrl })
-      .eq("id", order.id).eq("provider", "doku").eq("status", "pending");
-    if (saveError) throw new Error("Order update failed");
+    const checkoutUrl = await checkoutForDokuOrder(order, user.email || "", p.name.trim());
     return json({ order_id: order.id, payment_url: checkoutUrl });
   } catch {
     return json({
-      error: "Pembayaran DOKU belum dapat dibuka. Coba lagi; pesanan yang sama akan digunakan.",
+      error: "Pembayaran DOKU sedang diverifikasi. Periksa pesananmu sebelum mencoba pembayaran lagi.",
     }, 502);
   }
 }

@@ -5,13 +5,16 @@ name: DOKU Isolated SQL Entitlement Test
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, codex/freelance-business-hub]
     types: [opened, synchronize, reopened]
     paths:
       - '.github/workflows/doku-isolated-sql.yml'
       - 'supabase_commerce.sql'
       - 'supabase/migrations/20261017051124_commerce_media_guest_checkout.sql'
       - 'supabase/migrations/20261018094500_doku_checkout_sandbox.sql'
+      - 'supabase/migrations/20261020154413_doku_go_live_safety.sql'
+      - 'src/lib/doku*.ts'
+      - 'src/app/api/commerce/doku/**'
       - 'scripts/prepare-doku-local-schema.ps1'
       - 'scripts/test-doku-local-db.ps1'
       - 'scripts/test-doku-private-pdf-e2e.mjs'
@@ -24,7 +27,7 @@ permissions:
 
 jobs:
   isolated-database:
-    if: ${{ github.event.pull_request.number == 4 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'feature/doku-sandbox-checkout' }}
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository && (github.head_ref == 'feature/doku-sandbox-checkout' || github.head_ref == 'codex/doku-qris-go-live-v2') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 30
     env:
@@ -65,7 +68,7 @@ jobs:
           npx --yes supabase@latest init --yes >/dev/null
           grep -Eq '^project_id[[:space:]]*=[[:space:]]*"khadafi-doku-staging-db"' supabase/config.toml
           echo "PASS: isolated local CLI project was initialized"
-      - name: Prepare EXACTLY four local Commerce migrations
+      - name: Prepare EXACTLY five local Commerce migrations
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
@@ -73,7 +76,7 @@ jobs:
           # The preparation is PowerShell-only and throws on errors. $LASTEXITCODE
           # can be $null if no native executable was called; do not misread it as a failure.
           $count = @(Get-ChildItem "$env:RUNNER_TEMP/khadafi-doku-staging-db/supabase/migrations" -Filter '*.sql').Count
-          if ($count -ne 4) { throw "Expected exactly 4 migrations; found $count" }
+          if ($count -ne 5) { throw "Expected exactly 5 migrations; found $count" }
       - name: Start minimized local Supabase on ephemeral GitHub runner
         shell: bash
         run: |
@@ -127,6 +130,13 @@ jobs:
             echo "FAILED: npm ci on disposable runner"; exit 1;
           }
           echo "PASS: Next.js and Supabase SDK installed locally"
+      - name: Test checkout contract and embedded safety migration
+        shell: bash
+        run: |
+          set -euo pipefail
+          node scripts/test-doku-checkout.cjs
+          npm install --prefix "$RUNNER_TEMP/doku-pglite" --no-audit --no-fund @electric-sql/pglite@0.5.9 >/dev/null
+          PGLITE_MODULE="$RUNNER_TEMP/doku-pglite/node_modules/@electric-sql/pglite" node scripts/test-doku-safety-db.cjs
       - name: Start REAL Next.js with INERT synthetic DOKU HMAC only
         env:
           DOKU_ENABLED: 'true'

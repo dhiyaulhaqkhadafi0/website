@@ -18,6 +18,7 @@ $Sources = @{
     "20261018000100_doku_local_commerce_base.sql" = "supabase_commerce.sql"
     "20261018000200_doku_local_guest_media.sql" = "supabase/migrations/20261017051124_commerce_media_guest_checkout.sql"
     "20261018000300_doku_local_payment.sql" = "supabase/migrations/20261018094500_doku_checkout_sandbox.sql"
+    "20261020000400_doku_local_safety.sql" = "supabase/migrations/20261020154413_doku_go_live_safety.sql"
 }
 foreach ($source in $Sources.Values) {
     if (-not (Test-Path -LiteralPath (Join-Path $RepositoryRoot $source))) {
@@ -56,7 +57,7 @@ foreach ($entry in $Sources.GetEnumerator()) {
     $Destination = Join-Path $Migrations $entry.Key
     Copy-Item -LiteralPath (Join-Path $RepositoryRoot $entry.Value) -Destination $Destination -ErrorAction Stop
 }
-Write-Host "Prepared exactly 4 LOCAL migrations (not executed):" -ForegroundColor Green
+Write-Host "Prepared exactly 5 LOCAL migrations (not executed):" -ForegroundColor Green
 Get-ChildItem -LiteralPath $Migrations -File |
   Sort-Object Name | Select-Object Name,Length | Format-Table -AutoSize
 Write-Host "Next: inspect migrations and Docker resources; do not run db reset or start yet."

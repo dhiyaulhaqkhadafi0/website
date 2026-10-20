@@ -1,91 +1,42 @@
-import { timingSafeEqual } from "node:crypto";
+import { timingSafeEqual, createHash, randomUUID } from "node:crypto";
 import { createServiceRoleClient } from "@/lib/supabase";
-import { dokuConfigured } from "@/lib/doku";
-import { dokuInvoice } from "@/lib/doku-security";
-import { isAllowedDokuCheckoutUrl } from "@/lib/doku-checkout-host";
-import { checkDokuSandboxStatus } from "@/lib/doku-status-check";
-import { reconcilePendingDokuOrders } from "@/lib/doku-reconciliation";
-
-// PREPARED, DISABLED-BY-DEFAULT reconciliation entry point.
-// Only a PRIVATE server-side scheduler or operator should POST here.
-// DO NOT point the public DOKU webhook tunnel to this route.
-// Staging-bound even if code is present in a Cloudflare branch build.
+import { dokuPolicy } from "@/lib/doku-config";
+import { checkDokuStatus } from "@/lib/doku-status-check";
 export const dynamic = "force-dynamic";
-
-function reply(body: unknown, status = 200) {
-  return Response.json(body, {
-    status,
-    headers: { "Cache-Control": "private, no-store" },
-  });
-}
-
-function authorized(provided: string, expected: string): boolean {
-  if (!expected || expected.length < 32 || !provided.startsWith("Bearer ")) return false;
-  const supplied = Buffer.from(provided.slice("Bearer ".length), "utf8");
-  const secret = Buffer.from(expected, "utf8");
-  return supplied.length === secret.length && timingSafeEqual(supplied, secret);
-}
-
-function isolatedSandboxReady(): boolean {
-  return process.env.DOKU_RECONCILE_ENABLED === "true" &&
-    process.env.DOKU_LOCAL_STAGING_ONLY === "true" &&
-    process.env.DOKU_IS_PRODUCTION !== "true" &&
-    process.env.DOKU_PRODUCTION_APPROVED !== "true" &&
-    process.env.DOKU_SITE_ORIGIN === "https://doku-staging.khadafidaffa.com" &&
-    ["http://127.0.0.1:54321", "http://localhost:54321"].includes(
-      process.env.NEXT_PUBLIC_SUPABASE_URL || "",
-    ) &&
-    Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY) &&
-    dokuConfigured();
-}
-
+const reply = (body: unknown, status = 200) => Response.json(body, { status, headers: { "Cache-Control": "private, no-store" } });
 export async function POST(request: Request) {
-  // Disabled by default in all deployed environments, including production.
-  if (!isolatedSandboxReady()) return reply({ error: "Not found" }, 404);
-  // Only reachable on same computer as staging Next, never over a public tunnel.
-  const host = request.headers.get("host") || new URL(request.url).host;
-  if (!["localhost:3000", "127.0.0.1:3000"].includes(host)) {
-    return reply({ error: "Not found" }, 404);
-  }
-  if (!authorized(
-    request.headers.get("authorization") || "",
-    process.env.DOKU_RECONCILE_TOKEN || "",
-  )) return reply({ error: "Unauthorized" }, 401);
-
-  try {
-    const db = createServiceRoleClient();
-    const now = Date.now();
-    const { data, error } = await db.from("commerce_orders")
-      .select("id,provider,status,total,created_at,payment_url")
-      .eq("provider", "doku")
-      .eq("status", "pending")
-      .not("payment_url", "is", null)
-      .lte("created_at", new Date(now - 3 * 60 * 1000).toISOString())
-      .gte("created_at", new Date(now - 7 * 24 * 60 * 60 * 1000).toISOString())
-      .order("created_at", { ascending: false })
-      .limit(10);
-    if (error || !data) return reply({ error: "Staging database unavailable" }, 503);
-    const { clientId, secretKey } = {
-      clientId: process.env.DOKU_CLIENT_ID || "",
-      secretKey: process.env.DOKU_SECRET_KEY || "",
-    };
-    const summary = await reconcilePendingDokuOrders(data, {
-      invoiceForOrder: dokuInvoice,
-      isValidSandboxCheckoutUrl: (url) => isAllowedDokuCheckoutUrl(url, false),
-      checkStatus: (invoice) => checkDokuSandboxStatus(
-        invoice, { clientId, secretKey },
-      ),
-      settle: async (orderId, amount, reference) => {
-        // Same atomic, service-role-only RPC used by the signed webhook.
-        // Duplicate successful reconciliation/webhook calls are idempotent.
-        const { error: updateError } = await db.rpc("commerce_set_payment_doku", {
-          p_order: orderId, p_total: amount, p_reference: reference,
+  const policy = dokuPolicy(process.env);
+  if (!policy.configured || process.env.DOKU_RECONCILE_ENABLED !== "true") return reply({ error: "Not found" }, 404);
+  const expected = process.env.DOKU_RECONCILE_TOKEN || "";
+  const actual = request.headers.get("authorization")?.replace(/^Bearer /, "") || "";
+  const supplied = Buffer.from(actual), secret = Buffer.from(expected);
+  if (secret.length < 32 || supplied.length !== secret.length || !timingSafeEqual(supplied, secret)) return reply({ error: "Unauthorized" }, 401);
+  const db = createServiceRoleClient();
+  const { data: states, error } = await db.rpc("commerce_claim_doku_reconciliation", { p_environment: policy.environment });
+  if (error) return reply({ error: "Database unavailable" }, 503);
+  const summary = { checked: 0, paid: 0, pending: 0, failed: 0 };
+  for (const state of states || []) {
+    let failure: string | null = null;
+    try {
+      const { data: order, error: readError } = await db.from("commerce_orders").select("total,currency,status,provider").eq("id", state.order_id).single();
+      if (readError || !order || order.provider !== "doku" || order.currency !== "IDR" || !["pending", "paid"].includes(order.status)) throw new Error("Order mismatch");
+      const result = await checkDokuStatus(state.invoice, { clientId: process.env.DOKU_CLIENT_ID || "", secretKey: process.env.DOKU_SECRET_KEY || "" }, policy.production);
+      summary.checked++;
+      if (result.invoice !== state.invoice || result.amount !== order.total || !["VIRTUAL_ACCOUNT_BANK_MANDIRI", "QRIS_DOKU"].includes(result.channel || "")) throw new Error("Provider mismatch");
+      if (result.status === "SUCCESS") {
+        const { error: writeError } = await db.rpc("commerce_record_doku_event", {
+          p_order: state.order_id, p_total: order.total, p_reference: state.invoice,
+          p_environment: policy.environment, p_event: "check:" + randomUUID(),
+          p_hash: createHash("sha256").update(JSON.stringify(result)).digest("hex"),
+          p_status: result.status, p_channel: result.channel,
         });
-        if (updateError) throw new Error("Payment persistence failed");
-      },
-    }, now);
-    return reply({ ok: true, ...summary });
-  } catch {
-    return reply({ error: "Reconciliation unavailable" }, 503);
+        if (writeError) throw new Error("Settlement unavailable");
+        summary.paid++;
+      } else summary.pending++;
+    } catch { failure = "PROVIDER_OR_DB_ERROR"; summary.failed++; }
+    const finished = await db.rpc("commerce_finish_doku_reconciliation", { p_order: state.order_id, p_token: state.lease_token, p_error: failure });
+    if (finished.error) return reply({ error: "Lease persistence unavailable", ...summary }, 503);
   }
+  console.info("commerce.doku.reconciliation", summary);
+  return reply({ ok: true, ...summary });
 }

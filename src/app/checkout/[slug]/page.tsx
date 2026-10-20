@@ -34,6 +34,7 @@ export default async function Page({
         email={auth?.ok ? auth.user.email || "" : ""}
         name={auth?.ok ? auth.user.user_metadata?.display_name || "" : ""}
         available={commerceConfigured(p.price > 0)}
+        guestEnabled={process.env.COMMERCE_GUEST_CHECKOUT_ENABLED === "true"}
       />
     </>
   );

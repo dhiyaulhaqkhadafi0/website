@@ -2,6 +2,7 @@ import "server-only";
 import { dokuInvoice, signature, sameSignature, verifyDokuHmacSignature } from "./doku-security";
 export { dokuInvoice, orderIdFromDokuInvoice } from "./doku-security";
 import { isAllowedDokuCheckoutUrl } from "./doku-checkout-host";
+import { dokuPolicy } from "./doku-config";
 
 const CHECKOUT_PATH = "/checkout/v1/payment";
 export const DOKU_WEBHOOK_PATH = "/api/commerce/doku/webhook";
@@ -13,39 +14,23 @@ function credentials() {
 }
 
 export function dokuConfigured() {
-  const production = process.env.DOKU_IS_PRODUCTION === "true";
-  const origin = process.env.DOKU_SITE_ORIGIN || "";
-  if (process.env.DOKU_LOCAL_STAGING_ONLY === "true" &&
-      (production || !["http://127.0.0.1:54321", "http://localhost:54321"]
-        .includes(process.env.NEXT_PUBLIC_SUPABASE_URL || ""))) return false;
-  // Sandbox must always use an explicitly configured non-production Supabase.
-  // src/lib/supabase.ts has a legacy production URL fallback; do not use it here.
-  const dbOrigin = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-  if (!production && (!dbOrigin || /mykgtajanxczdnzekycl\.supabase\.co/i.test(dbOrigin))) return false;
-  try {
-    const url = new URL(origin);
-    const validOrigin = url.protocol === "https:" && url.origin === origin && !url.username && !url.password;
-    const approved = !production || (
-      process.env.DOKU_PRODUCTION_APPROVED === "true" &&
-      origin === "https://khadafidaffa.com"
-    );
-    // Prevent inadvertently redirecting live customers to sandbox checkout.
-    return process.env.DOKU_ENABLED === "true" &&
-      Boolean(process.env.DOKU_CLIENT_ID && process.env.DOKU_SECRET_KEY) &&
-      validOrigin && approved && (production || origin !== "https://khadafidaffa.com");
-  } catch { return false; }
+  return dokuPolicy(process.env).checkout;
 }
 
 export function verifyDokuNotification(headers: Headers, body: string): boolean {
-  if (!dokuConfigured() || body.length > 32768) return false;
+  // New-sale kill switches must not disable processing accepted payments.
+  if (!dokuPolicy(process.env).configured || body.length > 32768) return false;
   const { clientId, secretKey } = credentials();
   return verifyDokuHmacSignature(headers, body, clientId, secretKey, DOKU_WEBHOOK_PATH);
 }
 
 export async function createDokuCheckout(input: {
-  orderId: string; amount: number; email: string; name: string;
+  orderId: string; amount: number; email: string; name: string; requestId: string; privateQa?: boolean;
 }): Promise<string> {
-  if (!dokuConfigured()) throw new Error("DOKU is not enabled");
+  const policy = dokuPolicy(process.env);
+  if (!(input.privateQa ? policy.qaCheckout : policy.checkout)) throw new Error("DOKU is not enabled");
+  if (!Number.isSafeInteger(input.amount) || input.amount <= 0 ||
+      !/^[a-f0-9-]{36}$/i.test(input.requestId)) throw new Error("Invalid checkout input");
   const { clientId, secretKey } = credentials();
   const production = process.env.DOKU_IS_PRODUCTION === "true";
   const invoice = dokuInvoice(input.orderId);
@@ -62,10 +47,11 @@ export async function createDokuCheckout(input: {
       callback_url_result: callbackOrigin + "/checkout/success?order=" + input.orderId,
       auto_redirect: false,
     },
-    payment: { payment_due_date: 60 },
+    payment: { payment_due_date: 60, payment_method_types: input.privateQa ? ["QRIS"] : policy.methods },
+    additional_info: { override_notification_url: process.env.DOKU_SITE_ORIGIN + DOKU_WEBHOOK_PATH },
     customer: { name: input.name, email: input.email },
   });
-  const requestId = crypto.randomUUID();
+  const requestId = input.requestId;
   const timestamp = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
   const response = await fetch(
     (production ? "https://api.doku.com" : "https://api-sandbox.doku.com") + CHECKOUT_PATH,
@@ -88,12 +74,13 @@ export async function createDokuCheckout(input: {
   const result = JSON.parse(raw);
   if (!response.ok) throw new Error("DOKU checkout creation failed");
 
-  // If the server includes a response signature, authenticate the body as well.
+  // Authenticate provider response before trusting its checkout URL.
   const responseSignature = response.headers.get("signature");
-  if (responseSignature) {
+  if (!responseSignature) throw new Error("Unsigned DOKU checkout response");
+  {
     const responseTime = response.headers.get("response-timestamp") || "";
-    const signedClient = response.headers.get("client-id") || clientId;
-    const signedId = response.headers.get("request-id") || requestId;
+    const signedClient = response.headers.get("client-id");
+    const signedId = response.headers.get("request-id");
     if (!responseTime || signedClient !== clientId || signedId !== requestId ||
       !sameSignature(signature(clientId, requestId, responseTime, CHECKOUT_PATH, raw, secretKey, true), responseSignature)) {
       throw new Error("Invalid DOKU response signature");

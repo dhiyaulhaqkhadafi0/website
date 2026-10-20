@@ -15,11 +15,13 @@ export function CheckoutForm({
   email,
   name,
   available,
+  guestEnabled = false,
 }: {
   product: Product;
   email: string;
   name: string;
   available: boolean;
+  guestEnabled?: boolean;
 }) {
   const router = useRouter();
   const hydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
@@ -70,7 +72,7 @@ export function CheckoutForm({
           <label>
             Email pembeli
             <input type="email" name="email" autoComplete="email" defaultValue={email} readOnly={Boolean(email)} maxLength={254} required />
-            <small>{email ? "Produk terhubung ke library akunmu." : "Beli tanpa password. Simpan halaman pesanan; akses di perangkat lain melalui verifikasi email."}</small>
+            <small>{email ? "Produk terhubung ke library akunmu." : guestEnabled ? "Simpan halaman pesanan untuk mengakses pembelian pada browser ini." : "Masuk untuk menghubungkan pembelian dengan library akunmu."}</small>
           </label>
           <label className={s.check}>
             <input type="checkbox" name="consent" required />
@@ -89,10 +91,12 @@ export function CheckoutForm({
           {error && (
             <div role="alert" className={s.notice + " " + s.error}>
               {error}
+              {email && error.includes("diverifikasi") && <p><Link href="/account/orders">Periksa pesanan saya ↗</Link></p>}
             </div>
           )}
           {error.includes("berakhir") && <button type="button" className={s.secondary} onClick={() => { const next = crypto.randomUUID(); setKey(next); try { sessionStorage.setItem("khadafi-checkout-" + product.slug, next); } catch {} setError(""); }}>Mulai pesanan baru</button>}
-          <button className={s.button} disabled={!hydrated || busy || !available}>
+          {!email && !guestEnabled && <Link className={s.secondary} href={"/login?returnTo=" + encodeURIComponent("/checkout/" + product.slug)}>Masuk untuk membeli ↗</Link>}
+          <button className={s.button} disabled={!hydrated || busy || !available || (!email && !guestEnabled)}>
             {busy ? <LoaderCircle className={s.spin} /> : <ArrowUpRight />}
             {busy
               ? "Menyiapkan pesanan…"

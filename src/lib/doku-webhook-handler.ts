@@ -1,62 +1,58 @@
-// Framework-independent HTTP handling, also imported by local Node tests.
-// DOKU HMAC verification and order persistence are injected by the server route.
-// A successful browser redirect is NEVER evidence of a successful payment.
+import { createHash } from "node:crypto";
+export type DokuNotification = {
+  orderId: string; amount: number; reference: string; eventId: string;
+  bodyHash: string; status: string; channel: string;
+};
 export type DokuWebhookDependencies = {
   verify: (headers: Headers, body: string) => boolean;
   decodeInvoice: (invoice: string) => string | null;
   invoiceForOrder: (orderId: string) => string;
   canSettle: () => boolean;
-  settle: (orderId: string, amount: number, reference: string) => Promise<void>;
+  persist: (event: DokuNotification) => Promise<void>;
 };
-
-function json(data: unknown, status = 200): Response {
-  return Response.json(data, {
-    status,
-    headers: { "Cache-Control": "private, no-store" },
-  });
+const reply = (body: unknown, status = 200) => Response.json(body, {
+  status, headers: { "Cache-Control": "private, no-store" },
+});
+export async function readLimitedBody(request: Request, limit: number) {
+  if (Number(request.headers.get("content-length")) > limit) throw new Error("Body too large");
+  const reader = request.body?.getReader();
+  if (!reader) return "";
+  const chunks: Uint8Array[] = []; let size = 0;
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      size += value.byteLength;
+      if (size > limit) { await reader.cancel(); throw new Error("Body too large"); }
+      chunks.push(value);
+    }
+  } finally { reader.releaseLock(); }
+  return Buffer.concat(chunks).toString("utf8");
 }
-
-export async function handleDokuWebhookHttp(
-  request: Request,
-  deps: DokuWebhookDependencies,
-): Promise<Response> {
-  const raw = await request.text();
-  if (!deps.verify(request.headers, raw)) {
-    return json({ error: "Invalid DOKU signature" }, 401);
-  }
-
-  let payload: unknown;
+export async function handleDokuWebhookHttp(request: Request, deps: DokuWebhookDependencies): Promise<Response> {
+  let raw: string;
+  try { raw = await readLimitedBody(request, 32768); }
+  catch { return reply({ error: "Notification too large" }, 413); }
+  if (!deps.verify(request.headers, raw)) return reply({ error: "Invalid DOKU signature" }, 401);
+  let event;
+  try { event = JSON.parse(raw); }
+  catch { return reply({ error: "Invalid notification" }, 400); }
+  const invoice = event?.order?.invoice_number, status = event?.transaction?.status;
+  const amount = Number(event?.order?.amount), channel = event?.channel?.id;
+  const id = typeof invoice === "string" ? deps.decodeInvoice(invoice) : null;
+  if (!id || invoice !== deps.invoiceForOrder(id) || !Number.isSafeInteger(amount) || amount <= 0 ||
+      (event?.order?.currency != null && event.order.currency !== "IDR") ||
+      !["SUCCESS", "PENDING", "FAILED", "EXPIRED", "TIMEOUT", "REFUNDED", "DISPUTED"].includes(status) ||
+      !["VIRTUAL_ACCOUNT_BANK_MANDIRI", "QRIS_DOKU"].includes(channel))
+    return reply({ error: "Invalid notification" }, 400);
+  if (!deps.canSettle()) return reply({ error: "Unavailable" }, 503);
   try {
-    payload = JSON.parse(raw);
+    await deps.persist({ orderId: id, amount, reference: invoice, status, channel,
+      eventId: request.headers.get("request-id") || "",
+      bodyHash: createHash("sha256").update(raw).digest("hex") });
+    return reply({ ok: true, ...(status !== "SUCCESS" ? { ignored: true } : {}) });
   } catch {
-    return json({ error: "Invalid notification" }, 400);
-  }
-  const event = payload as {
-    order?: { invoice_number?: unknown; amount?: unknown };
-    transaction?: { status?: unknown };
-  } | null;
-  const invoice = event?.order?.invoice_number;
-  const status = event?.transaction?.status;
-  if (typeof invoice !== "string" || typeof status !== "string") {
-    return json({ error: "Invalid notification" }, 400);
-  }
-
-  // DOKU Checkout may retry another method after a failure. Never grant
-  // entitlement until a correctly signed SUCCESS event has been persisted.
-  if (status !== "SUCCESS") return json({ ok: true, ignored: true });
-
-  const id = deps.decodeInvoice(invoice);
-  const amount = Number(event?.order?.amount);
-  if (!id || !Number.isSafeInteger(amount) || amount <= 0) {
-    return json({ error: "Invalid order or amount" }, 400);
-  }
-  if (!deps.canSettle()) return json({ error: "Unavailable" }, 503);
-  try {
-    await deps.settle(id, amount, deps.invoiceForOrder(id));
-    return json({ ok: true });
-  } catch {
-    // Non-2xx response requests DOKU to retry delivery. Never acknowledge
-    // an unpersisted payment. Avoid leaking invoice or identity in logs.
-    return json({ error: "Retry notification" }, 503);
+    // 2xx only after durable inbox + business transaction commits.
+    return reply({ error: "Retry notification" }, 503);
   }
 }

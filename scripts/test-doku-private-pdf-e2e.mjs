@@ -103,6 +103,9 @@ const order = must(await admin.rpc("commerce_create_order_doku", {
 assert.equal(order.status, "pending");
 assert.equal(order.total, 59000);
 assert.equal(order.provider, "doku");
+must(await admin.rpc("commerce_claim_doku_checkout", {
+  p_order: order.id, p_environment: "sandbox", p_invoice: dokuInvoice(order.id),
+}), "bind synthetic order to sandbox invoice");
 console.log("PASS: two isolated Auth users, private PDF and pending Rp59000 DOKU order exist");
 
 function guestCookie(id, tamper = false) {

@@ -20,7 +20,7 @@ const payload = JSON.stringify({
   transaction: { status: "SUCCESS" },
 });
 const requestId = randomUUID();
-const timestamp = "2026-10-18T10:00:00Z";
+const timestamp = new Date().toISOString();
 const digest = createHash("sha256").update(payload, "utf8").digest("base64");
 const stringToSign = [
   "Client-Id:" + clientId,

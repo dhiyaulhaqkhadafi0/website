@@ -4,7 +4,7 @@ name: DOKU Sandbox Offline Verification
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, codex/freelance-business-hub]
     types: [opened, synchronize, reopened]
     paths:
       - '.github/workflows/doku-sandbox-offline.yml'
@@ -20,7 +20,7 @@ permissions:
 jobs:
   offline-doku-tests:
     # Never run automatically for another PR or a fork.
-    if: ${{ github.event.pull_request.number == 4 && github.event.pull_request.head.repo.full_name == github.repository && github.head_ref == 'feature/doku-sandbox-checkout' }}
+    if: ${{ github.event.pull_request.head.repo.full_name == github.repository && (github.head_ref == 'feature/doku-sandbox-checkout' || github.head_ref == 'codex/doku-qris-go-live-v2') }}
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     env:
@@ -57,5 +57,7 @@ jobs:
         run: node scripts/test-doku-get-status-signature.mjs
       - name: Verify reconciliation/entitlement decision engine
         run: node scripts/test-doku-reconciliation.mjs
+      - name: Verify QRIS replay, concurrency and scheduled contract
+        run: node scripts/test-doku-qris-safety.mjs
       - name: Confirmation
         run: echo "PASS - all DOKU offline tests; no DOKU API, no DB, no secrets, no deployment"

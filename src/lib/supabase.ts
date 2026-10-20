@@ -5,6 +5,15 @@ import { createClient } from '@supabase/supabase-js';
 // Cloudflare branch previews work when the build dashboard omits NEXT_PUBLIC_*.
 const fallbackSupabaseUrl = 'https://mykgtajanxczdnzekycl.supabase.co';
 const fallbackSupabasePublishableKey = 'sb_publishable_WOicVaI6VxFP0g4X0dJrlA_LX4hBCGI';
+// Cloud sandbox must never silently read either production project.
+if (process.env.DOKU_STAGING_ONLY === 'true') {
+  const candidate = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+  if (!candidate || candidate !== process.env.DOKU_SANDBOX_SUPABASE_URL ||
+      /mykgtajanxczdnzekycl|zhxqjmciowxozrohutoi/.test(candidate) ||
+      !process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY) {
+    throw new Error('Isolated DOKU staging Supabase configuration required.');
+  }
+}
 
 // In the DOKU local staging workflow, NEVER fall back to the production database.
 if (process.env.DOKU_LOCAL_STAGING_ONLY === 'true' &&
