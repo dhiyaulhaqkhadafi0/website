@@ -352,7 +352,6 @@ export function PathwaySimulation({ item }: { item: Pathway }) {
         </label>
         <label className={s.field}>
           {item.simulation.unit_label} (Rp)
-          {item.simulation.divisor === 1000 ? " / 1.000 views" : ""}
           <input
             aria-label="Penerimaan asumsi per unit"
             type="number"

@@ -1,10 +1,8 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import bundledPosts from '@/content/generated-blog-posts.json';
 import { isSupabaseConfigured, supabase } from '@/lib/supabase';
 import { resolveArticleCover, type PublishedArticle, type TiptapNode } from '@/lib/blog-types';
 
-const POSTS_DIRECTORY = path.join(process.cwd(), 'src/content/blog');
+const localPosts: Record<string, {data: Record<string, unknown>; content: string; contentHtml: string}> = bundledPosts;
 
 export type BlogPostMetadata = {
   title: string;
@@ -73,25 +71,14 @@ export function toBlogCardItem(post: BlogPost): BlogCardItem {
 }
 
 export function getPostSlugs(): string[] {
-  try {
-    return fs.readdirSync(POSTS_DIRECTORY).filter((file) => file.endsWith('.mdx'));
-  } catch (error) {
-    console.error("Error reading posts directory", error);
-    return [];
-  }
+  return Object.keys(localPosts).map(slug=>`${slug}.mdx`);
 }
 
 export function getPostBySlug(slug: string): BlogPost | null {
   try {
     const realSlug = slug.replace(/\.mdx$/, '');
-    const fullPath = path.join(POSTS_DIRECTORY, `${realSlug}.mdx`);
-
-    if (!fs.existsSync(fullPath)) {
-      return null;
-    }
-
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const { data, content } = matter(fileContents);
+    if (!Object.hasOwn(localPosts,realSlug)) return null;
+    const { data, content, contentHtml } = localPosts[realSlug];
     const resolvedCover = resolveArticleCover({ ...(data as Record<string, unknown>), content });
 
     return {
@@ -105,6 +92,7 @@ export function getPostBySlug(slug: string): BlogPost | null {
         updatedAt: typeof data.updated_at === 'string' ? data.updated_at : undefined,
       } as BlogPostMetadata,
       content,
+      contentHtml,
       source: 'mdx',
     };
   } catch (error) {

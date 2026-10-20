@@ -41,7 +41,7 @@ async function main() {
       timeout: 120000,
     });
     assert.equal(r.status(), 200, route);
-    await page.locator("h1").waitFor();
+    await page.locator("h1").first().waitFor();
     await page.evaluate(() => document.fonts.ready);
     if (route.startsWith(sp) || route.startsWith(mp))
       await page
@@ -503,6 +503,13 @@ async function main() {
   record(
     "nine original resources and ecosystem routes, private account redirect, unknown slug 404, 86 detail/chapter sitemap URLs",
   );
+  const articles=require('../src/content/generated-blog-posts.json');
+  for(const [slug,post] of Object.entries(articles)){
+    await go('/blog/'+slug);
+    assert.ok((await page.locator('h1').first().innerText()).includes(post.data.title));
+    assert.ok((await page.locator('body').innerText()).length>1000);
+  }
+  record('three existing MDX articles render their original headings and complete bodies on the deployed runtime');
   assert.deepEqual(errors, []);
   await browser.close();
   const report = {
