@@ -16,12 +16,14 @@ export function CheckoutForm({
   name,
   available,
   guestEnabled = false,
+  qrisAvailable = false,
 }: {
   product: Product;
   email: string;
   name: string;
   available: boolean;
   guestEnabled?: boolean;
+  qrisAvailable?: boolean;
 }) {
   const router = useRouter();
   const hydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
@@ -81,7 +83,7 @@ export function CheckoutForm({
               dan <Link href="/privacy">Kebijakan Privasi</Link>. Email digunakan untuk identitas pembelian dan library digital.
             </span>
           </label>
-          {product.price > 0 && <div className={s.paymentMethods}><span className={s.eyebrow}>02 / METODE PEMBAYARAN</span><div><span>Bank / Virtual Account</span><span>E-wallet</span><span>QRIS</span></div><p>Pilih metode yang tersedia setelah lanjut ke halaman DOKU. Ketersediaan mengikuti aktivasi merchant.</p></div>}
+          {product.price > 0 && <div className={s.paymentMethods}><span className={s.eyebrow}>02 / METODE PEMBAYARAN</span><div><span>Bank / Virtual Account · Mandiri</span>{qrisAvailable && <span>QRIS</span>}</div><p>Pilih metode yang tersedia setelah lanjut ke halaman DOKU. Ketersediaan mengikuti aktivasi merchant.</p></div>}
           {!available && (
             <div className={s.notice} role="status">
               Checkout produk ini belum dibuka. Silakan kembali beberapa saat
