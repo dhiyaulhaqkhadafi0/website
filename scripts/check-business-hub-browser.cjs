@@ -47,6 +47,18 @@ async function main() {
       await page
         .locator("[data-business-ready=true]")
         .waitFor({ state: "attached" });
+    if (route === root + "/freelance-rate-calculator")
+      await page.waitForFunction(() => {
+        const input = document.querySelector('[name="margin"]');
+        return (
+          input &&
+          Object.keys(input).some(
+            (key) =>
+              key.startsWith("__reactProps$") &&
+              typeof input[key]?.onChange === "function",
+          )
+        );
+      });
   };
   const count = async (p, selector, n) =>
     p.waitForFunction(

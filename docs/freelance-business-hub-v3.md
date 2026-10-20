@@ -40,14 +40,34 @@ node node_modules/next/dist/bin/next build --webpack
 npx opennextjs-cloudflare build --skipNextBuild
 ```
 
-Gate lokal sebelum packaging: lint seluruh source yang berubah bersih; Next build/typecheck berhasil dengan 184 halaman statis. Acceptance pada production server lokal lulus 12 kelompok: 80 detail dan enam bab anonim, 42 GET file dengan MIME/signature/ukuran/checksum, pencarian/filter/URL/pagination, simpan/perbandingan, preview/fallback, checklist, kalkulator, localStorage diblokir, JavaScript dimatikan, 24 layout di 360/390/768/1440 px, regresi resource lama dan sitemap. Nol uncaught browser errors. Lint seluruh repository di luar diff tidak diklaim bersih.
+Gate lokal sebelum packaging: lint seluruh source yang berubah bersih; Next build/typecheck berhasil dengan 184 halaman statis. Acceptance pada production server lokal lulus 14 kelompok: 80 detail dan enam bab anonim, 42 GET file dengan MIME/signature/ukuran/checksum, pencarian/filter/URL/pagination, simpan/perbandingan, preview/fallback, checklist, kalkulator, localStorage diblokir, JavaScript dimatikan, 24 layout di 360/390/768/1440 px, regresi resource lama, sitemap dan tiga artikel MDX existing. Nol uncaught browser errors. Lint seluruh repository di luar diff tidak diklaim bersih.
 
 Artefak tersanitasi berada di `artifacts/business-hub/`: log build, hasil browser, screenshot desktop/mobile, manifest rilis, hasil upload cache dan hasil produksi. Direktori artifacts diabaikan Git.
 
 ## Packaging Windows
 
-Jangan memakai junction node_modules untuk build rilis ini. Junction ikut masuk ke standalone, sehingga patch adapter OpenNext tidak diterapkan pada salinan Next yang benar dan esbuild menarik binary sharp Windows. Dependensi rilis disalin secara fisik dari versi lockfile yang sama; tidak mengubah package.json atau lockfile. Build dan acceptance harus dijalankan kembali setelah perbaikan packaging tersebut.
+Jangan memakai junction node_modules untuk build rilis ini. Junction ikut masuk ke standalone, sehingga patch adapter OpenNext tidak diterapkan pada salinan Next yang benar dan esbuild menarik binary sharp Windows. Dependensi rilis disalin secara fisik dari versi lockfile yang sama; tidak mengubah versi dependensi atau lockfile. Next dan OpenNext berhasil dengan exit code 0 setelah perbaikan packaging tersebut. Peringatan copy Windows pada paket unist/vfile tidak menghalangi hasil akhir; runtime workerd dan domain production turut diperiksa.
 
-Deployment memakai Worker `khadafi`, bucket `khadafi-opennext-cache`, dan `--keep-vars` untuk mempertahankan binding/secret existing. Versi sebelum rilis: `9868bff2-b7a8-42d4-b1cc-2f6d1f506351`. Status production final dicatat setelah deploy dan verifikasi domain, bukan berdasarkan keberhasilan build lokal.
+Deployment memakai Worker `khadafi`, bucket `khadafi-opennext-cache`, dan `--keep-vars` untuk mempertahankan binding/secret existing. Versi sebelum rilis: `9868bff2-b7a8-42d4-b1cc-2f6d1f506351`.
+
+## Kompatibilitas artikel existing
+
+Pemeriksaan runtime menemukan artikel MDX existing bergantung pada filesystem dan kompilasi MDX saat request, yang tidak tersedia pada Worker. `scripts/generate-blog-content.cjs` mengompilasi tiga artikel repository saat build menjadi `src/content/generated-blog-posts.json`. Hook `predev` dan `prebuild:next` menyiapkan bundle tersebut. Naskah dan metadata asli dipertahankan; prioritas artikel Studio serta panggilan Supabase existing tidak diubah. Tidak ada perubahan database.
+
+Ketiga artikel (`arsitektur-ai`, `bisnis-digital-defensibel`, `mantra-pertama`) menghasilkan HTTP 200 dan judul asli pada runtime workerd serta production. Pemeriksaan bundle dapat diulang dengan `node scripts/generate-blog-content.cjs --check`.
+
+## Rilis production — 20 Oktober 2026
+
+- Domain: https://khadafidaffa.com/freelance/tools
+- Source aplikasi: `6f670aa9606a89c21a7d72f65db9abec0c830b87`, branch `codex/freelance-business-hub`; tidak merge ke main.
+- Build: `himGmJIjGwjotQ2vXkyrv`; `/BUILD_ID` pada domain utama cocok dengan build lokal.
+- Worker final: `5c1ff734-95fd-4c63-9e91-eb6a6398381c`, deployment `4620c77f-95e7-41c6-8b5a-a784c9a64ea0`, 100% traffic pada pemeriksaan Wrangler.
+- Sebanyak 151/151 entri cache build final diunggah ke R2; cache sebelumnya dipertahankan.
+- Preflight memeriksa 666 file publik/cache terhadap dua kredensial privat yang tersedia, tanpa kecocokan. Nilai kredensial tidak ditulis ke log.
+- Pemeriksaan tambahan domain utama lulus: build ID, tiga artikel asli, decoding sampul melalui optimasi gambar Cloudflare, screenshot spotlight dan nol page errors.
+- Acceptance lengkap pada domain production lulus 14 kelompok pada `2026-10-20T13:25:49.949Z` (20:25 WIB): seluruh 80 detail dan enam bab, 42 unduhan dengan checksum identik, semua interaksi, 24 layout responsif, regresi resource lama, sitemap dan tiga artikel existing; nol uncaught browser errors. Skrip menunggu hydration kalkulator sebelum mengisi input agar hasil uji mencerminkan interaksi yang sudah aktif.
+- Versi intermediate sebelum koreksi artikel: `6174ed52-8d34-472e-8a9f-dfc1cdd489b9`; versi sebelum seluruh rilis tercatat di atas untuk referensi pemulihan.
+
+Artefak bukti: `artifacts/business-hub/production/verification.json`, `production/runtime-smoke.json`, `deployments-after.json`, `release-manifest.json`, `r2-upload.json` serta screenshot desktop/mobile. Pemeriksaan ini tidak menjalankan transaksi pembayaran atau mutasi akun Studio.
 
 Simpanan dan checklist bersifat lokal per browser; fallback memori sesi digunakan saat storage diblokir. Tidak ada sinkronisasi akun. Kurasi tools berasal dari paket pengguna dan tanggal pemeriksaan penyusunnya; tidak diklaim sebagai audit platform baru.
