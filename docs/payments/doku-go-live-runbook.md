@@ -35,3 +35,20 @@ Persetujuan baru dibutuhkan setelah patch, migrasi additive, CI/build, sandbox d
 ## Rollback
 
 Matikan flag penjualan terlebih dahulu, pertahankan pemrosesan pembayaran yang sudah diterima. Rollback Worker ke versi yang dicatat sebelum deploy; jangan drop tabel/event baru atau menghapus order/grant. Jalankan rekonsiliasi/recovery yang sudah diaudit untuk in-flight order. Source lama tanpa handler DOKU tidak boleh menjadi satu-satunya pemroses order yang sudah menerima pembayaran.
+
+## Jalur lokal yang sudah disiapkan
+
+Folder ignored `artifacts/payments/khadafi-doku-staging-db/supabase` sudah berisi config CLI dan tepat lima migrasi curated; Docker/SQL belum dijalankan. Tidak menggunakan dua database cloud production.
+
+Setelah Docker Desktop tersedia dan resource laptop mencukupi, dari worktree DOKU V2:
+
+```powershell
+$stageRoot = Join-Path $PWD 'artifacts/payments/khadafi-doku-staging-db'
+./scripts/start-doku-local.ps1 -StagingRoot $stageRoot
+./scripts/prepare-doku-local-env.ps1 -StagingRoot $stageRoot -FeatureRoot $PWD
+./scripts/enable-doku-local-sandbox.ps1 -FeatureRoot $PWD
+```
+
+Perintah terakhir kini **hanya mengisi** dua sandbox keys melalui input tersembunyi dan membiarkan DOKU_ENABLED/PAYMENTS_ENABLED=false. Tidak menjalankan script ini dengan credentials pada audit. Setelah HTTPS webhook benar-benar menolak unsigned POST dengan 401, konfigurasi tervalidasi, dan operator siap melakukan simulasi, opsi `-EnableAfterValidation` dapat dipakai untuk aktivasi **sandbox lokal**. Tidak dipakai untuk production. Start Next memakai `./scripts/start-doku-local-next.ps1 -FeatureRoot $PWD`; relay/tunnel hanya boleh membuka route webhook, bukan API Auth/REST/Storage.
+
+Jika memilih Worker staging, gunakan script configure-doku-sandbox-secrets.ps1 setelah Worker dan database staging isolated tersedia. Jangan membuat proyek berbayar baru untuk melewati blocker ini.

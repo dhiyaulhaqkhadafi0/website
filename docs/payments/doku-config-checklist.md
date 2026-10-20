@@ -38,3 +38,5 @@ Route: `/api/commerce/doku/webhook`, POST, tanpa login, signature wajib. URL len
 Sandbox Back Office: Settings -> Payment Settings -> Virtual Account (Non-SNAP) -> Mandiri VA -> Configure -> Notification URL. QRIS: konfigurasi Notification URL per channel yang benar-benar tersedia; pastikan integrasi Checkout Non-SNAP, bukan memindahkan backend ke Direct SNAP. Periksa Integration -> HTTP Notification untuk event asli dan HTTP response. Override notification di Checkout tidak dianggap pengganti konfigurasi channel. Jika Configure tidak tersedia, pemilik perlu meminta support mengaktifkan/mengonfirmasi URL channel.
 
 QRIS Checkout memakai payment_method_types QRIS. Sampel notifikasi resmi menyebut channel.id QRIS_DOKU; header HMAC Non-SNAP diverifikasi melalui route existing. Status Check memakai environment sesuai order, GET HMAC tanpa Digest. Referensi resmi ada dalam test-evidence.
+
+Hasil audit nama secret production (read-only): DOKU_CLIENT_ID/DOKU_SECRET_KEY/DOKU_RECONCILE_TOKEN belum ada; SUPABASE_SERVICE_ROLE_KEY ada. Jangan menyalin nilai secret production ke staging. Nilai binding existing tidak dibaca.

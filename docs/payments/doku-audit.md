@@ -33,3 +33,17 @@ Status: **NO-GO untuk penjualan publik**. Implementasi lokal dilanjutkan; tidak 
 Tes unit memakai vector HMAC inert hanya di proses uji, bukan kredensial sandbox/provider yang dibuat-buat. Embedded PostgreSQL menguji SQL nyata secara lokal; fixture tidak dikirim ke cloud production. Bukti CI lama pada PR #4 bersifat historis; perubahan baru perlu CI tersendiri. Tidak ada klaim webhook berasal dari provider sebelum event asli diterima.
 
 Lihat doku-test-evidence.md, doku-config-checklist.md dan doku-go-live-runbook.md. Semua P0 eksternal harus selesai sebelum GO-LIVE READY.
+
+## Indeks lokasi kode untuk reviewer
+
+- `src/lib/doku-security.ts:51`: verifier raw-body HMAC dan timestamp window.
+- `src/lib/doku-webhook-handler.ts:16`: pembacaan body terbatas; `:32` validasi dan durable dependency.
+- `src/lib/doku-config.ts:4`: pemisahan environment, public sales, QA dan QRIS ACTIVE.
+- `src/lib/doku-order-checkout.ts:7`: lease RPC dan larangan retry session ambigu.
+- `src/lib/doku-status-check.ts:41`: GET status dengan signature respons, origin sesuai environment.
+- `src/app/api/internal/commerce/doku/reconcile/route.ts:7`: bearer endpoint dan bounded processing.
+- `src/app/api/studio/commerce/payment-qa/route.ts:5`: flag, admin dan UUID allowlist.
+- `supabase/migrations/20261020154413_doku_go_live_safety.sql:32`: checkout lock; `:67` settlement repair; `:82` inbox transaction; `:110` scheduler lease; `:134` QA order; `:162` purchase reuse; `:193` private admin lookup.
+- `src/components/commerce/ProductGallery.tsx:10`: galeri, percentage zoom, pan, touch dan keyboard.
+
+Privilege production read-only diperiksa: service_role tidak punya SELECT langsung pada auth.users/blog_admin_emails. Helper private QA mengatasi kebutuhan itu secara terbatas; SQL test menjalankan free-QA RPC sebagai role service_role dan PASS. Perubahan grant/helper hanya ada di migration lokal/CI.

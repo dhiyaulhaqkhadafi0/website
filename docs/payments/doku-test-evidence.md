@@ -12,7 +12,7 @@
 | PRODUCTION_QRIS_ACTIVATION | APPROVED_EMAIL__UPDATING_DASHBOARD | User mengonfirmasi masih UPDATING pada percakapan ini |
 | LIVE_CHECKOUT_INITIATION | BLOCKED | Belum ACTIVE dan belum izin transaksi/config production |
 | LIVE_PAYMENT_E2E | NOT_TESTED | Tidak membayar uang asli atau meminta PIN/OTP |
-| DIGITAL_DELIVERY | PASS lokal untuk otorisasi; BLOCKED live | Tes download/expiry/IDOR commerce lama PASS; full real Supabase private-PDF CI baru akan dicatat setelah run selesai |
+| DIGITAL_DELIVERY | PASS CI terisolasi; BLOCKED provider/live | Next.js asli -> event sintetis signed -> Supabase PostgreSQL -> satu entitlement -> private PDF PASS pada CI baru; bukan pembayaran DOKU asli |
 | CATALOG_GALLERY_ZOOM | PASS lokal | 12 layout (360/390/768/1440), preset zoom 50–150, reset, keyboard, Escape/focus; nol page errors |
 
 ## Hasil yang diperoleh langsung
@@ -27,7 +27,7 @@
 - `node scripts/test-doku-safety-db.cjs`: 11 kelompok PostgreSQL embedded PASS, termasuk fungsi dijalankan sebagai service_role, schema privileges, new migration, QA draft constraint/free order, atomic inbox/grants, lease/backoff/recovery/refund.
 - `node scripts/check-commerce.cjs`: 11 pemeriksaan keamanan existing PASS; historical Midtrans callback tetap diuji, bukan provider aktif baru.
 - Regresi `check-resource-library.cjs`, `check-business-hub.cjs`: PASS 11 resources, 80 paths, 24 komponen, 42 assets/checksums.
-- Lint source berubah PASS tanpa error/warning pada pemeriksaan terarah. TypeScript PASS. Next webpack build PASS dengan 187 halaman. OpenNext/Worker check dicatat di bagian pembaruan di bawah setelah selesai.
+- Lint source berubah PASS tanpa error/warning pada pemeriksaan terarah. TypeScript PASS. Next webpack build PASS dengan 187 halaman. OpenNext build dan Worker dry-run PASS; workerd lokal sembilan route serta scheduled handler default OFF PASS.
 
 Artefak lokal di `artifacts/payments/` (ignored): sql-verification.json, browser-verification.json, worker-inventory.json, https-readiness.json, lint/typecheck/build logs dan screenshot actual catalog/gallery. Tidak mengunggah secrets/checkout URL/signed URL.
 
@@ -37,7 +37,7 @@ Artefak lokal di `artifacts/payments/` (ignored): sql-verification.json, browser
 - Pembesaran mockup sempat menutupi tombol preview: z-index tombol diperbaiki, QA ulang PASS.
 - Read-only privilege audit menemukan service_role tidak punya SELECT auth.users/admin allowlist. Lookup QA dipindah ke helper sempit `private.commerce_payment_qa_email`, fixed search_path, service-only execute, tidak diekspos Data API. Tidak memberi service_role broad SELECT Auth.
 - Bundel artikel pada checkout baru memiliki perbedaan newline teks Windows. Regenerasi melalui script existing (tanpa perubahan artikel) membuat check PASS; tidak ada perubahan naskah pada diff.
-- `check-commerce-experience.cjs` masih memakai fixture Midtrans untuk create checkout dan perlu disesuaikan dengan adapter DOKU sebelum dapat menjadi regression gate baru; gate DOKU memakai suite checkout dan SQL/PDF di atas.
+- Fixture `check-commerce-experience.cjs` sudah disesuaikan ke adapter DOKU; tujuh kelompok keamanan guest cookie/private download/RLS/free/refund PASS pada PostgreSQL embedded.
 
 ## Referensi primer yang diperiksa
 
@@ -49,3 +49,39 @@ Artefak lokal di `artifacts/payments/` (ignored): sql-verification.json, browser
 - [Supabase private storage access control](https://supabase.com/docs/guides/storage/security/access-control)
 
 Tidak menyimpulkan kesiapan settlement, status ACTIVE, ketersediaan QRIS sandbox, biaya issuer, email delivery, hosted cron, atau payment E2E dari unit/fixture tests.
+
+## CI baru pada source 16dc842 — PASS
+
+- [DOKU Sandbox Offline Verification](https://github.com/dhiyaulhaqkhadafi0/website/actions/runs/39456186506): completed/success.
+- [DOKU Isolated SQL Entitlement Test](https://github.com/dhiyaulhaqkhadafi0/website/actions/runs/39456186543): completed/success, job 118743559736; lima migrasi curated, PostgreSQL/Auth/Storage disposable, checkout contract, safety migration, endpoint Next.js asli, private-PDF E2E serta cleanup semua success.
+- Log CI 2026-10-20T16:20:17Z menunjukkan unsigned/forged/wrong-target ditolak; invoice/amount salah ditolak; SUCCESS sintetis -> PAID + satu entitlement meski retry; buyer lain/anon/forged cookie ditolak; buyer berhak/receipt guest sah dapat mengunduh PDF dummy; signed URL mempunyai expiry <=900 detik; revocation memblokir URL baru.
+- CI memakai standard ubuntu-24.04 pada repository public, tanpa secrets provider atau proyek Supabase cloud baru. Fixture HMAC inert tidak digunakan sebagai pengganti credentials DOKU sandbox yang hilang. Ini bukan bukti webhook berasal dari DOKU.
+- Scan 833 calon file Git terhadap dua private credentials lokal: nol kecocokan. Pemeriksaan hanya memilih nama KEY/SECRET/TOKEN/PASSWORD; model name bukan secret. Private source PDF tidak disalin ke public/repo.
+- PDF ebook asli terkonfirmasi metadata keberadaannya pada bucket privat; isi PDF asli tidak dibaca karena credential service-role lokal tidak tersedia. Service-role production ada sebagai nama secret Worker, nilainya tidak dibaca/diekspor. Unduhan ebook asli setelah pembayaran live tetap belum diuji.
+
+## Production tetap tidak berubah
+
+Read-only Worker metadata: DOKU_CLIENT_ID, DOKU_SECRET_KEY dan DOKU_RECONCILE_TOKEN belum terdaftar pada Worker khadafi; SUPABASE_SERVICE_ROLE_KEY ada. Tidak membuktikan validitas nilai binding. Worker aktif tetap `5c1ff734-95fd-4c63-9e91-eb6a6398381c` dengan 100% traffic, versi Freelance sebelum tugas DOKU ini. Tidak ada deployment atau migrasi production maupun uang asli yang dibelanjakan.
+
+Draft PR: https://github.com/dhiyaulhaqkhadafi0/website/pull/5. Base `codex/freelance-business-hub`; source DOKU lama berasal dari PR #4 terbaru. Tidak merge ke main atau ke branch production. Lima dokumen payment ini menjadi laporan operasional terbaru; catatan DOKU lama dipertahankan sebagai histori.
+
+## Pemeriksaan tambahan penutup
+
+- `scripts/test-doku-job.cjs`: PASS pada endpoint rekonsiliasi aplikasi yang sama dengan scheduled service binding: auth token termasuk unicode ditolak aman, flag nonaktif 404, QRIS dapat diproses saat public sales OFF, HMAC failure/amount/channel mismatch tidak settle, DB failure dijadwalkan ulang, per-order lease diselesaikan. Semua I/O provider/DB pada contract test ini inert; SQL nyata dan private-PDF dibuktikan terpisah oleh CI.
+- Checkout production read-only: HTTP 200, pemberitahuan checkout belum dibuka, tombol `Lanjut bayar` disabled. Tidak diklik, tidak membuat order.
+- Semua tiga gambar galeri asli dibuka pada mobile/desktop, object-fit contain terverifikasi; screenshot zoom 100%/150% serta fokus tetap dalam native dialog PASS.
+- PowerShell secret setup script lolos parsing tanpa menjalankan secure prompt. CLI init menyiapkan lima migrasi lokal, tidak start Docker/SQL. Client ID dan Secret Key sama-sama hidden; payments OFF default.
+- Label metode checkout mengikuti adapter: Mandiri VA; QRIS hanya muncul saat flag QRIS aktif. E-wallet yang belum ditawarkan adapter tidak ditampilkan.
+- Peringatan copy paket unist/vfile OpenNext Windows muncul, tetapi build adapter pertama dan kedua exit 0; workerd/dry-run lulus. Packaging final diulang setelah menghentikan workerd lokal karena lock folder EPERM. Tidak menganggap log sukses sebelum exit 0.
+
+## Gate final source aplikasi cc37e08
+
+- Source aplikasi: `cc37e0853fa4753d00f5676d5ec0c9d312759dbb`; build `-L17PPakW4LKYbrzLWttk`.
+- Next webpack/typecheck: exit 0, 187 halaman. OpenNext: exit 0. Wrangler deploy --dry-run: exit 0, tidak upload/deploy. Log final: next-accepted-build.log, opennext-accepted-build.log, worker-accepted-dry-run.log.
+- Browser pada build production lokal final: 12 layout PASS, nol uncaught errors, Ctrl-wheel mencegah default browser zoom dan label menjadi 125%, reset/keyboard/focus serta proteksi endpoint PASS. Lihat browser-verification.json dan browser-accepted.log.
+- Scan 671 assets/cache publik terhadap dua private credentials lokal: nol kecocokan; productionDeployed=false. Lihat final-manifest.json.
+- CI backend terbaru `6711869ab59eae4f77488260074e451ec8f30403`: [offline success](https://github.com/dhiyaulhaqkhadafi0/website/actions/runs/39458802327), [SQL/Next/private-PDF success](https://github.com/dhiyaulhaqkhadafi0/website/actions/runs/39458802124), job 118752534316 termasuk tes endpoint rekonsiliasi sebenarnya. Perubahan aplikasi setelah commit ini hanya galeri Ctrl-wheel, diuji lint/browser/build final di atas.
+- Tiga negative checks script secrets PASS: Worker production ditolak, env lokal hilang ditolak, database production ditolak sebelum prompt. Tidak memasukkan secrets.
+- Verifikasi production penutup: Worker `5c1ff734-95fd-4c63-9e91-eb6a6398381c` masih menerima 100% traffic; tidak berubah dari sebelum tugas ini. Checkout existing disabled. No deployment/migration/live payment.
+
+**Kesimpulan: implementasi lokal dan QA aplikasi PASS; NO-GO untuk penjualan publik sampai sandbox asli, staging/scheduler hosted, QRIS ACTIVE dan satu pembayaran live yang disetujui terbukti.** Semua status provider asli pada tabel awal tetap BLOCKED/NOT_TESTED. Tidak ada klaim GO-LIVE READY.
