@@ -93,3 +93,7 @@ Draft PR: https://github.com/dhiyaulhaqkhadafi0/website/pull/5. Base `codex/free
 Tiga warning milik diff dibersihkan: wrapper memakai named default object, import tak terpakai di SQL test dihapus, counter HTTP test kini memastikan event unsigned tidak pernah mencapai persistence. Lint **seluruh file JS/TS yang berubah terhadap `393c4d9`** kemudian exit 0 tanpa warning/error (patch-lint-final.log). HTTP contract test tetap PASS, dan wrapper final kembali lolos Wrangler dry-run. Perubahan pembersihan ini tidak mengubah aplikasi Next yang sudah dibangun; hanya deklarasi export ekuivalen dan tes.
 
 Jadi status yang benar: **PATCH_LINT=PASS**, **REPOSITORY_LINT=FAIL_LEGACY**. Tidak mengklaim repository-wide lint bersih; tidak memperluas refactor ke blog/Studio unrelated. Ini dicatat sebagai temuan terpisah dalam NO-GO report, selain external provider/staging gates.
+
+## CI commit penutup 4cb99b0 — PASS
+
+Verifikasi ulang 21 Oktober 2026 WIB: [offline/HMAC/QRIS](https://github.com/dhiyaulhaqkhadafi0/website/actions/runs/39462907413) success dan [isolated SQL/Next/private PDF](https://github.com/dhiyaulhaqkhadafi0/website/actions/runs/39462907555) success (job 118766711102). Semua perubahan source/test penutup telah ikut pengujian. Lint repository penuh tetap FAIL_LEGACY seperti dicatat di atas; hasil CI payment tidak menghapus temuan tersebut. Production dan transaksi uang asli tetap tidak disentuh.
