@@ -22,4 +22,21 @@ Signed notifications, scheduled reconciliation and the service-only settlement R
 
 No additional production order, checkout session or payment was created during verification. The owner's completed session cannot demonstrate the new provider method picker; a fresh legitimate checkout is required for that final provider UI check.
 
-Deployment and live verification evidence will be recorded after release.
+## Hosted database
+
+The `doku_checkout_active_channels` migration applied successfully to the Khadafi production project. A read-only check confirmed SECURITY INVOKER, empty search_path, service_role execution enabled and anon/authenticated execution disabled. Additional wallet/BNI channel identifiers are present in the hosted function. The original order remains paid at Rp1,000 with exactly one entitlement.
+
+Security advisors retain the existing [RLS-without-policy informational notices](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy) for server-only payment tables and unrelated blog/Auth warnings. No new public settlement privilege was introduced.
+
+## Production release and verification
+
+- Application source `f1e9b2c` is pushed to `codex/doku-qris-go-live-v2` on GitHub. Main was not moved.
+- Next.js and OpenNext builds both exited 0. Known Windows package-copy diagnostics appeared during OpenNext packaging; live route/browser checks below passed.
+- Public preflight checked 671 assets/cache files against the two available local private credentials, with zero matches. This does not claim coverage of unknown merchant secret values.
+- Build `NLeeVa7RVCagb5vgUZWV6`: 151/151 R2 cache entries uploaded. The first upload encountered an expired OAuth session (401); Wrangler refreshed the existing session and the retry succeeded.
+- Worker `bea00c80-3689-47c6-90f3-67589bdfeafc` deployed to production with the existing secrets, bindings, sales gates and five-minute reconciliation schedule preserved. Prior normal release was `5e22f622-3436-40f1-9929-44ff3b3cbb74`.
+- At 04:23:20 UTC, Chrome verified the product and checkout at 390 and 1440 pixels: Rp1,000 visible, method-choice instructions rendered, fixed Mandiri badge absent, checkout configured, login required and no horizontal overflow or uncaught browser errors. Screenshots were visually inspected.
+- Homepage, Freelance, monetization directory and sitemap return 200; AdSense metadata remains present. Unsigned webhook and anonymous order requests return 401. Private payment QA and the removed temporary diagnostic endpoint return 404. Public `/BUILD_ID` matches the new build.
+- These checks create no production order or payment. The provider's new-session picker and successful payments on additional channels remain unverified with real transactions. The existing real QRIS SUCCESS and single entitlement were verified separately above.
+
+Sanitized evidence is kept in ignored `artifacts/payments/doku-active-methods-live-verification.json`, `doku-active-methods-public-preflight.json`, `doku-active-methods-cache-upload.json`, `doku-active-methods-next-build.log`, `doku-active-methods-opennext-build.log`, `doku-active-methods-deploy.log` and the mobile/desktop screenshots. No merchant key or bearer payment URL is included in this report.
