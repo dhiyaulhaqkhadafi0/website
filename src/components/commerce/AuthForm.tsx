@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowUpRight, LoaderCircle } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import { syncSession } from "./SessionBridge";
+import { SIGNUP_CONFIRM_REDIRECT } from "@/lib/email-confirmation";
 import s from "./commerce.module.css";
 const subscribeHydration = () => () => {};
 export function AuthForm({
@@ -79,7 +80,7 @@ export function AuthForm({
             email,
             password,
             options: {
-              emailRedirectTo: "https://khadafidaffa.com/login",
+              emailRedirectTo: SIGNUP_CONFIRM_REDIRECT,
               data: { display_name: String(form.get("name")) },
             },
           })

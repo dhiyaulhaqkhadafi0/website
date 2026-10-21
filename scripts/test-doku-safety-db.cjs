@@ -13,7 +13,7 @@ const {PGlite}=require(process.env.PGLITE_MODULE || '@electric-sql/pglite');
  create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);
  create table storage.objects(id uuid default gen_random_uuid(),bucket_id text,name text);alter table storage.objects enable row level security;
  create function storage.foldername(text) returns text[] language sql as $$select string_to_array($1,'/')$$;`);
- for(const f of ['supabase_commerce.sql','supabase/migrations/20261017051124_commerce_media_guest_checkout.sql','supabase/migrations/20261018094500_doku_checkout_sandbox.sql','supabase/migrations/20261020154413_doku_go_live_safety.sql','supabase/migrations/20261021034531_doku_production_checkout_host.sql','supabase/migrations/20261021041208_doku_checkout_active_channels.sql']){ console.log('Applying '+f); await db.exec(fs.readFileSync(f,'utf8')); }
+ for(const f of ['supabase_commerce.sql','supabase/migrations/20261017051124_commerce_media_guest_checkout.sql','supabase/migrations/20261018094500_doku_checkout_sandbox.sql','supabase/migrations/20261020154413_doku_go_live_safety.sql','supabase/migrations/20261021034531_doku_production_checkout_host.sql','supabase/migrations/20261021041208_doku_checkout_active_channels.sql','supabase/migrations/20261021074807_doku_checkout_method_binding.sql']){ console.log('Applying '+f); await db.exec(fs.readFileSync(f,'utf8')); }
  pass('curated migrations apply on embedded PostgreSQL without production connection');
  const user='11111111-1111-4111-8111-111111111111',other='22222222-2222-4222-8222-222222222222';
  await db.query("insert into auth.users values($1,'qa@example.invalid',now(),false),($2,'other@example.invalid',now(),false)",[user,other]);
@@ -31,6 +31,19 @@ const {PGlite}=require(process.env.PGLITE_MODULE || '@electric-sql/pglite');
  for(const url of ['https://checkout.doku.com.evil.test/pay','https://sandbox.doku.com/checkout/test','https://evil.test@checkout.doku.com/pay'])await assert.rejects(()=>db.query('select commerce_finish_doku_checkout($1,$2,$3)',[productionOrder.id,productionClaim.token,url]));
  await db.query('select commerce_finish_doku_checkout($1,$2,$3)',[productionOrder.id,productionClaim.token,'https://checkout.doku.com/checkout-link-v2/test']);
  const storedProduction=(await db.query('select status,payment_url from commerce_orders where id=$1',[productionOrder.id])).rows[0];assert.equal(storedProduction.status,'pending');assert.equal(storedProduction.payment_url,'https://checkout.doku.com/checkout-link-v2/test');pass('production current Checkout hostname persists without settlement; spoofed host, credentials and sandbox host rejected');
+ const methodUser='33333333-3333-4333-8333-333333333333';
+ await db.query("insert into auth.users values($1,'method@example.invalid',now(),false)",[methodUser]);
+ const methodOrder=await create(crypto.randomUUID(),methodUser);
+ const methodClaim=async method=>(await db.query('select commerce_claim_doku_checkout_method($1,$2,$3,$4) result',[methodOrder.id,'production','KSMETHODTEST3',method])).rows[0].result;
+ await assert.rejects(()=>methodClaim('CREDIT_CARD'));
+ await db.exec('set role service_role');
+ const methodFirst=await methodClaim('QRIS');assert.ok(methodFirst.token);assert.equal((await methodClaim('QRIS')).busy,true);assert.equal((await methodClaim('VIRTUAL_ACCOUNT_BNI')).method_locked,true);
+ await db.query('select commerce_finish_doku_checkout($1,$2,$3)',[methodOrder.id,methodFirst.token,'https://checkout.doku.com/checkout-link-v2/method-test']);
+ assert.equal((await methodClaim('QRIS')).url,'https://checkout.doku.com/checkout-link-v2/method-test');
+ const methodState=(await db.query('select checkout_method,checkout_request_id from commerce_doku_state where order_id=$1',[methodOrder.id])).rows[0];assert.equal(methodState.checkout_method,'QRIS');assert.equal(methodState.checkout_request_id,methodFirst.request_id);
+ assert.equal((await db.query('select count(*)::int n from commerce_entitlements where order_id=$1',[methodOrder.id])).rows[0].n,0);await db.exec('reset role');
+ for(const role of ['anon','authenticated'])assert.equal((await db.query("select has_function_privilege($1,'public.commerce_claim_doku_checkout_method(uuid,text,text,text)','EXECUTE') allowed",[role])).rows[0].allowed,false);
+ pass('method binding is service-only, durable, rejects unsupported choices and changes after claim; retries reuse the original session without settlement');
  const {DOKU_CHANNELS}=await import('../src/lib/doku-channels.mjs');
  for(const channel of [...DOKU_CHANNELS,'UNKNOWN',null]){
   await db.exec('begin');

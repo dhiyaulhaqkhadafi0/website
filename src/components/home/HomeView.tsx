@@ -7,6 +7,7 @@ import { WorkAtlas } from "@/components/freelance/WorkAtlas";
 import { HomeExperience, DynamicNote } from "./HomeExperience";
 import { CredentialsGallery } from "./CredentialsGallery";
 import { NewsletterSection } from "./NewsletterSection";
+import { ChikkiPreview } from "./ChikkiPreview";
 import styles from "./editorial-home.module.css";
 
 function BuilderComposition() {
@@ -186,20 +187,7 @@ export function HomeView({ posts }: { posts: Promise<BlogCardItem[]> }) {
             </h2>
           </div>
           <div className={styles.flagship}>
-            <figure
-              className={styles.laptopShowcase}
-              aria-label="Eksplorasi antarmuka Chikki dalam mockup laptop"
-            >
-              <div className={styles.laptopAmbient} aria-hidden="true" />
-              <div className={styles.laptopScreen}>
-                <span className={styles.laptopCamera} aria-hidden="true" />
-                <Image src="/images/experience/chikki-preview-v1.webp" width={1200} height={900} sizes="(max-width: 860px) 90vw, 620px" unoptimized alt="Konsep UI Chikki: ruang menulis, karya digital, dan eksplorasi peluang" />
-              </div>
-              <div className={styles.laptopBase} aria-hidden="true"><i /></div>
-              <figcaption>
-                CHIKKI / Konsep antarmuka · ilustrasi, bukan data transaksi
-              </figcaption>
-            </figure>
+            <ChikkiPreview />
             <div className={styles.flagshipCopy}>
               <p className={styles.eyebrow}>
                 Produk pilihan / Terus dikembangkan

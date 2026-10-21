@@ -1066,6 +1066,17 @@
 .paymentMethods > div { display: flex; flex-wrap: wrap; gap: 10px; }
 .paymentMethods > div span { padding: 9px 13px; border: 1px solid var(--line); border-radius: 7px; font-size: 12px; }
 .paymentMethods p { font-size: 12px; line-height: 1.9; margin-top: 15px; }
+.methodGroup { border:0;padding:0;margin:22px 0 0;min-width:0; }
+.methodGroup legend { font-size:11px;letter-spacing:.04em;color:var(--muted);margin-bottom:12px; }
+.methodGrid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px; }
+.methodGrid label { display:flex;align-items:center;gap:10px;min-height:56px;padding:13px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);cursor:pointer; }
+.methodGrid label:has(input:checked) { border-color:var(--accent);background:color-mix(in srgb,var(--accent) 10%,var(--surface)); }
+.methodGrid input { width:16px;height:16px;min-height:0;margin:0;flex-shrink:0;accent-color:var(--accent); }
+.methodGrid strong { display:block;font-size:12px;font-weight:500;line-height:1.5; }
+.methodGrid small { display:block;font-size:10px;line-height:1.7;margin-top:5px; }
+.methodGroup:first-of-type .methodGrid,.methodGroup:last-of-type .methodGrid { grid-template-columns:1fr; }
+.methodGroup:disabled label { cursor:default;opacity:.7; }
+@media(max-width:380px) { .methodGrid { grid-template-columns:1fr; } }
 @media (max-width: 760px) { .detailHero .heroGrid { grid-template-columns: 1fr; gap: 32px; } .detailHero { padding-block: 32px 52px; } .detailHero .gallery { max-width: 520px; width: 100%; margin: auto; } .mediaEditor { grid-template-columns: 1fr; } .detailSections { gap: 28px; } .lightboxToolbar { padding: 10px; gap: 8px; } .lightboxToolbar p { max-width: 65%; } }
 .heroSummary { margin-top: 18px; font-size: 13px; color: var(--accent); }
 .heroSummary summary { cursor: pointer; min-height: 36px; }

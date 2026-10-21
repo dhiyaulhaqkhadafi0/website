@@ -11,6 +11,7 @@ const out = 'public/images/experience';
     [path.join(resourceRoot, 'free-resources-hero.png'), 'resources-cover-v1-1440.webp', 1440, 84],
     [path.join(resourceRoot, 'free-resources-hero.png'), 'resources-cover-v1-768.webp', 768, 82],
     [path.join(resourceRoot, 'ChatGPT Image Sep 10, 2026, 10_04_02 AM (6).png'), 'chikki-preview-v1.webp', 1200, 84],
+    [path.join(resourceRoot, 'ChatGPT Image Sep 10, 2026, 10_04_02 AM (6).png'), 'chikki-detail-v1.webp', 1448, 92],
   ];
   for (const [source, name, width, quality] of tasks) {
     if (!fs.existsSync(source)) { if (fs.existsSync(path.join(out, name))) continue; throw Error('Missing source: '+source); }

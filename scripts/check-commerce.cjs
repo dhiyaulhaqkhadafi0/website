@@ -11,7 +11,7 @@ function check(name,fn){fn();checks++;console.log('PASS '+name);}
 function load(file,mocks={},globals={}){
  const loaded={exports:{}};
  const code=ts.transpileModule(fs.readFileSync(path.join(root,file),'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2020}}).outputText;
- const context={module:loaded,exports:loaded.exports,require:name=>Object.hasOwn(mocks,name)?mocks[name]:require(name),Response,Request,URL,Buffer,AbortSignal,console:{info(){},error(){}},process:{env:{}},...globals};
+ const context={module:loaded,exports:loaded.exports,require:name=>Object.hasOwn(mocks,name)?mocks[name]:['@/lib/checkout-methods','@/lib/doku-config'].includes(name)?load('src/lib/'+name.split('/').pop()+'.ts'):require(name),Response,Request,URL,Buffer,AbortSignal,console:{info(){},error(){}},process:{env:{}},...globals};
  vm.runInNewContext(code,context,{filename:file});return loaded.exports;
 }
 const media=load('src/lib/product-media.ts');

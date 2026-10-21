@@ -14,6 +14,7 @@ export function LegalDocument({
   sections,
   children,
   customSections = false,
+  updated,
 }: {
   title: string;
   summary: string;
@@ -21,6 +22,7 @@ export function LegalDocument({
   sections: LegalSection[];
   children?: React.ReactNode;
   customSections?: boolean;
+  updated?: { date: string; label: string };
 }) {
   return (
     <>
@@ -35,7 +37,7 @@ export function LegalDocument({
             <h1>{title}</h1>
             <p className={s.summary}>{summary}</p>
             <p className={s.updated}>
-              Diperbarui <time dateTime="2026-10-15">{LEGAL_UPDATED}</time>
+              Diperbarui <time dateTime={updated?.date || "2026-10-15"}>{updated?.label || LEGAL_UPDATED}</time>
             </p>
           </header>
           <nav className={s.related} aria-label="Halaman informasi">

@@ -3,7 +3,7 @@ const fs = require('node:fs'), path = require('node:path'), vm = require('node:v
 const root = path.resolve(__dirname, '..');
 function load(file, mocks = {}, globals = {}) {
   const loaded = { exports: {} };
-  vm.runInNewContext(ts.transpileModule(fs.readFileSync(path.join(root, file), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText, { module: loaded, exports: loaded.exports, require: name => Object.hasOwn(mocks,name) ? mocks[name] : require(name), process: { env: {} }, Response, Request, URL, Buffer, AbortSignal, console, ...globals });
+  vm.runInNewContext(ts.transpileModule(fs.readFileSync(path.join(root, file), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText, { module: loaded, exports: loaded.exports, require: name => Object.hasOwn(mocks,name) ? mocks[name] : ['@/lib/checkout-methods','@/lib/doku-config'].includes(name) ? load('src/lib/'+name.split('/').pop()+'.ts') : require(name), process: { env: {} }, Response, Request, URL, Buffer, AbortSignal, console, ...globals });
   return loaded.exports;
 }
 const json = (data, status = 200) => Response.json(data, { status });

@@ -9,11 +9,12 @@ function load(file, mocks, env, extras = {}) {
 }
 (async () => {
   const security = load('src/lib/doku-security.ts', {}, {}), policy = load('src/lib/doku-config.ts', {}, {}), hosts = load('src/lib/doku-checkout-host.ts', {}, {});
+  const methods = load('src/lib/checkout-methods.ts', {}, {});
   const env = { DOKU_ENABLED: 'true', PAYMENTS_ENABLED: 'true', DOKU_CLIENT_ID: 'OFFLINE_CLIENT_VECTOR', DOKU_SECRET_KEY: 'OFFLINE_HMAC_VECTOR', DOKU_SITE_ORIGIN: 'https://khadafidaffa.com', NEXT_PUBLIC_SUPABASE_URL: 'https://mykgtajanxczdnzekycl.supabase.co', DOKU_IS_PRODUCTION: 'true', DOKU_PRODUCTION_APPROVED: 'true', DOKU_PUBLIC_SALES_APPROVED: 'true', DOKU_QRIS_ENABLED: 'true', DOKU_QRIS_STATUS: 'ACTIVE', DOKU_QA_ENABLED: 'true', DOKU_QA_LIVE_APPROVED: 'true' };
   const input = { orderId: crypto.randomUUID(), requestId: crypto.randomUUID(), amount: 1000, email: 'buyer@example.invalid', name: 'Buyer' };
   let mode = 'echo';
   let expectedMethods = null;
-  const doku = load('src/lib/doku.ts', { './doku-security': security, './doku-config': policy, './doku-checkout-host': hosts }, env, {
+  const doku = load('src/lib/doku.ts', { './doku-security': security, './doku-config': policy, './doku-checkout-host': hosts, './checkout-methods': methods }, env, {
     fetch: async (url, options) => {
       assert.equal(url, 'https://api.doku.com/checkout/v1/payment');
       assert.equal(options.redirect, 'error');
@@ -31,17 +32,20 @@ function load(file, mocks, env, extras = {}) {
     },
   });
   mode='signed'; assert.equal(await doku.createDokuCheckout(input), 'https://checkout.doku.com/checkout-link-v2/unit');
+  mode='echo'; assert.equal(await doku.createDokuCheckout(input), 'https://checkout.doku.com/checkout-link-v2/unit');
+  mode='bare'; assert.equal(await doku.createDokuCheckout(input), 'https://checkout.doku.com/checkout-link-v2/unit');
+  mode='signed'; expectedMethods=['VIRTUAL_ACCOUNT_BNI']; await doku.createDokuCheckout({...input, method:'VIRTUAL_ACCOUNT_BNI'});
   expectedMethods=['QRIS']; await doku.createDokuCheckout({...input, privateQa:true});
   env.DOKU_QRIS_ENABLED='false'; expectedMethods=['VIRTUAL_ACCOUNT_BANK_MANDIRI']; await doku.createDokuCheckout(input);
   env.DOKU_QRIS_ENABLED='true'; expectedMethods=null;
   console.log('PASS new public production Checkout omits method filter, uses SALE; private QA stays QRIS-only and QRIS kill switch stays enforced');
-  for (const [test, code] of [['bare', 'DOKU_RESPONSE_SIGNATURE_MISSING'], ['echo', 'DOKU_RESPONSE_SIGNATURE_MISSING'], ['wrong-echo', 'DOKU_RESPONSE_SIGNATURE_MISSING'], ['bad-signature', 'DOKU_RESPONSE_SIGNATURE_INVALID'], ['wrong-amount', 'DOKU_RESPONSE_ORDER_MISMATCH'], ['wrong-host', 'DOKU_RESPONSE_HOST_REJECTED'], ['auth-rejected', 'DOKU_CREDENTIALS_REJECTED']]) {
+  for (const [test, code] of [['wrong-echo', 'DOKU_RESPONSE_METADATA_INVALID'], ['bad-signature', 'DOKU_RESPONSE_SIGNATURE_INVALID'], ['wrong-amount', 'DOKU_RESPONSE_ORDER_MISMATCH'], ['wrong-host', 'DOKU_RESPONSE_HOST_REJECTED'], ['auth-rejected', 'DOKU_CREDENTIALS_REJECTED']]) {
     mode = test; await assert.rejects(() => doku.createDokuCheckout(input), error => error.message === code, test);
   }
   let providerCalls=0,storedUrl='https://checkout.doku.com/checkout-link-v2/existing';
-  const existing=load('src/lib/doku-order-checkout.ts',{'./supabase':{createServiceRoleClient:()=>({rpc:async()=>({data:{url:storedUrl}})})},'./doku':{dokuInvoice:security.dokuInvoice,createDokuCheckout:async()=>{providerCalls++;throw Error('Must reuse saved checkout')}},'./doku-config':policy,'./doku-checkout-host':hosts},env);
+  const existing=load('src/lib/doku-order-checkout.ts',{'./supabase':{createServiceRoleClient:()=>({rpc:async()=>({data:{url:storedUrl}})})},'./doku':{dokuInvoice:security.dokuInvoice,createDokuCheckout:async()=>{providerCalls++;throw Error('Must reuse saved checkout')}},'./doku-config':policy,'./doku-checkout-host':hosts,'./checkout-methods':methods},env);
   assert.equal(await existing.checkoutForDokuOrder({id:input.orderId,total:1000},input.email,input.name),storedUrl);assert.equal(providerCalls,0);
   storedUrl='https://checkout.doku.com.evil.invalid/pay';await assert.rejects(()=>existing.checkoutForDokuOrder({id:input.orderId,total:1000},input.email,input.name));assert.equal(providerCalls,0);
-  console.log('PASS production checkout.doku.com URL, exact Rp1000/invoice and signed response; unsigned request echo, invalid signature/amount/host rejected; fixed HTTPS API without redirects; no provider calls');
+  console.log('PASS documented HTTPS response with request echo or optional metadata; wrong metadata, supplied invalid HMAC, amount and host rejected; fixed API without redirects; no provider calls');
   console.log('PASS existing current-host checkout URL is reused without creating a provider session; spoofed stored URL rejected');
 })().catch(error => { console.error(error.message); process.exitCode = 1; });

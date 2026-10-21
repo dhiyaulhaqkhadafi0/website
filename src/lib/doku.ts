@@ -3,6 +3,7 @@ import { dokuInvoice, signature, sameSignature, verifyDokuHmacSignature } from "
 export { dokuInvoice, orderIdFromDokuInvoice } from "./doku-security";
 import { isAllowedDokuCheckoutUrl } from "./doku-checkout-host";
 import { dokuPolicy } from "./doku-config";
+import { checkoutMethodAllowed } from "./checkout-methods";
 
 const CHECKOUT_PATH = "/checkout/v1/payment";
 export const DOKU_WEBHOOK_PATH = "/api/commerce/doku/webhook";
@@ -25,10 +26,12 @@ export function verifyDokuNotification(headers: Headers, body: string): boolean 
 }
 
 export async function createDokuCheckout(input: {
-  orderId: string; amount: number; email: string; name: string; requestId: string; privateQa?: boolean;
+  orderId: string; amount: number; email: string; name: string; requestId: string; privateQa?: boolean; method?: string;
 }): Promise<string> {
   const policy = dokuPolicy(process.env);
   if (!(input.privateQa ? policy.qaCheckout : policy.checkout)) throw new Error("DOKU is not enabled");
+  const selected = input.method || "all";
+  if (!input.privateQa && !checkoutMethodAllowed(selected, policy)) throw new Error("DOKU_METHOD_UNAVAILABLE");
   if (!Number.isSafeInteger(input.amount) || input.amount <= 0 ||
       !/^[a-f0-9-]{36}$/i.test(input.requestId)) throw new Error("Invalid checkout input");
   const { clientId, secretKey } = credentials();
@@ -51,6 +54,7 @@ export async function createDokuCheckout(input: {
       payment_due_date: 60,
       type: "SALE",
       ...(input.privateQa ? { payment_method_types: ["QRIS"] }
+        : selected !== "all" ? { payment_method_types: [selected] }
         : policy.methods ? { payment_method_types: policy.methods } : {}),
     },
     additional_info: { override_notification_url: process.env.DOKU_SITE_ORIGIN + DOKU_WEBHOOK_PATH },
@@ -89,17 +93,28 @@ export async function createDokuCheckout(input: {
     throw new Error("DOKU_CHECKOUT_REJECTED");
   }
 
-  // Authenticate the response independently; echoed request metadata alone is
-  // not a response signature and cannot authenticate the returned checkout URL.
+  // Checkout's documented response embeds request metadata, not a mandatory
+  // HTTP response HMAC. The fixed HTTPS API and disabled redirects authenticate
+  // the transport. Never interpret echoed request signatures as response HMACs.
+  // Verify a real response signature whenever supplied, and bind echoed metadata
+  // to this request. This URL only starts payment; it never proves settlement.
   const responseSignature = response.headers.get("signature");
-  if (!responseSignature) throw new Error("DOKU_RESPONSE_SIGNATURE_MISSING");
-  {
+  if (responseSignature) {
     const responseTime = response.headers.get("response-timestamp") || "";
     const signedClient = response.headers.get("client-id");
     const signedId = response.headers.get("request-id");
     if (!responseTime || signedClient !== clientId || signedId !== requestId ||
       !sameSignature(signature(clientId, requestId, responseTime, CHECKOUT_PATH, raw, secretKey, true), responseSignature)) {
       throw new Error("DOKU_RESPONSE_SIGNATURE_INVALID");
+    }
+  }
+  const echo = result?.response?.headers;
+  if (echo != null) {
+    if (typeof echo !== "object" || Array.isArray(echo) ||
+      (echo.client_id ?? echo.clientId) !== clientId ||
+      (echo.request_id ?? echo.requestId) !== requestId ||
+      echo.date !== timestamp || typeof echo.signature !== "string" || !sameSignature(echo.signature, requestSignature)) {
+      throw new Error("DOKU_RESPONSE_METADATA_INVALID");
     }
   }
   if (result?.response?.order?.invoice_number !== invoice ||

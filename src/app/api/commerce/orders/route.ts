@@ -9,6 +9,8 @@ import { createServiceRoleClient } from "@/lib/supabase";
 import { grantGuestOrder, guestFingerprint } from "@/lib/guest-order";
 import { checkoutForDokuOrder } from "@/lib/doku-order-checkout";
 import { readLimitedBody } from "@/lib/doku-webhook-handler";
+import { isCheckoutMethod, checkoutMethodAllowed } from "@/lib/checkout-methods";
+import { dokuPolicy } from "@/lib/doku-config";
 export async function POST(request: Request) {
   if (!sameOrigin(request)) return json({ error: "Origin tidak diizinkan." }, 403);
   const auth = request.headers.has("authorization") ? await requireUser(request) : null;
@@ -37,6 +39,9 @@ export async function POST(request: Request) {
     return json({ error: "Data checkout tidak valid." }, 400);
   const product = await publishedProduct(p.slug);
   if (!product) return json({ error: "Produk tidak tersedia." }, 404);
+  const method = p.method === undefined ? "all" : p.method;
+  if (!isCheckoutMethod(method) || (product.price > 0 && !checkoutMethodAllowed(method, dokuPolicy(process.env))))
+    return json({ error: "Metode pembayaran tidak tersedia. Pilih metode lain." }, 400);
   if (!commerceConfigured(product.price > 0))
     return json({ error: "Checkout belum dibuka. Silakan kembali setelah pembayaran diaktifkan." }, 503);
   if (product.price > 0) {
@@ -83,7 +88,7 @@ export async function POST(request: Request) {
     );
   if (order.provider !== "doku") return json({ error: "Pesanan masih memakai gateway lama. Mulai pesanan baru." }, 409);
   try {
-    const checkoutUrl = await checkoutForDokuOrder(order, user.email || "", p.name.trim());
+    const checkoutUrl = await checkoutForDokuOrder(order, user.email || "", p.name.trim(), false, method);
     return json({ order_id: order.id, payment_url: checkoutUrl });
   } catch (error) {
     const messages: Record<string, string> = {
@@ -91,11 +96,14 @@ export async function POST(request: Request) {
       DOKU_RATE_LIMITED: "DOKU sedang membatasi permintaan. Periksa pesananmu sebelum mencoba kembali.",
       DOKU_CHECKOUT_REJECTED: "DOKU belum dapat membuat halaman pembayaran. Periksa pesananmu; status ini belum merupakan konfirmasi pembayaran.",
       DOKU_CHECKOUT_PENDING: "Pesanan sebelumnya belum memiliki link pembayaran yang terverifikasi. Periksa pesananmu sebelum mengulang pembayaran.",
+      DOKU_METHOD_LOCKED: "Metode pesanan ini sudah dipilih. Lanjutkan pesanan sebelumnya melalui Riwayat Pembelian; jangan membuat pembayaran ganda.",
+      DOKU_METHOD_UNAVAILABLE: "Metode pembayaran ini belum tersedia. Pilih metode lain.",
     };
     const code = error instanceof Error ? error.message : "";
     return json({
       error: messages[code] || "Halaman pembayaran DOKU belum berhasil disiapkan. Periksa pesananmu; belum ada konfirmasi pembayaran yang diterima.",
-    }, code === "DOKU_CHECKOUT_PENDING" ? 409 : 502);
+      code: /^DOKU_[A-Z_]+$/.test(code) ? code : "DOKU_CHECKOUT_UNKNOWN",
+    }, ["DOKU_CHECKOUT_PENDING", "DOKU_METHOD_LOCKED"].includes(code) ? 409 : 502);
   }
 }
 export async function GET(request: Request) {
