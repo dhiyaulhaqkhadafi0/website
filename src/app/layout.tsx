@@ -74,6 +74,9 @@ export const metadata: Metadata = {
   verification: {
     google: "tvDzvqzKpVqYpHuHxRtfaLJHT6_mTg4AeQpKmp44m6k",
   },
+  other: {
+    "google-adsense-account": "ca-pub-2795731884245055",
+  },
 };
 
 import { Footer } from "@/components/shared/footer";
