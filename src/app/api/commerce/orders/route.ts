@@ -7,12 +7,18 @@ import {
 } from "@/lib/commerce-server";
 import { createServiceRoleClient } from "@/lib/supabase";
 import { grantGuestOrder, guestFingerprint } from "@/lib/guest-order";
+import { checkoutForDokuOrder } from "@/lib/doku-order-checkout";
+import { readLimitedBody } from "@/lib/doku-webhook-handler";
 export async function POST(request: Request) {
   if (!sameOrigin(request)) return json({ error: "Origin tidak diizinkan." }, 403);
   const auth = request.headers.has("authorization") ? await requireUser(request) : null;
   if (auth && !auth.ok) return auth.response;
+  if (!auth && process.env.COMMERCE_GUEST_CHECKOUT_ENABLED !== "true")
+    return json({ error: "Masuk ke akun untuk membeli dan menyimpan akses ebook." }, 401);
   if (Number(request.headers.get("content-length")) > 4096) return json({ error: "Data terlalu besar." }, 413);
-  const raw = await request.text();
+  let raw: string;
+  try { raw = await readLimitedBody(request, 4096); }
+  catch { return json({ error: "Data terlalu besar." }, 413); }
   if (raw.length > 4096) return json({ error: "Data terlalu besar." }, 413);
   let p;
   try { p = JSON.parse(raw); } catch { return json({ error: "Data checkout tidak valid." }, 400); }
@@ -32,13 +38,17 @@ export async function POST(request: Request) {
   const product = await publishedProduct(p.slug);
   if (!product) return json({ error: "Produk tidak tersedia." }, 404);
   if (!commerceConfigured(product.price > 0))
-    return json(
-      {
-        error:
-          "Checkout belum dibuka. Silakan kembali setelah pembayaran diaktifkan.",
-      },
-      503,
-    );
+    return json({ error: "Checkout belum dibuka. Silakan kembali setelah pembayaran diaktifkan." }, 503);
+  if (product.price > 0) {
+    const expectedHost = new URL(process.env.DOKU_SITE_ORIGIN || "https://invalid.example").host;
+    const requestHost = request.headers.get("host") || new URL(request.url).host;
+    const localCheckout = process.env.DOKU_LOCAL_STAGING_ONLY === "true" &&
+      process.env.DOKU_IS_PRODUCTION !== "true" &&
+      ["localhost:3000", "127.0.0.1:3000"].includes(requestHost);
+    if (requestHost !== expectedHost && !localCheckout) {
+      return json({ error: "Checkout belum aktif pada domain ini." }, 503);
+    }
+  }
   const db = createServiceRoleClient();
   let user = auth?.ok ? auth.user : null;
   if (!user) {
@@ -51,7 +61,7 @@ export async function POST(request: Request) {
     if (identity.error || !identity.data.user || identity.data.user.is_anonymous) return json({ error: "Checkout email belum tersedia. Coba masuk ke akunmu." }, 503);
     user = identity.data.user;
   }
-  const { data, error } = await db.rpc("commerce_create_order", {
+  const { data, error } = await db.rpc(product.price > 0 ? "commerce_create_order_doku" : "commerce_create_order", {
     p_user: user.id,
     p_product: product.id,
     p_name: p.name.trim(),
@@ -71,75 +81,21 @@ export async function POST(request: Request) {
       { error: "Pesanan ini sudah berakhir. Mulai checkout baru." },
       409,
     );
-  if (order.payment_url)
-    return json({ order_id: order.id, payment_url: order.payment_url });
-  const production = process.env.MIDTRANS_IS_PRODUCTION === "true";
+  if (order.provider !== "doku") return json({ error: "Pesanan masih memakai gateway lama. Mulai pesanan baru." }, 409);
   try {
-    const response = await fetch(
-      production
-        ? "https://app.midtrans.com/snap/v1/transactions"
-        : "https://app.sandbox.midtrans.com/snap/v1/transactions",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-          "Idempotency-Key": order.id,
-          Authorization:
-            "Basic " +
-            Buffer.from(process.env.MIDTRANS_SERVER_KEY + ":").toString(
-              "base64",
-            ),
-        },
-        body: JSON.stringify({
-          transaction_details: {
-            order_id: order.id,
-            gross_amount: order.total,
-          },
-          item_details: [
-            {
-              id: product.id,
-              price: order.total,
-              quantity: 1,
-              name: product.name.slice(0, 50),
-            },
-          ],
-          customer_details: {
-            first_name: p.name.trim(),
-            email: user.email,
-          },
-          callbacks: {
-            finish:
-              "https://khadafidaffa.com/checkout/success?order=" + order.id,
-          },
-        }),
-        signal: AbortSignal.timeout(15000),
-      },
-    );
-    const transaction = await response.json();
-    if (!response.ok || typeof transaction.redirect_url !== "string")
-      throw new Error("Gateway unavailable");
-    const url = new URL(transaction.redirect_url);
-    if (
-      url.protocol !== "https:" ||
-      url.hostname !==
-        (production ? "app.midtrans.com" : "app.sandbox.midtrans.com")
-    )
-      throw new Error("Invalid gateway");
-    const { error: saveError } = await db
-      .from("commerce_orders")
-      .update({ payment_url: url.href })
-      .eq("id", order.id);
-    if (saveError) throw new Error("Order update failed");
-    return json({ order_id: order.id, payment_url: url.href });
-  } catch {
-    return json(
-      {
-        error:
-          "Pembayaran belum dapat dibuka. Coba lagi; pesanan yang sama akan digunakan.",
-      },
-      502,
-    );
+    const checkoutUrl = await checkoutForDokuOrder(order, user.email || "", p.name.trim());
+    return json({ order_id: order.id, payment_url: checkoutUrl });
+  } catch (error) {
+    const messages: Record<string, string> = {
+      DOKU_CREDENTIALS_REJECTED: "DOKU menolak konfigurasi pembayaran toko. Hubungi kami untuk memeriksa pesanan ini.",
+      DOKU_RATE_LIMITED: "DOKU sedang membatasi permintaan. Periksa pesananmu sebelum mencoba kembali.",
+      DOKU_CHECKOUT_REJECTED: "DOKU belum dapat membuat halaman pembayaran. Periksa pesananmu; status ini belum merupakan konfirmasi pembayaran.",
+      DOKU_CHECKOUT_PENDING: "Pesanan sebelumnya belum memiliki link pembayaran yang terverifikasi. Periksa pesananmu sebelum mengulang pembayaran.",
+    };
+    const code = error instanceof Error ? error.message : "";
+    return json({
+      error: messages[code] || "Halaman pembayaran DOKU belum berhasil disiapkan. Periksa pesananmu; belum ada konfirmasi pembayaran yang diterima.",
+    }, code === "DOKU_CHECKOUT_PENDING" ? 409 : 502);
   }
 }
 export async function GET(request: Request) {

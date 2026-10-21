@@ -1,12 +1,26 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "main": ".open-next/worker.js",
+  "main": "cloudflare/worker.mjs",
   "name": "khadafi",
   "compatibility_date": "2024-09-23",
   "compatibility_flags": [
     "nodejs_compat",
     "global_fetch_strictly_public"
   ],
+  "vars": {
+    "NEXT_PUBLIC_SUPABASE_URL": "https://mykgtajanxczdnzekycl.supabase.co",
+    "DOKU_SITE_ORIGIN": "https://khadafidaffa.com",
+    "DOKU_IS_PRODUCTION": "true",
+    "DOKU_PRODUCTION_APPROVED": "true",
+    "DOKU_ENABLED": "true",
+    "PAYMENTS_ENABLED": "true",
+    "DOKU_PUBLIC_SALES_APPROVED": "true",
+    "DOKU_QRIS_ENABLED": "true",
+    "DOKU_QRIS_STATUS": "ACTIVE",
+    "DOKU_RECONCILE_ENABLED": "true",
+    "COMMERCE_GUEST_CHECKOUT_ENABLED": "false"
+  },
+  "triggers": { "crons": ["*/5 * * * *"] },
   "assets": {
     "directory": ".open-next/assets",
     "binding": "ASSETS"

@@ -1041,3 +1041,20 @@
 .heroSummary .productText { margin-top: 12px; padding-left: 18px; border-left: 1px solid var(--line); font-size: 14px; }
 .productOverview { --text: #2d2733; --muted: #665c6b; --line: #4d395d30; --accent: #715691; color: var(--text); background: radial-gradient(ellipse at 100% 0, #ddd0e680, transparent 60%), #f3eee5; border: 1px solid #c9b9d2; border-radius: 18px; padding: 48px 36px; margin: 0 -36px 64px; }
 @media (max-width: 900px) { .productOverview { margin: 0 -12px 36px; padding: 32px 22px; } }
+/* Complete product media and bounded, accessible percentage zoom. */
+.expandImage { z-index: 2; }
+.book img { object-fit: contain; }
+.galleryStage .mockupBook { width: 92%; max-width: 540px; height: 88%; display: grid; place-items: center; }
+.galleryStage .mockupBook img { width: 100%; height: 100%; object-fit: contain; }
+.galleryStage .bookScene::before { inset: 18px; pointer-events: none; }
+.zoomLabel { display: flex; align-items: center; gap: 6px; font-size: 12px; }
+.zoomLabel select { min-height: 44px; padding: 8px; color: #fff; background: #24202b; border: 1px solid #ffffff50; border-radius: 8px; font-size: 16px; }
+.zoomHelp { font-size: 12px; color: #d5cfde; padding: 9px 20px; margin: 0; }
+.lightboxCanvas { overscroll-behavior: contain; touch-action: pan-x pan-y pinch-zoom; cursor: grab; }
+.lightboxCanvas:active { cursor: grabbing; }
+.lightboxCanvas > .zoomSurface { display: flex; align-items: center; justify-content: center; max-width: none; flex-shrink: 0; }
+.zoomSurface > div { flex-shrink: 0; display: grid; place-items: center; }
+.zoomSurface img { width: 100%; height: 100%; object-fit: contain; user-select: none; pointer-events: none; }
+.lightbox button:focus-visible, .lightbox select:focus-visible, .lightboxCanvas:focus-visible { outline: 3px solid #cbd9b9; outline-offset: -3px; }
+@media(max-width:600px) { .lightboxToolbar { flex-wrap: wrap; gap: 6px; } .lightboxToolbar > span { width: 100%; } .zoomLabel { font-size: 0; } .zoomHelp { font-size: 11px; padding-inline: 12px; } }
+@media(prefers-reduced-motion:reduce) { .galleryStage:hover .mockupBook { transform: none; } }

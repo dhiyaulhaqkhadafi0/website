@@ -56,9 +56,9 @@ async function run(){
  owned=[{expires_at:null}];const downloaded=await download.POST(dreq());assert.equal(downloaded.status,200);assert.equal(expiry,900);assert.equal(downloaded.headers.get('Cache-Control'),'private, no-store');
  checks++;console.log('PASS authorized download has 15-minute URL and no-store response');
  const noAuth={ok:false,response:json({error:'Login required'},401)};
- const checkout=load('src/app/api/commerce/orders/route.ts',{'@/lib/commerce-server':{json,sameOrigin:()=>true,requireUser:async()=>noAuth},'@/lib/guest-order':{},'@/lib/supabase':{createServiceRoleClient:()=>{throw new Error('Must not reach storage');}}});
+ const checkout=load('src/app/api/commerce/orders/route.ts',{'@/lib/commerce-server':{json,sameOrigin:()=>true,requireUser:async()=>noAuth},'@/lib/doku-order-checkout':{},'@/lib/doku-webhook-handler':{},'@/lib/guest-order':{},'@/lib/supabase':{createServiceRoleClient:()=>{throw new Error('Must not reach storage');}}});
  assert.equal((await checkout.POST(new Request('https://khadafidaffa.com/api/commerce/orders',{method:'POST',headers:{authorization:'Bearer invalid'},body:'{}'}))).status,401);
- assert.equal((await checkout.POST(new Request('https://khadafidaffa.com/api/commerce/orders',{method:'POST',body:'{}'}))).status,400);
+ assert.equal((await checkout.POST(new Request('https://khadafidaffa.com/api/commerce/orders',{method:'POST',body:'{}'}))).status,401);
  checks++;console.log('PASS invalid auth and incomplete guest checkout cannot reach database');
  const page=fs.readFileSync(path.join(root,'src/app/checkout/success/page.tsx'),'utf8');assert.ok(!/commerce_set_payment|\\.update\(|\\.insert\(/.test(page));checks++;console.log('PASS success page only reads authenticated order status');
  console.log(checks+' commerce security checks passed.');

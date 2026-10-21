@@ -15,11 +15,17 @@ export function CheckoutForm({
   email,
   name,
   available,
+  guestEnabled = false,
+  qrisAvailable = false,
+  providerMethods = false,
 }: {
   product: Product;
   email: string;
   name: string;
   available: boolean;
+  guestEnabled?: boolean;
+  qrisAvailable?: boolean;
+  providerMethods?: boolean;
 }) {
   const router = useRouter();
   const hydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
@@ -70,7 +76,7 @@ export function CheckoutForm({
           <label>
             Email pembeli
             <input type="email" name="email" autoComplete="email" defaultValue={email} readOnly={Boolean(email)} maxLength={254} required />
-            <small>{email ? "Produk terhubung ke library akunmu." : "Beli tanpa password. Simpan halaman pesanan; akses di perangkat lain melalui verifikasi email."}</small>
+            <small>{email ? "Produk terhubung ke library akunmu." : guestEnabled ? "Simpan halaman pesanan untuk mengakses pembelian pada browser ini." : "Masuk untuk menghubungkan pembelian dengan library akunmu."}</small>
           </label>
           <label className={s.check}>
             <input type="checkbox" name="consent" required />
@@ -79,7 +85,16 @@ export function CheckoutForm({
               dan <Link href="/privacy">Kebijakan Privasi</Link>. Email digunakan untuk identitas pembelian dan library digital.
             </span>
           </label>
-          {product.price > 0 && <div className={s.paymentMethods}><span className={s.eyebrow}>02 / METODE PEMBAYARAN</span><div><span>Bank / Virtual Account</span><span>E-wallet</span><span>QRIS</span></div><p>Pilih metode yang tersedia setelah lanjut ke halaman Midtrans. Ketersediaan mengikuti aktivasi merchant.</p></div>}
+          {product.price > 0 && <div className={s.paymentMethods}>
+            <span className={s.eyebrow}>02 / METODE PEMBAYARAN</span>
+            {providerMethods ? <>
+              <div><span>Pilih di halaman DOKU</span></div>
+              <p>Setelah klik Lanjut bayar, pilih QRIS, virtual account, atau metode lain yang tersedia di DOKU. Pilihan mengikuti layanan aktif dan nominal pembayaran.</p>
+            </> : <>
+              <div><span>Bank / Virtual Account · Mandiri</span>{qrisAvailable && <span>QRIS</span>}</div>
+              <p>Pilih metode yang tersedia setelah lanjut ke halaman DOKU. Ketersediaan mengikuti aktivasi merchant.</p>
+            </>}
+          </div>}
           {!available && (
             <div className={s.notice} role="status">
               Checkout produk ini belum dibuka. Silakan kembali beberapa saat
@@ -89,10 +104,12 @@ export function CheckoutForm({
           {error && (
             <div role="alert" className={s.notice + " " + s.error}>
               {error}
+              {email && (error.includes("diverifikasi") || error.includes("pesanan")) && <p><Link href="/account/orders">Periksa pesanan saya ↗</Link></p>}
             </div>
           )}
           {error.includes("berakhir") && <button type="button" className={s.secondary} onClick={() => { const next = crypto.randomUUID(); setKey(next); try { sessionStorage.setItem("khadafi-checkout-" + product.slug, next); } catch {} setError(""); }}>Mulai pesanan baru</button>}
-          <button className={s.button} disabled={!hydrated || busy || !available}>
+          {!email && !guestEnabled && <Link className={s.secondary} href={"/login?returnTo=" + encodeURIComponent("/checkout/" + product.slug)}>Masuk untuk membeli ↗</Link>}
+          <button className={s.button} disabled={!hydrated || busy || !available || (!email && !guestEnabled)}>
             {busy ? <LoaderCircle className={s.spin} /> : <ArrowUpRight />}
             {busy
               ? "Menyiapkan pesanan…"
@@ -107,7 +124,7 @@ export function CheckoutForm({
               style={{ display: "inline", marginRight: 8 }}
             />
             {product.price > 0
-              ? "Pembayaran diproses melalui Midtrans."
+              ? "Pembayaran diproses secara aman melalui DOKU."
               : "Produk akan ditambahkan ke library akunmu."}
           </small>
         </form>

@@ -9,6 +9,7 @@ import {
 import { CheckoutForm } from "@/components/commerce/CheckoutForm";
 import s from "@/components/commerce/commerce.module.css";
 import { cookies } from "next/headers";
+import { dokuPolicy } from "@/lib/doku-config";
 export default async function Page({
   params,
 }: {
@@ -34,6 +35,9 @@ export default async function Page({
         email={auth?.ok ? auth.user.email || "" : ""}
         name={auth?.ok ? auth.user.user_metadata?.display_name || "" : ""}
         available={commerceConfigured(p.price > 0)}
+        guestEnabled={process.env.COMMERCE_GUEST_CHECKOUT_ENABLED === "true"}
+        qrisAvailable={dokuPolicy(process.env).qris}
+        providerMethods={dokuPolicy(process.env).methods === null}
       />
     </>
   );
