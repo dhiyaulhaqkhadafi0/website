@@ -1058,3 +1058,29 @@
 .lightbox button:focus-visible, .lightbox select:focus-visible, .lightboxCanvas:focus-visible { outline: 3px solid #cbd9b9; outline-offset: -3px; }
 @media(max-width:600px) { .lightboxToolbar { flex-wrap: wrap; gap: 6px; } .lightboxToolbar > span { width: 100%; } .zoomLabel { font-size: 0; } .zoomHelp { font-size: 11px; padding-inline: 12px; } }
 @media(prefers-reduced-motion:reduce) { .galleryStage:hover .mockupBook { transform: none; } }
+
+
+/* DOKU-hosted method picker: accessible action, not a decorative badge. */
+.paymentMethods .dokuMethodButton {
+  width: min(100%, 440px);
+  min-height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 650;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color .2s ease, transform .2s ease;
+}
+.paymentMethods .dokuMethodButton:hover:not(:disabled) { border-color: var(--accent); transform: translateY(-1px); }
+.paymentMethods .dokuMethodButton:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.paymentMethods .dokuMethodButton:disabled { opacity: .55; cursor: not-allowed; }
+.paymentMethods .dokuMethodButton svg { width: 17px; height: 17px; flex-shrink: 0; }
