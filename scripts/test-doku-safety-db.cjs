@@ -13,7 +13,7 @@ const {PGlite}=require(process.env.PGLITE_MODULE || '@electric-sql/pglite');
  create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);
  create table storage.objects(id uuid default gen_random_uuid(),bucket_id text,name text);alter table storage.objects enable row level security;
  create function storage.foldername(text) returns text[] language sql as $$select string_to_array($1,'/')$$;`);
- for(const f of ['supabase_commerce.sql','supabase/migrations/20261017051124_commerce_media_guest_checkout.sql','supabase/migrations/20261018094500_doku_checkout_sandbox.sql','supabase/migrations/20261020154413_doku_go_live_safety.sql']){ console.log('Applying '+f); await db.exec(fs.readFileSync(f,'utf8')); }
+ for(const f of ['supabase_commerce.sql','supabase/migrations/20261017051124_commerce_media_guest_checkout.sql','supabase/migrations/20261018094500_doku_checkout_sandbox.sql','supabase/migrations/20261020154413_doku_go_live_safety.sql','supabase/migrations/20261021034531_doku_production_checkout_host.sql']){ console.log('Applying '+f); await db.exec(fs.readFileSync(f,'utf8')); }
  pass('curated migrations apply on embedded PostgreSQL without production connection');
  const user='11111111-1111-4111-8111-111111111111',other='22222222-2222-4222-8222-222222222222';
  await db.query("insert into auth.users values($1,'qa@example.invalid',now(),false),($2,'other@example.invalid',now(),false)",[user,other]);
@@ -26,6 +26,11 @@ const {PGlite}=require(process.env.PGLITE_MODULE || '@electric-sql/pglite');
  const invoice='KSLOCALTEST1'; const claim=async env=>(await db.query('select commerce_claim_doku_checkout($1,$2,$3) result',[order.id,env,invoice])).rows[0].result;
  const first=await claim('sandbox');assert.ok(first.token);assert.equal((await claim('sandbox')).busy,true);await assert.rejects(()=>claim('production'));pass('checkout concurrency lock, stable request ID and environment isolation');
  await db.query('select commerce_finish_doku_checkout($1,$2,$3)',[order.id,first.token,'https://staging.doku.com/checkout/test']);
+ const productionOrder=await create(crypto.randomUUID(),other);
+ const productionClaim=(await db.query('select commerce_claim_doku_checkout($1,$2,$3) result',[productionOrder.id,'production','KSLOCALPROD2'])).rows[0].result;
+ for(const url of ['https://checkout.doku.com.evil.test/pay','https://sandbox.doku.com/checkout/test','https://evil.test@checkout.doku.com/pay'])await assert.rejects(()=>db.query('select commerce_finish_doku_checkout($1,$2,$3)',[productionOrder.id,productionClaim.token,url]));
+ await db.query('select commerce_finish_doku_checkout($1,$2,$3)',[productionOrder.id,productionClaim.token,'https://checkout.doku.com/checkout-link-v2/test']);
+ const storedProduction=(await db.query('select status,payment_url from commerce_orders where id=$1',[productionOrder.id])).rows[0];assert.equal(storedProduction.status,'pending');assert.equal(storedProduction.payment_url,'https://checkout.doku.com/checkout-link-v2/test');pass('production current Checkout hostname persists without settlement; spoofed host, credentials and sandbox host rejected');
  const event=async(id,status='SUCCESS',amount=59000,hash='a'.repeat(64),env='sandbox')=>db.query('select commerce_record_doku_event($1,$2,$3,$4,$5,$6,$7,$8)',[order.id,amount,invoice,env,id,hash,status,'QRIS_DOKU']);
  await assert.rejects(()=>event('wrong-amount','SUCCESS',59001));await assert.rejects(()=>event('wrong-env','SUCCESS',59000,undefined,'production'));
  assert.equal((await db.query('select count(*)::int n from commerce_entitlements')).rows[0].n,0);pass('signed wrong amount/environment cannot unlock');

@@ -9,8 +9,10 @@ on:
     paths:
       - '.github/workflows/doku-sandbox-offline.yml'
       - 'scripts/test-doku-*.mjs'
+      - 'scripts/test-doku-*.cjs'
       - 'scripts/lib/doku-nonsnap-get-signature.mjs'
       - 'src/lib/doku-*.ts'
+      - 'src/lib/doku.ts'
       - 'src/app/api/commerce/doku/**'
       - 'src/app/api/internal/commerce/doku/**'
 
@@ -55,6 +57,8 @@ jobs:
         run: node scripts/test-doku-webhook-http.mjs
       - name: Verify status GET response signatures
         run: node scripts/test-doku-get-status-signature.mjs
+      - name: Verify Checkout response formats without credentials
+        run: node scripts/test-doku-checkout-response.cjs
       - name: Verify reconciliation/entitlement decision engine
         run: node scripts/test-doku-reconciliation.mjs
       - name: Verify QRIS replay, concurrency and scheduled contract

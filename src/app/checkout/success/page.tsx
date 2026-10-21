@@ -26,6 +26,7 @@ export default async function Page({
     : { data: null };
   const o = data as Order | null;
   const paid = o?.status === "paid";
+  const awaitingCheckout = o?.status === "pending" && !o.payment_url;
   const endedTitle = o ? { failed: "Pembayaran belum berhasil.", expired: "Waktu pembayaran berakhir.", cancelled: "Pesanan dibatalkan.", refunded: "Pembayaran dikembalikan.", pending: "Menunggu konfirmasi.", paid: "Bekalmu sudah siap." }[o.status] : "Periksa pesananmu.";
   return (
     <section className={s.success}>
@@ -34,6 +35,8 @@ export default async function Page({
       <h1>
         {paid
           ? "Bekalmu sudah siap."
+          : awaitingCheckout
+            ? "Halaman pembayaran belum siap."
           : o?.status === "pending"
             ? "Menunggu konfirmasi."
             : endedTitle}
@@ -41,6 +44,8 @@ export default async function Page({
       <p className={s.lead}>
         {paid
           ? "Terima kasih. Produk sudah terhubung ke akunmu dan bisa diakses dari library."
+          : awaitingCheckout
+            ? "Pesanan sudah tercatat, tetapi link pembayaran belum tersedia. Status pending belum berarti pembayaran sudah dilakukan."
           : o?.status === "pending"
             ? "Pembayaran akan dikonfirmasi otomatis. Jika kamu baru membayar, tunggu sebentar lalu periksa status kembali."
             : "Buka daftar pesanan untuk melihat status transaksi yang terhubung ke akunmu."}

@@ -4,6 +4,10 @@ export const DOKU_SANDBOX_CHECKOUT_HOSTS = [
   "staging.doku.com",
 ] as const;
 export const DOKU_PRODUCTION_CHECKOUT_HOST = "jokul.doku.com";
+export const DOKU_PRODUCTION_CHECKOUT_HOSTS = [
+  DOKU_PRODUCTION_CHECKOUT_HOST,
+  "checkout.doku.com",
+] as const;
 
 export function isAllowedDokuCheckoutUrl(
   value: string,
@@ -14,7 +18,7 @@ export function isAllowedDokuCheckoutUrl(
     if (url.protocol !== "https:" || url.username || url.password ||
       url.port) return false;
     return production
-      ? url.hostname === DOKU_PRODUCTION_CHECKOUT_HOST
+      ? DOKU_PRODUCTION_CHECKOUT_HOSTS.some((host) => url.hostname === host)
       : DOKU_SANDBOX_CHECKOUT_HOSTS.some((host) => url.hostname === host);
   } catch {
     return false;

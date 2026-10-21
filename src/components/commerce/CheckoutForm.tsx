@@ -93,7 +93,7 @@ export function CheckoutForm({
           {error && (
             <div role="alert" className={s.notice + " " + s.error}>
               {error}
-              {email && error.includes("diverifikasi") && <p><Link href="/account/orders">Periksa pesanan saya ↗</Link></p>}
+              {email && (error.includes("diverifikasi") || error.includes("pesanan")) && <p><Link href="/account/orders">Periksa pesanan saya ↗</Link></p>}
             </div>
           )}
           {error.includes("berakhir") && <button type="button" className={s.secondary} onClick={() => { const next = crypto.randomUUID(); setKey(next); try { sessionStorage.setItem("khadafi-checkout-" + product.slug, next); } catch {} setError(""); }}>Mulai pesanan baru</button>}

@@ -22,8 +22,9 @@ export async function POST(request: Request) {
       if (readError || !order || order.provider !== "doku" || order.currency !== "IDR" || !["pending", "paid"].includes(order.status)) throw new Error("Order mismatch");
       const result = await checkDokuStatus(state.invoice, { clientId: process.env.DOKU_CLIENT_ID || "", secretKey: process.env.DOKU_SECRET_KEY || "" }, policy.production);
       summary.checked++;
-      if (result.invoice !== state.invoice || result.amount !== order.total || !["VIRTUAL_ACCOUNT_BANK_MANDIRI", "QRIS_DOKU"].includes(result.channel || "")) throw new Error("Provider mismatch");
+      if (result.invoice !== state.invoice || result.amount !== order.total) throw new Error("Provider mismatch");
       if (result.status === "SUCCESS") {
+        if (!["VIRTUAL_ACCOUNT_BANK_MANDIRI", "QRIS_DOKU"].includes(result.channel || "")) throw new Error("Provider channel mismatch");
         const { error: writeError } = await db.rpc("commerce_record_doku_event", {
           p_order: state.order_id, p_total: order.total, p_reference: state.invoice,
           p_environment: policy.environment, p_event: "check:" + randomUUID(),

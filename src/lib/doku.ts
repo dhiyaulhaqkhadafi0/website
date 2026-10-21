@@ -53,6 +53,7 @@ export async function createDokuCheckout(input: {
   });
   const requestId = input.requestId;
   const timestamp = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
+  const requestSignature = signature(clientId, requestId, timestamp, CHECKOUT_PATH, body, secretKey);
   const response = await fetch(
     (production ? "https://api.doku.com" : "https://api-sandbox.doku.com") + CHECKOUT_PATH,
     {
@@ -62,38 +63,48 @@ export async function createDokuCheckout(input: {
         "Client-Id": clientId,
         "Request-Id": requestId,
         "Request-Timestamp": timestamp,
-        Signature: signature(clientId, requestId, timestamp, CHECKOUT_PATH, body, secretKey),
+        Signature: requestSignature,
       },
       body,
       signal: AbortSignal.timeout(15000),
       cache: "no-store",
+      redirect: "error",
     },
   );
   const raw = await response.text();
-  if (raw.length > 65536) throw new Error("Unexpected DOKU response");
-  const result = JSON.parse(raw);
-  if (!response.ok) throw new Error("DOKU checkout creation failed");
+  if (raw.length > 65536) throw new Error("DOKU_RESPONSE_TOO_LARGE");
+  let result;
+  try { result = JSON.parse(raw); } catch { throw new Error("DOKU_RESPONSE_INVALID_JSON"); }
+  let responseHost: string | null = null;
+  try { responseHost = new URL(result?.response?.payment?.url).hostname; } catch { /* No URL in rejected responses. */ }
+  console.info("commerce.doku.checkout_response", { status: response.status, host: responseHost, signed: response.headers.has("signature") });
+  if (!response.ok) {
+    if ([401, 403].includes(response.status)) throw new Error("DOKU_CREDENTIALS_REJECTED");
+    if (response.status === 429) throw new Error("DOKU_RATE_LIMITED");
+    throw new Error("DOKU_CHECKOUT_REJECTED");
+  }
 
-  // Authenticate provider response before trusting its checkout URL.
+  // Authenticate the response independently; echoed request metadata alone is
+  // not a response signature and cannot authenticate the returned checkout URL.
   const responseSignature = response.headers.get("signature");
-  if (!responseSignature) throw new Error("Unsigned DOKU checkout response");
+  if (!responseSignature) throw new Error("DOKU_RESPONSE_SIGNATURE_MISSING");
   {
     const responseTime = response.headers.get("response-timestamp") || "";
     const signedClient = response.headers.get("client-id");
     const signedId = response.headers.get("request-id");
     if (!responseTime || signedClient !== clientId || signedId !== requestId ||
       !sameSignature(signature(clientId, requestId, responseTime, CHECKOUT_PATH, raw, secretKey, true), responseSignature)) {
-      throw new Error("Invalid DOKU response signature");
+      throw new Error("DOKU_RESPONSE_SIGNATURE_INVALID");
     }
   }
   if (result?.response?.order?.invoice_number !== invoice ||
     Number(result?.response?.order?.amount) !== input.amount ||
     (result?.response?.order?.currency && result.response.order.currency !== "IDR") ||
     typeof result?.response?.payment?.url !== "string") {
-    throw new Error("DOKU response does not match the order");
+    throw new Error("DOKU_RESPONSE_ORDER_MISMATCH");
   }
   if (!isAllowedDokuCheckoutUrl(result.response.payment.url, production)) {
-    throw new Error("Unexpected DOKU checkout URL");
+    throw new Error("DOKU_RESPONSE_HOST_REJECTED");
   }
   return new URL(result.response.payment.url).toString();
 }

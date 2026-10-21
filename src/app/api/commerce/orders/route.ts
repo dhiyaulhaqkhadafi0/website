@@ -85,10 +85,17 @@ export async function POST(request: Request) {
   try {
     const checkoutUrl = await checkoutForDokuOrder(order, user.email || "", p.name.trim());
     return json({ order_id: order.id, payment_url: checkoutUrl });
-  } catch {
+  } catch (error) {
+    const messages: Record<string, string> = {
+      DOKU_CREDENTIALS_REJECTED: "DOKU menolak konfigurasi pembayaran toko. Hubungi kami untuk memeriksa pesanan ini.",
+      DOKU_RATE_LIMITED: "DOKU sedang membatasi permintaan. Periksa pesananmu sebelum mencoba kembali.",
+      DOKU_CHECKOUT_REJECTED: "DOKU belum dapat membuat halaman pembayaran. Periksa pesananmu; status ini belum merupakan konfirmasi pembayaran.",
+      DOKU_CHECKOUT_PENDING: "Pesanan sebelumnya belum memiliki link pembayaran yang terverifikasi. Periksa pesananmu sebelum mengulang pembayaran.",
+    };
+    const code = error instanceof Error ? error.message : "";
     return json({
-      error: "Pembayaran DOKU sedang diverifikasi. Periksa pesananmu sebelum mencoba pembayaran lagi.",
-    }, 502);
+      error: messages[code] || "Halaman pembayaran DOKU belum berhasil disiapkan. Periksa pesananmu; belum ada konfirmasi pembayaran yang diterima.",
+    }, code === "DOKU_CHECKOUT_PENDING" ? 409 : 502);
   }
 }
 export async function GET(request: Request) {
