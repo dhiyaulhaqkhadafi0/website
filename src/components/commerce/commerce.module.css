@@ -11,7 +11,12 @@
   min-height: 80vh;
   line-height: 1.7;
 }
-.providerHandoff { display: flex; align-items: center; gap: 20px; margin-top: 20px; padding: 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+.providerHandoff { display: flex; align-items: center; gap: 20px; width: 100%; margin-top: 20px; padding: 24px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--text); font: inherit; text-align: left; cursor: pointer; transition: border-color .2s ease, box-shadow .2s ease; }
+.providerHandoff:hover:not(:disabled) { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.providerHandoff:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+.providerHandoff:disabled { cursor: not-allowed; opacity: .65; }
+.providerCopy { flex: 1; min-width: 0; }
+.providerCopy > span { display: block; font-size: 13px; margin-top: 8px; line-height: 1.8; color: var(--muted); }
 .providerHandoff strong { font-size: 16px; font-weight: 600; }
 .providerHandoff p { font-size: 13px; margin-top: 8px; line-height: 1.8; }
 .providerHandoff > svg { flex-shrink: 0; width: 20px; }
@@ -20,7 +25,7 @@
 .checkout .summary { --muted: #655b6a; --line: #45384a2e; }
 .checkout .summary .eyebrow { color: #655b6a; }
 .shell .notice a { text-decoration: underline; text-underline-offset: 3px; }
-@media(max-width:540px) { .providerHandoff { padding: 18px; gap: 14px; flex-wrap: wrap; }.providerHandoff > div { flex: 1; min-width: 145px; }.providerHandoff > svg { display: none; } }
+@media(max-width:540px) { .providerHandoff { padding: 18px; gap: 14px; flex-wrap: wrap; }.providerCopy { min-width: 145px; }.providerHandoff > svg { display: none; } }
 .shell[data-theme="light"] {
   --bg: #f4f1e9;
   --surface: #ebe8df;

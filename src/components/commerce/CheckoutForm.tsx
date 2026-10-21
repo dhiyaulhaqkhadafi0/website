@@ -1,5 +1,5 @@
 "use client";
-import { useState, useSyncExternalStore } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowUpRight, LoaderCircle, LockKeyhole } from "lucide-react";
@@ -27,6 +27,7 @@ export function CheckoutForm({
   const router = useRouter();
   const hydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
   const [busy, setBusy] = useState(false);
+  const submitting = useRef(false);
   const [error, setError] = useState("");
   const intentStorageKey = "khadafi-checkout-" + product.slug + ":" + (email.trim().toLowerCase() || "guest");
   const [key, setKey] = useState(() => {
@@ -45,6 +46,8 @@ export function CheckoutForm({
   });
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (submitting.current) return;
+    submitting.current = true;
     setBusy(true);
     setError("");
     const data = new FormData(e.currentTarget);
@@ -61,6 +64,7 @@ export function CheckoutForm({
       else throw new Error("Tautan pembayaran belum tersedia. Periksa pesananmu sebelum mencoba kembali.");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Checkout gagal. Coba lagi.");
+      submitting.current = false;
       setBusy(false);
     }
   }
@@ -93,11 +97,11 @@ export function CheckoutForm({
           </label>
           {product.price > 0 && <div className={s.paymentMethods}>
             <span className={s.eyebrow}>02 / PEMBAYARAN AMAN</span>
-            <div className={s.providerHandoff}>
+            <button type="submit" className={s.providerHandoff} disabled={!hydrated || busy || !available || (!email && !guestEnabled)} aria-describedby="doku-checkout-hint" aria-busy={busy}>
               <span className={s.providerMark} aria-label="DOKU">DOKU<span>CHECKOUT</span></span>
-              <div><strong>Pilih cara bayar di DOKU</strong><p>Klik Lanjut pembayaran untuk membuka halaman resmi DOKU. Metode yang tersedia dan instruksi pembayaran akan tampil di sana.</p></div>
-              <ArrowUpRight aria-hidden="true" />
-            </div>
+              <span className={s.providerCopy}><strong>{busy ? "Menyiapkan halaman DOKU…" : "Pilih cara bayar di DOKU"}</strong><span id="doku-checkout-hint">Buka halaman resmi DOKU untuk memilih metode dan melihat instruksi pembayaran. Belum ada dana yang dibayarkan saat tombol ini diklik.</span></span>
+              {busy ? <LoaderCircle className={s.spin} aria-hidden="true" /> : <ArrowUpRight aria-hidden="true" />}
+            </button>
           </div>}
           {!available && (
             <div className={s.notice} role="status">
@@ -114,7 +118,7 @@ export function CheckoutForm({
           )}
           {error.includes("berakhir") && <button type="button" className={s.secondary} onClick={() => { const next = crypto.randomUUID(); setKey(next); setMethod("all"); try { sessionStorage.setItem(intentStorageKey, next); } catch {} setError(""); }}>Mulai pesanan baru</button>}
           {!email && !guestEnabled && <Link className={s.secondary} href={"/login?returnTo=" + encodeURIComponent("/checkout/" + product.slug)}>Masuk untuk membeli ↗</Link>}
-          <button className={s.button} disabled={!hydrated || busy || !available || (!email && !guestEnabled)}>
+          <button type="submit" className={s.button} disabled={!hydrated || busy || !available || (!email && !guestEnabled)}>
             {busy ? <LoaderCircle className={s.spin} /> : <ArrowUpRight />}
             {busy
               ? "Menyiapkan pesanan…"

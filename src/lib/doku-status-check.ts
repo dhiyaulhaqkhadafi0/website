@@ -13,6 +13,8 @@ export type VerifiedDokuStatus = {
   status: DokuPaymentStatus;
   channel: string | null;
   transactionType?: string;
+  originalRequestId?: string;
+  orderStatus?: string;
 };
 type FetchLike = typeof fetch;
 
@@ -45,9 +47,9 @@ export async function checkDokuStatus(
   production = false,
   requestFetch: FetchLike = fetch,
 ): Promise<VerifiedDokuStatus> {
-  if (!/^KS[0-9A-Z]{1,25}$/.test(invoice)) throw new Error("Invalid DOKU invoice");
+  if (!/^KS[0-9A-Z]{1,25}$/.test(invoice)) throw new Error("DOKU_STATUS_INVALID_INVOICE");
   if (!credentials.clientId || !credentials.secretKey)
-    throw new Error("Missing DOKU Sandbox credentials");
+    throw new Error("DOKU_STATUS_CREDENTIALS_MISSING");
   const target = "/orders/v1/status/" + invoice;
   const requestId = randomUUID();
   const time = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
@@ -64,10 +66,17 @@ export async function checkDokuStatus(
     },
     cache: "no-store",
     signal: AbortSignal.timeout(15000),
+    redirect: "error",
   });
-  if (!response.ok) throw new Error("DOKU Sandbox status HTTP " + response.status);
+  if (!response.ok) {
+    // HTTP absence/rejection never proves that an earlier checkout is safe to recreate.
+    if ([401, 403].includes(response.status)) throw new Error("DOKU_STATUS_CREDENTIALS_REJECTED");
+    if (response.status === 404) throw new Error("DOKU_STATUS_NOT_FOUND_UNCONFIRMED");
+    if (response.status === 429) throw new Error("DOKU_STATUS_RATE_LIMITED");
+    throw new Error("DOKU_STATUS_HTTP_FAILURE");
+  }
   const body = await response.text();
-  if (body.length > 65536) throw new Error("Oversized DOKU status response");
+  if (body.length > 65536) throw new Error("DOKU_STATUS_RESPONSE_TOO_LARGE");
   const headers = response.headers;
   const receivedSignature = headers.get("signature") || "";
   const responseTime = headers.get("response-timestamp") || "";
@@ -82,12 +91,12 @@ export async function checkDokuStatus(
           credentials.secretKey,
         ),
       )) {
-    throw new Error("Invalid DOKU Check Status response signature");
+    throw new Error("DOKU_STATUS_SIGNATURE_INVALID");
   }
   let parsed: unknown;
   try { parsed = JSON.parse(body); }
-  catch { throw new Error("Invalid DOKU status JSON"); }
-  if (!parsed || typeof parsed !== "object") throw new Error("Invalid DOKU status payload");
+  catch { throw new Error("DOKU_STATUS_INVALID_JSON"); }
+  if (!parsed || typeof parsed !== "object") throw new Error("DOKU_STATUS_INVALID_PAYLOAD");
   const result = parsed as Record<string, unknown>;
   const nested = result.response;
   const record = nested && typeof nested === "object" ? nested as Record<string, unknown> : result;
@@ -99,13 +108,15 @@ export async function checkDokuStatus(
   if (order?.invoice_number !== invoice || !Number.isSafeInteger(amount) ||
       amount <= 0 || (order?.currency != null && order.currency !== "IDR") ||
       typeof status !== "string" || !STATES.has(status as DokuPaymentStatus)) {
-    throw new Error("DOKU status invoice, amount, currency, or state mismatch");
+    throw new Error("DOKU_STATUS_ORDER_MISMATCH");
   }
   return {
     invoice,
     amount,
     status: status as DokuPaymentStatus,
     channel: typeof channel?.id === "string" ? channel.id : null,
+    ...(typeof transaction?.original_request_id === "string" ? { originalRequestId: transaction.original_request_id } : {}),
+    ...(typeof order?.status === "string" ? { orderStatus: order.status } : {}),
     ...(typeof transaction?.type === "string" ? { transactionType: transaction.type } : {}),
   };
 }

@@ -20,22 +20,33 @@ export async function POST(request: Request) {
     let failure: string | null = null;
     try {
       const { data: order, error: readError } = await db.from("commerce_orders").select("total,currency,status,provider").eq("id", state.order_id).single();
-      if (readError || !order || order.provider !== "doku" || order.currency !== "IDR" || !["pending", "paid"].includes(order.status)) throw new Error("Order mismatch");
+      if (readError) throw new Error("DOKU_RECONCILE_ORDER_READ_FAILED");
+      if (!order || order.provider !== "doku" || order.currency !== "IDR" || !["pending", "paid"].includes(order.status)) throw new Error("DOKU_RECONCILE_ORDER_MISMATCH");
       const result = await checkDokuStatus(state.invoice, { clientId: process.env.DOKU_CLIENT_ID || "", secretKey: process.env.DOKU_SECRET_KEY || "" }, policy.production);
       summary.checked++;
-      if (result.invoice !== state.invoice || result.amount !== order.total) throw new Error("Provider mismatch");
+      if (result.invoice !== state.invoice || result.amount !== order.total) throw new Error("DOKU_RECONCILE_PROVIDER_MISMATCH");
       if (result.status === "SUCCESS") {
-        if (!isDokuSettlement(result.channel, result.status, result.transactionType)) throw new Error("Provider channel mismatch");
+        if (!isDokuSettlement(result.channel, result.status, result.transactionType)) throw new Error("DOKU_RECONCILE_CHANNEL_MISMATCH");
         const { error: writeError } = await db.rpc("commerce_record_doku_event", {
           p_order: state.order_id, p_total: order.total, p_reference: state.invoice,
           p_environment: policy.environment, p_event: "check:" + randomUUID(),
           p_hash: createHash("sha256").update(JSON.stringify(result)).digest("hex"),
           p_status: result.status, p_channel: result.channel,
         });
-        if (writeError) throw new Error("Settlement unavailable");
+        if (writeError) throw new Error("DOKU_RECONCILE_SETTLEMENT_FAILED");
         summary.paid++;
       } else summary.pending++;
-    } catch { failure = "PROVIDER_OR_DB_ERROR"; summary.failed++; }
+    } catch (error) {
+      // Native/Worker errors can cross JavaScript realms; instanceof Error can
+      // discard their safe diagnostic code. Never persist arbitrary messages.
+      const detail = error && typeof error === "object" ? error as { message?: unknown; name?: unknown } : {};
+      failure = typeof detail.message === "string" && /^DOKU_[A-Z_]+$/.test(detail.message) ? detail.message
+        : ["AbortError", "TimeoutError"].includes(String(detail.name)) ? "DOKU_STATUS_TIMEOUT"
+        : detail.name === "TypeError" ? "DOKU_STATUS_TRANSPORT_FAILURE"
+        : "DOKU_RECONCILE_UNEXPECTED_FAILURE";
+      summary.failed++;
+      console.warn("commerce.doku.reconciliation_failure", { code: failure });
+    }
     const finished = await db.rpc("commerce_finish_doku_reconciliation", { p_order: state.order_id, p_token: state.lease_token, p_error: failure });
     if (finished.error) return reply({ error: "Lease persistence unavailable", ...summary }, 503);
   }

@@ -3,7 +3,7 @@
   "name": "khadafi-doku-staging",
   "main": "cloudflare/worker.mjs",
   "compatibility_date": "2024-09-23",
-  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "compatibility_flags": ["nodejs_compat", "cache_option_enabled", "global_fetch_strictly_public"],
   "workers_dev": true,
   "assets": {"directory": ".open-next/assets", "binding": "ASSETS"},
   "services": [{"binding": "WORKER_SELF_REFERENCE", "service": "khadafi-doku-staging"}],
