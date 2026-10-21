@@ -33,3 +33,15 @@ The integration intentionally requests only Mandiri VA and QRIS. Its labels are 
 - Next webpack and TypeScript pass, 187 static pages. Changed-file lint passes. Provider-generated completed payment/notification/private-PDF download remains unverified until the owner's real test succeeds.
 
 Final Worker deployment and hosted verification are recorded below after rollout.
+
+## Final rollout
+
+- App source `4561eb208640649701dea76781bb0db4b556ca8d`; build `mMWUJq-KE29OttLiGy1EU`; Worker `5e22f622-3436-40f1-9929-44ff3b3cbb74` deployed successfully to production. Source synced to `codex/doku-qris-go-live-v2` on GitHub; main was not moved.
+- Public scan: 671 asset/cache files checked against two available local private credentials, zero matches. R2: 151/151 new-build cache objects uploaded; one transient HTTP 500 recovered using bounded retries on the same objects.
+- Live browser: product and checkout at 390/1440 pixels show Rp1,000 and QRIS; checkout configured; login required; zero uncaught errors. Existing homepage/Freelance/monetization/sitemap routes and protected endpoints pass the same smoke checks.
+- Temporary diagnostic route now returns 404 even with its old token. The remote support token and temporary local token/private-response/checkout-URL copies were removed. Genuine merchant keys remain installed. No diagnostic endpoint exists in the final Worker source.
+- Existing pending order has the verified current-host URL saved and state ready; still Rp1,000 pending with zero entitlements. Its old error backoff was reset for normal scheduled checks. No replacement invoice/request ID or payment was created.
+- Actual completed payment, provider webhook delivery and paid private-PDF access remain unverified until the owner finishes the payment. No signed-in buyer session was available for clicking the application redirect; its saved-URL reuse path is covered by the regression test and provider-page invoice/amount verification.
+- Security advisors retain the baseline [server-only RLS-without-policy notices](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy) and existing unrelated blog/Auth warnings. The changed RPC remains service-role only; no new public permissions were granted.
+
+Sanitized evidence is in ignored `artifacts/payments/existing-doku-checkout-verification.json`, `doku-support-status-diagnostic.json`, `doku-support-cleanup.json`, `qris-1000-live-verification.json`, `qris-host-fix-next-build.log`, `qris-host-fix-opennext-build.log` and `qris-host-fix-deploy.log`. No paid success claim is inferred from these checks.
