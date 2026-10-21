@@ -22,3 +22,15 @@ Based on production release `1d0f7d9`, isolated from the primary dirty worktree.
 - `scripts/audit-visual-payment.cjs` defaults to public checks. To exercise the local dev-only checkout fixture, use `QA_CHECKOUT_FIXTURE=true`; it creates and removes its isolated route. Do not build concurrently with that optional fixture. Production preflight verifies the fixture route is absent.
 
 Detailed logs, screenshots, contrast reports and deployment evidence are under ignored `artifacts/visual-payment/`.
+
+## Production verification
+
+- Application commit: `e16a977041d5e98762c51c7b87ab1e9348f9d6ab` on `codex/checkout-visual-fix`.
+- Production Worker: `768cb8b4-401b-4340-9a14-426194f3f88c`, deployed with `--keep-vars`. Existing secrets, QRIS ACTIVE/payment flags, Images/R2/self bindings, disabled guest checkout and five-minute reconciliation schedule were retained.
+- `https://khadafidaffa.com/BUILD_ID` matches `_wjNOOgjS5AkeJoH6Vu-_`.
+- Live browser acceptance passed 36 checks at 390px/1440px, both theme preferences, zero browser errors and zero flagged contrast elements on the 14 covered routes. Resource thumbnails, disclosures, spacing, six section links, Threads href and absence of checkout radios were verified on the deployed site.
+- Live HTTP acceptance passed 15 checks, including anonymous order rejection, foreign-origin rejection, unsigned webhook rejection, private download/QA protection, no fixture route, configured checkout/IDR 59,000 and successful Cloudflare image optimization (`image/webp`, HTTP 200).
+- The final package was built with physical dependencies and fresh traces inside this checkout. No dependency version downgrade or native-module shim was introduced.
+- No real new order or payment was performed. Existing pending IDR 59,000 orders were not reset. The provider-owned payment page, settlement and ebook delivery for a new IDR 59,000 purchase still require an owner-approved real transaction.
+- The supplied Threads href was verified in the deployed CTA. Automated external profile retrieval received HTTP 429, so profile contents/direct messaging were not independently verified.
+- GitHub push was not performed: automatic approval review rejected repository export without specific user authorization. Source remains committed locally; production deployment was separately authorized and completed.

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { chromium } = require('C:/Users/user/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
-const base = process.env.QA_BASE || 'http://localhost:3042', out = 'artifacts/visual-payment';
+const base = process.env.QA_BASE || 'http://localhost:3042', out = process.env.QA_OUT || 'artifacts/visual-payment';
 fs.mkdirSync(out,{recursive:true});
 const fixtureEnabled=process.env.QA_CHECKOUT_FIXTURE==='true' && /^http:\/\/(localhost|127\.0\.0\.1):\d+$/.test(base);
 const fixtureDir=path.resolve('src/app/visual-checkout-qa');
@@ -55,5 +55,5 @@ if(fixtureEnabled) {
   await page.goto(base+'/visual-checkout-qa',{waitUntil:'networkidle'});await page.unroute('**/api/commerce/orders');await page.route('**/api/commerce/orders',route=>route.fulfill({status:409,contentType:'application/json',body:JSON.stringify({error:'Pesanan sebelumnya belum memiliki link pembayaran yang terverifikasi. Periksa pesananmu sebelum mengulang pembayaran.'})}));
   await page.locator('[name=consent]').check();await page.getByRole('button',{name:/Lanjut pembayaran/}).click();await page.locator('form [role=alert]').waitFor();assert.ok(await page.getByRole('link',{name:'Periksa pesanan saya'}).count());assert.equal(await page.getByRole('radio').count(),0);checks.push('pending order recovery, no duplicate new-order action');
 }
-fs.writeFileSync(out+'/contrast.json',JSON.stringify(issues,null,2));fs.writeFileSync(out+'/results.json',JSON.stringify({checks,errors,scope:'public pages and intercepted checkout fixture; no real payment'},null,2));console.log(JSON.stringify({checks:checks.length,errors,contrast:issues.filter(x=>x.items.length).map(x=>({theme:x.theme,route:x.route,count:x.items.length,examples:x.items.slice(0,5)}))},null,2));assert.deepEqual(errors,[]);
+fs.writeFileSync(out+'/contrast.json',JSON.stringify(issues,null,2));fs.writeFileSync(out+'/results.json',JSON.stringify({base,checks,errors,scope:'public pages and optional intercepted checkout fixture; no real payment'},null,2));console.log(JSON.stringify({base,checks:checks.length,errors,contrast:issues.filter(x=>x.items.length).map(x=>({theme:x.theme,route:x.route,count:x.items.length,examples:x.items.slice(0,5)}))},null,2));assert.deepEqual(errors,[]);
 }finally{await browser.close();if(fixtureEnabled)fs.rmSync(fixtureDir,{recursive:true});}})().catch(e=>{console.error(e);process.exitCode=1});
