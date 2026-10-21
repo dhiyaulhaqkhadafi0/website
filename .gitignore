@@ -1,19 +1,30 @@
+# Dependencies and build outputs
 node_modules/
-.dev.vars*
 .next/
 .next-*/
 .open-next/
-.env*.local
 .wrangler/
 *.tsbuildinfo
-Master-Prompt*.md
-
-.open-next/
-.wrangler/
-artifacts/
-
-.open-next/
-.wrangler/
-artifacts/
-
 supabase/.temp/
+artifacts/
+
+# Local configuration / secrets (allow harmless templates)
+.env
+.env.*
+!.env.example
+!.env.*.example
+.dev.vars*
+!.dev.vars.example
+.secrets*
+secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Temporary files and machine-specific artifacts
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+Master-Prompt*.md
