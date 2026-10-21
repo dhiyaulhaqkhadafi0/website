@@ -18,7 +18,7 @@ Migration `20261021074807_doku_checkout_method_binding.sql` was applied to produ
 
 Supabase Site URL was corrected from localhost to `https://khadafidaffa.com`. Redirect allowlist includes `/auth/confirm`, `/login` and login returnTo. The owner installed Gmail SMTP; dashboard persistence was verified with host smtp.gmail.com, port 587 and sender name Khadafi. The stored password was neither read nor copied.
 
-Template persistence and live release identity are recorded below after deployment. SMTP configuration alone does not prove email delivery.
+Both Indonesian templates and subjects were saved in Supabase, then reloaded to verify persistence. Confirmation uses `Konfirmasi email akun Khadafi`; magic link uses `Tautan masuk akun Khadafi`. SMTP configuration alone does not prove email delivery; no real test email was sent in this run. Emails sent before the redirect correction retain their old localhost destination and must be replaced by a fresh confirmation request.
 
 ## Validation
 
@@ -35,4 +35,12 @@ Contract references: [DOKU backend integration](https://developers.doku.com/acce
 
 ## Release evidence
 
-Pending final production build, deployment and template persistence verification.
+- Application source: `a39e10ced842fc506dde7e7e89ca9d77f32f4dfb`, pushed to GitHub on the release branch.
+- Next production build: `-8giQposKiPbe112nChCV`, 189 generated pages; TypeScript and targeted ESLint passed. OpenNext completed successfully despite the previously observed Windows package-copy warnings.
+- Public preflight scanned 688 files against two known local server credentials: zero matches. This is a bounded check, not a claim to know every production secret.
+- Uploaded all 152 build cache objects before Worker activation.
+- Production Worker version: `ca5b69ab-aed9-4e73-8839-8c25a7ac2b99`, deployed with `--keep-vars`. Payment flags, production secrets, R2/images/self binding and five-minute reconciliation cron were preserved.
+- Live checks at `https://khadafidaffa.com` passed at 390px and 1440px: product/checkout IDR 59,000; 17 visible payment choices; anonymous checkout still requires login; checkout is configured; homepage, freelance, monetization and sitemap return 200; unsigned webhook/order requests fail closed; private QA/diagnostic endpoints return 404; `/BUILD_ID` matches the local release; no browser errors.
+- The complete callback/checkout-serialization/Chikki browser fixture suite also passed against the live deployment. Provider verification and order POSTs were intercepted, so this does not claim live signup delivery or a new DOKU payment.
+- Read-only inspection of the previously affected IDR 59,000 order still showed pending/unknown without a saved URL. It was neither reset nor charged again. Its existing DOKU email is the continuation path; the new response handling does not reconstruct a previously discarded URL.
+- Evidence: `artifacts/auth-checkout/deploy.log`, `public-preflight.json`, `cache-upload.json`, `commerce-live-verification.json`, `browser-results.json`, UI screenshots and `email-template-saved.jpg` (ignored local artifacts).
