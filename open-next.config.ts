@@ -1,8 +1,14 @@
 import { defineCloudflareConfig } from "@opennextjs/cloudflare";
 import r2IncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/r2-incremental-cache";
+import { withRegionalCache } from "@opennextjs/cloudflare/overrides/incremental-cache/regional-cache";
 
 const cloudflareConfig = defineCloudflareConfig({
-  incrementalCache: r2IncrementalCache,
+  // Only wraps entries Next already caches. Dynamic checkout, prices and
+  // authenticated responses are never added to a public response cache.
+  incrementalCache: withRegionalCache(r2IncrementalCache, {
+    mode: "short-lived",
+    bypassTagCacheOnCacheHit: false,
+  }),
 });
 
 export default {

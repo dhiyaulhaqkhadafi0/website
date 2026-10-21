@@ -34,6 +34,8 @@ Versioned image filenames receive immutable cache headers. Fixed dimensions rese
 
 The first hosted performance profile identified the ebook PNG as a real 443 KB network transfer. Its validated local media path now resolves to a 124 KB WebP derivative, retaining transparency and the original CMS value. The homepage also streams its latest-article column inside Suspense so the hero and navigation can render without waiting for the public article query. Article freshness and query permissions are unchanged.
 
+Repeated hosted measurements also showed variable R2 lookup latency. The final adapter configuration uses OpenNext's built-in regional cache in short-lived mode (up to 60 seconds), keeping tag validation enabled. It wraps only existing Next incremental-cache entries, without creating a shared response cache for authenticated routes or dynamic commerce prices. Cache keys include the build ID. Hashed `/_next/static/*` assets also receive the immutable cache header recommended by [OpenNext's caching guide](https://opennext.js.org/cloudflare/caching), avoiding validation requests on repeat visits. This adapter-only change reuses the unchanged Next build and rebuilds the Worker wrapper.
+
 ## Initial production audit
 
 All 164 sitemap URLs returned HTTP 200 with canonical URLs and descriptions. Three bundled blog articles had two H1 elements; their body H1s are now section H2s while preserving anchor IDs. `/ads.txt` returned 404. Existing publisher metadata was independently verified as `ca-pub-2795731884245055`, so ads.txt declares the same account.
