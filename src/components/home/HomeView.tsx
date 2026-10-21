@@ -169,31 +169,17 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
           </div>
           <div className={styles.flagship}>
             <figure
-              className={styles.chikkiVisual}
-              aria-label="Chikki: ruang menulis dan hubungan antara penulis dan pembaca"
+              className={styles.laptopShowcase}
+              aria-label="Eksplorasi antarmuka Chikki dalam mockup laptop"
             >
-              <div className={styles.productMasthead}>
-                CHIKKI<span>Eksplorasi produk</span>
+              <div className={styles.laptopAmbient} aria-hidden="true" />
+              <div className={styles.laptopScreen}>
+                <span className={styles.laptopCamera} aria-hidden="true" />
+                <Image src="/images/experience/chikki-preview-v1.webp" width={1200} height={900} sizes="(max-width: 860px) 90vw, 620px" unoptimized alt="Konsep UI Chikki: ruang menulis, karya digital, dan eksplorasi peluang" />
               </div>
-              <div className={styles.chikkiPage}>
-                <span>RUANG UNTUK BERCERITA</span>
-                <p>
-                  Sebuah ide.
-                  <br />
-                  Sebuah cerita.
-                  <br />
-                  <em>Sebuah koneksi.</em>
-                </p>
-                <div className={styles.proseLines} aria-hidden="true">
-                  <i />
-                  <i />
-                  <i />
-                </div>
-                <span className={styles.pageNumber}>01</span>
-              </div>
+              <div className={styles.laptopBase} aria-hidden="true"><i /></div>
               <figcaption>
-                Penulis <span aria-hidden="true">—</span> Pembaca{" "}
-                <span aria-hidden="true">—</span> Peluang
+                CHIKKI / Konsep antarmuka · ilustrasi, bukan data transaksi
               </figcaption>
             </figure>
             <div className={styles.flagshipCopy}>
@@ -391,11 +377,14 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
           <div className={styles.aboutGrid}>
             <figure className={styles.portrait}>
               <Image
-                src="/assets/my-profile.jpg"
+                src="/images/experience/portrait-v1.webp"
+                unoptimized
                 alt="Khadafi, digital builder"
                 fill
                 sizes="(max-width: 600px) 80vw, 360px"
               />
+              <span className={styles.portraitLight} aria-hidden="true" />
+              <span className={styles.portraitSignature}>K.</span>
               <figcaption>Khadafi / Berkarya, sambil terus belajar.</figcaption>
             </figure>
             <div>

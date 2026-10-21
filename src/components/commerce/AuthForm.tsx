@@ -111,6 +111,19 @@ export function AuthForm({
     }
   }
   return (
+    <div className={s.authStage}>
+      <aside className={s.authStory} aria-label="Ruang digital Khadafi">
+        <span className={s.eyebrow}>A LITTLE CURIOSITY. A BIGGER TOMORROW.</span>
+        <h2>Ide kecil. <br />Karya berarti.<br /><em>Perjalananmu.</em></h2>
+        <p>Tempat untuk menyimpan bekal, menemukan perspektif, dan melanjutkan hal yang ingin kamu bangun.</p>
+        <div className={s.authArtwork} aria-hidden="true">
+          <span className={s.authOrbit} />
+          <div className={s.authNoteBack}><small>02 / MAKE IT REAL</small><strong>Make<br />a little<br /><em>progress.</em></strong><i>BUILD SOMETHING MEANINGFUL</i></div>
+          <div className={s.authNoteFront}><small>01 / STAY CURIOUS</small><strong>Your next<br /><em>chapter.</em></strong><i>KHADAFI / LEARNING NOTES</i></div>
+          <span className={s.authSeal}>K.</span>
+        </div>
+        <Link href="/resources" className={s.authExplore}>Jelajahi bekal gratis <ArrowUpRight size={16} /></Link>
+      </aside>
     <section className={s.auth}>
       <span className={s.eyebrow}>SATU AKUN KHADAFI</span>
       <h1>{register ? "Ruang untuk perjalananmu." : "Senang bertemu lagi."}</h1>
@@ -157,6 +170,7 @@ export function AuthForm({
         method="post"
         onSubmit={submit}
         aria-label={register ? "Daftar akun" : "Masuk akun"}
+        aria-busy={busy}
       >
         {register && (
           <label>
@@ -226,5 +240,6 @@ export function AuthForm({
         </Link>
       </p>
     </section>
+    </div>
   );
 }

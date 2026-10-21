@@ -128,7 +128,7 @@ export function LearningLibrary() {
     timer.current = setTimeout(() => {
       update({ q: value.trim() });
       setDraft(null);
-    }, 280);
+    }, 160);
   }
   function clear(all = false) {
     if (timer.current) clearTimeout(timer.current);
@@ -160,6 +160,16 @@ export function LearningLibrary() {
   ].map((slug) => LEARNING_RESOURCES.find((r) => r.slug === slug)!);
   return (
     <div className={s.library}>
+      <div className={s.coverWrap}>
+        <a href="#collection" className={s.cover} aria-label="Jelajahi koleksi sumber daya gratis">
+          <picture>
+            <source media="(max-width: 760px)" srcSet="/images/experience/resources-cover-v1-768.webp" />
+            {/* Pre-sized responsive cover avoids a transformation request and layout shifts. */}
+            <img src="/images/experience/resources-cover-v1-1440.webp" width="1440" height="540" fetchPriority="high" alt="HCFTL dan semesta sumber daya: alat digital, template, ebook, dan panduan belajar" />
+          </picture>
+          <span className={s.coverLabel}>HCFTL / A little curiosity. A bigger tomorrow. <b aria-hidden="true">↗</b></span>
+        </a>
+      </div>
       <header className={s.hero}>
         <div className={s.container}>
           <div className={s.heroMeta}>
@@ -186,31 +196,30 @@ export function LearningLibrary() {
               </p>
             </div>
             <div className={s.libraryArt} aria-hidden="true">
-              <span>COLLECTED WITH CURIOSITY</span>
-              <div className={s.bookOne}>
-                <small>01 / AI & IDEAS</small>
-                <b>
-                  Stay
-                  <br />
-                  <em>curious.</em>
-                </b>
-                <i>KHADAFI</i>
+              <div className={s.learningOrbit}><i /><i /><i /></div>
+              <span className={s.artIndex}>COLLECTED WITH CURIOSITY</span>
+              <div className={s.learningDesk}>
+                <div className={s.deskChrome}><span><i /><i /><i /></span>khadafi / learning desk <b>↗</b></div>
+                <div className={s.deskBody}>
+                  <small>A PLACE FOR YOUR NEXT IDEA</small>
+                  <strong>Small beginnings.<br /><em>Real possibilities.</em></strong>
+                  <div className={s.deskTiles}><span>✳<small>AI & IDEAS</small></span><span>⌘<small>BUILD & CREATE</small></span><span>↗<small>INDEPENDENT WORK</small></span></div>
+                  <div className={s.deskLine}><i /><i /><i /></div>
+                </div>
               </div>
-              <div className={s.bookTwo}>
-                <small>02 / BUILD & CREATE</small>
-                <b>
-                  Make
-                  <br />
-                  it real.
-                </b>
-                <i>LEARNING LIBRARY</i>
+              <div className={`${s.bookOne} ${s.resourceNote}`}>
+                <small>01 / YOUR FIRST NOTE</small>
+                <b>A little<br /><em>curiosity.</em></b>
+                <i>IDE → PROTOTYPE → POSSIBILITY</i>
               </div>
+              <span className={s.resourceSeal}><b>20</b>OPEN RESOURCES</span>
               <span className={s.artCaption}>
                 Sedikit belajar. Banyak kemungkinan.
               </span>
             </div>
           </div>
           <form
+            data-premium-search
             className={s.search}
             onSubmit={(e) => {
               e.preventDefault();

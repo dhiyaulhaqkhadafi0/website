@@ -1,4 +1,5 @@
 import bundledPosts from '@/content/generated-blog-posts.json';
+import { cache } from 'react';
 import { isSupabaseConfigured, supabase } from '@/lib/supabase';
 import { resolveArticleCover, type PublishedArticle, type TiptapNode } from '@/lib/blog-types';
 
@@ -143,7 +144,8 @@ async function getPublishedStudioPosts(): Promise<BlogPost[]> {
   return (data as PublishedArticle[]).map(publishedArticleToPost);
 }
 
-export async function getAllPosts(): Promise<BlogPost[]> {
+// Per-request deduplication only; publishing is visible on the next request.
+export const getAllPosts = cache(async function getAllPosts(): Promise<BlogPost[]> {
   const slugs = getPostSlugs();
   const mdxPosts = slugs
     .map((slug) => getPostBySlug(slug))
@@ -152,7 +154,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
   const studioSlugs = new Set(studioPosts.map((post) => post.metadata.slug));
   return [...studioPosts, ...mdxPosts.filter((post) => !studioSlugs.has(post.metadata.slug))]
     .sort((post1, post2) => new Date(post2.metadata.date).getTime() - new Date(post1.metadata.date).getTime());
-}
+});
 
 /**
  * Returns lightweight listing card items for the /blog page.
@@ -163,7 +165,7 @@ export async function getBlogListingPosts(): Promise<BlogCardItem[]> {
   return allPosts.map(toBlogCardItem);
 }
 
-export async function getPublishedPostBySlug(slug: string): Promise<BlogPost | null> {
+export const getPublishedPostBySlug = cache(async function getPublishedPostBySlug(slug: string): Promise<BlogPost | null> {
   if (isSupabaseConfigured) {
     const { data, error } = await supabase
       .from('published_blog_articles')
@@ -175,7 +177,7 @@ export async function getPublishedPostBySlug(slug: string): Promise<BlogPost | n
     if (error) console.error(`Error reading published article ${slug}:`, error.message);
   }
   return getPostBySlug(slug);
-}
+});
 
 /**
  * Deterministically fetches up to `limit` related published articles.

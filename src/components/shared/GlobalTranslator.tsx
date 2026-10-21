@@ -2,17 +2,11 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Globe, Check } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { LanguageSuggestion } from "./LanguageSuggestion";
+import { SUPPORTED_LANGUAGES, isPublicTranslationPath } from "@/lib/visitor-language.mjs";
+export { SUPPORTED_LANGUAGES } from "@/lib/visitor-language.mjs";
 import { TRANSLATION_CONSENT_KEY } from "@/components/legal/CookiePreferences";
-export const SUPPORTED_LANGUAGES = [
-  { code: "id", label: "Bahasa Indonesia" },
-  { code: "en", label: "English" },
-  { code: "ja", label: "日本語" },
-  { code: "es", label: "Español" },
-  { code: "zh-CN", label: "简体中文" },
-  { code: "de", label: "Deutsch" },
-  { code: "fr", label: "Français" },
-  { code: "ar", label: "العربية" },
-];
 declare global {
   interface Window {
     googleTranslateElementInit?: () => void;
@@ -61,9 +55,15 @@ function setLanguage(code: string) {
   }
 }
 export function GlobalTranslator() {
+  const [failed,setFailed]=useState(false);
+  const pathname=usePathname() || "/";
+  const allowed=isPublicTranslationPath(pathname);
   const lang = useSyncExternalStore(subscribe, currentLanguage, () => "id");
   useEffect(() => {
-    if (lang === "id") return;
+    // Third-party translation code cannot be unloaded after execution. Enter
+    // private routes in a fresh document so it never observes those pages.
+    if (!allowed) { if (window.google?.translate) window.location.reload(); return; }
+    if (lang === "id") { if (window.google?.translate) window.location.reload(); return; }
     window.googleTranslateElementInit = () => {
       if (window.google?.translate?.TranslateElement)
         new window.google.translate.TranslateElement(
@@ -81,23 +81,27 @@ export function GlobalTranslator() {
       script.src =
         "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
       script.async = true;
+      script.onerror = () => setFailed(true);
       document.body.appendChild(script);
     }
-  }, [lang]);
+    const timeout=setTimeout(()=>{if(!document.documentElement.classList.contains("translated-ltr") && !document.documentElement.classList.contains("translated-rtl"))setFailed(true);},20000);
+    return () => { clearTimeout(timeout);document.getElementById("google-translate-script")?.remove(); delete window.googleTranslateElementInit; };
+  }, [lang,allowed]);
   return (
     <>
+      <LanguageSuggestion onTranslate={code=>{localStorage.setItem(TRANSLATION_CONSENT_KEY,"granted");setLanguage(code);}} />
       <div
         id="google_translate_element"
         className="sr-only pointer-events-none"
         aria-hidden="true"
       />
-      {lang !== "id" && (
+      {lang !== "id" && allowed && (
         <aside
           aria-label="Status terjemahan"
           className="fixed bottom-5 left-5 z-[95] rounded-xl bg-[#181815] border border-white/20 text-white text-xs p-3 flex items-center gap-4"
         >
           <span>
-            Terjemahan:{" "}
+            {failed ? "Terjemahan belum tersedia. Bahasa pilihan:" : "Google Translate:"}{" "}
             {SUPPORTED_LANGUAGES.find((l) => l.code === lang)?.label}
           </span>
           <button
@@ -180,7 +184,7 @@ export function NavbarLanguageSwitcher() {
       </button>
       {open && (
         <div
-          className="absolute right-0 top-full mt-2 w-64 max-w-[calc(100vw-44px)] bg-[#181815] text-white border border-white/15 shadow-xl rounded-xl p-3 z-[100]"
+          className="language-switcher-menu absolute right-0 top-full mt-2 w-64 max-w-[calc(100vw-44px)] max-h-[min(65dvh,420px)] overflow-y-auto overscroll-contain bg-[#181815] text-white border border-white/15 shadow-xl rounded-xl p-3 z-[100]"
           aria-label="Pilihan bahasa"
         >
           {pending ? (

@@ -68,6 +68,9 @@ export default async function BlogPost({ params }: Props) {
   }
 
   const relatedPosts = await getRelatedPosts(slug, post.metadata.category, 3);
+  // The page header supplies the sole H1. Preserve section IDs for deep links.
+  const articleHtml = addHeadingIds(post.contentHtml || "")
+    .replace(/<h1(\s[^>]*)?>/gi, '<h2$1>').replace(/<\/h1>/gi, '</h2>');
   const siteUrl = 'https://khadafidaffa.com';
   const articleUrl = `${siteUrl}/blog/${slug}`;
   const coverImage = post.metadata.ogImage || post.metadata.cover_url || post.metadata.image;
@@ -105,7 +108,7 @@ export default async function BlogPost({ params }: Props) {
   const jsonLdScript = (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
     />
   );
 
@@ -115,7 +118,7 @@ export default async function BlogPost({ params }: Props) {
       <>
         {jsonLdScript}
         <BlogPostContent post={{ ...post, content: tocContent }} slug={slug} relatedPosts={relatedPosts}>
-          <div dangerouslySetInnerHTML={{ __html: addHeadingIds(post.contentHtml || '') }} />
+          <div dangerouslySetInnerHTML={{ __html: articleHtml }} />
         </BlogPostContent>
       </>
     );
@@ -125,7 +128,7 @@ export default async function BlogPost({ params }: Props) {
     <>
       {jsonLdScript}
       <BlogPostContent post={post} slug={slug} relatedPosts={relatedPosts}>
-        <div dangerouslySetInnerHTML={{ __html: addHeadingIds(post.contentHtml || '') }} />
+        <div dangerouslySetInnerHTML={{ __html: articleHtml }} />
       </BlogPostContent>
     </>
   );

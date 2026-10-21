@@ -139,7 +139,7 @@ export function ShopDiscovery({
         setFilters((current) =>
           normalizeFilters({ ...current, q: input }, items),
         ),
-      260,
+      150,
     );
     return () => clearTimeout(timer);
   }, [input, items]);
@@ -217,7 +217,7 @@ export function ShopDiscovery({
           dan karya yang terus bertumbuh.
         </p>
       </div>
-      <form className={s.searchBox} role="search" onSubmit={e => { e.preventDefault(); update({ ...filters, q: input }); }}>
+      <form className={s.searchBox} data-premium-search role="search" onSubmit={e => { e.preventDefault(); update({ ...filters, q: input }); }}>
         <Search aria-hidden="true" />
         <label className={s.srOnly} htmlFor="shop-search">
           Cari koleksi

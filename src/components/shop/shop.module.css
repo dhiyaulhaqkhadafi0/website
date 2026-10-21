@@ -1979,10 +1979,6 @@
 .discovery { --bg: #f5f1e8; --surface: #fffdf7; --text: #292430; --muted: #6b6270; --line: #47375026; --accent: #715691; --sage: #54705f; color: var(--text); background: radial-gradient(ellipse at 100% 0%, #d7cbe7a6, transparent 38%), radial-gradient(ellipse at 0% 85%, #d7dfd2a6, transparent 40%), #f5f1e8; border: 1px solid #cbbfd539; border-radius: 24px; padding: 58px 36px; margin: 40px -36px 88px; position: relative; }
 .discovery .eyebrow, .cardMeta { font-size: 11px; }
 .searchBox { position: relative; isolation: isolate; background: var(--surface); border: 1px solid #b9a7cc; border-radius: 12px; padding: 0 12px 0 22px; box-shadow: 0 8px 30px #59436c0b; }
-.searchBox::before { content: ""; position: absolute; z-index: -1; inset: -2px; padding: 2px; border-radius: inherit; pointer-events: none; background: conic-gradient(from var(--trace-angle), #a38bb12b, #a38bb12b 65%, #a791c6 82%, #d5c8ef 87%, #a38bb12b 95%); mask: linear-gradient(#fff 0 0) content-box exclude, linear-gradient(#fff 0 0); opacity: .6; }
-.searchBox:hover::before, .searchBox:focus-within::before { opacity: 1; animation: searchTrace 5s linear infinite; }
-@property --trace-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
-@keyframes searchTrace { to { --trace-angle: 360deg; } }
 .searchBox .searchSend { background: #715691; color: #fff; border-radius: 9px; flex-shrink: 0; transition: background .2s, transform .2s; }
 .searchBox .searchSend:hover { background: #57416f; transform: translateY(-2px); }
 .cardGrid { gap: 26px; align-items: stretch; }

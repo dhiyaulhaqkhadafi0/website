@@ -21,7 +21,8 @@ export function Footer() {
           <div className={s.identity}>
             <Link href="/" className={s.brand} aria-label="Khadafi — Beranda">
               <Image
-                src="/assets/logo%20AAPE.png"
+                src="/images/experience/brand-v1.webp"
+                unoptimized
                 alt=""
                 width={66}
                 height={44}

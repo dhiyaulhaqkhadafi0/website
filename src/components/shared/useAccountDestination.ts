@@ -1,21 +1,24 @@
 "use client";
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
-import { syncSession } from "@/components/commerce/SessionBridge";
 export function useAccountDestination() {
   const [account, setAccount] = useState({ label: "Masuk", href: "/login" });
   useEffect(() => {
     let active = true;
     let revision = 0;
+    let unsubscribe = () => {};
+    let initialized = false, previousToken: string | undefined;
     async function update(token?: string) {
+      if (initialized && token === previousToken) return;
+      initialized = true; previousToken = token;
       const current = ++revision;
       if (!token) {
         if (active) setAccount({ label: "Masuk", href: "/login" });
         return;
       }
       try {
-        const response = await syncSession(token);
+        const response = await fetch("/api/auth/session", { method: "POST", headers: { Authorization: "Bearer " + token } });
         const data = await response.json();
+        if (!response.ok) initialized = false;
         if (active && current === revision)
           setAccount(
             response.ok
@@ -29,11 +32,15 @@ export function useAccountDestination() {
               : { label: "Masuk", href: "/login" },
           );
       } catch {
+        initialized = false;
         if (active && current === revision)
           setAccount({ label: "Masuk", href: "/login" });
       }
     }
-    void supabase.auth
+    // The anonymous navbar can render without downloading the auth SDK first.
+    const timer = setTimeout(() => { void import("@/lib/supabase").then(({supabase}) => {
+      if (!active) return;
+      void supabase.auth
       .getSession()
       .then(({ data }) => update(data.session?.access_token))
       .catch(() => update());
@@ -42,10 +49,13 @@ export function useAccountDestination() {
         void update(session?.access_token);
       });
     });
+    unsubscribe = () => data.subscription.unsubscribe();
+    }).catch(() => update()); }, 300);
     return () => {
       active = false;
       revision++;
-      data.subscription.unsubscribe();
+      clearTimeout(timer);
+      unsubscribe();
     };
   }, []);
   return account;
