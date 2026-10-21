@@ -28,8 +28,11 @@ The supplied raster images were resized/encoded for delivery without changing th
 | HCFTL cover, mobile | 2,025,841 | 36,864 |
 | Chikki concept | 1,705,078 | 131,430 |
 | Portrait | 77,996 | 24,088 |
+| Ebook mockup | 443,231 | 124,210 |
 
 Versioned image filenames receive immutable cache headers. Fixed dimensions reserve image space; below-fold visuals load lazily. These byte reductions are file-level comparisons, not claims that the original complete files were necessarily transferred by the previous image optimizer.
+
+The first hosted performance profile identified the ebook PNG as a real 443 KB network transfer. Its validated local media path now resolves to a 124 KB WebP derivative, retaining transparency and the original CMS value. The homepage also streams its latest-article column inside Suspense so the hero and navigation can render without waiting for the public article query. Article freshness and query permissions are unchanged.
 
 ## Initial production audit
 

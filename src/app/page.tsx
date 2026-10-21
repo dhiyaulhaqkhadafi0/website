@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function HomePage() {
-  const posts = await getBlogListingPosts();
+export default function HomePage() {
+  const posts = getBlogListingPosts();
 
   const websiteJsonLd = {
     "@context": "https://schema.org",

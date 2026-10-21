@@ -662,6 +662,10 @@
   border-top: 1px solid var(--line);
   color: var(--text);
 }
+.articlePlaceholder > div { min-height: 172px; padding: 24px 0; border-top: 1px solid var(--line); }
+.articlePlaceholder i { display: block; height: 13px; width: 70%; margin: 14px 0; background: var(--line); border-radius: 4px; }
+.articlePlaceholder i:first-child { width: 25%; height: 9px; }
+.articlePlaceholder i:last-child { width: 40%; height: 9px; }
 .articleRow .eyebrow {
   font-size: 10px;
   margin-bottom: 12px !important;

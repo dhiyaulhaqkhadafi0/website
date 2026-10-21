@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import type { BlogCardItem } from "@/lib/mdx";
 import { SIGNATURE_SYSTEMS } from "@/content/resources-data";
 import { WorkAtlas } from "@/components/freelance/WorkAtlas";
@@ -73,7 +74,24 @@ const capabilities = [
     "Merumuskan masalah, menguji ide, dan menentukan langkah berikutnya.",
   ],
 ];
-export function HomeView({ posts }: { posts: BlogCardItem[] }) {
+async function RecentArticles({ posts }: { posts: Promise<BlogCardItem[]> }) {
+  const articles = await posts;
+  return <>{articles.slice(0, 3).map((post) => (
+    <Link key={post.metadata.slug} href={`/blog/${post.metadata.slug}`} className={styles.articleRow}>
+      <span className={styles.eyebrow}>{post.metadata.category || "Artikel"}</span>
+      <h4>{post.metadata.title}</h4>
+      <div><time dateTime={post.metadata.date}>{new Date(post.metadata.date).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" })}</time>
+        {post.metadata.readingTime && <span>{post.metadata.readingTime} menit baca</span>}<span aria-hidden="true">↗</span>
+      </div>
+    </Link>
+  ))}{articles.length === 0 && <p>Artikel akan tampil di sini setelah diterbitkan.</p>}</>;
+}
+function ArticlePlaceholder() {
+  return <div className={styles.articlePlaceholder} role="status" aria-label="Memuat artikel terbaru">
+    {[0, 1, 2].map(i => <div key={i} aria-hidden="true"><i /><i /><i /></div>)}
+  </div>;
+}
+export function HomeView({ posts }: { posts: Promise<BlogCardItem[]> }) {
   return (
     <HomeExperience>
       <header className={`${styles.section} ${styles.hero}`}>
@@ -328,38 +346,7 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
               <h3 className={styles.columnTitle}>
                 Terbaru dari The Digital Grimoire
               </h3>
-              {posts.slice(0, 3).map((post) => (
-                <Link
-                  key={post.metadata.slug}
-                  href={`/blog/${post.metadata.slug}`}
-                  className={styles.articleRow}
-                >
-                  <span className={styles.eyebrow}>
-                    {post.metadata.category || "Artikel"}
-                  </span>
-                  <h4>{post.metadata.title}</h4>
-                  <div>
-                    <time dateTime={post.metadata.date}>
-                      {new Date(post.metadata.date).toLocaleDateString(
-                        "id-ID",
-                        {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                          timeZone: "UTC",
-                        },
-                      )}
-                    </time>
-                    {post.metadata.readingTime && (
-                      <span>{post.metadata.readingTime} menit baca</span>
-                    )}
-                    <span aria-hidden="true">↗</span>
-                  </div>
-                </Link>
-              ))}
-              {posts.length === 0 && (
-                <p>Artikel akan tampil di sini setelah diterbitkan.</p>
-              )}
+              <Suspense fallback={<ArticlePlaceholder />}><RecentArticles posts={posts} /></Suspense>
               <Link href="/blog" className={styles.textLink}>
                 Baca semua artikel <span aria-hidden="true">→</span>
               </Link>

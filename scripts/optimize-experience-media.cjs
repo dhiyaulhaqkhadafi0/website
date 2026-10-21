@@ -7,6 +7,7 @@ const out = 'public/images/experience';
   const tasks = [
     ['public/assets/logo AAPE.png', 'brand-v1.webp', 240, 86],
     ['public/assets/my-profile.jpg', 'portrait-v1.webp', 720, 86],
+    ['public/products/formula-profitable-blueprint-mockup.png', 'formula-profitable-blueprint-mockup-v1.webp', 720, 82],
     [path.join(resourceRoot, 'free-resources-hero.png'), 'resources-cover-v1-1440.webp', 1440, 84],
     [path.join(resourceRoot, 'free-resources-hero.png'), 'resources-cover-v1-768.webp', 768, 82],
     [path.join(resourceRoot, 'ChatGPT Image Sep 10, 2026, 10_04_02 AM (6).png'), 'chikki-preview-v1.webp', 1200, 84],

@@ -3,6 +3,8 @@ export type ProductMedia = { url: string; alt: string };
 const storage = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://mykgtajanxczdnzekycl.supabase.co";
 export function mediaUrl(value: string) {
   const raw = value.trim();
+  if (raw === "/products/formula-profitable-blueprint-mockup.png")
+    return "/images/experience/formula-profitable-blueprint-mockup-v1.webp";
   // Repair the published ebook's old, extensionless site path.
   if (["/products/ebook-formula-profitable-blueprint-cover", "ebook/products/ebook-formula-profitable-blueprint-cover"].includes(raw))
     return "/products/formula-profitable-blueprint-cover.webp";
