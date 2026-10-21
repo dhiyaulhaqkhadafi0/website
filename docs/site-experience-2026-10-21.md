@@ -32,7 +32,7 @@ The supplied raster images were resized/encoded for delivery without changing th
 
 Versioned image filenames receive immutable cache headers. Fixed dimensions reserve image space; below-fold visuals load lazily. These byte reductions are file-level comparisons, not claims that the original complete files were necessarily transferred by the previous image optimizer.
 
-The first hosted performance profile identified the ebook PNG as a real 443 KB network transfer. Its validated local media path now resolves to a 124 KB WebP derivative, retaining transparency and the original CMS value. The homepage also streams its latest-article column inside Suspense so the hero and navigation can render without waiting for the public article query. Article freshness and query permissions are unchanged.
+The first hosted performance profile identified the ebook PNG as a real 443 KB network transfer. Its validated local media path now resolves to a 124 KB WebP derivative, retaining transparency and the original CMS value. The homepage also streams its latest-article column inside Suspense so the hero and navigation can render without waiting for the public article query during server rendering. The current homepage is prerendered and served from the incremental cache in production, so this is not evidence that a database query previously ran on every homepage request. Article freshness and query permissions are unchanged.
 
 Repeated hosted measurements also showed variable R2 lookup latency. The final adapter configuration uses OpenNext's built-in regional cache in short-lived mode (up to 60 seconds), keeping tag validation enabled. It wraps only existing Next incremental-cache entries, without creating a shared response cache for authenticated routes or dynamic commerce prices. Cache keys include the build ID. Hashed `/_next/static/*` assets also receive the immutable cache header recommended by [OpenNext's caching guide](https://opennext.js.org/cloudflare/caching), avoiding validation requests on repeat visits. This adapter-only change reuses the unchanged Next build and rebuilds the Worker wrapper.
 
@@ -72,4 +72,29 @@ The locale approach keeps original content accessible without redirecting crawle
 
 ## Deployment
 
-Build, release identity, hosted verification and the post-release performance comparison will be recorded after deployment. Sanitized evidence is in ignored `artifacts/site-experience/`.
+Deployed to https://khadafidaffa.com on 21 October 2026. Application source: `1ba8897`; final adapter/header source: `1402672`; Next build ID: `6DrjQBYMRZ2B4zYCOINlc`; active Worker version: `4d03acb2-d1cd-4af5-9868-6e97c714e910`. Source commits are pushed to `codex/site-speed-experience`. Existing R2, Images, assets, self-service binding, merchant secrets, payment flags and five-minute reconciliation cron were retained.
+
+Next production build completed with 188 routes. OpenNext completed successfully; its existing Windows package-copy warnings remain in the build log. Targeted application ESLint and TypeScript checks passed. The adapter config lint has one pre-existing anonymous-default-export warning and no errors. Public-output preflight checked 684 files against the two known private root credentials, with zero matches; this does not claim coverage of unknown merchant secret values. All 151 cache objects for the build were uploaded successfully.
+
+Final hosted verification:
+
+- All 164 sitemap URLs returned 200 with unique titles, matching canonicals, descriptions, one H1 and no noindex directive. Seven article URLs and 24 JSON-LD blocks passed; structured JSON parsed successfully. This is technical validation, not a Google indexing receipt.
+- Mobile touch scrolling, expanded menus, language-list scrolling, search/filter/reset, reduced motion, route feedback, public product translation and auth form modes passed on the final Worker, with no uncaught browser errors. No account was created and no email or payment was sent.
+- The same Next build was visually checked on 390/1440-pixel screens and translated with the real Google service. Resources-to-home navigation remained translated without browser errors. Country/language fixtures cover US and Japanese suggestions and remembered dismissal; these fixtures do not simulate a physical visitor in every country.
+- Hosted build ID matches local output. Geo hint is country-only with private/no-store. ads.txt is 200/text/plain with the verified publisher; both versioned images and hashed framework chunks return one-year immutable cache headers.
+- Product and checkout remain Rp59,000 at 390/1440 pixels. Checkout is configured, login is required and method availability is explained at DOKU. Unsigned webhook and anonymous order requests return 401; obsolete diagnostic/QA endpoints return 404. Payment processing and entitlement code were not modified.
+
+### Final performance measurements
+
+Three sequential Chromium samples after the final edge deployment used the same 390×844 mobile viewport, reduced motion and disabled browser cache, without network throttling. Edge cache state is not controlled. These local lab results do not establish a field Core Web Vitals improvement.
+
+| Route | Median LCP ms | Observed LCP range ms | Median TTFB ms | Median transferred bytes |
+| --- | ---: | ---: | ---: | ---: |
+| / | 3,220 | 1,992–3,452 | 1,120 | 421,728 |
+| /products | 2,660 | 1,268–2,780 | 282 | 598,131 |
+| /resources | 2,368 | 1,372–2,588 | 515 | 471,597 |
+| /login | 1,284 | 940–2,472 | 211 | 477,675 |
+
+Product-page transfer fell about 34% from the initial 909,961-byte sample, driven by the smaller ebook mockup. Resources adds the requested cover and therefore transfers more content than before. LCP did not improve consistently against the original single-run sample: network/edge and machine timing varied substantially, including one earlier 9.15-second resources TTFB outlier. A preceding three-run series had median LCP 2,480/1,296/1,348/916 ms on the four routes, demonstrating that a single reading is insufficient. No guaranteed speed increase is claimed from these lab samples.
+
+Median CLS was 0 on all four routes, but one homepage sample recorded 0.234 and one login sample 0.009. A focused homepage layout-shift trace did not reproduce the shift. Treat this as a remaining field-monitoring concern rather than claiming universally zero shifts. All raw sanitized measurements, screenshots and verification evidence are in ignored `artifacts/site-experience/`.
