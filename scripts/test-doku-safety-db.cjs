@@ -13,7 +13,7 @@ const {PGlite}=require(process.env.PGLITE_MODULE || '@electric-sql/pglite');
  create table storage.buckets(id text primary key,name text,public boolean,file_size_limit bigint,allowed_mime_types text[]);
  create table storage.objects(id uuid default gen_random_uuid(),bucket_id text,name text);alter table storage.objects enable row level security;
  create function storage.foldername(text) returns text[] language sql as $$select string_to_array($1,'/')$$;`);
- for(const f of ['supabase_commerce.sql','supabase/migrations/20261017051124_commerce_media_guest_checkout.sql','supabase/migrations/20261018094500_doku_checkout_sandbox.sql','supabase/migrations/20261020154413_doku_go_live_safety.sql','supabase/migrations/20261021034531_doku_production_checkout_host.sql']){ console.log('Applying '+f); await db.exec(fs.readFileSync(f,'utf8')); }
+ for(const f of ['supabase_commerce.sql','supabase/migrations/20261017051124_commerce_media_guest_checkout.sql','supabase/migrations/20261018094500_doku_checkout_sandbox.sql','supabase/migrations/20261020154413_doku_go_live_safety.sql','supabase/migrations/20261021034531_doku_production_checkout_host.sql','supabase/migrations/20261021041208_doku_checkout_active_channels.sql']){ console.log('Applying '+f); await db.exec(fs.readFileSync(f,'utf8')); }
  pass('curated migrations apply on embedded PostgreSQL without production connection');
  const user='11111111-1111-4111-8111-111111111111',other='22222222-2222-4222-8222-222222222222';
  await db.query("insert into auth.users values($1,'qa@example.invalid',now(),false),($2,'other@example.invalid',now(),false)",[user,other]);
@@ -31,6 +31,21 @@ const {PGlite}=require(process.env.PGLITE_MODULE || '@electric-sql/pglite');
  for(const url of ['https://checkout.doku.com.evil.test/pay','https://sandbox.doku.com/checkout/test','https://evil.test@checkout.doku.com/pay'])await assert.rejects(()=>db.query('select commerce_finish_doku_checkout($1,$2,$3)',[productionOrder.id,productionClaim.token,url]));
  await db.query('select commerce_finish_doku_checkout($1,$2,$3)',[productionOrder.id,productionClaim.token,'https://checkout.doku.com/checkout-link-v2/test']);
  const storedProduction=(await db.query('select status,payment_url from commerce_orders where id=$1',[productionOrder.id])).rows[0];assert.equal(storedProduction.status,'pending');assert.equal(storedProduction.payment_url,'https://checkout.doku.com/checkout-link-v2/test');pass('production current Checkout hostname persists without settlement; spoofed host, credentials and sandbox host rejected');
+ const {DOKU_CHANNELS}=await import('../src/lib/doku-channels.mjs');
+ for(const channel of [...DOKU_CHANNELS,'UNKNOWN',null]){
+  await db.exec('begin');
+  try{
+   const notify=()=>db.query('select commerce_record_doku_event($1,$2,$3,$4,$5,$6,$7,$8)',[productionOrder.id,59000,'KSLOCALPROD2','production','channel-event','c'.repeat(64),'SUCCESS',channel]);
+   if(channel===null||channel==='UNKNOWN')await assert.rejects(notify);
+   else{await notify();await notify();assert.equal((await db.query('select count(*)::int n from commerce_entitlements where order_id=$1',[productionOrder.id])).rows[0].n,1);}
+  }finally{await db.exec('rollback')}
+ }
+ pass('all Checkout channels settle exactly once in SQL; unknown and NULL rejected without access');
+ for(const role of ['anon','authenticated','service_role']){
+  const allowed=(await db.query("select has_function_privilege($1,'public.commerce_record_doku_event(uuid,integer,text,text,text,text,text,text)','EXECUTE') allowed",[role])).rows[0].allowed;
+  assert.equal(allowed,role==='service_role');
+ }
+ pass('settlement RPC remains service-only with fixed search path');
  const event=async(id,status='SUCCESS',amount=59000,hash='a'.repeat(64),env='sandbox')=>db.query('select commerce_record_doku_event($1,$2,$3,$4,$5,$6,$7,$8)',[order.id,amount,invoice,env,id,hash,status,'QRIS_DOKU']);
  await assert.rejects(()=>event('wrong-amount','SUCCESS',59001));await assert.rejects(()=>event('wrong-env','SUCCESS',59000,undefined,'production'));
  assert.equal((await db.query('select count(*)::int n from commerce_entitlements')).rows[0].n,0);pass('signed wrong amount/environment cannot unlock');

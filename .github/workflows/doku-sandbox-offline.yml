@@ -12,7 +12,9 @@ on:
       - 'scripts/test-doku-*.cjs'
       - 'scripts/lib/doku-nonsnap-get-signature.mjs'
       - 'src/lib/doku-*.ts'
+      - 'src/lib/doku-*.mjs'
       - 'src/lib/doku.ts'
+      - 'supabase/migrations/20261021041208_doku_checkout_active_channels.sql'
       - 'src/app/api/commerce/doku/**'
       - 'src/app/api/internal/commerce/doku/**'
 
@@ -55,10 +57,14 @@ jobs:
           node scripts/test-doku-webhook-signature.mjs
       - name: Verify HTTP webhook handler (offline localhost only)
         run: node scripts/test-doku-webhook-http.mjs
+      - name: Verify supported channel notifications and card settlement types
+        run: node scripts/test-doku-channels.mjs
       - name: Verify status GET response signatures
         run: node scripts/test-doku-get-status-signature.mjs
       - name: Verify Checkout response formats without credentials
-        run: node scripts/test-doku-checkout-response.cjs
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          node scripts/test-doku-checkout-response.cjs
       - name: Verify reconciliation/entitlement decision engine
         run: node scripts/test-doku-reconciliation.mjs
       - name: Verify QRIS replay, concurrency and scheduled contract

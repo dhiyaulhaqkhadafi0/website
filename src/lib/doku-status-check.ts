@@ -1,7 +1,7 @@
 import { createHmac, randomUUID, timingSafeEqual } from "node:crypto";
 
-// Sandbox-only server function. Never accept a caller-supplied URL or invoice
-// from a browser. A checkout must already exist in our isolated order database.
+// Server-only caller: never accept a caller-supplied URL or invoice from a browser.
+// A checkout must already exist in the matching environment's order database.
 export type DokuPaymentStatus =
   "PENDING" | "SUCCESS" | "FAILED" | "EXPIRED" | "REFUNDED" | "TIMEOUT" | "REDIRECT";
 const STATES = new Set<DokuPaymentStatus>([
@@ -12,6 +12,7 @@ export type VerifiedDokuStatus = {
   amount: number;
   status: DokuPaymentStatus;
   channel: string | null;
+  transactionType?: string;
 };
 type FetchLike = typeof fetch;
 
@@ -105,6 +106,7 @@ export async function checkDokuStatus(
     amount,
     status: status as DokuPaymentStatus,
     channel: typeof channel?.id === "string" ? channel.id : null,
+    ...(typeof transaction?.type === "string" ? { transactionType: transaction.type } : {}),
   };
 }
 // Preserve the audited sandbox-only API for old scripts and fixtures.

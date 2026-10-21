@@ -14,7 +14,9 @@ on:
       - 'supabase/migrations/20261018094500_doku_checkout_sandbox.sql'
       - 'supabase/migrations/20261020154413_doku_go_live_safety.sql'
       - 'supabase/migrations/20261021034531_doku_production_checkout_host.sql'
+      - 'supabase/migrations/20261021041208_doku_checkout_active_channels.sql'
       - 'src/lib/doku*.ts'
+      - 'src/lib/doku*.mjs'
       - 'src/app/api/commerce/doku/**'
       - 'scripts/prepare-doku-local-schema.ps1'
       - 'scripts/test-doku-local-db.ps1'
@@ -69,7 +71,7 @@ jobs:
           npx --yes supabase@latest init --yes >/dev/null
           grep -Eq '^project_id[[:space:]]*=[[:space:]]*"khadafi-doku-staging-db"' supabase/config.toml
           echo "PASS: isolated local CLI project was initialized"
-      - name: Prepare EXACTLY five local Commerce migrations
+      - name: Prepare EXACTLY seven local Commerce migrations
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
@@ -77,7 +79,7 @@ jobs:
           # The preparation is PowerShell-only and throws on errors. $LASTEXITCODE
           # can be $null if no native executable was called; do not misread it as a failure.
           $count = @(Get-ChildItem "$env:RUNNER_TEMP/khadafi-doku-staging-db/supabase/migrations" -Filter '*.sql').Count
-          if ($count -ne 5) { throw "Expected exactly 5 migrations; found $count" }
+          if ($count -ne 7) { throw "Expected exactly 7 migrations; found $count" }
       - name: Start minimized local Supabase on ephemeral GitHub runner
         shell: bash
         run: |

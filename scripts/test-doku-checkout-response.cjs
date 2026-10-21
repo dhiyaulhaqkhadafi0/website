@@ -9,15 +9,19 @@ function load(file, mocks, env, extras = {}) {
 }
 (async () => {
   const security = load('src/lib/doku-security.ts', {}, {}), policy = load('src/lib/doku-config.ts', {}, {}), hosts = load('src/lib/doku-checkout-host.ts', {}, {});
-  const env = { DOKU_ENABLED: 'true', PAYMENTS_ENABLED: 'true', DOKU_CLIENT_ID: 'OFFLINE_CLIENT_VECTOR', DOKU_SECRET_KEY: 'OFFLINE_HMAC_VECTOR', DOKU_SITE_ORIGIN: 'https://khadafidaffa.com', NEXT_PUBLIC_SUPABASE_URL: 'https://mykgtajanxczdnzekycl.supabase.co', DOKU_IS_PRODUCTION: 'true', DOKU_PRODUCTION_APPROVED: 'true', DOKU_PUBLIC_SALES_APPROVED: 'true' };
+  const env = { DOKU_ENABLED: 'true', PAYMENTS_ENABLED: 'true', DOKU_CLIENT_ID: 'OFFLINE_CLIENT_VECTOR', DOKU_SECRET_KEY: 'OFFLINE_HMAC_VECTOR', DOKU_SITE_ORIGIN: 'https://khadafidaffa.com', NEXT_PUBLIC_SUPABASE_URL: 'https://mykgtajanxczdnzekycl.supabase.co', DOKU_IS_PRODUCTION: 'true', DOKU_PRODUCTION_APPROVED: 'true', DOKU_PUBLIC_SALES_APPROVED: 'true', DOKU_QRIS_ENABLED: 'true', DOKU_QRIS_STATUS: 'ACTIVE', DOKU_QA_ENABLED: 'true', DOKU_QA_LIVE_APPROVED: 'true' };
   const input = { orderId: crypto.randomUUID(), requestId: crypto.randomUUID(), amount: 1000, email: 'buyer@example.invalid', name: 'Buyer' };
   let mode = 'echo';
+  let expectedMethods = null;
   const doku = load('src/lib/doku.ts', { './doku-security': security, './doku-config': policy, './doku-checkout-host': hosts }, env, {
     fetch: async (url, options) => {
       assert.equal(url, 'https://api.doku.com/checkout/v1/payment');
       assert.equal(options.redirect, 'error');
       const request = JSON.parse(options.body);
       assert.equal(request.order.amount, 1000);
+      assert.equal(request.payment.type, 'SALE');
+      if (expectedMethods === null) assert.equal(Object.hasOwn(request.payment, 'payment_method_types'), false, 'DOKU chooses active eligible methods');
+      else assert.deepEqual(request.payment.payment_method_types, expectedMethods);
       const echo = { client_id: env.DOKU_CLIENT_ID, request_id: input.requestId, date: options.headers['Request-Timestamp'], signature: options.headers.Signature };
       if (mode === 'wrong-echo') echo.request_id = crypto.randomUUID();
       const raw = JSON.stringify({ message: ['SUCCESS'], response: { order: { invoice_number: security.dokuInvoice(input.orderId), amount: mode === 'wrong-amount' ? 1001 : 1000, currency: 'IDR' }, payment: { url: mode === 'wrong-host' ? 'https://evil.invalid/pay' : 'https://checkout.doku.com/checkout-link-v2/unit' }, ...(mode === 'bare' ? {} : { headers: echo }) } });
@@ -27,6 +31,10 @@ function load(file, mocks, env, extras = {}) {
     },
   });
   mode='signed'; assert.equal(await doku.createDokuCheckout(input), 'https://checkout.doku.com/checkout-link-v2/unit');
+  expectedMethods=['QRIS']; await doku.createDokuCheckout({...input, privateQa:true});
+  env.DOKU_QRIS_ENABLED='false'; expectedMethods=['VIRTUAL_ACCOUNT_BANK_MANDIRI']; await doku.createDokuCheckout(input);
+  env.DOKU_QRIS_ENABLED='true'; expectedMethods=null;
+  console.log('PASS new public production Checkout omits method filter, uses SALE; private QA stays QRIS-only and QRIS kill switch stays enforced');
   for (const [test, code] of [['bare', 'DOKU_RESPONSE_SIGNATURE_MISSING'], ['echo', 'DOKU_RESPONSE_SIGNATURE_MISSING'], ['wrong-echo', 'DOKU_RESPONSE_SIGNATURE_MISSING'], ['bad-signature', 'DOKU_RESPONSE_SIGNATURE_INVALID'], ['wrong-amount', 'DOKU_RESPONSE_ORDER_MISMATCH'], ['wrong-host', 'DOKU_RESPONSE_HOST_REJECTED'], ['auth-rejected', 'DOKU_CREDENTIALS_REJECTED']]) {
     mode = test; await assert.rejects(() => doku.createDokuCheckout(input), error => error.message === code, test);
   }

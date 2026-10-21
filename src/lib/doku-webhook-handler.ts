@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { isDokuSettlement } from "./doku-channels.mjs";
 export type DokuNotification = {
   orderId: string; amount: number; reference: string; eventId: string;
   bodyHash: string; status: string; channel: string;
@@ -43,7 +44,7 @@ export async function handleDokuWebhookHttp(request: Request, deps: DokuWebhookD
   if (!id || invoice !== deps.invoiceForOrder(id) || !Number.isSafeInteger(amount) || amount <= 0 ||
       (event?.order?.currency != null && event.order.currency !== "IDR") ||
       !["SUCCESS", "PENDING", "FAILED", "EXPIRED", "TIMEOUT", "REFUNDED", "DISPUTED"].includes(status) ||
-      !["VIRTUAL_ACCOUNT_BANK_MANDIRI", "QRIS_DOKU"].includes(channel))
+      !isDokuSettlement(channel, status, event?.transaction?.type))
     return reply({ error: "Invalid notification" }, 400);
   if (!deps.canSettle()) return reply({ error: "Unavailable" }, 503);
   try {

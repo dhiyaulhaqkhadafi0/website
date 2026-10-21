@@ -26,5 +26,7 @@ export function dokuPolicy(env: Env) {
   const qaCheckout = configured && qris && env.DOKU_QA_ENABLED === "true" &&
     (!production || env.DOKU_QA_LIVE_APPROVED === "true");
   return { environment, production, configured, checkout, qaCheckout, qris,
-    methods: qris ? ["VIRTUAL_ACCOUNT_BANK_MANDIRI", "QRIS"] : ["VIRTUAL_ACCOUNT_BANK_MANDIRI"] };
+    // Omit the public production filter so DOKU selects active, eligible methods.
+    // Preserve the explicit QRIS kill switch and isolated sandbox restrictions.
+    methods: production && qris ? null : qris ? ["VIRTUAL_ACCOUNT_BANK_MANDIRI", "QRIS"] : ["VIRTUAL_ACCOUNT_BANK_MANDIRI"] };
 }

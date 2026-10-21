@@ -47,7 +47,12 @@ export async function createDokuCheckout(input: {
       callback_url_result: callbackOrigin + "/checkout/success?order=" + input.orderId,
       auto_redirect: false,
     },
-    payment: { payment_due_date: 60, payment_method_types: input.privateQa ? ["QRIS"] : policy.methods },
+    payment: {
+      payment_due_date: 60,
+      type: "SALE",
+      ...(input.privateQa ? { payment_method_types: ["QRIS"] }
+        : policy.methods ? { payment_method_types: policy.methods } : {}),
+    },
     additional_info: { override_notification_url: process.env.DOKU_SITE_ORIGIN + DOKU_WEBHOOK_PATH },
     customer: { name: input.name, email: input.email },
   });

@@ -2,6 +2,7 @@ import { timingSafeEqual, createHash, randomUUID } from "node:crypto";
 import { createServiceRoleClient } from "@/lib/supabase";
 import { dokuPolicy } from "@/lib/doku-config";
 import { checkDokuStatus } from "@/lib/doku-status-check";
+import { isDokuSettlement } from "@/lib/doku-channels.mjs";
 export const dynamic = "force-dynamic";
 const reply = (body: unknown, status = 200) => Response.json(body, { status, headers: { "Cache-Control": "private, no-store" } });
 export async function POST(request: Request) {
@@ -24,7 +25,7 @@ export async function POST(request: Request) {
       summary.checked++;
       if (result.invoice !== state.invoice || result.amount !== order.total) throw new Error("Provider mismatch");
       if (result.status === "SUCCESS") {
-        if (!["VIRTUAL_ACCOUNT_BANK_MANDIRI", "QRIS_DOKU"].includes(result.channel || "")) throw new Error("Provider channel mismatch");
+        if (!isDokuSettlement(result.channel, result.status, result.transactionType)) throw new Error("Provider channel mismatch");
         const { error: writeError } = await db.rpc("commerce_record_doku_event", {
           p_order: state.order_id, p_total: order.total, p_reference: state.invoice,
           p_environment: policy.environment, p_event: "check:" + randomUUID(),

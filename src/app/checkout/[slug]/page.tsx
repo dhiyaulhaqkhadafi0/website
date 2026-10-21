@@ -37,6 +37,7 @@ export default async function Page({
         available={commerceConfigured(p.price > 0)}
         guestEnabled={process.env.COMMERCE_GUEST_CHECKOUT_ENABLED === "true"}
         qrisAvailable={dokuPolicy(process.env).qris}
+        providerMethods={dokuPolicy(process.env).methods === null}
       />
     </>
   );

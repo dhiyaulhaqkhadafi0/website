@@ -33,7 +33,7 @@ function fakeFetchFactory(opts = {}) {
     const body = JSON.stringify({
       order: { invoice_number: opts.invoice || invoice,
         amount: opts.amount ?? 59000, currency: opts.currency || "IDR" },
-      transaction: { status: opts.status || "SUCCESS" },
+      transaction: { status: opts.status || "SUCCESS", ...(opts.transactionType ? { type: opts.transactionType } : {}) },
       channel: { id: opts.channel || "VIRTUAL_ACCOUNT_BANK_MANDIRI" },
     });
     const signed = [
@@ -60,6 +60,11 @@ assert.deepEqual(valid, {
   invoice, amount: 59000, status: "SUCCESS", channel: "VIRTUAL_ACCOUNT_BANK_MANDIRI",
 });
 console.log("PASS: signed DOKU Sandbox Check Status SUCCESS verified");
+for (const transactionType of ["SALE", "CAPTURE", "AUTHORIZE"]) {
+  const card = await check({ channel: "CREDIT_CARD", transactionType });
+  assert.equal(card.transactionType, transactionType);
+}
+console.log("PASS: signed status parser preserves card transaction type for settlement guard");
 
 for (const [label, bad] of [
   ["unsigned", { unsigned: true }],
