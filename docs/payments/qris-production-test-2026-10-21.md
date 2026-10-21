@@ -26,4 +26,18 @@ Signed-in checkout is required so the owner can recover the ebook from /account/
 - Next webpack build and TypeScript passed, 187 static pages.
 - Remaining release and hosted verification results are recorded below after deployment.
 
+## Deployment and hosted result
+
+- OpenNext build passed, exit 0. Known Windows copy-package diagnostics appeared; hosted route checks passed afterward.
+- Public preflight scanned 671 assets/cache files against the two available private local credentials: zero matches. Build ID: `1YIFgF3WoGwyvj3Umpr6A`.
+- 151/151 cache entries uploaded to the new build prefix; prior release cache retained.
+- Worker release `542c50c5-f23e-4aa1-be57-961a60a82311`, source `dda72bd`, deployed successfully to production, including cron `*/5 * * * *`. Existing secrets/bindings retained; separate scheduler token uploaded as a secret and its temporary local file removed.
+- Browser verification: product/checkout at 390 and 1440 pixels show Rp1,000, QRIS displayed, login required, zero uncaught browser errors. Homepage, Freelance, monetization directory and sitemap return 200; AdSense verification metadata retained.
+- Unsigned DOKU webhook returns 401; anonymous order request returns 401; disabled private QA endpoint returns 404. No test order or payment was created.
+- **BLOCKED for live payment:** post-deploy secret inventory still lacks `DOKU_CLIENT_ID` and `DOKU_SECRET_KEY`. Browser confirms checkout is closed by the credential gate. Enabled production/QRIS configuration is not a verified live provider session. Owner was asked to install genuine production keys in Cloudflare, without sharing values in chat.
+- Source release synced to GitHub branch `codex/doku-qris-go-live-v2`. Main was not moved.
+- Supabase security advisors show informational [RLS enabled with no policy](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy) for the two new server-only event/state tables, intentionally with all buyer/public privileges revoked. Existing unrelated blog/Auth warnings remain outside this payment release.
+
+Evidence: ignored `artifacts/payments/qris-1000-live-verification.json`, `qris-1000-cache-upload.json`, `qris-1000-next-build.log`, `qris-1000-opennext-build.log`, and `qris-1000-deploy-direct.log`.
+
 Prior preparation reports are historical; their no-deploy scope is superseded for this release by the owner's explicit production request. Genuine payment completion and fulfillment must not be inferred from a build or an enabled flag.
