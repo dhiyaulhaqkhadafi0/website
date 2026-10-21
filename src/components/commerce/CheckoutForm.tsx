@@ -88,8 +88,17 @@ export function CheckoutForm({
           {product.price > 0 && <div className={s.paymentMethods}>
             <span className={s.eyebrow}>02 / METODE PEMBAYARAN</span>
             {providerMethods ? <>
-              <div><span>Pilih di halaman DOKU</span></div>
-              <p>Setelah klik Lanjut bayar, pilih QRIS, virtual account, atau metode lain yang tersedia di DOKU. Pilihan mengikuti layanan aktif dan nominal pembayaran.</p>
+              <div>
+                <button
+                  type="submit"
+                  className={s.dokuMethodButton}
+                  disabled={!hydrated || busy || !available || (!email && !guestEnabled)}
+                  aria-describedby="doku-checkout-hint"
+                >
+                  Pilih cara bayar di DOKU <ArrowUpRight aria-hidden="true" />
+                </button>
+              </div>
+              <p id="doku-checkout-hint">Tombol ini menyiapkan pesanan dan membukakan halaman resmi DOKU, tempat kamu memilih metode yang tersedia. Belum ada pembayaran yang dilakukan saat tombol diklik.</p>
             </> : <>
               <div><span>Bank / Virtual Account · Mandiri</span>{qrisAvailable && <span>QRIS</span>}</div>
               <p>Pilih metode yang tersedia setelah lanjut ke halaman DOKU. Ketersediaan mengikuti aktivasi merchant.</p>
