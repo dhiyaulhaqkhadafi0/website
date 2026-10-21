@@ -40,4 +40,12 @@ Signed-in checkout is required so the owner can recover the ebook from /account/
 
 Evidence: ignored `artifacts/payments/qris-1000-live-verification.json`, `qris-1000-cache-upload.json`, `qris-1000-next-build.log`, `qris-1000-opennext-build.log`, and `qris-1000-deploy-direct.log`.
 
+## Merchant secrets installed, 21 October 2026 at 10:25 WIB
+
+Owner confirmed installing both merchant secrets in Cloudflare. Current secret-name inventory confirms `DOKU_CLIENT_ID` and `DOKU_SECRET_KEY`; their values were not read or exported. Dashboard deployment `f9d36d0a-2149-44fb-86dd-30aa533654bb` is serving 100% traffic.
+
+Live browser verification was repeated at 390/1440 pixels: published price is Rp1,000, QRIS is shown, checkout configuration is now available, and the closed-checkout notice is absent. Anonymous buyers must sign in. The same homepage/Freelance/sitemap and unsigned webhook/anonymous orders/disabled private QA checks pass with zero browser errors.
+
+The missing-secret blocker above is resolved. No signed-in buyer session was available to this verifier. A real provider checkout/QR, merchant-key validity, payment SUCCESS, webhook delivery, and private ebook fulfillment have not yet been verified. Owner can now sign in and initiate the Rp1,000 QRIS payment from the production checkout. No payment was performed by the agent, and no additional code deployment was needed after the owner's secret deployment.
+
 Prior preparation reports are historical; their no-deploy scope is superseded for this release by the owner's explicit production request. Genuine payment completion and fulfillment must not be inferred from a build or an enabled flag.
