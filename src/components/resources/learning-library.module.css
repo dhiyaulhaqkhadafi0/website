@@ -4,6 +4,32 @@
   --champagne: #d4bb99;
   color: var(--text);
 }
+.library .hero { padding-top: clamp(36px, 5vw, 64px); }
+.thumbnailLink { display: block; margin: -12px -11px 20px; border-radius: 10px; overflow: hidden; }
+.thumbnail { --ink: #d0c3ef; position: relative; height: 156px; overflow: hidden; padding: 12px 16px; background: radial-gradient(ellipse at 90% 10%, #b4a0db30, transparent 65%), #202331; color: var(--ink); border: 1px solid #c2b8dc40; border-radius: 10px; }
+.thumbnail[data-tone="product"] { --ink: #bbd6ca; background: radial-gradient(ellipse at 90% 10%, #9bbcab30, transparent 65%), #1e2a28; }
+.thumbnail[data-tone="marketing"] { --ink: #e5cca5; background: radial-gradient(ellipse at 90% 10%, #c9a57630, transparent 65%), #302820; }
+.thumbnail[data-tone="business"] { --ink: #bed5e8; background: radial-gradient(ellipse at 90% 10%, #8baec230, transparent 65%), #202b35; }
+.thumbnailIndex { display: block; font-size: 9px; letter-spacing: .09em; text-transform: uppercase; }
+.thumbnailCanvas { position: relative; height: 105px; }
+.thumbnailSheet { position: absolute; left: 12%; top: 13px; width: 65%; padding: 12px; transform: rotate(-6deg); color: #35303d; background: #f0ece2; border: 1px solid #d5d0c8; box-shadow: 7px 7px 0 #ffffff0d, 0 7px 18px #0003; border-radius: 4px; }
+.thumbnailSheet > span { display: flex; align-items: center; gap: 7px; font-size: 7px; letter-spacing: .06em; }
+.thumbnailSheet i { display: block; width: 85%; height: 2px; margin-top: 7px; background: #4e465a36; }
+.thumbnailSheet i:nth-of-type(2) { width: 64%; }
+.thumbnailSheet > div { display: flex; align-items: center; justify-content: space-between; margin-top: 9px; }
+.thumbnailStamp { position: absolute; right: 6%; top: 26px; display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; background: #252734; border: 1px solid var(--ink); transform: rotate(12deg); box-shadow: 0 5px 20px #0004; }
+.thumbnail[data-format="checklist"] .thumbnailSheet i { height: 4px; border-left: 4px solid #657b69; }
+.thumbnail[data-format="course"] .thumbnailSheet, .thumbnail[data-format="video"] .thumbnailSheet { transform: rotate(3deg); border-radius: 9px; }
+.thumbnailCaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 7px 15px; background: #202331f2; color: #e6dfef; border-top: 1px solid #d0c3ef26; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 10px; }
+.library .cardTop { margin-bottom: 16px; }
+.cardDetails { margin-top: 15px; font-size: 13px; color: var(--muted); }
+.cardDetails summary { cursor: pointer; display: flex; align-items: center; justify-content: space-between; min-height: 44px; color: var(--text); border-block: 1px solid var(--line); list-style: none; }
+.cardDetails summary::-webkit-details-marker { display: none; }
+.cardDetails summary span { font-size: 20px; transition: transform .2s; }
+.cardDetails[open] summary span { transform: rotate(45deg); }
+.cardDetails p { margin-top: 12px; line-height: 1.8; }
+.cardDetails summary:focus-visible { outline: 2px solid var(--lavender); outline-offset: 4px; }
+.library .cardMeta { padding-top: 18px; }
 .container {
   width: 100%;
   max-width: 1240px;

@@ -80,7 +80,7 @@ export async function POST(request: Request) {
       400,
     );
   if (!auth) await grantGuestOrder(order.id);
-  if (order.status === "paid") return json({ order_id: order.id });
+  if (order.status === "paid") return json({ order_id: order.id, status: "paid" });
   if (order.status !== "pending")
     return json(
       { error: "Pesanan ini sudah berakhir. Mulai checkout baru." },

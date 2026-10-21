@@ -181,7 +181,7 @@ export default function BlogSearchFilter({ posts, initialEngagement, loraClassNa
                         initial={{ opacity: 0, y: 10, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.96 }} transition={{ duration: 0.18 }}
                         className="absolute top-full left-0 mt-3 w-full sm:w-60 bg-[#141417]/95 backdrop-blur-2xl border border-[#3F3F46] rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.9)] p-2 z-50"
                       >
-                        <div className="px-3 py-1.5 text-[10px] font-mono text-[#71717A] uppercase tracking-wider border-b border-[#27272A] mb-1">Topik Konten</div>
+                        <div className="px-3 py-1.5 text-[10px] font-mono text-[#9CA3AF] uppercase tracking-wider border-b border-[#27272A] mb-1">Topik Konten</div>
                         {categories.map((cat) => {
                           const isSelected = selectedCategory === cat;
                           return (
@@ -190,7 +190,7 @@ export default function BlogSearchFilter({ posts, initialEngagement, loraClassNa
                               className={`flex items-center justify-between w-full text-left px-4 py-2.5 rounded-xl text-sm transition-colors cursor-pointer ${isSelected ? "bg-[#34D399]/15 text-[#34D399] font-semibold border border-[#34D399]/30" : "text-[#A1A1AA] hover:bg-[#1F1F23] hover:text-[#F8FAFC]"}`}
                             >
                               <span>{cat}</span>
-                              <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${isSelected ? "bg-[#34D399]/20 text-[#34D399]" : "bg-[#27272A] text-[#71717A]"}`}>{categoryCounts[cat]}</span>
+                              <span className={`text-[10px] font-mono px-2 py-0.5 rounded-full ${isSelected ? "bg-[#34D399]/20 text-[#34D399]" : "bg-[#27272A] text-[#9CA3AF]"}`}>{categoryCounts[cat]}</span>
                             </button>
                           );
                         })}
@@ -222,7 +222,7 @@ export default function BlogSearchFilter({ posts, initialEngagement, loraClassNa
                         initial={{ opacity: 0, y: 10, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 10, scale: 0.96 }} transition={{ duration: 0.18 }}
                         className="absolute top-full left-0 mt-3 w-full sm:w-64 bg-[#141417]/95 backdrop-blur-2xl border border-[#3F3F46] rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.9)] p-2 z-50"
                       >
-                        <div className="px-3 py-1.5 text-[10px] font-mono text-[#71717A] uppercase tracking-wider border-b border-[#27272A] mb-1">Urutan & Filter</div>
+                        <div className="px-3 py-1.5 text-[10px] font-mono text-[#9CA3AF] uppercase tracking-wider border-b border-[#27272A] mb-1">Urutan & Filter</div>
                         {sortOptions.map((opt) => {
                           const isSelected = sortMode === opt.id;
                           const Icon = opt.icon;
@@ -231,7 +231,7 @@ export default function BlogSearchFilter({ posts, initialEngagement, loraClassNa
                               key={opt.id} type="button" onClick={() => { setSortMode(opt.id); setIsSortDropdownOpen(false); }}
                               className={`flex items-center gap-3 w-full text-left px-4 py-2.5 rounded-xl text-sm transition-colors cursor-pointer ${isSelected ? "bg-[#34D399]/15 text-[#34D399] font-semibold border border-[#34D399]/30" : "text-[#A1A1AA] hover:bg-[#1F1F23] hover:text-[#F8FAFC]"}`}
                             >
-                              <Icon className={`w-4 h-4 ${isSelected ? "text-[#34D399]" : "text-[#71717A]"}`} />
+                              <Icon className={`w-4 h-4 ${isSelected ? "text-[#34D399]" : "text-[#9CA3AF]"}`} />
                               <span>{opt.label}</span>
                             </button>
                           );
@@ -352,7 +352,7 @@ export default function BlogSearchFilter({ posts, initialEngagement, loraClassNa
                                 <Eye className="w-3 h-3 text-[#34D399]" /> {formatViews(post.metadata.slug)}
                               </span>
                               <span className="w-1 h-1 rounded-full bg-[#3F3F46]" />
-                              <span className="text-[#71717A]">{new Date(post.metadata.date).toLocaleDateString("id-ID", { month: "long", day: "numeric", year: "numeric" })}</span>
+                              <span className="text-[#9CA3AF]">{new Date(post.metadata.date).toLocaleDateString("id-ID", { month: "long", day: "numeric", year: "numeric" })}</span>
                             </div>
                             <h2 className={`text-xl sm:text-2xl text-[#E2E8F0] group-hover/item:text-[#34D399] font-medium leading-snug transition-colors mb-2.5 line-clamp-2 ${loraClassName}`}>{post.metadata.title}</h2>
                             <p className="text-[#9CA3AF] leading-relaxed text-sm font-light group-hover/item:text-[#D1D5DB] transition-colors line-clamp-2 max-w-3xl">{post.metadata.excerpt}</p>
@@ -411,7 +411,7 @@ export default function BlogSearchFilter({ posts, initialEngagement, loraClassNa
                         </div>
                         <h2 className={`text-2xl sm:text-3xl text-[#E2E8F0] group-hover:text-white font-medium leading-[1.3] transition-colors mb-3 line-clamp-2 ${loraClassName}`}>{filteredPosts[0].metadata.title}</h2>
                         <p className="text-[#9CA3AF] text-sm leading-relaxed font-light group-hover:text-[#D1D5DB] transition-colors mb-6 line-clamp-3">{filteredPosts[0].metadata.excerpt}</p>
-                        <div className="flex items-center gap-4 text-xs font-mono text-[#71717A] mt-auto pt-4 border-t border-[#27272A]/50">
+                        <div className="flex items-center gap-4 text-xs font-mono text-[#9CA3AF] mt-auto pt-4 border-t border-[#27272A]/50">
                           <span>{new Date(filteredPosts[0].metadata.date).toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" })}</span>
                           <span className="w-1 h-1 rounded-full bg-[#3F3F46]" />
                           <span className="flex items-center gap-1.5"><Eye className="w-3.5 h-3.5 text-[#34D399]" /> {formatViews(filteredPosts[0].metadata.slug)}</span>
@@ -447,7 +447,7 @@ export default function BlogSearchFilter({ posts, initialEngagement, loraClassNa
                           </div>
                           <div className="flex flex-col py-1 justify-between flex-grow min-w-0">
                             <h3 className={`text-[13px] sm:text-sm text-[#E2E8F0] group-hover:text-[#34D399] font-medium leading-[1.4] line-clamp-2 pr-2 ${loraClassName}`}>{post.metadata.title}</h3>
-                            <div className="flex flex-col gap-1 mt-1.5 text-[10px] font-mono text-[#71717A] truncate">
+                            <div className="flex flex-col gap-1 mt-1.5 text-[10px] font-mono text-[#9CA3AF] truncate">
                               <span className="text-[#34D399] uppercase tracking-wider truncate">{post.metadata.category}</span>
                               <span className="flex items-center gap-1.5 truncate"><Eye className="w-3 h-3 text-[#34D399]" /> {formatViews(post.metadata.slug)} &bull; {new Date(post.metadata.date).toLocaleDateString("id-ID", { month: "short", year: "numeric" })}</span>
                             </div>
@@ -456,7 +456,7 @@ export default function BlogSearchFilter({ posts, initialEngagement, loraClassNa
                       </Link>
                     ))}
                     {filteredPosts.length <= 1 && (
-                      <div className="text-xs text-[#71717A] italic px-2 py-6 text-center border border-dashed border-[#27272A] rounded-xl mt-2 bg-[#09090B]/50">
+                      <div className="text-xs text-[#9CA3AF] italic px-2 py-6 text-center border border-dashed border-[#27272A] rounded-xl mt-2 bg-[#09090B]/50">
                         Belum ada artikel rekomendasi lainnya untuk saat ini.
                       </div>
                     )}

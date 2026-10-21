@@ -96,8 +96,9 @@ export async function createDokuCheckout(input: {
   // Checkout's documented response embeds request metadata, not a mandatory
   // HTTP response HMAC. The fixed HTTPS API and disabled redirects authenticate
   // the transport. Never interpret echoed request signatures as response HMACs.
-  // Verify a real response signature whenever supplied, and bind echoed metadata
-  // to this request. This URL only starts payment; it never proves settlement.
+  // Verify a real HTTP response signature whenever supplied. Embedded headers
+  // are optional provider metadata, not that HTTP authentication contract.
+  // This URL only starts payment; it never proves settlement.
   const responseSignature = response.headers.get("signature");
   if (responseSignature) {
     const responseTime = response.headers.get("response-timestamp") || "";
@@ -110,10 +111,12 @@ export async function createDokuCheckout(input: {
   }
   const echo = result?.response?.headers;
   if (echo != null) {
+    // The documented body envelope does not guarantee that date/signature
+    // reproduce our outbound bytes. Bind IDs when supplied, without treating
+    // an embedded signature as a mandatory second HTTP signature.
     if (typeof echo !== "object" || Array.isArray(echo) ||
-      (echo.client_id ?? echo.clientId) !== clientId ||
-      (echo.request_id ?? echo.requestId) !== requestId ||
-      echo.date !== timestamp || typeof echo.signature !== "string" || !sameSignature(echo.signature, requestSignature)) {
+      ((echo.client_id ?? echo.clientId) != null && (echo.client_id ?? echo.clientId) !== clientId) ||
+      ((echo.request_id ?? echo.requestId) != null && (echo.request_id ?? echo.requestId) !== requestId)) {
       throw new Error("DOKU_RESPONSE_METADATA_INVALID");
     }
   }

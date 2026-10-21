@@ -78,7 +78,19 @@
 .hero {
   padding-top: 115px;
   padding-bottom: 40px;
+  position: relative;
+  isolation: isolate;
+  background: radial-gradient(ellipse at 80% 28%, #8272b527, transparent 56%), radial-gradient(ellipse at 10% 80%, #7b9c9c1a, transparent 55%), linear-gradient(135deg, #10161e, #171927 55%, #10100e);
 }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; background-image: linear-gradient(#c4cee508 1px, transparent 1px), linear-gradient(90deg, #c4cee508 1px, transparent 1px); background-size: 72px 72px; mask-image: linear-gradient(120deg, transparent 5%, #000 75%); }
+.hero::after { content: ""; position: absolute; width: 580px; height: 580px; right: -170px; top: 10%; z-index: -1; pointer-events: none; border: 1px solid #bfafd326; border-radius: 50%; box-shadow: 0 0 0 70px #b7afd008, 0 0 0 140px #b7afd005; }
+.home[data-theme="light"] .hero { background: radial-gradient(ellipse at 80% 28%, #ab9dcb2e, transparent 56%), radial-gradient(ellipse at 10% 80%, #8daa9c25, transparent 55%), linear-gradient(135deg, #f5f2ea, #eae7ef 60%, #f5f2ea); }
+.home[data-theme="light"] .hero::before { background-image: linear-gradient(#534d6810 1px, transparent 1px), linear-gradient(90deg, #534d6810 1px, transparent 1px); }
+.sectionBridge { position: relative; display: flex; align-items: center; justify-content: space-between; width: min(1160px,calc(100% - 80px)); margin-inline: auto; min-height: 84px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 10px; letter-spacing: .12em; text-transform: uppercase; }
+.sectionBridge svg { width: 160px; height: 64px; color: var(--accent); transition: transform .25s; }
+.sectionBridge:hover svg { transform: translateY(5px); }
+.sectionBridge + .section:not(.hero)::before { display: none; }
+@media(max-width:600px) { .sectionBridge { width: calc(100% - 40px); min-height: 70px; font-size: 9px; letter-spacing: .06em; gap: 12px; }.sectionBridge svg { width: 90px; flex-shrink: 0; }.sectionBridge > span:last-child { display: none; } }
 .heroGrid {
   display: grid;
   grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
@@ -562,6 +574,9 @@
   font-size: 15px;
 }
 .freelance {
+  --muted: #c0c3b7;
+  --text: #ecede7;
+  --accent: #c6ccb9;
   background: #252722;
   color: #ecede7;
 }
@@ -2559,7 +2574,7 @@
 }
 
 /* Signature role: luminous metal and a single, restrained reveal. */
-.home .heroRole { display: inline-block; position: relative; font-size: clamp(11px, 1.08vw, 14px); font-weight: 600; line-height: 1.8; letter-spacing: .12em; background-image: linear-gradient(105deg, #b6a2cf 8%, #eee4fa 32%, #c5ad86 48%, #fff8eb 53%, #b6a2cf 68%); background-size: 250% 100%; animation: signatureSweep 3.8s ease-out 1 both; filter: drop-shadow(0 0 16px #c4afe52e); padding-bottom: 15px; border-bottom: 1px solid #b9addf4d; }
-.home[data-theme="light"] .heroRole { background-image: linear-gradient(105deg, #695579 8%, #876494 32%, #785b32 48%, #40334f 53%, #695579 68%); border-color: #76568b40; }
+.home .heroRole { display: inline-block; position: relative; font-size: clamp(11px, 1.08vw, 14px); font-weight: 600; line-height: 1.8; letter-spacing: .12em; background: none; color: #d9c9ed !important; animation: none; padding-bottom: 15px; border-bottom: 1px solid #b9addf4d; }
+.home[data-theme="light"] .heroRole { background: none; color: #695579 !important; border-color: #76568b40; }
 @keyframes signatureSweep { from { background-position: 100% 0; } to { background-position: 0% 0; } }
 @media (prefers-reduced-motion: reduce) { .home .heroRole { animation: none !important; background-position: 0 0; } }

@@ -9,7 +9,7 @@ import s from "./commerce.module.css";
 import { supabase } from "@/lib/supabase";
 import { ProductImage } from "./ProductImage";
 import { CREATOR_NAME } from "@/lib/product-media";
-import { CHECKOUT_METHODS, isCheckoutMethod } from "@/lib/checkout-methods";
+import { isCheckoutMethod } from "@/lib/checkout-methods";
 const subscribeHydration = () => () => {};
 export function CheckoutForm({
   product,
@@ -17,16 +17,12 @@ export function CheckoutForm({
   name,
   available,
   guestEnabled = false,
-  qrisAvailable = false,
-  providerMethods = false,
 }: {
   product: Product;
   email: string;
   name: string;
   available: boolean;
   guestEnabled?: boolean;
-  qrisAvailable?: boolean;
-  providerMethods?: boolean;
 }) {
   const router = useRouter();
   const hydrated = useSyncExternalStore(subscribeHydration, () => true, () => false);
@@ -41,22 +37,18 @@ export function CheckoutForm({
       const next = crypto.randomUUID(); sessionStorage.setItem(intentStorageKey, next); return next;
     } catch { return crypto.randomUUID(); }
   });
-  const [choice, setChoice] = useState(() => {
+  const [method, setMethod] = useState(() => {
     if (typeof window !== "undefined") {
-      try { const saved = sessionStorage.getItem("khadafi-checkout-method-" + key); if (isCheckoutMethod(saved)) return { method: saved, locked: true }; } catch {}
+      try { const saved = sessionStorage.getItem("khadafi-checkout-method-" + key); if (isCheckoutMethod(saved)) return saved; } catch {}
     }
-    return { method: "all", locked: false };
+    return "all";
   });
-  const methods = CHECKOUT_METHODS.filter(m => providerMethods || m.code === "all" || m.code === "VIRTUAL_ACCOUNT_BANK_MANDIRI" || (qrisAvailable && m.code === "QRIS"));
-  const groups = [...new Set(methods.map(m => m.group))];
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setBusy(true);
     setError("");
     const data = new FormData(e.currentTarget);
     try {
-      const method = choice.method;
-      setChoice({ method, locked: true });
       try { sessionStorage.setItem("khadafi-checkout-method-" + key, method); } catch {}
       const { data: session } = await supabase.auth.getSession();
       const body = JSON.stringify({ slug: product.slug, name: data.get("name"), email: data.get("email"), consent: data.get("consent") === "on", key, method });
@@ -65,7 +57,8 @@ export function CheckoutForm({
         body,
       }) : await fetch("/api/commerce/orders", { method: "POST", headers: { "Content-Type": "application/json" }, body }).then(async r => { const payload = await r.json(); if (!r.ok) throw new Error(payload.error || "Checkout gagal."); return payload; });
       if (result.payment_url) window.location.assign(result.payment_url);
-      else router.push("/checkout/success?order=" + result.order_id);
+      else if ((product.price === 0 || result.status === "paid") && result.order_id) router.push("/checkout/success?order=" + result.order_id);
+      else throw new Error("Tautan pembayaran belum tersedia. Periksa pesananmu sebelum mencoba kembali.");
     } catch (e) {
       setError(e instanceof Error ? e.message : "Checkout gagal. Coba lagi.");
       setBusy(false);
@@ -99,15 +92,12 @@ export function CheckoutForm({
             </span>
           </label>
           {product.price > 0 && <div className={s.paymentMethods}>
-            <span className={s.eyebrow}>02 / METODE PEMBAYARAN</span>
-            <p>Pilih caramu membayar. QRIS dapat dipindai dengan GoPay atau aplikasi bank. Ketersediaan akhir mengikuti ketentuan dan nominal pada DOKU.</p>
-            {groups.map(group => <fieldset className={s.methodGroup} key={group} disabled={busy || (hydrated && choice.locked)}>
-              <legend>{group}</legend><div className={s.methodGrid}>{methods.filter(m => m.group === group).map(m => <label key={m.code}>
-                <input type="radio" name="paymentMethod" value={m.code} checked={(hydrated ? choice.method : "all") === m.code} onChange={() => setChoice({ method: m.code, locked: false })} />
-                <span><strong>{m.label}</strong>{group !== "Bank / Virtual Account" && <small>{m.detail}</small>}</span>
-              </label>)}</div>
-            </fieldset>)}
-            {hydrated && choice.locked && <p>Metode pesanan ini sudah dipilih. Jika pembayaran belum selesai, lanjutkan pesanan yang sama melalui Riwayat Pembelian atau tautan email DOKU.</p>}
+            <span className={s.eyebrow}>02 / PEMBAYARAN AMAN</span>
+            <div className={s.providerHandoff}>
+              <span className={s.providerMark} aria-label="DOKU">DOKU<span>CHECKOUT</span></span>
+              <div><strong>Pilih cara bayar di DOKU</strong><p>Klik Lanjut pembayaran untuk membuka halaman resmi DOKU. Metode yang tersedia dan instruksi pembayaran akan tampil di sana.</p></div>
+              <ArrowUpRight aria-hidden="true" />
+            </div>
           </div>}
           {!available && (
             <div className={s.notice} role="status">
@@ -119,16 +109,17 @@ export function CheckoutForm({
             <div role="alert" className={s.notice + " " + s.error}>
               {error}
               {email && (error.includes("diverifikasi") || error.includes("pesanan")) && <p><Link href="/account/orders">Periksa pesanan saya ↗</Link></p>}
+              <p>Sudah menerima email DOKU? Gunakan tautan pesanan yang sama. <a href="https://threads.com/khdfii9" target="_blank" rel="noopener noreferrer">Hubungi support ↗</a></p>
             </div>
           )}
-          {error.includes("berakhir") && <button type="button" className={s.secondary} onClick={() => { const next = crypto.randomUUID(); setKey(next); setChoice({ method: "all", locked: false }); try { sessionStorage.setItem(intentStorageKey, next); } catch {} setError(""); }}>Mulai pesanan baru</button>}
+          {error.includes("berakhir") && <button type="button" className={s.secondary} onClick={() => { const next = crypto.randomUUID(); setKey(next); setMethod("all"); try { sessionStorage.setItem(intentStorageKey, next); } catch {} setError(""); }}>Mulai pesanan baru</button>}
           {!email && !guestEnabled && <Link className={s.secondary} href={"/login?returnTo=" + encodeURIComponent("/checkout/" + product.slug)}>Masuk untuk membeli ↗</Link>}
           <button className={s.button} disabled={!hydrated || busy || !available || (!email && !guestEnabled)}>
             {busy ? <LoaderCircle className={s.spin} /> : <ArrowUpRight />}
             {busy
               ? "Menyiapkan pesanan…"
               : product.price > 0
-                ? "Lanjut bayar · " + money(product.price)
+                ? "Lanjut pembayaran · " + money(product.price)
                 : "Dapatkan gratis"}
           </button>
           <noscript><p>Aktifkan JavaScript untuk checkout aman. Informasi pembeli tidak dikirim melalui URL.</p></noscript>

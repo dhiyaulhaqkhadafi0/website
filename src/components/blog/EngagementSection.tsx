@@ -110,7 +110,7 @@ export default function EngagementSection({ slug }: Props) {
                 </div>
                 <div>
                   <div className="text-[#E2E8F0] font-medium text-sm">{comment.user_name}</div>
-                  <div className="text-[#6B7280] text-xs font-mono">
+                  <div className="text-[#9CA3AF] text-xs font-mono">
                     {new Date(comment.created_at).toLocaleDateString("id-ID", { month: "short", day: "numeric" })}
                   </div>
                 </div>
@@ -122,7 +122,7 @@ export default function EngagementSection({ slug }: Props) {
           ))}
 
           {comments.length === 0 && (
-            <div className="text-center py-10 text-[#6B7280] font-light italic">
+            <div className="text-center py-10 text-[#9CA3AF] font-light italic">
               Jadilah yang pertama membuka wawasan di lembar ini.
             </div>
           )}

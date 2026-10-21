@@ -205,7 +205,7 @@ export function ArticleEngagementBar({ slug, previewMode = false }: Props) {
         <span className="font-mono text-xs font-semibold">
           {likeCount !== null ? numberFormatter.format(likeCount) : '—'}
         </span>
-        <span className="text-[11px] font-sans text-[#71717A] group-hover:text-[#94A3B8] hidden sm:inline">
+        <span className="text-[11px] font-sans text-[#9CA3AF] group-hover:text-[#94A3B8] hidden sm:inline">
           {hasLiked ? 'Disukai' : 'Suka'}
         </span>
       </button>

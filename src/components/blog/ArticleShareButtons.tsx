@@ -148,7 +148,7 @@ export function ArticleShareButtons({ url, title }: Props) {
             Bagikan artikel
           </h3>
           <span className="w-1 h-1 rounded-full bg-[#3F3F46]" />
-          <span className="text-[11px] text-[#71717A]">
+          <span className="text-[11px] text-[#9CA3AF]">
             Diskusi &amp; sebarluaskan gagasan
           </span>
         </div>

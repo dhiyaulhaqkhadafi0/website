@@ -9,6 +9,11 @@ import { CredentialsGallery } from "./CredentialsGallery";
 import { NewsletterSection } from "./NewsletterSection";
 import { ChikkiPreview } from "./ChikkiPreview";
 import styles from "./editorial-home.module.css";
+function SectionBridge({ label, href, index }: { label: string; href: string; index: string }) {
+  return <a className={styles.sectionBridge} href={href} aria-label={"Lanjut ke " + label}>
+    <span>{index} / {label}</span><svg viewBox="0 0 160 64" fill="none" aria-hidden="true"><path d="M1 9h88c24 0 36 13 36 34v11m-10-11 10 11 11-11" stroke="currentColor" strokeWidth="1.3" /></svg><span>Terus jelajahi ↓</span>
+  </a>;
+}
 
 function BuilderComposition() {
   return (
@@ -134,6 +139,7 @@ export function HomeView({ posts }: { posts: Promise<BlogCardItem[]> }) {
           </div>
         </div>
       </header>
+      <SectionBridge label="Temukan arahmu" href="#intent" index="01" />
       <section
         id="intent"
         className={`${styles.section} ${styles.intent}`}
@@ -168,6 +174,7 @@ export function HomeView({ posts }: { posts: Promise<BlogCardItem[]> }) {
           </div>
         </div>
       </section>
+      <SectionBridge label="Karya & eksperimen" href="#featured-work" index="02" />
       <section
         id="featured-work"
         className={`${styles.section} ${styles.featured}`}
@@ -252,7 +259,9 @@ export function HomeView({ posts }: { posts: Promise<BlogCardItem[]> }) {
           </div>
         </div>
       </section>
+      <SectionBridge label="Peluang baru" href="#freelance-home" index="03" />
       <section
+        id="freelance-home"
         className={`${styles.section} ${styles.freelance}`}
         aria-labelledby="freelance-preview-title"
         data-reveal="soft"
@@ -296,6 +305,7 @@ export function HomeView({ posts }: { posts: Promise<BlogCardItem[]> }) {
           </div>
         </div>
       </section>
+      <SectionBridge label="Bekal untuk bertumbuh" href="#knowledge" index="04" />
       <section
         id="knowledge"
         className={`${styles.section} ${styles.knowledge}`}
@@ -342,6 +352,7 @@ export function HomeView({ posts }: { posts: Promise<BlogCardItem[]> }) {
           </div>
         </div>
       </section>
+      <SectionBridge label="Di balik karya" href="#about" index="05" />
       <section
         id="about"
         className={`${styles.section} ${styles.about}`}
@@ -399,6 +410,7 @@ export function HomeView({ posts }: { posts: Promise<BlogCardItem[]> }) {
           <CredentialsGallery />
         </div>
       </section>
+      <SectionBridge label="Tetap terhubung" href="#newsletter" index="06" />
       <section
         id="newsletter"
         className={`${styles.section} ${styles.conversion}`}
@@ -417,14 +429,16 @@ export function HomeView({ posts }: { posts: Promise<BlogCardItem[]> }) {
             <p>
               Jelajahi produk, panduan, dan sumber daya yang sedang saya bangun.
               <br />
-              Butuh bantuan? Hubungi saya melalui email.
+              Butuh bantuan? Temui saya di Threads @khdfii9.
             </p>
             <div className={styles.actions}>
               <Link href="#intent" className={styles.primary}>
                 Jelajahi Website <span aria-hidden="true">↑</span>
               </Link>
               <a
-                href="mailto:daffadhiyaulhaqkhadafi@gmail.com"
+                href="https://threads.com/khdfii9"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={styles.textLink}
               >
                 Hubungi Support <span aria-hidden="true">↗</span>

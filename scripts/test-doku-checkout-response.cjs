@@ -25,15 +25,19 @@ function load(file, mocks, env, extras = {}) {
       else assert.deepEqual(request.payment.payment_method_types, expectedMethods);
       const echo = { client_id: env.DOKU_CLIENT_ID, request_id: input.requestId, date: options.headers['Request-Timestamp'], signature: options.headers.Signature };
       if (mode === 'wrong-echo') echo.request_id = crypto.randomUUID();
+      if (mode === 'provider-metadata') { echo.date = timestampWithMilliseconds(); echo.signature = 'provider-body-metadata'; }
+      if (mode === 'partial-metadata') { delete echo.date; delete echo.signature; }
       const raw = JSON.stringify({ message: ['SUCCESS'], response: { order: { invoice_number: security.dokuInvoice(input.orderId), amount: mode === 'wrong-amount' ? 1001 : 1000, currency: 'IDR' }, payment: { url: mode === 'wrong-host' ? 'https://evil.invalid/pay' : 'https://checkout.doku.com/checkout-link-v2/unit' }, ...(mode === 'bare' ? {} : { headers: echo }) } });
       const time = new Date().toISOString();
-      const headers = !['echo','bare','wrong-echo'].includes(mode) ? { 'Client-Id': env.DOKU_CLIENT_ID, 'Request-Id': input.requestId, 'Response-Timestamp': time, Signature: mode === 'bad-signature' ? 'HMACSHA256=invalid' : security.signature(env.DOKU_CLIENT_ID, input.requestId, time, '/checkout/v1/payment', raw, env.DOKU_SECRET_KEY, true) } : {};
+      const headers = !['echo','bare','wrong-echo','provider-metadata','partial-metadata'].includes(mode) ? { 'Client-Id': env.DOKU_CLIENT_ID, 'Request-Id': input.requestId, 'Response-Timestamp': time, Signature: mode === 'bad-signature' ? 'HMACSHA256=invalid' : security.signature(env.DOKU_CLIENT_ID, input.requestId, time, '/checkout/v1/payment', raw, env.DOKU_SECRET_KEY, true) } : {};
       return new Response(raw, { status: mode === 'auth-rejected' ? 403 : 200, headers });
     },
   });
   mode='signed'; assert.equal(await doku.createDokuCheckout(input), 'https://checkout.doku.com/checkout-link-v2/unit');
   mode='echo'; assert.equal(await doku.createDokuCheckout(input), 'https://checkout.doku.com/checkout-link-v2/unit');
   mode='bare'; assert.equal(await doku.createDokuCheckout(input), 'https://checkout.doku.com/checkout-link-v2/unit');
+  function timestampWithMilliseconds() { return new Date().toISOString(); }
+  for (mode of ['provider-metadata','partial-metadata']) assert.equal(await doku.createDokuCheckout(input), 'https://checkout.doku.com/checkout-link-v2/unit');
   mode='signed'; expectedMethods=['VIRTUAL_ACCOUNT_BNI']; await doku.createDokuCheckout({...input, method:'VIRTUAL_ACCOUNT_BNI'});
   expectedMethods=['QRIS']; await doku.createDokuCheckout({...input, privateQa:true});
   env.DOKU_QRIS_ENABLED='false'; expectedMethods=['VIRTUAL_ACCOUNT_BANK_MANDIRI']; await doku.createDokuCheckout(input);

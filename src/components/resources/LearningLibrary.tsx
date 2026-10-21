@@ -13,6 +13,7 @@ import {
 } from "@/content/learning-resources";
 import { NewsletterSection } from "@/components/home/NewsletterSection";
 import s from "./learning-library.module.css";
+import { LearningThumbnail } from "./LearningThumbnail";
 
 const subscribe = (callback: () => void) => {
   window.addEventListener("popstate", callback);
@@ -447,6 +448,10 @@ export function LearningLibrary() {
                 data-category={r.category}
                 data-resource={r.slug}
               >
+                <ResourceLink resource={r} className={s.thumbnailLink}>
+                  <LearningThumbnail resource={r} />
+                  <span className={s.srOnly}>Buka {r.title}</span>
+                </ResourceLink>
                 <div className={s.cardTop}>
                   <span>
                     {LEARNING_TOPICS.find((t) => t.id === r.category)?.short}
@@ -460,14 +465,17 @@ export function LearningLibrary() {
                     <span className={s.srOnly}> (sumber resmi, tab baru)</span>
                   )}
                 </ResourceLink>
-                <p>{r.description}</p>
+                <details className={s.cardDetails}>
+                  <summary>Tentang materi ini <span aria-hidden="true">+</span></summary>
+                  <p>{r.description}</p>
+                  <p className={s.access}>{r.accessNote}</p>
+                </details>
                 <div className={s.cardMeta}>
                   <strong>{r.provider}</strong>
                   <span>
                     {LEVEL_LABELS[r.level]} · {LANGUAGE_LABELS[r.language]}
                   </span>
                 </div>
-                <p className={s.access}>{r.accessNote}</p>
                 <span className={s.sourceType}>
                   {r.sourceType === "original"
                     ? "Original Khadafi"
