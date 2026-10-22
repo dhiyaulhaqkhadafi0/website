@@ -87,6 +87,11 @@ export async function POST(request: Request) {
       409,
     );
   if (order.provider !== "doku") return json({ error: "Pesanan masih memakai gateway lama. Mulai pesanan baru." }, 409);
+  if (order.total !== product.price)
+    return json({
+      error: "Nominal pesanan sebelumnya berbeda dari harga saat ini. Periksa pesananmu atau hubungi support sebelum melanjutkan; pembayaran belum dibuat ulang.",
+      code: "DOKU_ORDER_PRICE_CHANGED",
+    }, 409);
   try {
     const checkoutUrl = await checkoutForDokuOrder(order, user.email || "", p.name.trim(), false, method);
     return json({ order_id: order.id, payment_url: checkoutUrl });
