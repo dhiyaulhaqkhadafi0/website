@@ -20,7 +20,8 @@
     "DOKU_QRIS_STATUS": "ACTIVE",
     "DOKU_RECONCILE_ENABLED": "true",
     "COMMERCE_GUEST_CHECKOUT_ENABLED": "false",
-    "TRANSACTION_EMAIL_ENABLED": "true"
+    "TRANSACTION_EMAIL_ENABLED": "true",
+    "TRANSACTION_EMAIL_PROVIDER": "smtp"
   },
   "triggers": { "crons": ["*/5 * * * *"] },
   "assets": {

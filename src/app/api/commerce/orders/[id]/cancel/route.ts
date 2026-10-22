@@ -44,8 +44,13 @@ export async function POST(request:Request,{params}:{params:Promise<{id:string}>
   if(["CANCELLED","EXPIRED"].includes(after.status)&&await confirm(after))return json({status:"cancelled",message:"Pembatalan dikonfirmasi DOKU. Silakan pilih produk lain."});
   return json({status:"pending",message:"Permintaan pembatalan sedang diverifikasi DOKU. Kamu tetap bisa memilih produk lain."},202);
  }catch(error){
-  rejected=!requestAttempted||(error instanceof Error&&error.message==="DOKU_CANCEL_REJECTED");
-  return json({error:error instanceof Error&&error.message==="DOKU_CANCEL_REJECTED"?"DOKU belum menerima pembatalan. Periksa pengaktifan Order Cancellation dan kanal pembayaran di dashboard merchant.":"Status pembatalan belum dapat dipastikan. Periksa status pesanan kembali; jangan membuat pembayaran ganda."},502);
+  const code=typeof error==="object"&&error!==null&&"message" in error&&typeof error.message==="string"?error.message:"";
+  if(!requestAttempted&&code==="DOKU_STATUS_NOT_FOUND_UNCONFIRMED"){
+   const closed=await db.rpc("commerce_close_unregistered_doku_intent",{p_order:id,p_user:auth.user.id,p_token:claim.token,p_environment:policy.environment});
+   if(!closed.error&&closed.data===true){rejected=false;return json({status:"cancelled",local_only:true,message:"Catatan pesanan lama ditutup. Invoice ini tidak ditemukan di DOKU; penutupan lokal bukan konfirmasi pembatalan tagihan DOKU. Jangan bayar tautan lama. Jika dana sudah terpotong, hubungi support."});}
+  }
+  rejected=!requestAttempted||code==="DOKU_CANCEL_REJECTED";
+  return json({error:code==="DOKU_CANCEL_REJECTED"?"DOKU belum menerima pembatalan. Periksa pengaktifan Order Cancellation dan kanal pembayaran di dashboard merchant.":"Status pembatalan belum dapat dipastikan. Periksa status pesanan kembali; jangan membuat pembayaran ganda."},502);
  }finally{
   await db.rpc("commerce_finish_doku_cancel",{p_order:id,p_token:claim.token,p_rejected:rejected});
  }

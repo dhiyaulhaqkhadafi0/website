@@ -29,6 +29,12 @@ message. Buying a different product uses a separate intent. A confirmed cancella
 clears only its mapped browser intent. No real buyer orders were cancelled as an
 automated production test.
 
+Legacy intents older than 24 hours with no saved checkout URL and an unknown
+checkout state can be closed locally only after their owner requests cancellation
+and the provider status call returns not-found. This is expressly labelled local
+closure, not proof of provider cancellation or absence of funds. The provider state
+stays unknown and remains in reconciliation; a later signed SUCCESS still wins.
+
 Reference: https://developers.doku.com/accept-payments/doku-checkout/order-and-notification-handling/cancel-order-api
 
 ## Email
@@ -64,6 +70,23 @@ SMTP acceptance proves submission to Gmail, not delivery to the recipient's inbo
 Inbox placement must be checked on the receiving account. Gmail authentication and
 reputation are controlled by Google; adding domain DNS records cannot authenticate a
 personal `gmail.com` sender as `khadafidaffa.com`.
+
+Hosted test, 23 October 2026: the receipt for the owner's approved Rp1,000 payment
+was accepted by Gmail SMTP on its first attempt. The owner subsequently confirmed
+that both this receipt and a fresh account-confirmation email reached Spam. The
+provided confirmation headers show SPF PASS, DKIM PASS (`gmail.com`) and DMARC PASS.
+Inbox placement therefore remains unresolved; do not report it as fixed. The
+SMTP credentials and authentication path work. Further remediation requires sender
+reputation/filter investigation or a separately configured professional domain
+sender, followed by another receiving-inbox test. Do not weaken email confirmation
+or change Chikki to work around filtering.
+
+## Framework security
+
+The release updates Next.js and eslint-config-next to 16.4.2 after newly published
+advisories affected 16.3.8. A fresh production-dependency audit reports no high or
+critical findings, with six moderate findings remaining in selector/frontmatter
+dependency chains. This is not a claim that all development advisories are resolved.
 
 References: https://supabase.com/docs/guides/auth/auth-smtp and
 https://support.google.com/mail/answer/81126

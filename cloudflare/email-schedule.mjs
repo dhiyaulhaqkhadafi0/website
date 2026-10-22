@@ -1,8 +1,10 @@
 import {WorkerMailer,LogLevel,SmtpAuthError,SmtpTimeoutError,SmtpConnectionError,SmtpRecipientError} from '@workermailer/smtp';
-import {deliverTransactionEmails} from './transaction-email.mjs';
+import {deliverProviderEmails} from './provider-email.mjs';
+import {sendResendEmail} from './resend-email.mjs';
 export function emailScheduled(env){
- return deliverTransactionEmails(env,{
-  async send(config,message){
+ return deliverProviderEmails(env,{
+  resendSend:sendResendEmail,
+  async smtpSend(config,message){
    try {
     const mailer=await WorkerMailer.connect({...config,authType:'plain',logLevel:LogLevel.NONE,socketTimeoutMs:15000,responseTimeoutMs:15000});
     try{await mailer.send(message);}finally{await mailer.close().catch(()=>{});}
