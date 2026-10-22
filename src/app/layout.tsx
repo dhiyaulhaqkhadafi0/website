@@ -91,6 +91,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" data-scroll-behavior="smooth" className={`${plusJakartaSans.variable} antialiased`}>
+      <head>
+        {/* Impact requires a value attribute, which the Metadata API cannot emit. */}
+        <meta name="impact-site-verification" {...{ value: "2751ee24-59dc-4fb8-9b71-6c6db5d4a3b3" }} />
+      </head>
       <body className="min-h-screen flex flex-col bg-brand-bg text-brand-primary font-sans">
         <GlobalTranslator />
         <Suspense fallback={null}><NavigationFeedback /></Suspense>
