@@ -18,6 +18,11 @@ harus mencakup email autentikasi Supabase. Jangan menaikkan paket berbayar otoma
 - Sebelum penerusan terbukti menerima email, uji Resend memakai Reply-To Gmail
   yang sudah ada. Jangan mengaktifkan Reply-To support hanya berdasarkan DNS.
 
+Verifikasi 23 Oktober 2026: tujuan Gmail diverifikasi; Cloudflare Email Routing
+berstatus ready, MX/SPF publik terpasang, dan aturan khusus support aktif. Pemilik
+menguji dari Gmail keduanya dan mengonfirmasi pesan masuk ke inbox utama Gmail
+tujuan. Ini membuktikan penerusan support, bukan pengiriman keluar Resend.
+
 ## Gerbang migrasi
 
 Worker tetap `TRANSACTION_EMAIL_PROVIDER=smtp`. Memasang kode, migrasi basis data,

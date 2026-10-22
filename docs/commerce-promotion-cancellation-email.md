@@ -85,8 +85,11 @@ or change Chikki to work around filtering.
 
 The release updates Next.js and eslint-config-next to 16.4.2 after newly published
 advisories affected 16.3.8. A fresh production-dependency audit reports no high or
-critical findings, with six moderate findings remaining in selector/frontmatter
-dependency chains. This is not a claim that all development advisories are resolved.
+critical findings, with two moderate findings remaining in the typography/selector
+dependency chain. This is not a claim that all development advisories are resolved.
+OpenNext is pinned to 1.20.13, which includes the upstream Next 16.4
+`preview-props.json` manifest fix. The packaged Worker must pass loopback workerd
+rendering checks before deployment; a successful Next build alone is insufficient.
 
 References: https://supabase.com/docs/guides/auth/auth-smtp and
 https://support.google.com/mail/answer/81126
@@ -104,3 +107,5 @@ https://support.google.com/mail/answer/81126
 - Existing Checkout handoff, signed reconciliation and workerd regressions.
 - Full Next production build, OpenNext bundle, public artifact preflight and live
   HTTP/browser verification. Hosted email acceptance is recorded separately.
+- `scripts/check-opennext-runtime.mjs`: real packaged Worker on loopback; public
+  pages, webhook method guard and matching build ID, without creating transactions.

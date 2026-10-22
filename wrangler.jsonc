@@ -21,7 +21,8 @@
     "DOKU_RECONCILE_ENABLED": "true",
     "COMMERCE_GUEST_CHECKOUT_ENABLED": "false",
     "TRANSACTION_EMAIL_ENABLED": "true",
-    "TRANSACTION_EMAIL_PROVIDER": "smtp"
+    "TRANSACTION_EMAIL_PROVIDER": "smtp",
+    "RESEND_REPLY_TO_VERIFIED": "true"
   },
   "triggers": { "crons": ["*/5 * * * *"] },
   "assets": {
