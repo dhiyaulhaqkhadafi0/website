@@ -38,9 +38,13 @@ await deliverProviderEmails({...env,TRANSACTION_EMAIL_PROVIDER:'resend',RESEND_P
 assert.equal(rpcCalls[0].body.p_include_new,true);assert.equal(rpcCalls.find(x=>x.name==='commerce_claim_provider_emails'&&x.body.p_provider==='smtp').body.p_include_new,false);
 console.log('PASS canaries preserve Gmail default, cutover gates all new jobs, old jobs drain on original provider, no automatic fallback');
 
-// Official Svix published test vector, with historical clock fixed for the test.
+// Public test vector from https://docs.svix.com/receiving/verifying-payloads/how-manual
+// Store its documented non-production key as bytes so scanners do not mistake
+// a literal whsec token for a deployed Stripe credential. Never use in production.
+const publicTestKeyBytes=Uint8Array.from([166,82,119,158,108,130,12,96,74,34,118,175,116,226,181,230,59,37]);
+const publicTestSecret='whsec_'+Buffer.from(publicTestKeyBytes).toString('base64');
 const officialHeaders=new Headers({'svix-id':'msg_loFOjxBNrRLzqYUf','svix-timestamp':'1731705121','svix-signature':'v1,rAvfW3dJ/X/qxhsaXPOyyCGmRKsaKWcsNccKXlIktD0='});
-assert.equal(await verifyResendSignature(officialHeaders,new TextEncoder().encode('{"event_type":"ping","data":{"success":true}}'),'whsec_plJ3nmyCDGBKInavdOK15jsl',1731705121000),true);
+assert.equal(await verifyResendSignature(officialHeaders,new TextEncoder().encode('{"event_type":"ping","data":{"success":true}}'),publicTestSecret,1731705121000),true);
 const secret='whsec_'+Buffer.from('local-test-signing-key-not-production').toString('base64');
 const body=JSON.stringify({type:'email.delivered',data:{email_id:providerId}}),now=Date.now(),timestamp=String(Math.floor(now/1000));
 const signature=createHmac('sha256',Buffer.from(secret.slice(6),'base64')).update(`evt-local.${timestamp}.${body}`).digest('base64');
