@@ -1,55 +1,94 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# Khadafi — Digital Product Ecosystem
 
-First, run the development server:
+**An independent product engineering workspace**
+Designing, building, and shipping useful digital experiences with AI-assisted development.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+[Live website](https://khadafidaffa.com) · [About the builder](https://khadafidaffa.com/about) · [Freelance hub](https://khadafidaffa.com/freelance) · [Chikki](https://chikki.id)
+
+</div>
+
+---
+
+## Overview
+
+This repository contains the public codebase for **Khadafi's personal website and digital product platform**. It brings together editorial content, freelance resources, original digital products, and account-based commerce in one Next.js application.
+
+Rather than a static portfolio, this is a living product: new capabilities are researched, designed, implemented, and iterated on as real users interact with them.
+
+## What I'm building
+
+| Area | Purpose |
+| --- | --- |
+| **Digital products** | Product discovery, detail pages, checkout, orders, and customer library |
+| **Freelance Journey Hub** | Guides, resources, curated opportunities, and learning tools |
+| **Editorial & Studio** | Articles, publishing workflows, and an owner-facing content studio |
+| **User experience** | Responsive UI, accessible navigation, reusable components, and thoughtful motion |
+| **Product experiments** | Small tools, prototypes, and practical AI-assisted workflows |
+
+## Engineering stack
+
+- **Frontend:** TypeScript, React, Next.js App Router
+- **Backend & data:** Next.js server routes, Supabase Auth, PostgreSQL, Row Level Security
+- **Hosting:** Cloudflare Workers with OpenNext
+- **Interface:** CSS Modules, Tailwind tooling, Lucide icons, Framer Motion
+- **Workflow:** Git-based development, focused release branches, automated checks and reproducible scripts
+
+> This is an evolving independent product. The public default branch is not necessarily the same revision as a live release branch; verify the target branch and release notes before assuming production parity.
+
+## Repository map
+
+```text
+src/
+  app/           Routes, layouts, server components, APIs
+  components/    Feature and shared UI components
+  lib/           Server integrations, data access, validation
+  content/       Editorial and catalog source content
+supabase/        Database migrations
+scripts/         Verification and development utilities
+docs/            Design, release, and implementation notes
+public/          Public static assets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Getting started
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Requirements:** recent Node.js LTS, npm, and your *own* Supabase development project. Do not point a local checkout at production data.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+git clone https://github.com/dhiyaulhaqkhadafi0/website.git
+cd website
+npm ci
+cp .env.example .env.local
+npm run dev
+```
 
-## Learn More
+Update `.env.local` with development-only values as needed. Never commit credentials, customer data, provider checkout links, or downloaded production artifacts.
 
-To learn more about Next.js, take a look at the following resources:
+### Useful checks
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+npm run lint
+npm run build:next
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+For Cloudflare-specific builds and payment workflows, see the relevant files in `docs/` and run those checks **only in an appropriately isolated environment**. Production payment validation requires a controlled live test; passing local tests alone is not proof of a successful real transaction.
 
-## Deploy on Vercel
+## Security and payments
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Authentication and access control should be enforced on the server and in database policies, not inferred from client-side UI.
+- Payment fulfillment must depend on verified provider state and exact order/amount checks; a browser redirect is not proof of payment.
+- Secrets belong in platform secret stores and local ignored files, never in Git history.
+- See [SECURITY.md](SECURITY.md) for responsible disclosure and precautions.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## About the builder
 
-## Blog Studio
+I'm **Daffa Dhiyaulhaq Khadafi**, an Indonesia-based **AI-Assisted Product Engineer / Digital Builder**. I combine product thinking, UX, full-stack implementation, and AI-assisted workflows to turn concepts into usable software.
 
-The private editor lives at `/studio`. Published Studio articles are merged with
-the existing MDX archive and rendered at `/blog/[slug]`.
+This repository is one part of that journey. The separate **Chikki — Immersive Writing Network** is another actively developed product; its private application code is intentionally not exposed here.
 
-Setup:
+**Explore:** [khadafidaffa.com](https://khadafidaffa.com) · [Chikki](https://chikki.id)
 
-1. Copy `.env.example` to `.env.local` and fill the Supabase URL and publishable key.
-2. Set `BLOG_ADMIN_EMAIL` to the only email allowed to use Studio APIs.
-3. Run `supabase_blog_studio.sql` once in the Supabase SQL Editor.
-4. Add the same email privately to `blog_admin_emails` (do not commit it).
-5. Create that admin user in Supabase Authentication using email/password.
-6. Add the same environment values to the Cloudflare deployment.
+---
 
-The SQL creates the `blog_articles` table, row-level security policies, and the
-public `blog-media` storage bucket. Drafts remain owner-only; public visitors can
-only read articles with `status = 'published'`. The admin allowlist is protected
-by RLS and intentionally contains no email address in source control.
+<sub>Built in public where appropriate. Private customer data, merchant credentials, and internal operations remain private.</sub>
