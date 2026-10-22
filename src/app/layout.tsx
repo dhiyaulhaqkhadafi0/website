@@ -74,10 +74,15 @@ export const metadata: Metadata = {
   verification: {
     google: "tvDzvqzKpVqYpHuHxRtfaLJHT6_mTg4AeQpKmp44m6k",
   },
+  other: {
+    "google-adsense-account": "ca-pub-2795731884245055",
+  },
 };
 
 import { Footer } from "@/components/shared/footer";
 import { GlobalTranslator } from "@/components/shared/GlobalTranslator";
+import { NavigationFeedback } from "@/components/shared/NavigationFeedback";
+import { Suspense } from "react";
 
 export default function RootLayout({
   children,
@@ -86,8 +91,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="id" data-scroll-behavior="smooth" className={`${plusJakartaSans.variable} antialiased`}>
+      <head>
+        {/* Impact requires a value attribute, which the Metadata API cannot emit. */}
+        <meta name="impact-site-verification" {...{ value: "2751ee24-59dc-4fb8-9b71-6c6db5d4a3b3" }} />
+      </head>
       <body className="min-h-screen flex flex-col bg-brand-bg text-brand-primary font-sans">
         <GlobalTranslator />
+        <Suspense fallback={null}><NavigationFeedback /></Suspense>
         <main className="flex-1 flex flex-col">
           {children}
         </main>

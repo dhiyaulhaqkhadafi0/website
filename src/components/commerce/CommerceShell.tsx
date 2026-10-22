@@ -1,6 +1,8 @@
 "use client";
 import { useSyncExternalStore, type ReactNode } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { isPublicTranslationPath } from "@/lib/visitor-language.mjs";
 import { Moon, Sun } from "lucide-react";
 import s from "./commerce.module.css";
 import { SessionBridge } from "./SessionBridge";
@@ -18,6 +20,7 @@ const theme = () => {
   }
 };
 export function CommerceShell({ children }: { children: ReactNode }) {
+  const privatePage = !isPublicTranslationPath(usePathname() || "/");
   const current = useSyncExternalStore(subscribe, theme, () => "dark");
   function toggle() {
     try {
@@ -29,7 +32,7 @@ export function CommerceShell({ children }: { children: ReactNode }) {
     } catch {}
   }
   return (
-    <div className={s.shell} data-theme={current}>
+    <div className={`${s.shell}${privatePage ? " notranslate" : ""}`} translate={privatePage ? "no" : undefined} data-theme={current}>
       <SessionBridge />
       <div className={s.wrap}>
         <header className={s.header}>

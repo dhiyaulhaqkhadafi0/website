@@ -1,10 +1,8 @@
 import { getPublishedPostBySlug, getPostSlugs, getRelatedPosts } from '@/lib/mdx';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { MDXRemote } from 'next-mdx-remote/rsc';
 import BlogPostContent from '@/components/blog/BlogPostContent';
 import { addHeadingIds, tiptapHeadingsToMarkdown } from '@/lib/blog-types';
-import type { HTMLAttributes, ReactNode } from 'react';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -61,34 +59,6 @@ export async function generateStaticParams() {
   return slugs.map((slug) => ({ slug: slug.replace(/\.mdx$/, '') }));
 }
 
-// Custom heading components that attach unique id for smooth ToC navigation
-function headingText(children: ReactNode): string {
-  if (typeof children === 'string' || typeof children === 'number') return String(children);
-  if (Array.isArray(children)) return children.map(headingText).join('');
-  return '';
-}
-
-const mdxComponents = {
-  h2: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement>) => {
-    const text = headingText(children);
-    const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
-    return (
-      <h2 id={id} className="scroll-mt-36" {...props}>
-        {children}
-      </h2>
-    );
-  },
-  h3: ({ children, ...props }: HTMLAttributes<HTMLHeadingElement>) => {
-    const text = headingText(children);
-    const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)+/g, "");
-    return (
-      <h3 id={id} className="scroll-mt-36" {...props}>
-        {children}
-      </h3>
-    );
-  },
-};
-
 export default async function BlogPost({ params }: Props) {
   const { slug } = await params;
   const post = await getPublishedPostBySlug(slug);
@@ -98,6 +68,9 @@ export default async function BlogPost({ params }: Props) {
   }
 
   const relatedPosts = await getRelatedPosts(slug, post.metadata.category, 3);
+  // The page header supplies the sole H1. Preserve section IDs for deep links.
+  const articleHtml = addHeadingIds(post.contentHtml || "")
+    .replace(/<h1(\s[^>]*)?>/gi, '<h2$1>').replace(/<\/h1>/gi, '</h2>');
   const siteUrl = 'https://khadafidaffa.com';
   const articleUrl = `${siteUrl}/blog/${slug}`;
   const coverImage = post.metadata.ogImage || post.metadata.cover_url || post.metadata.image;
@@ -135,7 +108,7 @@ export default async function BlogPost({ params }: Props) {
   const jsonLdScript = (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, '\\u003c') }}
     />
   );
 
@@ -145,7 +118,7 @@ export default async function BlogPost({ params }: Props) {
       <>
         {jsonLdScript}
         <BlogPostContent post={{ ...post, content: tocContent }} slug={slug} relatedPosts={relatedPosts}>
-          <div dangerouslySetInnerHTML={{ __html: addHeadingIds(post.contentHtml || '') }} />
+          <div dangerouslySetInnerHTML={{ __html: articleHtml }} />
         </BlogPostContent>
       </>
     );
@@ -155,7 +128,7 @@ export default async function BlogPost({ params }: Props) {
     <>
       {jsonLdScript}
       <BlogPostContent post={post} slug={slug} relatedPosts={relatedPosts}>
-        <MDXRemote source={post.content} components={mdxComponents} />
+        <div dangerouslySetInnerHTML={{ __html: articleHtml }} />
       </BlogPostContent>
     </>
   );

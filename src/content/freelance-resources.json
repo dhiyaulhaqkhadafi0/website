@@ -69,6 +69,7 @@
     "updatedAt": "2026-10-12",
     "contentFile": "src/content/freelance-resource-content.ts#T01",
     "relatedIds": [
+      "S01",
       "G01",
       "T03",
       "T02"
@@ -95,6 +96,7 @@
     "updatedAt": "2026-10-12",
     "contentFile": "src/content/freelance-resource-content.ts#T02",
     "relatedIds": [
+      "S01",
       "K01",
       "T06",
       "T03"
@@ -122,6 +124,7 @@
     "updatedAt": "2026-10-12",
     "contentFile": "src/content/freelance-resource-content.ts#T03",
     "relatedIds": [
+      "S01",
       "T01",
       "T02",
       "G01"
@@ -148,6 +151,7 @@
     "updatedAt": "2026-10-12",
     "contentFile": "src/content/freelance-resource-content.ts#T06",
     "relatedIds": [
+      "S01",
       "T02",
       "K01",
       "E02"
@@ -244,5 +248,57 @@
     ],
     "accessLevel": "free",
     "pricingModel": "freemium"
+  },
+  {
+    "id": "S01",
+    "slug": "service-business-system",
+    "title": "Service Business System",
+    "description": "Enam pilar, 24 komponen, dan 19 aset untuk menyiapkan layanan, harga, kesepakatan serta hubungan klien.",
+    "type": "system",
+    "keywords": [
+      "bisnis jasa",
+      "SBS",
+      "SPK",
+      "SOW",
+      "pricing",
+      "toolkit",
+      "sistem"
+    ],
+    "audience": "Freelancer dan pemilik bisnis jasa",
+    "status": "published",
+    "featured": false,
+    "updatedAt": "2026-10-20",
+    "relatedIds": [
+      "G01",
+      "K01",
+      "T02",
+      "T06"
+    ],
+    "contentFile": "business-hub/sbs.json",
+    "pricingModel": "free"
+  },
+  {
+    "id": "S02",
+    "slug": "monetisasi",
+    "title": "80 Jalur Monetisasi Bisnis Digital",
+    "description": "Jelajahi delapan kategori bisnis digital, bandingkan pilihan dan uji asumsi lewat simulasi penerimaan kotor.",
+    "type": "system",
+    "keywords": [
+      "80 jalur",
+      "monetisasi",
+      "bisnis digital",
+      "model bisnis",
+      "simulasi"
+    ],
+    "audience": "Pembelajar dan pelaku bisnis digital",
+    "status": "published",
+    "featured": false,
+    "updatedAt": "2026-10-20",
+    "relatedIds": [
+      "S01",
+      "G01"
+    ],
+    "contentFile": "business-hub/monetization.json",
+    "pricingModel": "free"
   }
 ]

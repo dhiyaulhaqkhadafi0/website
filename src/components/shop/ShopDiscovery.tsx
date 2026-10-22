@@ -19,6 +19,7 @@ import {
   type ShopFilters,
 } from "@/lib/shop-discovery";
 import { ShopArtwork } from "./ShopArtwork";
+import { ProductPrice } from "@/components/commerce/ProductPrice";
 import s from "./shop.module.css";
 const subscribeHydration = () => () => {};
 const clientHydrated = () => true;
@@ -139,7 +140,7 @@ export function ShopDiscovery({
         setFilters((current) =>
           normalizeFilters({ ...current, q: input }, items),
         ),
-      260,
+      150,
     );
     return () => clearTimeout(timer);
   }, [input, items]);
@@ -217,7 +218,7 @@ export function ShopDiscovery({
           dan karya yang terus bertumbuh.
         </p>
       </div>
-      <form className={s.searchBox} role="search" onSubmit={e => { e.preventDefault(); update({ ...filters, q: input }); }}>
+      <form className={s.searchBox} data-premium-search role="search" onSubmit={e => { e.preventDefault(); update({ ...filters, q: input }); }}>
         <Search aria-hidden="true" />
         <label className={s.srOnly} htmlFor="shop-search">
           Cari koleksi
@@ -367,7 +368,7 @@ export function ShopDiscovery({
                   <span>
                     {item.provider} · {item.format}
                   </span>
-                  <strong>{item.priceLabel}</strong>
+                  {item.type==="original"&&item.price!==null?<ProductPrice product={{...item,price:item.price}} compact/>:<strong>{item.priceLabel}</strong>}
                   <Link href={item.href} className={s.cardCta}>{item.type === "original" ? "Lihat produk" : item.type === "service" ? "Jelajahi layanan" : "Kenali tool"} <ArrowUpRight size={15} /></Link>
                 </div>
               </div>

@@ -11,6 +11,7 @@ export function PrivateNav({ studio = false }: { studio?: boolean }) {
         ["Ringkasan", "/studio/overview"],
         ["Konten", "/studio"],
         ["Produk", "/studio/products"],
+        ["Promosi", "/studio/promotions"],
         ["Pesanan", "/studio/orders"],
         ["Brief Proyek", "/studio/inquiries"],
         ["Pelanggan", "/studio/customers"],

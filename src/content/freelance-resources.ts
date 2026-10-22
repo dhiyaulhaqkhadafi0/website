@@ -1,13 +1,13 @@
 import data from './freelance-resources.json';
-export type ResourceType = 'guide' | 'calculator' | 'template' | 'tool';
+export type ResourceType = 'guide' | 'calculator' | 'template' | 'tool' | 'system';
 export interface FreelanceResource {
   id: string; slug: string; title: string; description: string; type: ResourceType;
   keywords: string[]; audience: string; status: 'draft' | 'published'; featured: boolean;
   updatedAt: string; relatedIds: string[]; contentFile: string; pricingModel: 'free' | 'freemium';
   officialUrl?: string; pricingUrl?: string; lastVerified?: string; pricingNote?: string;
 }
-export const RESOURCE_LABELS: Record<ResourceType, string> = {guide:'Panduan',calculator:'Kalkulator',template:'Template',tool:'Tools'};
-export const RESOURCE_ACTIONS: Record<ResourceType, string> = {guide:'Baca panduan',calculator:'Hitung tarif',template:'Buka template',tool:'Kenali tool'};
+export const RESOURCE_LABELS: Record<ResourceType, string> = {guide:'Panduan',calculator:'Kalkulator',template:'Template',tool:'Tools',system:'Sistem'};
+export const RESOURCE_ACTIONS: Record<ResourceType, string> = {guide:'Baca panduan',calculator:'Hitung tarif',template:'Buka template',tool:'Kenali tool',system:'Jelajahi sistem'};
 const ids = new Set<string>();
 const slugs = new Set<string>();
 for (const r of data) {

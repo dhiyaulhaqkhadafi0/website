@@ -9,6 +9,7 @@ import { commerceApi } from "./client-api";
 import { BookCover } from "./BookCover";
 import { ProductImage } from "./ProductImage";
 import { CREATOR_NAME } from "@/lib/product-media";
+import { PromotionFields } from "./PromotionFields";
 import s from "./commerce.module.css";
 type ProductFile = {
   id: string;
@@ -23,6 +24,9 @@ const blank = {
   description: "",
   category: "Ebook",
   price: 0,
+  compare_at_price: null,
+  promotion_enabled: false,
+  promotion_label: "Harga spesial",
   cover_url: "",
   creator_name: CREATOR_NAME,
   gallery: [],
@@ -252,7 +256,7 @@ export function ProductEditor({
           <h2>02 / Harga & cover</h2>
           <div className={s.form}>
             <label>
-              Harga (Rp) · isi 0 untuk produk gratis
+              Harga jual / nominal checkout (Rp) · isi 0 untuk produk gratis
               <input
                 type="number"
                 min={0}
@@ -263,6 +267,7 @@ export function ProductEditor({
                 onChange={(e) => field("price", Number(e.target.value))}
               />
             </label>
+            <PromotionFields value={p} onChange={patch=>{setP(prev=>({...prev,...patch}));dirty.current=true;setNotice("");}}/>
             <label>
               URL cover
               <input

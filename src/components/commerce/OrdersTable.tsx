@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { money, statusLabel, type Order } from "@/lib/commerce-types";
+import { isAllowedDokuCheckoutUrl } from "@/lib/doku-checkout-host";
 import s from "./commerce.module.css";
+import { CancelOrderButton } from "./CancelOrderButton";
 export function OrdersTable({
   orders,
   studio = false,
@@ -52,6 +54,7 @@ export function OrdersTable({
                 <span className={s.status}>{statusLabel[o.status]}</span>
               </td>
               <td data-label={studio ? "Provider" : "Aksi"}>
+                {!studio && o.status === "pending" && o.provider === "doku" && <CancelOrderButton orderId={o.id} />}
                 {studio ? (
                   o.provider
                 ) : (
@@ -59,7 +62,7 @@ export function OrdersTable({
                     Detail ↗
                   </Link>
                 )}
-                {!studio && o.status === "pending" && o.payment_url && (
+                {!studio && o.status === "pending" && o.payment_url && (o.provider === "doku" ? isAllowedDokuCheckoutUrl(o.payment_url, process.env.DOKU_IS_PRODUCTION === "true") : /^https:\/\/app(?:\.sandbox)?\.midtrans\.com\//.test(o.payment_url)) && (
                   <>
                     <br />
                     <a href={o.payment_url}>Lanjut bayar ↗</a>

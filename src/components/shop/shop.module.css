@@ -1979,14 +1979,11 @@
 .discovery { --bg: #f5f1e8; --surface: #fffdf7; --text: #292430; --muted: #6b6270; --line: #47375026; --accent: #715691; --sage: #54705f; color: var(--text); background: radial-gradient(ellipse at 100% 0%, #d7cbe7a6, transparent 38%), radial-gradient(ellipse at 0% 85%, #d7dfd2a6, transparent 40%), #f5f1e8; border: 1px solid #cbbfd539; border-radius: 24px; padding: 58px 36px; margin: 40px -36px 88px; position: relative; }
 .discovery .eyebrow, .cardMeta { font-size: 11px; }
 .searchBox { position: relative; isolation: isolate; background: var(--surface); border: 1px solid #b9a7cc; border-radius: 12px; padding: 0 12px 0 22px; box-shadow: 0 8px 30px #59436c0b; }
-.searchBox::before { content: ""; position: absolute; z-index: -1; inset: -2px; padding: 2px; border-radius: inherit; pointer-events: none; background: conic-gradient(from var(--trace-angle), #a38bb12b, #a38bb12b 65%, #a791c6 82%, #d5c8ef 87%, #a38bb12b 95%); mask: linear-gradient(#fff 0 0) content-box exclude, linear-gradient(#fff 0 0); opacity: .6; }
-.searchBox:hover::before, .searchBox:focus-within::before { opacity: 1; animation: searchTrace 5s linear infinite; }
-@property --trace-angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
-@keyframes searchTrace { to { --trace-angle: 360deg; } }
 .searchBox .searchSend { background: #715691; color: #fff; border-radius: 9px; flex-shrink: 0; transition: background .2s, transform .2s; }
 .searchBox .searchSend:hover { background: #57416f; transform: translateY(-2px); }
 .cardGrid { gap: 26px; align-items: stretch; }
-.card { position: relative; overflow: visible; border-radius: 14px; background: #fffdf8; border-color: #49375626; box-shadow: 0 8px 28px #4d365307; }
+.card { --text: #292430; --muted: #6b6270; --line: #47375026; --accent: #715691; color: var(--text); position: relative; overflow: visible; border-radius: 14px; background: #fffdf8; border-color: #49375626; box-shadow: 0 8px 28px #4d365307; }
+.shell[data-theme="light"] .featureTag { color: #fff; }
 .card:hover, .card:focus-within { transform: translateY(-5px); border-color: #a28bbd; box-shadow: 0 20px 40px #60447516, 0 0 0 1px #b4a1d62b; z-index: 2; }
 .card > a { display: block; border-radius: 13px 13px 0 0; overflow: hidden; }
 .card .artwork { height: 240px; }
@@ -2007,3 +2004,12 @@
 @media (max-width: 900px) { .discovery { margin-inline: -20px; padding: 42px 24px; } }
 @media (max-width: 600px) { .discovery { margin: 24px -8px 60px; padding: 34px 18px; border-radius: 18px; } .searchBox { gap: 10px; height: 64px; } .searchBox input { font-size: 13px; } .card .artwork { height: 250px; } .cardBody { padding: 22px; } .cardGrid { gap: 24px; } }
 @media (prefers-reduced-motion: reduce) { .searchBox::before { animation: none !important; } .card:hover, .card:focus-within, .searchBox .searchSend:hover { transform: none; } }
+/* Original ebook: generous complete mockup, quiet frame and keyboard parity. */
+.card[data-offering="original"] { border: 1px solid #b7a4c966; background: linear-gradient(135deg,#fffdf8,#f5f0e8); box-shadow: 0 5px 10px #49365705,0 20px 48px #4936570d; }
+.card[data-offering="original"] > a { position: relative; }
+.card[data-offering="original"] > a::after { content:""; position:absolute; inset:0; pointer-events:none; background:linear-gradient(115deg,transparent 25%,#ffffff38 45%,transparent 65%); opacity:0; transform:translateX(-80%); transition:transform .65s,opacity .65s; }
+.card[data-offering="original"]:is(:hover,:focus-within) > a::after { transform:translateX(80%); opacity:1; }
+.card[data-offering="original"] .artwork { height:clamp(290px,27vw,370px); }
+.card[data-offering="original"] .bookArt .mockupBook { width:94%; height:94%; max-width:440px; }
+.card[data-offering="original"]:focus-within { outline:2px solid #9b80b5; outline-offset:4px; }
+@media(prefers-reduced-motion:reduce) { .card[data-offering="original"] > a::after { transition:none; transform:none; opacity:0; } }

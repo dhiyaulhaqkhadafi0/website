@@ -5,6 +5,8 @@ import { money, statusLabel, type Order } from "@/lib/commerce-types";
 import s from "@/components/commerce/commerce.module.css";
 import { guestOrder } from "@/lib/guest-order";
 import { GuestDownloads } from "@/components/commerce/GuestDownloads";
+import { isAllowedDokuCheckoutUrl } from "@/lib/doku-checkout-host";
+import { CancelOrderButton } from "@/components/commerce/CancelOrderButton";
 export default async function Page({
   searchParams,
 }: {
@@ -25,6 +27,7 @@ export default async function Page({
     : { data: null };
   const o = data as Order | null;
   const paid = o?.status === "paid";
+  const awaitingCheckout = o?.status === "pending" && !o.payment_url;
   const endedTitle = o ? { failed: "Pembayaran belum berhasil.", expired: "Waktu pembayaran berakhir.", cancelled: "Pesanan dibatalkan.", refunded: "Pembayaran dikembalikan.", pending: "Menunggu konfirmasi.", paid: "Bekalmu sudah siap." }[o.status] : "Periksa pesananmu.";
   return (
     <section className={s.success}>
@@ -33,6 +36,8 @@ export default async function Page({
       <h1>
         {paid
           ? "Bekalmu sudah siap."
+          : awaitingCheckout
+            ? "Halaman pembayaran belum siap."
           : o?.status === "pending"
             ? "Menunggu konfirmasi."
             : endedTitle}
@@ -40,6 +45,8 @@ export default async function Page({
       <p className={s.lead}>
         {paid
           ? "Terima kasih. Produk sudah terhubung ke akunmu dan bisa diakses dari library."
+          : awaitingCheckout
+            ? "Pesanan sudah tercatat, tetapi link pembayaran belum tersedia. Status pending belum berarti pembayaran sudah dilakukan."
           : o?.status === "pending"
             ? "Pembayaran akan dikonfirmasi otomatis. Jika kamu baru membayar, tunggu sebentar lalu periksa status kembali."
             : "Buka daftar pesanan untuk melihat status transaksi yang terhubung ke akunmu."}
@@ -63,6 +70,7 @@ export default async function Page({
         </div>
       )}
       <div className={s.actions}>
+        {!guest && o?.status === "pending" && o.provider === "doku" && <CancelOrderButton orderId={o.id} />}
         <Link
           href={guest ? "/login?returnTo=" + encodeURIComponent(paid ? "/account/library" : "/account/orders") : paid ? "/account/library" : "/account/orders"}
           className={s.button}
@@ -74,7 +82,7 @@ export default async function Page({
             Periksa status kembali
           </a>
         )}
-        {o?.status === "pending" && o.payment_url && /^https:\/\/app(?:\.sandbox)?\.midtrans\.com\//.test(o.payment_url) && <a className={s.secondary} href={o.payment_url}>Lanjutkan pembayaran <ArrowUpRight /></a>}
+        {o?.status === "pending" && o.payment_url && ((o.provider === "doku" && isAllowedDokuCheckoutUrl(o.payment_url, process.env.DOKU_IS_PRODUCTION === "true")) || (o.provider === "midtrans" && /^https:\/\/app(?:\.sandbox)?\.midtrans\.com\//.test(o.payment_url))) && <a className={s.secondary} href={o.payment_url}>Lanjutkan pembayaran <ArrowUpRight /></a>}
       </div>
     </section>
   );

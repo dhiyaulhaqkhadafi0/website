@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-require-imports -- Isolated embedded PostgreSQL QA. */
 const {
   PGlite,
-} = require("../artifacts/home-ecosystem/qa-runtime/node_modules/@electric-sql/pglite");
+} = require(process.env.PGLITE_MODULE || "../artifacts/home-ecosystem/qa-runtime/node_modules/@electric-sql/pglite");
 const fs = require("node:fs");
 const path = require("node:path");
 const assert = require("node:assert/strict");

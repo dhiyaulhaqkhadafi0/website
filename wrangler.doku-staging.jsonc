@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "khadafi-doku-staging",
+  "main": "cloudflare/worker.mjs",
+  "compatibility_date": "2024-09-23",
+  "compatibility_flags": ["nodejs_compat", "cache_option_enabled", "global_fetch_strictly_public"],
+  "workers_dev": true,
+  "assets": {"directory": ".open-next/assets", "binding": "ASSETS"},
+  "services": [{"binding": "WORKER_SELF_REFERENCE", "service": "khadafi-doku-staging"}],
+  "r2_buckets": [{"binding":"NEXT_INC_CACHE_R2_BUCKET","bucket_name":"khadafi-doku-staging-cache"}],
+  "triggers": {"crons": ["*/5 * * * *"]},
+  "vars": {"DOKU_STAGING_ONLY":"true", "DOKU_IS_PRODUCTION":"false", "DOKU_ENABLED":"false", "PAYMENTS_ENABLED":"false", "DOKU_RECONCILE_ENABLED":"false", "DOKU_QA_ENABLED":"false", "COMMERCE_GUEST_CHECKOUT_ENABLED":"false"}
+}

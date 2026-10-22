@@ -112,7 +112,7 @@ export default function TableOfContents({ content }: Props) {
               <span className="text-sm font-mono uppercase tracking-wider text-[#F8FAFC]">Daftar Isi</span>
               <button 
                 onClick={() => setIsOpen(false)}
-                className="text-[#6B7280] hover:text-[#E2E8F0] transition-colors"
+                className="text-[#9CA3AF] hover:text-[#E2E8F0] transition-colors"
                 title="Tutup"
               >
                 <X className="w-5 h-5" />
@@ -142,7 +142,7 @@ export default function TableOfContents({ content }: Props) {
                         className="absolute -left-[18px] top-1/2 -translate-y-1/2 w-1.5 h-1.5 bg-[#34D399] rounded-full shadow-[0_0_10px_rgb(52,211,153)]" 
                       />
                     )}
-                    <span className={`mr-2 font-mono ${isActive ? 'text-[#34D399]' : 'text-[#6B7280]'}`}>{heading.numbering}</span>
+                    <span className={`mr-2 font-mono ${isActive ? 'text-[#34D399]' : 'text-[#9CA3AF]'}`}>{heading.numbering}</span>
                     {heading.text}
                   </a>
                 );

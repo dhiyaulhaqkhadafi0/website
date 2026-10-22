@@ -2,7 +2,7 @@
 
 # Khadafi — Digital Product Ecosystem
 
-**An independent product engineering workspace**  
+**An independent product engineering workspace**
 Designing, building, and shipping useful digital experiences with AI-assisted development.
 
 [Live website](https://khadafidaffa.com) · [About the builder](https://khadafidaffa.com/about) · [Freelance hub](https://khadafidaffa.com/freelance) · [Chikki](https://chikki.id)

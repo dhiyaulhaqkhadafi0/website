@@ -284,7 +284,7 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
               <button
                 type="button"
                 onClick={() => scrollToSection("gabung")}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#34D399] to-[#10B981] hover:from-[#2EB882] hover:to-[#059669] text-[#05050A] font-semibold text-sm tracking-wide transition-all shadow-lg shadow-[#34D399]/20 hover:scale-[1.02] cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl bg-[#34D399] bg-gradient-to-r from-[#34D399] to-[#10B981] hover:from-[#2EB882] hover:to-[#059669] text-[#05050A] font-semibold text-sm tracking-wide transition-all shadow-lg shadow-[#34D399]/20 hover:scale-[1.02] cursor-pointer"
               >
                 <span>Gabung Komunitas</span>
                 <ArrowRight className="w-4 h-4" />
@@ -339,7 +339,7 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
                         D
                       </div>
                       <span className="text-white/80 font-medium">Dimas P.</span>
-                      <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-white/5 text-white/40">
+                      <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-white/5 text-white/60">
                         #AI-Workflow
                       </span>
                     </div>
@@ -366,7 +366,7 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
                         S
                       </div>
                       <span className="text-white/80 font-medium">Siti Rahma</span>
-                      <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-white/5 text-white/40">
+                      <span className="text-[10px] font-mono px-1.5 py-0.2 rounded bg-white/5 text-white/60">
                         #BuildLog
                       </span>
                     </div>
@@ -405,7 +405,7 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
 
               {/* Bottom status note */}
               <div className="mt-4 pt-3 border-t border-white/10 text-center">
-                <span className="text-[11px] font-mono text-white/40">
+                <span className="text-[11px] font-mono text-white/60">
                   Anggota saling berbagi perkembangan, bertanya, dan menguji karya
                 </span>
               </div>
@@ -437,36 +437,36 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
             {/* Titik A (Sebelum) */}
             <div className="p-8 rounded-3xl bg-[#0B0C12] border border-white/10 relative">
               <div className="flex items-center gap-2 mb-6 text-xs font-mono text-white/50 uppercase tracking-wider">
-                <XCircle className="w-4 h-4 text-white/40" />
+                <XCircle className="w-4 h-4 text-white/60" />
                 <span>Kondisi Umum Saat Ini (Titik A)</span>
               </div>
               <ul className="space-y-4 text-sm text-white/70 font-light">
                 <li className="flex items-start gap-3">
-                  <span className="text-white/30 font-mono text-xs mt-0.5">✕</span>
+                  <span className="text-white/60 font-mono text-xs mt-0.5">✕</span>
                   <span>Punya banyak ide di kepala, tetapi bingung harus mulai dari mana.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-white/30 font-mono text-xs mt-0.5">✕</span>
+                  <span className="text-white/60 font-mono text-xs mt-0.5">✕</span>
                   <span>Terjebak hanya mengonsumsi konten AI tanpa pernah menghasilkan karya nyata.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-white/30 font-mono text-xs mt-0.5">✕</span>
+                  <span className="text-white/60 font-mono text-xs mt-0.5">✕</span>
                   <span>Belajar tools secara acak tanpa sistem yang terhubung satu sama lain.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-white/30 font-mono text-xs mt-0.5">✕</span>
+                  <span className="text-white/60 font-mono text-xs mt-0.5">✕</span>
                   <span>Sulit konsisten membuat konten dan membangun personal brand yang meyakinkan.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-white/30 font-mono text-xs mt-0.5">✕</span>
+                  <span className="text-white/60 font-mono text-xs mt-0.5">✕</span>
                   <span>Karya berhenti sebagai draf atau file lokal yang tidak pernah dipublikasikan.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-white/30 font-mono text-xs mt-0.5">✕</span>
+                  <span className="text-white/60 font-mono text-xs mt-0.5">✕</span>
                   <span>Berjalan sendirian dalam sunyi tanpa ada teman untuk saling memberi masukan.</span>
                 </li>
                 <li className="flex items-start gap-3">
-                  <span className="text-white/30 font-mono text-xs mt-0.5">✕</span>
+                  <span className="text-white/60 font-mono text-xs mt-0.5">✕</span>
                   <span>Belum memahami jalur yang jelas untuk menghasilkan pendapatan dari keahliannya.</span>
                 </li>
               </ul>
@@ -542,7 +542,7 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
                     <div className="w-12 h-12 rounded-2xl bg-[#34D399]/10 border border-[#34D399]/20 flex items-center justify-center text-[#34D399] group-hover:scale-105 transition-transform">
                       <IconComponent className="w-6 h-6" />
                     </div>
-                    <span className="text-xs font-mono text-white/40 tracking-wider">
+                    <span className="text-xs font-mono text-white/60 tracking-wider">
                       {pillar.num}
                     </span>
                   </div>
@@ -629,7 +629,7 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
               <span className="w-3 h-3 rounded-full bg-rose-500/60" />
               <span className="w-3 h-3 rounded-full bg-amber-500/60" />
               <span className="w-3 h-3 rounded-full bg-emerald-500/60" />
-              <span className="ml-3 text-xs font-mono text-white/40 hidden sm:inline">
+              <span className="ml-3 text-xs font-mono text-white/60 hidden sm:inline">
                 khadafidaffa.com / ruang-bertumbuh
               </span>
             </div>
@@ -645,7 +645,7 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
             {/* Sidebar Mockup */}
             <div className="lg:col-span-3 bg-[#0B0C12] p-5 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-between">
               <div className="space-y-1">
-                <div className="px-3 py-2 text-[10px] font-mono uppercase tracking-widest text-white/40 mb-2">
+                <div className="px-3 py-2 text-[10px] font-mono uppercase tracking-widest text-white/60 mb-2">
                   Navigasi Anggota
                 </div>
                 <div className="px-3 py-2 rounded-xl bg-[#34D399]/15 text-[#34D399] text-xs font-medium flex items-center gap-2.5">
@@ -676,7 +676,7 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
                 </div>
                 <div className="text-left text-xs">
                   <div className="text-white font-medium">Anggota Komunitas</div>
-                  <div className="text-white/40 text-[10px] font-mono">Portal Akses Mandiri</div>
+                  <div className="text-white/60 text-[10px] font-mono">Portal Akses Mandiri</div>
                 </div>
               </div>
             </div>
@@ -717,7 +717,7 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
                 <div className="space-y-3">
                   <div className="p-4 rounded-xl bg-[#0D0E15] border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
-                      <div className="flex items-center gap-2 text-[11px] font-mono text-white/40 mb-1">
+                      <div className="flex items-center gap-2 text-[11px] font-mono text-white/60 mb-1">
                         <span className="text-[#34D399]">#Product-MVP</span>
                         <span>•</span>
                         <span>Ditulis oleh Alex K.</span>
@@ -733,7 +733,7 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
 
                   <div className="p-4 rounded-xl bg-[#0D0E15] border border-white/5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                     <div>
-                      <div className="flex items-center gap-2 text-[11px] font-mono text-white/40 mb-1">
+                      <div className="flex items-center gap-2 text-[11px] font-mono text-white/60 mb-1">
                         <span className="text-[#34D399]">#AI-Creation</span>
                         <span>•</span>
                         <span>Ditulis oleh Maya S.</span>
@@ -749,7 +749,7 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
                 </div>
               </div>
 
-              <div className="mt-8 pt-4 border-t border-white/5 text-xs text-white/40 font-mono text-center sm:text-left">
+              <div className="mt-8 pt-4 border-t border-white/5 text-xs text-white/60 font-mono text-center sm:text-left">
                 * Area interaktif di atas merupakan representasi antarmuka portal yang sedang dikembangkan.
               </div>
             </div>
@@ -899,7 +899,7 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
                 >
                   <span>{faq.q}</span>
                   <ChevronDown
-                    className={`w-4 h-4 text-white/40 transition-transform duration-300 ${
+                    className={`w-4 h-4 text-white/60 transition-transform duration-300 ${
                       isOpen ? "-rotate-180 text-[#34D399]" : ""
                     }`}
                   />
@@ -943,7 +943,7 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
                   value={waitlistEmail}
                   onChange={(e) => setWaitlistEmail(e.target.value)}
                   placeholder="Masukkan email kamu..."
-                  className="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-[#34D399] transition-colors"
+                  className="flex-1 px-4 py-3 rounded-xl bg-white/5 border border-white/15 text-white text-sm placeholder:text-white/60 focus:outline-none focus:border-[#34D399] transition-colors"
                 />
                 <button
                   type="submit"
@@ -958,7 +958,7 @@ export default function CommunityView({ recentPosts }: CommunityViewProps) {
               </div>
             )}
 
-            <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-xs font-mono text-white/40">
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-xs font-mono text-white/60">
               <span>Status: Akses komunitas sedang disiapkan</span>
               <span>•</span>
               <button

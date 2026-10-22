@@ -2,8 +2,9 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Plus } from "lucide-react";
-import { money, type Product } from "@/lib/commerce-types";
+import { type Product } from "@/lib/commerce-types";
 import s from "./commerce.module.css";
+import { ProductPrice } from "./ProductPrice";
 export function StudioProducts({ products }: { products: Product[] }) {
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("Semua");
@@ -60,7 +61,7 @@ export function StudioProducts({ products }: { products: Product[] }) {
                     </div>
                   </td>
                   <td data-label="Kategori">{p.category}</td>
-                  <td data-label="Harga">{money(p.price)}</td>
+                  <td data-label="Harga"><ProductPrice product={p} compact/></td>
                   <td data-label="Status">
                     <span className={s.badge}>{p.status}</span>
                   </td>

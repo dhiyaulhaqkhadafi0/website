@@ -1,8 +1,10 @@
 .readingPage {
+  --reading-accent: #b8a9ef;
   padding: 145px 0 110px;
   color: var(--text);
   font-size: 16px;
 }
+:global([data-theme="light"]) .readingPage { --reading-accent: #65528f; }
 .container {
   max-width: 1240px;
   padding-inline: 40px;
@@ -113,7 +115,7 @@
 .toc a > span {
   font-family: Georgia, serif;
   font-size: 12px;
-  color: #b8a9ef;
+  color: var(--reading-accent);
 }
 .intro {
   font-size: 21px;
@@ -173,7 +175,7 @@
 }
 .workspaceHeading > span {
   font-size: 25px;
-  color: #b8a9ef;
+  color: var(--reading-accent);
 }
 .workspaceNote {
   font-size: 12px !important;
@@ -324,7 +326,7 @@
 }
 .promptList summary > span:last-child {
   margin-left: auto;
-  color: #b8a9ef;
+  color: var(--reading-accent);
   font-size: 23px;
 }
 .promptList summary small {

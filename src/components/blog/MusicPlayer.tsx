@@ -83,7 +83,7 @@ export default function MusicPlayer() {
         </div>
 
         {/* Mood Tagline */}
-        <p className="text-xs text-[#71717A] italic mb-3 text-center">
+        <p className="text-xs text-[#9CA3AF] italic mb-3 text-center">
           &ldquo;{currentAtmosphere.tagline}&rdquo;
         </p>
 
@@ -123,7 +123,7 @@ export default function MusicPlayer() {
             <span>{currentAtmosphere.name}</span>
           </div>
 
-          <div className="flex items-center gap-1 text-[11px] font-mono text-[#6B7280] bg-[#18181B] px-2 py-0.5 rounded-full border border-[#27272A]">
+          <div className="flex items-center gap-1 text-[11px] font-mono text-[#9CA3AF] bg-[#18181B] px-2 py-0.5 rounded-full border border-[#27272A]">
             <Headphones className="w-3 h-3 text-[#34D399]" />
             <span>{hasLoadedIframe ? "Aktif" : "Atmosphere"}</span>
           </div>

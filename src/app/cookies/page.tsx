@@ -22,6 +22,7 @@ const sections = [
     paragraphs: [
       "Pilihan tema disimpan pada localStorage dengan nama khadafi-home-theme. Pilihan ini mempertahankan tema terang atau gelap saat Anda kembali. Preferensi bahasa dan izin terjemahan menggunakan khadafi_lang_preference dan khadafi-translation-consent.",
       "Preferensi localStorage tetap tersimpan sampai Anda mengubahnya atau menghapus data situs. Penyimpanan ini berbeda dari cookie sesi dan bukan daftar subscriber newsletter.",
+      "Tawaran bahasa menggunakan kode negara umum dari koneksi Cloudflare dan preferensi bahasa browser, tanpa meminta GPS atau menyimpan alamat IP. Pilihan menutup tawaran diingat pada khadafi_language_offer_v1 selama 30 hari. Negara hanya menjadi petunjuk karena negara dapat memiliki beberapa bahasa.",
     ],
   },
   {
@@ -30,6 +31,7 @@ const sections = [
     paragraphs: [
       "Versi Bahasa Indonesia tidak memerlukan Google Translate. Skrip terjemahan hanya dimuat setelah izin diberikan dan Anda memilih bahasa terjemahan. Saat digunakan, browser terhubung ke layanan Google, yang dapat menerima konten halaman dan informasi teknis permintaan.",
       "Cookie googtrans mengingat bahasa yang dipilih selama maksimal 30 hari. Anda dapat mencabut izin pada panel di atas. Jika skrip sudah berjalan, muat ulang halaman untuk menghentikannya; cookie dari domain pihak ketiga dapat dikelola melalui pengaturan browser.",
+      "Tawaran terjemahan hanya ditampilkan pada halaman publik. Skrip terjemahan tidak dimuat pada autentikasi, checkout, akun, dan Studio. Tawaran tidak mengubah URL, harga, atau hak akses akun.",
     ],
   },
   {

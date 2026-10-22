@@ -1,3 +1,4 @@
+import { sbs, monetization, chapterHref, pathwayHref } from '@/content/business-hub';
 import type { MetadataRoute } from "next";
 import { CURATED_TOOLS, SERVICES } from "@/content/shop";
 import { getAllPosts } from "@/lib/mdx";
@@ -14,8 +15,7 @@ export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = "https://khadafidaffa.com";
-  const posts = await getAllPosts();
-  const products = await publishedProducts();
+  const [posts, products] = await Promise.all([getAllPosts(), publishedProducts()]);
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${siteUrl}/cookies`, changeFrequency: "monthly", priority: 0.3 },
@@ -33,6 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     ...products.map((product) => ({
       url: `${siteUrl}/products/${product.slug}`,
+      ...(product.updated_at && !Number.isNaN(Date.parse(product.updated_at)) ? { lastModified: new Date(product.updated_at) } : {}),
       changeFrequency: "monthly" as const,
       priority: 0.7,
     })),
@@ -124,6 +125,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   // Ensure /studio and draft routes are NEVER included
   const freelanceRoutes: MetadataRoute.Sitemap = [
+ ...sbs.chapters.map(c=>({url:siteUrl+chapterHref(c.slug),changeFrequency:'monthly' as const,priority:0.75})),
+ ...monetization.items.map(i=>({url:siteUrl+pathwayHref(i.slug),changeFrequency:'monthly' as const,priority:0.7})),
     {
       url: `${siteUrl}/freelance/direktori`,
       changeFrequency: "monthly",
@@ -147,10 +150,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.65,
     })),
   ];
-  return [
+  const routes = [
     ...staticRoutes,
     ...blogRoutes,
     ...resourceRoutes,
     ...freelanceRoutes,
   ].filter((route) => isPublicDestination(new URL(route.url).pathname));
+  return [...new Map(routes.map(route => [route.url, route])).values()];
 }

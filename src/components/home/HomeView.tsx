@@ -1,12 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import type { BlogCardItem } from "@/lib/mdx";
 import { SIGNATURE_SYSTEMS } from "@/content/resources-data";
 import { WorkAtlas } from "@/components/freelance/WorkAtlas";
 import { HomeExperience, DynamicNote } from "./HomeExperience";
 import { CredentialsGallery } from "./CredentialsGallery";
 import { NewsletterSection } from "./NewsletterSection";
+import { ChikkiPreview } from "./ChikkiPreview";
 import styles from "./editorial-home.module.css";
+function SectionBridge({ label, href, index }: { label: string; href: string; index: string }) {
+  return <a className={styles.sectionBridge} href={href} aria-label={"Lanjut ke " + label}>
+    <span>{index} / {label}</span><svg viewBox="0 0 160 64" fill="none" aria-hidden="true"><path d="M1 9h88c24 0 36 13 36 34v11m-10-11 10 11 11-11" stroke="currentColor" strokeWidth="1.3" /></svg><span>Terus jelajahi ↓</span>
+  </a>;
+}
 
 function BuilderComposition() {
   return (
@@ -73,7 +80,24 @@ const capabilities = [
     "Merumuskan masalah, menguji ide, dan menentukan langkah berikutnya.",
   ],
 ];
-export function HomeView({ posts }: { posts: BlogCardItem[] }) {
+async function RecentArticles({ posts }: { posts: Promise<BlogCardItem[]> }) {
+  const articles = await posts;
+  return <>{articles.slice(0, 3).map((post) => (
+    <Link key={post.metadata.slug} href={`/blog/${post.metadata.slug}`} className={styles.articleRow}>
+      <span className={styles.eyebrow}>{post.metadata.category || "Artikel"}</span>
+      <h4>{post.metadata.title}</h4>
+      <div><time dateTime={post.metadata.date}>{new Date(post.metadata.date).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" })}</time>
+        {post.metadata.readingTime && <span>{post.metadata.readingTime} menit baca</span>}<span aria-hidden="true">↗</span>
+      </div>
+    </Link>
+  ))}{articles.length === 0 && <p>Artikel akan tampil di sini setelah diterbitkan.</p>}</>;
+}
+function ArticlePlaceholder() {
+  return <div className={styles.articlePlaceholder} role="status" aria-label="Memuat artikel terbaru">
+    {[0, 1, 2].map(i => <div key={i} aria-hidden="true"><i /><i /><i /></div>)}
+  </div>;
+}
+export function HomeView({ posts }: { posts: Promise<BlogCardItem[]> }) {
   return (
     <HomeExperience>
       <header className={`${styles.section} ${styles.hero}`}>
@@ -115,6 +139,7 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
           </div>
         </div>
       </header>
+      <SectionBridge label="Temukan arahmu" href="#intent" index="01" />
       <section
         id="intent"
         className={`${styles.section} ${styles.intent}`}
@@ -149,6 +174,7 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
           </div>
         </div>
       </section>
+      <SectionBridge label="Karya & eksperimen" href="#featured-work" index="02" />
       <section
         id="featured-work"
         className={`${styles.section} ${styles.featured}`}
@@ -168,34 +194,7 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
             </h2>
           </div>
           <div className={styles.flagship}>
-            <figure
-              className={styles.chikkiVisual}
-              aria-label="Chikki: ruang menulis dan hubungan antara penulis dan pembaca"
-            >
-              <div className={styles.productMasthead}>
-                CHIKKI<span>Eksplorasi produk</span>
-              </div>
-              <div className={styles.chikkiPage}>
-                <span>RUANG UNTUK BERCERITA</span>
-                <p>
-                  Sebuah ide.
-                  <br />
-                  Sebuah cerita.
-                  <br />
-                  <em>Sebuah koneksi.</em>
-                </p>
-                <div className={styles.proseLines} aria-hidden="true">
-                  <i />
-                  <i />
-                  <i />
-                </div>
-                <span className={styles.pageNumber}>01</span>
-              </div>
-              <figcaption>
-                Penulis <span aria-hidden="true">—</span> Pembaca{" "}
-                <span aria-hidden="true">—</span> Peluang
-              </figcaption>
-            </figure>
+            <ChikkiPreview />
             <div className={styles.flagshipCopy}>
               <p className={styles.eyebrow}>
                 Produk pilihan / Terus dikembangkan
@@ -260,7 +259,9 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
           </div>
         </div>
       </section>
+      <SectionBridge label="Peluang baru" href="#freelance-home" index="03" />
       <section
+        id="freelance-home"
         className={`${styles.section} ${styles.freelance}`}
         aria-labelledby="freelance-preview-title"
         data-reveal="soft"
@@ -304,6 +305,7 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
           </div>
         </div>
       </section>
+      <SectionBridge label="Bekal untuk bertumbuh" href="#knowledge" index="04" />
       <section
         id="knowledge"
         className={`${styles.section} ${styles.knowledge}`}
@@ -342,38 +344,7 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
               <h3 className={styles.columnTitle}>
                 Terbaru dari The Digital Grimoire
               </h3>
-              {posts.slice(0, 3).map((post) => (
-                <Link
-                  key={post.metadata.slug}
-                  href={`/blog/${post.metadata.slug}`}
-                  className={styles.articleRow}
-                >
-                  <span className={styles.eyebrow}>
-                    {post.metadata.category || "Artikel"}
-                  </span>
-                  <h4>{post.metadata.title}</h4>
-                  <div>
-                    <time dateTime={post.metadata.date}>
-                      {new Date(post.metadata.date).toLocaleDateString(
-                        "id-ID",
-                        {
-                          day: "numeric",
-                          month: "short",
-                          year: "numeric",
-                          timeZone: "UTC",
-                        },
-                      )}
-                    </time>
-                    {post.metadata.readingTime && (
-                      <span>{post.metadata.readingTime} menit baca</span>
-                    )}
-                    <span aria-hidden="true">↗</span>
-                  </div>
-                </Link>
-              ))}
-              {posts.length === 0 && (
-                <p>Artikel akan tampil di sini setelah diterbitkan.</p>
-              )}
+              <Suspense fallback={<ArticlePlaceholder />}><RecentArticles posts={posts} /></Suspense>
               <Link href="/blog" className={styles.textLink}>
                 Baca semua artikel <span aria-hidden="true">→</span>
               </Link>
@@ -381,6 +352,7 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
           </div>
         </div>
       </section>
+      <SectionBridge label="Di balik karya" href="#about" index="05" />
       <section
         id="about"
         className={`${styles.section} ${styles.about}`}
@@ -391,11 +363,14 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
           <div className={styles.aboutGrid}>
             <figure className={styles.portrait}>
               <Image
-                src="/assets/my-profile.jpg"
+                src="/images/experience/portrait-v1.webp"
+                unoptimized
                 alt="Khadafi, digital builder"
                 fill
                 sizes="(max-width: 600px) 80vw, 360px"
               />
+              <span className={styles.portraitLight} aria-hidden="true" />
+              <span className={styles.portraitSignature}>K.</span>
               <figcaption>Khadafi / Berkarya, sambil terus belajar.</figcaption>
             </figure>
             <div>
@@ -435,6 +410,7 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
           <CredentialsGallery />
         </div>
       </section>
+      <SectionBridge label="Tetap terhubung" href="#newsletter" index="06" />
       <section
         id="newsletter"
         className={`${styles.section} ${styles.conversion}`}
@@ -453,14 +429,16 @@ export function HomeView({ posts }: { posts: BlogCardItem[] }) {
             <p>
               Jelajahi produk, panduan, dan sumber daya yang sedang saya bangun.
               <br />
-              Butuh bantuan? Hubungi saya melalui email.
+              Butuh bantuan? Temui saya di Threads @khdfii9.
             </p>
             <div className={styles.actions}>
               <Link href="#intent" className={styles.primary}>
                 Jelajahi Website <span aria-hidden="true">↑</span>
               </Link>
               <a
-                href="mailto:daffadhiyaulhaqkhadafi@gmail.com"
+                href="https://threads.com/khdfii9"
+                target="_blank"
+                rel="noopener noreferrer"
                 className={styles.textLink}
               >
                 Hubungi Support <span aria-hidden="true">↗</span>

@@ -675,7 +675,7 @@ export function RemoteWorldVisualizer({
 
         {/* Drag Hint at bottom */}
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-center pointer-events-none">
-          <span className="text-[11px] text-[#898B84]/60 tracking-wider uppercase bg-[#2E2F2B]/60 px-3 py-1 rounded-[4px] border border-[rgba(255,255,255,0.05)] backdrop-blur-md">
+          <span className="text-[11px] text-[#c3c6ba] tracking-wider uppercase bg-[#2E2F2B]/90 px-3 py-1 rounded-[4px] border border-[rgba(255,255,255,0.05)] backdrop-blur-md">
             Geser untuk memutar · Klik node untuk menjelajahi
           </span>
         </div>

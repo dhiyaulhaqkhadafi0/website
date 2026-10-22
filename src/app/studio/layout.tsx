@@ -10,10 +10,10 @@ export default async function Layout({
 }) {
   await pageUser("/studio", true);
   return (
-    <>
+    <div className="notranslate contents" translate="no">
       <SessionBridge />
       <StudioRootNav />
       {children}
-    </>
+    </div>
   );
 }

@@ -80,7 +80,7 @@ export function RelatedArticlesSection({ posts }: Props) {
                     {post.metadata.readingTime ? (
                       <>
                         <span className="w-1 h-1 rounded-full bg-[#3F3F46]" />
-                        <span className="flex items-center gap-1 text-[#71717A]">
+                        <span className="flex items-center gap-1 text-[#9CA3AF]">
                           <Clock className="w-3 h-3 text-[#34D399]" />
                           {post.metadata.readingTime} min read
                         </span>

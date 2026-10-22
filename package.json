@@ -10,7 +10,9 @@
     "lint": "eslint",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
+    "predev": "node scripts/generate-blog-content.cjs",
+    "prebuild:next": "node scripts/generate-blog-content.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",
@@ -24,23 +26,24 @@
     "@tiptap/extension-underline": "^3.31.0",
     "@tiptap/react": "^3.31.0",
     "@tiptap/starter-kit": "^3.31.0",
+    "@workermailer/smtp": "0.2.1",
     "framer-motion": "^13.1.1",
     "gray-matter": "^4.0.3",
     "lucide-react": "^1.37.0",
-    "next": "16.3.3",
+    "next": "16.4.2",
     "next-mdx-remote": "^6.0.0",
     "react": "19.2.8",
     "react-dom": "19.2.8"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.20.5",
+    "@opennextjs/cloudflare": "1.20.13",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
-    "eslint-config-next": "16.3.3",
+    "eslint-config-next": "16.4.2",
     "tailwindcss": "^4",
     "typescript": "^5",
     "wrangler": "^4.127.1"

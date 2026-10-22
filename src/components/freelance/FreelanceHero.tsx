@@ -90,7 +90,7 @@ export function FreelanceHero({
           transition={{ duration: 0.9, delay: 0.45 }}
           className="mt-14 md:mt-16"
         >
-          <p className="text-[12px] tracking-[0.14em] text-[#898B84] uppercase font-medium">
+          <p className="text-[12px] tracking-[0.14em] text-[#b4b8aa] uppercase font-medium">
             Freelance&nbsp;&nbsp;·&nbsp;&nbsp;Remote Work&nbsp;&nbsp;·&nbsp;&nbsp;AI&nbsp;&nbsp;·&nbsp;&nbsp;Digital Career
           </p>
         </motion.div>

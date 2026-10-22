@@ -15,6 +15,9 @@ export type Product = {
   description: string;
   category: (typeof CATEGORIES)[number];
   price: number;
+  compare_at_price?: number | null;
+  promotion_enabled?: boolean;
+  promotion_label?: string;
   currency: "IDR";
   cover_url: string;
   creator_name?: string;
@@ -149,6 +152,7 @@ export function validateProduct(input: unknown) {
     slug,
     category: p.category as Product["category"],
     price: Number(p.price),
+    ...validatePromotion(p),
     status: p.status as Product["status"],
     cover_url,
     creator_name: typeof p.creator_name === "string" && p.creator_name.trim() ? str("creator_name", 180) : CREATOR_NAME,
@@ -162,6 +166,16 @@ export function validateProduct(input: unknown) {
     seo_description: str("seo_description", 320),
     included: p.included.map((v) => v.trim()).filter(Boolean),
   };
+}
+export function validatePromotion(p: Record<string, unknown>) {
+  const price=Number(p.price),comparison=p.compare_at_price == null || p.compare_at_price === "" ? null : p.compare_at_price;
+  if(comparison!==null&&(!Number.isSafeInteger(comparison)||Number(comparison)<1||Number(comparison)>100000000))throw new Error("Harga reguler harus berupa rupiah bulat yang valid.");
+  if(p.promotion_enabled!==undefined&&typeof p.promotion_enabled!=="boolean")throw new Error("Status promosi tidak valid.");
+  const enabled=p.promotion_enabled===true;
+  if(enabled&&(!(price>0)||comparison===null||Number(comparison)<=price))throw new Error("Harga reguler harus lebih tinggi dari harga jual promosi.");
+  const label=p.promotion_label===undefined?"Harga spesial":p.promotion_label;
+  if(typeof label!=="string"||label.length>60)throw new Error("Label promosi maksimal 60 karakter.");
+  return {compare_at_price:comparison===null?null:Number(comparison),promotion_enabled:enabled,promotion_label:label.trim()||"Harga spesial"};
 }
 export function validateGallery(input: unknown): ProductMedia[] {
   if (!Array.isArray(input) || input.length > 12) throw new Error("Galeri maksimal 12 gambar.");

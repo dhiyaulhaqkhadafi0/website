@@ -169,11 +169,6 @@ const NAV_CATEGORIES: NavCategory[] = [
           "Profil builder, AI-assisted product engineer & etos kerja",
       },
       {
-        label: "Perjalanan & Fokus",
-        href: "/about#journey",
-        description: "Fokus eksplorasi saat ini & roadmap pembangunan produk",
-      },
-      {
         label: "Sertifikasi & Kredensial",
         href: "/#certifications",
         description: "Validasi profesional dari Google, IBM & institusi global",

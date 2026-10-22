@@ -1,4 +1,7 @@
 import { supabase } from "@/lib/supabase";
+export class CommerceRequestError extends Error {
+  constructor(message: string, public orderId?: string) { super(message); }
+}
 export async function commerceApi(path: string, init: RequestInit = {}) {
   const { data, error } = await supabase.auth.getSession();
   if (error || !data.session)
@@ -13,6 +16,6 @@ export async function commerceApi(path: string, init: RequestInit = {}) {
   });
   const payload = await response.json();
   if (!response.ok)
-    throw new Error(payload.error || "Permintaan belum berhasil.");
+    throw new CommerceRequestError(payload.error || "Permintaan belum berhasil.", payload.order_id);
   return payload;
 }

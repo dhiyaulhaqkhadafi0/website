@@ -1,0 +1,503 @@
+[
+  {
+    "id": "sbs-01",
+    "title": "Service Business Playbook",
+    "optional": false,
+    "usage_notice": null,
+    "files": [
+      {
+        "path": "playbook/01_Service_Business_Playbook.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/playbook/01_Service_Business_Playbook.pdf",
+        "size_bytes": 122919,
+        "sha256": "6fc3d4fff048ca2a99c2665cf5751e066145fa055b57781b78736cfaa0c5d720"
+      }
+    ],
+    "document_revision": "V2",
+    "pillars": [],
+    "description": "Panduan lengkap enam pilar bisnis jasa"
+  },
+  {
+    "id": "sbs-02",
+    "title": "Service Positioning Worksheet",
+    "optional": false,
+    "usage_notice": null,
+    "files": [
+      {
+        "path": "templates/02_Service_Positioning_Worksheet.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/02_Service_Positioning_Worksheet.docx",
+        "size_bytes": 39496,
+        "sha256": "c68fc2017d45aad485b03f6d9ce48b4794290a1b4b1350668ef90c133096532f"
+      },
+      {
+        "path": "templates/02_Service_Positioning_Worksheet.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/02_Service_Positioning_Worksheet.pdf",
+        "size_bytes": 75597,
+        "sha256": "352bc3d871e85270e5dc02921989e12dc5e0339d3d49d5b39d90ba20258fc11e"
+      }
+    ],
+    "document_revision": "V1 retained",
+    "pillars": [
+      "fondasi"
+    ],
+    "description": "Katalog layanan · Target market dan ICP · Value proposition"
+  },
+  {
+    "id": "sbs-03",
+    "title": "Freelance Rate Calculator",
+    "optional": false,
+    "usage_notice": null,
+    "files": [
+      {
+        "path": "calculators/03_Freelance_Rate_Calculator.xlsx",
+        "format": "XLSX",
+        "public_url": "/downloads/service-business-system/calculators/03_Freelance_Rate_Calculator.xlsx",
+        "size_bytes": 6633,
+        "sha256": "a8e08608fc19c281b807d86611134cd031c264c29bd70009c02e3b31576d55a8"
+      }
+    ],
+    "document_revision": "V1 retained",
+    "pillars": [
+      "harga"
+    ],
+    "description": "Rate card · Pricing packages"
+  },
+  {
+    "id": "sbs-04",
+    "title": "Service Package Builder",
+    "optional": false,
+    "usage_notice": null,
+    "files": [
+      {
+        "path": "templates/04_Service_Package_Builder.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/04_Service_Package_Builder.docx",
+        "size_bytes": 40335,
+        "sha256": "45976fd7c0a1a39b324a30ffb74589912247fb79186a365efc23780c4e4f0c55"
+      },
+      {
+        "path": "templates/04_Service_Package_Builder.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/04_Service_Package_Builder.pdf",
+        "size_bytes": 110339,
+        "sha256": "f28e976b0b24e0c5daed8c1eda3e8588c00c7f42bae69bb4dce1d63ccd460b71"
+      }
+    ],
+    "document_revision": "V1 retained",
+    "pillars": [
+      "fondasi",
+      "harga"
+    ],
+    "description": "Katalog layanan · Scope dan deliverables · Pricing packages"
+  },
+  {
+    "id": "sbs-05",
+    "title": "Client Brief Form",
+    "optional": false,
+    "usage_notice": null,
+    "files": [
+      {
+        "path": "templates/05_Client_Brief_Form.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/05_Client_Brief_Form.docx",
+        "size_bytes": 39502,
+        "sha256": "1496bba2411f41711f5f4227a65bb4582572a4da945429dbe005e379104826c2"
+      },
+      {
+        "path": "templates/05_Client_Brief_Form.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/05_Client_Brief_Form.pdf",
+        "size_bytes": 75229,
+        "sha256": "187ec6765b95e06f34c4ca75fedeef33bc27d4131a48917a17da35bd68f93313"
+      }
+    ],
+    "document_revision": "V1 retained",
+    "pillars": [
+      "operasional"
+    ],
+    "description": "Client brief"
+  },
+  {
+    "id": "sbs-06",
+    "title": "Proposal dan Quotation",
+    "optional": false,
+    "usage_notice": null,
+    "files": [
+      {
+        "path": "templates/06_Proposal_dan_Quotation.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/06_Proposal_dan_Quotation.docx",
+        "size_bytes": 40469,
+        "sha256": "cd5ede555379a407feaeb8d47e3e2ad1d1564ce6061b17d7589c630f11687cab"
+      },
+      {
+        "path": "templates/06_Proposal_dan_Quotation.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/06_Proposal_dan_Quotation.pdf",
+        "size_bytes": 112813,
+        "sha256": "fc53712e6a569a777e4b64e7ed807540b16fe6c430a19f905e68c79781391204"
+      }
+    ],
+    "document_revision": "V1 retained",
+    "pillars": [
+      "harga"
+    ],
+    "description": "Payment terms · Quotation dan invoice"
+  },
+  {
+    "id": "sbs-07",
+    "title": "SPK dan Statement of Work",
+    "optional": false,
+    "usage_notice": "Sesuaikan sebelum disepakati; materi edukasi.",
+    "files": [
+      {
+        "path": "templates/07_SPK_dan_Statement_of_Work.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/07_SPK_dan_Statement_of_Work.docx",
+        "size_bytes": 43132,
+        "sha256": "da18ce7c62a906fc2973ce9724edcd1da9808541f0670e4ea0be585d6b313fb0"
+      },
+      {
+        "path": "templates/07_SPK_dan_Statement_of_Work.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/07_SPK_dan_Statement_of_Work.pdf",
+        "size_bytes": 140879,
+        "sha256": "f7d0007c29aed67a897d8dbda5c482b8611131602298b6fc5eb28ba17f2874be"
+      }
+    ],
+    "document_revision": "V1 retained",
+    "pillars": [
+      "fondasi",
+      "harga",
+      "kesepakatan"
+    ],
+    "description": "Scope dan deliverables · Payment terms · Service agreement dan SPK · Statement of Work · Terms dan policies"
+  },
+  {
+    "id": "sbs-08",
+    "title": "Freelance Invoice",
+    "optional": false,
+    "usage_notice": null,
+    "files": [
+      {
+        "path": "templates/08_Freelance_Invoice.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/08_Freelance_Invoice.docx",
+        "size_bytes": 40319,
+        "sha256": "070f7a8f020d10966b5e331de68b161dc365c123454d20acbc448b452e169073"
+      },
+      {
+        "path": "templates/08_Freelance_Invoice.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/08_Freelance_Invoice.pdf",
+        "size_bytes": 108707,
+        "sha256": "1f6c1065d56ca4fa2779ceeadbaea1b38a2e6116fbd39fa1e4cd459109382831"
+      }
+    ],
+    "document_revision": "V1 retained",
+    "pillars": [
+      "harga"
+    ],
+    "description": "Payment terms · Quotation dan invoice"
+  },
+  {
+    "id": "sbs-09",
+    "title": "Client and Project Tracker",
+    "optional": false,
+    "usage_notice": null,
+    "files": [
+      {
+        "path": "calculators/09_Client_and_Project_Tracker.xlsx",
+        "format": "XLSX",
+        "public_url": "/downloads/service-business-system/calculators/09_Client_and_Project_Tracker.xlsx",
+        "size_bytes": 36885,
+        "sha256": "4496972cbd054ee2007fca891b8352b1630bd68e1e3ea6672c51e2ffab3b9a9e"
+      }
+    ],
+    "document_revision": "V1 retained",
+    "pillars": [
+      "harga",
+      "operasional",
+      "pertumbuhan"
+    ],
+    "description": "Quotation dan invoice · Project timeline · SOP dan workflow · Lead generation · CRM dan client database"
+  },
+  {
+    "id": "sbs-10",
+    "title": "Project Handover Checklist",
+    "optional": false,
+    "usage_notice": null,
+    "files": [
+      {
+        "path": "templates/10_Project_Handover_Checklist.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/10_Project_Handover_Checklist.docx",
+        "size_bytes": 40141,
+        "sha256": "3f98d96e612515399f7bea342f3f07ee29f6f7622077b4df3ba7b7178be0601d"
+      },
+      {
+        "path": "templates/10_Project_Handover_Checklist.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/10_Project_Handover_Checklist.pdf",
+        "size_bytes": 98414,
+        "sha256": "c6221c9ff256015f4ff5e1a90e1ed3ca6bb0f39f46276594fbb74da69308aa32"
+      }
+    ],
+    "document_revision": "V1 retained",
+    "pillars": [
+      "operasional",
+      "pertumbuhan"
+    ],
+    "description": "Handover checklist · After sales dan repeat order"
+  },
+  {
+    "id": "sbs-11",
+    "title": "Service Catalog dan Rate Card",
+    "optional": false,
+    "usage_notice": null,
+    "files": [
+      {
+        "path": "templates/11_Service_Catalog_dan_Rate_Card.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/11_Service_Catalog_dan_Rate_Card.docx",
+        "size_bytes": 40249,
+        "sha256": "5f8ee374cb7a56fae2f284560ec4fa07c0ee63d64e9b6859ac877eee6ee9c21b"
+      },
+      {
+        "path": "templates/11_Service_Catalog_dan_Rate_Card.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/11_Service_Catalog_dan_Rate_Card.pdf",
+        "size_bytes": 105960,
+        "sha256": "447a41da01aaaa224b918c27572cad9ba7bbdfd33c9df6dd3d92dc4d4c88a5af"
+      }
+    ],
+    "document_revision": "V2",
+    "pillars": [
+      "fondasi",
+      "harga"
+    ],
+    "description": "Katalog layanan · Target market dan ICP · Value proposition · Rate card · Pricing packages"
+  },
+  {
+    "id": "sbs-12",
+    "title": "Portfolio Case Study dan Service Page",
+    "optional": false,
+    "usage_notice": null,
+    "files": [
+      {
+        "path": "templates/12_Portfolio_Case_Study_dan_Service_Page.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/12_Portfolio_Case_Study_dan_Service_Page.docx",
+        "size_bytes": 39414,
+        "sha256": "ee9b0b5e14eb0c6d0efa2d3cd3aca0afe10c075a126b70137e756f9eb16f7150"
+      },
+      {
+        "path": "templates/12_Portfolio_Case_Study_dan_Service_Page.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/12_Portfolio_Case_Study_dan_Service_Page.pdf",
+        "size_bytes": 76420,
+        "sha256": "a940d342e4652bf3ab8b5622555588a9fd3d12d52f320be307f8c7ae1ef47a5a"
+      }
+    ],
+    "document_revision": "V2",
+    "pillars": [
+      "bukti",
+      "pertumbuhan"
+    ],
+    "description": "Portfolio · Case studies · Testimonials · Service landing page · Feedback dan review"
+  },
+  {
+    "id": "sbs-13",
+    "title": "Lead Generation dan Follow Up Kit",
+    "optional": false,
+    "usage_notice": null,
+    "files": [
+      {
+        "path": "templates/13_Lead_Generation_dan_Follow_Up_Kit.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/13_Lead_Generation_dan_Follow_Up_Kit.docx",
+        "size_bytes": 39929,
+        "sha256": "3d3ce6d98bdedb7c86e00d6153c2ab0cd41e5254ea102156886ef1351eab25c0"
+      },
+      {
+        "path": "templates/13_Lead_Generation_dan_Follow_Up_Kit.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/13_Lead_Generation_dan_Follow_Up_Kit.pdf",
+        "size_bytes": 94666,
+        "sha256": "e9b6ad5cb7d0c93cf36499c81af640c1e26e780fdaf9519189c998a93882d8cb"
+      }
+    ],
+    "document_revision": "V2",
+    "pillars": [
+      "pertumbuhan"
+    ],
+    "description": "Lead generation · CRM dan client database"
+  },
+  {
+    "id": "sbs-14",
+    "title": "Project Timeline dan SOP",
+    "optional": false,
+    "usage_notice": null,
+    "files": [
+      {
+        "path": "templates/14_Project_Timeline_dan_SOP.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/14_Project_Timeline_dan_SOP.docx",
+        "size_bytes": 40240,
+        "sha256": "342d5049ceee53007c8cb7897fc0129cbb4f046950a54503e84cbc3874cfb7dc"
+      },
+      {
+        "path": "templates/14_Project_Timeline_dan_SOP.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/14_Project_Timeline_dan_SOP.pdf",
+        "size_bytes": 112544,
+        "sha256": "36a813e3fec646b7a929c2403bf8f5bf3f25898283bb3902c7d484d30dec3885"
+      }
+    ],
+    "document_revision": "V2",
+    "pillars": [
+      "operasional"
+    ],
+    "description": "Project timeline · SOP dan workflow · Handover checklist"
+  },
+  {
+    "id": "sbs-15",
+    "title": "Service Policies dan Change Request",
+    "optional": false,
+    "usage_notice": "Sesuaikan sebelum disepakati; materi edukasi.",
+    "files": [
+      {
+        "path": "templates/15_Service_Policies_dan_Change_Request.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/15_Service_Policies_dan_Change_Request.docx",
+        "size_bytes": 39949,
+        "sha256": "a8bc578d26434d6baaf7425e643deb46af0cff449cdd61c062d3ba5a11800206"
+      },
+      {
+        "path": "templates/15_Service_Policies_dan_Change_Request.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/15_Service_Policies_dan_Change_Request.pdf",
+        "size_bytes": 96309,
+        "sha256": "3d78b3cb2a8650ba73cfcb17319d31c3826e61542693dd88d3fa8fd7e0c247b3"
+      }
+    ],
+    "document_revision": "V2",
+    "pillars": [
+      "fondasi",
+      "kesepakatan"
+    ],
+    "description": "Scope dan deliverables · Service agreement dan SPK · Statement of Work · Terms dan policies"
+  },
+  {
+    "id": "sbs-16",
+    "title": "Client Feedback dan Retention",
+    "optional": false,
+    "usage_notice": null,
+    "files": [
+      {
+        "path": "templates/16_Client_Feedback_dan_Retention.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/16_Client_Feedback_dan_Retention.docx",
+        "size_bytes": 39791,
+        "sha256": "97aafeb9711af5f9cd7862dc9aa3b6261cff752aff1c0f8dd77774801baf1851"
+      },
+      {
+        "path": "templates/16_Client_Feedback_dan_Retention.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/16_Client_Feedback_dan_Retention.pdf",
+        "size_bytes": 91535,
+        "sha256": "6561cf327037ee9d635d5558f10ca71418e611e3242ea2f63040187f8be26a4a"
+      }
+    ],
+    "document_revision": "V2",
+    "pillars": [
+      "bukti",
+      "pertumbuhan"
+    ],
+    "description": "Testimonials · Feedback dan review · After sales dan repeat order"
+  },
+  {
+    "id": "sbs-17",
+    "title": "NDA Opsional",
+    "optional": true,
+    "usage_notice": "Sesuaikan sebelum disepakati; materi edukasi.",
+    "files": [
+      {
+        "path": "templates/17_NDA_Opsional.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/17_NDA_Opsional.docx",
+        "size_bytes": 39409,
+        "sha256": "6953ae819b555c24f353c1b4c20e10287e975c54752c5d9201056c8f71ee394b"
+      },
+      {
+        "path": "templates/17_NDA_Opsional.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/17_NDA_Opsional.pdf",
+        "size_bytes": 76108,
+        "sha256": "4201a4c31875f6056799d18586159a6868f0b054e68874323374f0b90c44a369"
+      }
+    ],
+    "document_revision": "V2",
+    "pillars": [
+      "kesepakatan"
+    ],
+    "description": "NDA opsional"
+  },
+  {
+    "id": "sbs-18",
+    "title": "Maintenance dan SLA Opsional",
+    "optional": true,
+    "usage_notice": "Sesuaikan sebelum disepakati; materi edukasi.",
+    "files": [
+      {
+        "path": "templates/18_Maintenance_dan_SLA_Opsional.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/18_Maintenance_dan_SLA_Opsional.docx",
+        "size_bytes": 39524,
+        "sha256": "eb7219ce979539ab6e5947ea20f11f65f2025c33a048659fba3fe2f1bc0f95ae"
+      },
+      {
+        "path": "templates/18_Maintenance_dan_SLA_Opsional.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/18_Maintenance_dan_SLA_Opsional.pdf",
+        "size_bytes": 88045,
+        "sha256": "7a305e501339075b462649c36beae9de29ed7d5db325ad1f04b69452ac396a5b"
+      }
+    ],
+    "document_revision": "V2",
+    "pillars": [
+      "kesepakatan",
+      "pertumbuhan"
+    ],
+    "description": "Terms dan policies · After sales dan repeat order"
+  },
+  {
+    "id": "sbs-19",
+    "title": "Data Processing Worksheet Opsional",
+    "optional": true,
+    "usage_notice": "Worksheet persiapan review, bukan DPA final.",
+    "files": [
+      {
+        "path": "templates/19_Data_Processing_Worksheet_Opsional.docx",
+        "format": "DOCX",
+        "public_url": "/downloads/service-business-system/templates/19_Data_Processing_Worksheet_Opsional.docx",
+        "size_bytes": 39494,
+        "sha256": "b40bd3babe73ad95c7435b26e7c15836e048394b686c41618138ff1b19414f7a"
+      },
+      {
+        "path": "templates/19_Data_Processing_Worksheet_Opsional.pdf",
+        "format": "PDF",
+        "public_url": "/downloads/service-business-system/templates/19_Data_Processing_Worksheet_Opsional.pdf",
+        "size_bytes": 80647,
+        "sha256": "5c27aa23760932e54979c5d3ce56f8c49704928b40ae3c01caef88279536601f"
+      }
+    ],
+    "document_revision": "V2",
+    "pillars": [
+      "kesepakatan"
+    ],
+    "description": "NDA opsional · Terms dan policies"
+  }
+]

@@ -14,7 +14,8 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { NavbarLanguageSwitcher } from "./GlobalTranslator";
-import { ProjectInquiryModal } from "./ProjectInquiryModal";
+import dynamic from "next/dynamic";
+const ProjectInquiryModal = dynamic(() => import("./ProjectInquiryModal").then(m => m.ProjectInquiryModal), { ssr: false });
 import { useAccountDestination } from "./useAccountDestination";
 
 
@@ -62,14 +63,13 @@ export function Navbar() {
 
   // Lock body scroll on mobile open
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
+    if (!mobileOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const wide = window.matchMedia("(min-width: 1024px)");
+    const resize = () => { if (wide.matches) setMobileOpen(false); };
+    wide.addEventListener("change", resize);
+    return () => { document.body.style.overflow = previous; wide.removeEventListener("change", resize); };
   }, [mobileOpen]);
 
   // Click outside closes desktop dropdown
@@ -115,11 +115,13 @@ export function Navbar() {
 
   return (
     <>
+      {mobileOpen && (inHome || inFreelance) && <div className="h-[84px] lg:hidden" aria-hidden="true" />}
       <motion.header
+        data-mobile-open={mobileOpen}
         initial={false}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: reduced ? 0 : 0.5, ease: "easeOut" }}
-        className={`${inHome ? "relative bg-[#10100e] pb-3 sm:pb-4" : inFreelance ? "relative bg-[#292a27] pb-3 sm:pb-4" : "fixed top-0 left-0 right-0"} z-[90] px-3 sm:px-6 pt-3 sm:pt-4 pointer-events-none`}
+        className={`site-navbar ${inHome ? "relative bg-[#10100e] pb-3 sm:pb-4" : inFreelance ? "relative bg-[#292a27] pb-3 sm:pb-4" : "fixed top-0 left-0 right-0"} z-[90] px-3 sm:px-6 pt-3 sm:pt-4 pointer-events-none`}
       >
         <div
           ref={navRef}
@@ -140,11 +142,12 @@ export function Navbar() {
               >
                 <div className="relative flex items-center">
                   <Image
-                    src="/assets/logo%20AAPE.png"
+                    src="/images/experience/brand-v1.webp"
+                    unoptimized
                     alt="Khadafi Logo"
                     width={60}
                     height={40}
-                    priority
+                    preload
                     className="h-8 sm:h-9 md:h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_12px_rgba(255,255,255,0.2)]"
                   />
                 </div>
@@ -302,7 +305,7 @@ export function Navbar() {
               >
                 <nav
                   aria-label="Navigasi Mobile"
-                  className="flex flex-col gap-1 max-h-[75vh] overflow-y-auto pb-4 pr-1"
+                  className="mobile-menu-scroll flex flex-col gap-1 overflow-y-auto pb-4 pr-1"
                 >
                   {/* Category Accordion Items */}
                   {navCategories.map((category) => {
@@ -312,7 +315,7 @@ export function Navbar() {
                     return (
                       <div
                         key={category.key}
-                        className="rounded-xl overflow-hidden border border-white/5 bg-white/[0.02]"
+                        className="shrink-0 rounded-xl overflow-hidden border border-white/5 bg-white/[0.02]"
                       >
                         <button
                           type="button"
@@ -385,7 +388,7 @@ export function Navbar() {
                   })}
 
                   {/* Mobile Footer Area */}
-                  <div className="pt-4 mt-2 border-t border-white/10 flex flex-col gap-3">
+                  <div className="shrink-0 pt-4 mt-2 border-t border-white/10 flex flex-col gap-3">
                     <Link
                       href={account.href}
                       onClick={closeMobile}
@@ -410,10 +413,10 @@ export function Navbar() {
       </motion.header>
 
       {/* Shared Project Inquiry Modal */}
-      <ProjectInquiryModal
+      {inquiryOpen && <ProjectInquiryModal
         isOpen={inquiryOpen}
         onClose={() => setInquiryOpen(false)}
-      />
+      />}
     </>
   );
 }

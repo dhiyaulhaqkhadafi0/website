@@ -6,7 +6,9 @@ let count=0;
 function scan(dir){for(const name of fs.readdirSync(dir)){const file=path.join(dir,name);if(fs.statSync(file).isDirectory())scan(file);else{const bytes=fs.readFileSync(file);for(const secret of secrets)assert.ok(!bytes.includes(Buffer.from(secret.value)),'Private credential found in '+file+' ('+secret.key+')');for(const marker of ['LOCAL_FIXTURE_ONLY','http://127.0.0.1:3031','http://localhost:3031'])assert.ok(!bytes.includes(Buffer.from(marker)),'Local fixture reference in '+file);count++;}}}
 scan('.open-next/assets');
 const manifest=JSON.parse(fs.readFileSync('.next/server/app-paths-manifest.json','utf8'));
-assert.ok(!Object.keys(manifest).some(route=>route.includes('commerce-preview-qa')),'Temporary component QA route in build');
+const temporary=/commerce-preview-qa|visual-checkout-qa|visual-promotion-qa/;
+assert.ok(!Object.keys(manifest).some(route=>temporary.test(route)),'Temporary component QA route in build');
+assert.ok(!fs.readdirSync('src/app').some(route=>temporary.test(route)),'Temporary component QA source remains');
 assert.ok(Object.keys(manifest).some(route=>route.includes('/api/commerce/guest-download/')),'Guest download route missing');
 assert.ok(!fs.readdirSync('public/products').some(name=>name.endsWith('.pdf')),'Paid product PDF must stay private');
 console.log(JSON.stringify({publicFiles:count,privateCredentialsChecked:secrets.length,leaks:0,temporaryQaRoute:false,paidPdfPublic:false}));

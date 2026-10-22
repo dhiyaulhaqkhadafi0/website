@@ -1,0 +1,1090 @@
+{
+  "version": "2.0",
+  "language": "id",
+  "title": "Service Business System",
+  "subtitle": "Panduan dan toolkit gratis untuk membangun bisnis jasa",
+  "read_without_login": true,
+  "download_without_login": true,
+  "release_date": "2026-10-20",
+  "route_base": null,
+  "chapters": [
+    {
+      "id": "pillar-1",
+      "slug": "fondasi",
+      "title": "Fondasi bisnis",
+      "components": [
+        {
+          "id": "component-01",
+          "anchor": "komponen-01",
+          "title": "Katalog layanan",
+          "summary": "Tuliskan satu sampai tiga jasa yang benar-benar bisa kamu kerjakan. Kelompokkan menurut kebutuhan pembeli, lalu jelaskan hasil, batas dan langkah pemesanannya.",
+          "steps": [
+            "Buat daftar kemampuan yang bisa dibuktikan.",
+            "Pilih satu pembeli dengan kebutuhan spesifik.",
+            "Tulis hasil, jumlah dan pengecualian.",
+            "Periksa dengan calon pembeli sebelum memperluas katalog."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Satu halaman informasi usaha berbeda dari toko online dengan checkout."
+          },
+          "common_mistake": "Mencantumkan terlalu banyak jasa tanpa bukti kemampuan.",
+          "sections": [
+            {
+              "heading": "Menyusun penawaran dan scope",
+              "paragraphs": [
+                "Penawaran yang baik menghubungkan masalah dengan hasil kerja. Scope menjelaskan apa yang akan diserahkan, bagaimana penerimaannya diperiksa, dan kapan pekerjaan dianggap berubah.",
+                "Tulis hasil dalam bentuk benda atau perilaku: Ganti “website profesional” dengan “satu halaman berisi lima section, tampilan mobile, tombol WhatsApp, dan formulir brief dengan notifikasi yang diuji”. Hindari fitur yang bisa ditafsirkan luas, seperti SEO lengkap, revisi bebas, atau integrasi semua platform.",
+                "Pisahkan hasil dan ketergantungan: Klien menyediakan teks final, foto berlisensi, serta akses akun dengan izin minimum. Penyedia menyiapkan rancangan, implementasi, pengujian, dan panduan. Timeline baru dimulai setelah kesepakatan, pembayaran awal, dan bahan minimum terpenuhi sesuai kontrak.",
+                "Tentukan cara menerima hasil: Contoh kriteria: lima section sesuai daftar, form berhasil mengirim data uji, tombol menuju nomor yang disetujui, dan tidak ada scroll horizontal pada ukuran layar yang diuji. Kinerja bisnis setelah rilis dipengaruhi faktor lain dan tidak otomatis menjadi jaminan pekerjaan."
+              ]
+            },
+            {
+              "heading": "Menyusun katalog dan paket",
+              "paragraphs": [
+                "Katalog membantu pembeli mengenali pilihan. Mulai dari satu layanan inti dengan varian berdasarkan kebutuhan, bukan memberi tiga paket yang hanya berbeda label.",
+                "Tampilkan enam informasi: Cantumkan harga atau dasar estimasi, deliverables, durasi, batas revisi, pengecualian, dan biaya tambahan. Untuk proyek custom, jelaskan proses penentuan harga serta keluaran sesi discovery. Jangan menampilkan harga pasti bila kebutuhan belum cukup diketahui.",
+                "CONTOH FIKTIF paket Landing Page: Harga simulasi Rp3.850.000 sebelum penyesuaian pajak. Satu halaman, lima section, desain mobile, tombol WhatsApp, form brief, dua putaran revisi, panduan, dan serah terima source sesuai perjanjian. Estimasi sepuluh hari kerja aktif setelah prasyarat terpenuhi; waktu menunggu klien dapat menggeser tanggal.",
+                "Buat upgrade yang masuk akal: Paket lebih tinggi dapat menambah jumlah halaman, migrasi konten, atau pelatihan. Jelaskan perbedaan dan tambahan kapasitasnya. Pilihan Custom digunakan untuk kebutuhan yang perlu dihitung ulang, bukan janji mengerjakan semua permintaan dengan satu harga."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-02",
+            "sbs-04",
+            "sbs-11"
+          ],
+          "source_playbook_pages": [
+            7,
+            8
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-02",
+          "anchor": "komponen-02",
+          "title": "Target market dan ICP",
+          "summary": "Pelanggan ideal adalah sasaran awal yang kebutuhannya sesuai dengan layanan dan kapasitasmu. Catat masalah, pemicu pembelian, serta siapa yang berwenang menyetujui biaya.",
+          "steps": [
+            "Tentukan jenis pelanggan dan tahap usahanya.",
+            "Wawancarai proses serta kesulitan yang terjadi.",
+            "Pisahkan fakta dari asumsi.",
+            "Tulis siapa yang cocok dan siapa yang belum cocok."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Usaha makanan dengan menu dan lokasi tersebar dapat membutuhkan landing page informasi."
+          },
+          "common_mistake": "Menyamakan audiens yang suka belajar dengan calon pembeli jasa.",
+          "sections": [
+            {
+              "heading": "Menentukan pelanggan ideal",
+              "paragraphs": [
+                "ICP atau profil pelanggan ideal membantu memilih siapa yang ingin kamu bantu lebih dahulu. Buat cukup spesifik agar kamu tahu ke mana mencari prospek dan pertanyaan apa yang perlu diajukan.",
+                "Isi lima unsur yang bisa diamati: Tentukan jenis usaha atau profesi, tahap bisnis, masalah yang sedang terjadi, pemicu pembelian, dan pembuat keputusan. Tambahkan batas anggaran atau lokasi hanya bila relevan. Hindari mengisi karakter yang tidak bisa kamu buktikan dari percakapan.",
+                "CONTOH FIKTIF: Kedai Senja adalah usaha makanan lokal yang masih menerima pertanyaan menu dan lokasi melalui chat berulang. Pemilik ingin satu halaman informasi yang bisa dibagikan. Ia sudah punya logo, foto, dan menu, tetapi belum punya susunan konten. Kebutuhan ini dapat cocok dengan landing page sederhana; kebutuhan sistem pemesanan penuh memerlukan scope lain.",
+                "Tulis siapa yang belum cocok: Misalnya calon klien memerlukan marketplace, pembayaran online, atau integrasi operasional real time, sementara paketmu hanya halaman informasi. Penolakan yang jelas dapat menghemat waktu kedua pihak. Kamu dapat menawarkan tahap discovery terpisah bila kompetensinya sesuai."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-02",
+            "sbs-11"
+          ],
+          "source_playbook_pages": [
+            6
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-03",
+          "anchor": "komponen-03",
+          "title": "Value proposition",
+          "summary": "Jelaskan alasan layananmu relevan melalui hubungan masalah dan hasil. Pakai bukti yang bisa diperiksa dan janji yang berada dalam kendalimu.",
+          "steps": [
+            "Tulis siapa yang dibantu.",
+            "Sebutkan masalah yang sudah dipahami.",
+            "Hubungkan dengan hasil konkret.",
+            "Lampirkan bukti tanpa mengarang metrik bisnis."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Membantu pemilik usaha merangkum menu, lokasi dan kontak dalam satu tautan."
+          },
+          "common_mistake": "Menjanjikan omzet, ranking atau pendapatan tanpa dasar.",
+          "sections": [
+            {
+              "heading": "Menentukan pelanggan ideal",
+              "paragraphs": [
+                "ICP atau profil pelanggan ideal membantu memilih siapa yang ingin kamu bantu lebih dahulu. Buat cukup spesifik agar kamu tahu ke mana mencari prospek dan pertanyaan apa yang perlu diajukan.",
+                "Isi lima unsur yang bisa diamati: Tentukan jenis usaha atau profesi, tahap bisnis, masalah yang sedang terjadi, pemicu pembelian, dan pembuat keputusan. Tambahkan batas anggaran atau lokasi hanya bila relevan. Hindari mengisi karakter yang tidak bisa kamu buktikan dari percakapan.",
+                "CONTOH FIKTIF: Kedai Senja adalah usaha makanan lokal yang masih menerima pertanyaan menu dan lokasi melalui chat berulang. Pemilik ingin satu halaman informasi yang bisa dibagikan. Ia sudah punya logo, foto, dan menu, tetapi belum punya susunan konten. Kebutuhan ini dapat cocok dengan landing page sederhana; kebutuhan sistem pemesanan penuh memerlukan scope lain.",
+                "Tulis siapa yang belum cocok: Misalnya calon klien memerlukan marketplace, pembayaran online, atau integrasi operasional real time, sementara paketmu hanya halaman informasi. Penolakan yang jelas dapat menghemat waktu kedua pihak. Kamu dapat menawarkan tahap discovery terpisah bila kompetensinya sesuai."
+              ]
+            },
+            {
+              "heading": "Membuat halaman layanan",
+              "paragraphs": [
+                "Halaman layanan membimbing pembeli dari mengenali masalah ke mengirim brief. Gunakan bahasa yang dipahami pembeli dan satu tindakan utama yang mudah ditemukan.",
+                "Susunan informasi: Mulai dari siapa yang dibantu dan hasil layanan. Lanjutkan dengan situasi yang cocok, deliverables, bukti pekerjaan, paket, proses, FAQ, lalu CTA “Isi Brief Proyek”. Jelaskan estimasi waktu respons sesuai jam kerja nyata. Jangan menyebut sisa slot atau testimoni yang belum ada.",
+                "CONTOH FIKTIF copy: “Rapikan informasi usahamu dalam satu landing page yang mudah dibuka dari ponsel.” Penjelasan pendamping: “Untuk usaha yang sudah punya materi dasar dan membutuhkan halaman profil, menu, lokasi, serta tombol kontak. Isi brief agar kita dapat memastikan kebutuhan dan batas pekerjaannya.”",
+                "Periksa alur calon klien: Buka halaman dari ponsel. Pastikan tombol jelas, contoh pekerjaan bisa dibuka, harga menyebut cakupan, form menampilkan status kirim, dan konfirmasi menjelaskan langkah berikutnya. Hubungi calon klien melalui kanal yang ia pilih; izin pengiriman promosi dipisahkan dari komunikasi proyek."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-02",
+            "sbs-11"
+          ],
+          "source_playbook_pages": [
+            6,
+            13
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-04",
+          "anchor": "komponen-04",
+          "title": "Scope dan deliverables",
+          "summary": "Scope membatasi pekerjaan dan deliverables menjelaskan apa yang diserahkan. Sertakan acceptance criteria agar kedua pihak dapat menilai hasil dengan cara yang sama.",
+          "steps": [
+            "Tulis jumlah, format dan fitur.",
+            "Daftarkan pengecualian.",
+            "Tetapkan bahan serta PIC dari klien.",
+            "Sepakati cara memeriksa hasil dan mengubah pekerjaan."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Lima section, form yang mengirim data uji, dan tombol kontak dengan tujuan benar."
+          },
+          "common_mistake": "Menggunakan frasa revisi bebas atau integrasi semua platform.",
+          "sections": [
+            {
+              "heading": "Menyusun penawaran dan scope",
+              "paragraphs": [
+                "Penawaran yang baik menghubungkan masalah dengan hasil kerja. Scope menjelaskan apa yang akan diserahkan, bagaimana penerimaannya diperiksa, dan kapan pekerjaan dianggap berubah.",
+                "Tulis hasil dalam bentuk benda atau perilaku: Ganti “website profesional” dengan “satu halaman berisi lima section, tampilan mobile, tombol WhatsApp, dan formulir brief dengan notifikasi yang diuji”. Hindari fitur yang bisa ditafsirkan luas, seperti SEO lengkap, revisi bebas, atau integrasi semua platform.",
+                "Pisahkan hasil dan ketergantungan: Klien menyediakan teks final, foto berlisensi, serta akses akun dengan izin minimum. Penyedia menyiapkan rancangan, implementasi, pengujian, dan panduan. Timeline baru dimulai setelah kesepakatan, pembayaran awal, dan bahan minimum terpenuhi sesuai kontrak.",
+                "Tentukan cara menerima hasil: Contoh kriteria: lima section sesuai daftar, form berhasil mengirim data uji, tombol menuju nomor yang disetujui, dan tidak ada scroll horizontal pada ukuran layar yang diuji. Kinerja bisnis setelah rilis dipengaruhi faktor lain dan tidak otomatis menjadi jaminan pekerjaan."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-04",
+            "sbs-07",
+            "sbs-15"
+          ],
+          "source_playbook_pages": [
+            7
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        }
+      ]
+    },
+    {
+      "id": "pillar-2",
+      "slug": "harga",
+      "title": "Harga dan transaksi",
+      "components": [
+        {
+          "id": "component-05",
+          "anchor": "komponen-05",
+          "title": "Rate card",
+          "summary": "Rate dasar adalah patokan internal untuk mendanai kerja dan operasional. Harga akhir mempertimbangkan jam, biaya langsung, risiko dan margin.",
+          "steps": [
+            "Hitung kebutuhan bulanan.",
+            "Perkirakan jam yang benar-benar tertagih.",
+            "Pisahkan biaya tetap dan biaya langsung.",
+            "Uji perubahan input sebelum membuat quotation."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Rp8.000.000 dibagi 100 jam = Rp80.000 per jam dalam simulasi."
+          },
+          "common_mistake": "Menganggap semua jam kerja tertagih atau menghitung biaya dua kali.",
+          "sections": [
+            {
+              "heading": "Menghitung rate dasar",
+              "paragraphs": [
+                "Rate dasar adalah patokan internal untuk membiayai waktu dan operasional. Ia membantu menilai kelayakan penawaran; angka hasil kalkulator bukan tarif pasar dan bukan jaminan pendapatan.",
+                "Hitung kebutuhan dan kapasitas: Kebutuhan bulanan = kompensasi pemilik + biaya operasional tetap + cadangan. Jam tertagih = hari kerja × jam kerja per hari × porsi waktu yang bisa ditagihkan. Porsi waktu lain dipakai untuk mencari klien, administrasi, belajar, dan jeda kerja.",
+                "CONTOH FIKTIF: Kompensasi Rp6.000.000 + biaya tetap Rp1.000.000 + cadangan Rp1.000.000 = Rp8.000.000. Kapasitas 20 hari × 8 jam × 62,5% = 100 jam tertagih. Rate dasar = Rp8.000.000 / 100 = Rp80.000 per jam.",
+                "Jangan menghitung biaya dua kali: Biaya tetap sudah masuk rate. Biaya langsung proyek, seperti aset khusus atau subkontraktor, dihitung terpisah. Cadangan bulanan menopang usaha; cadangan risiko proyek menampung ketidakpastian estimasi pekerjaan. Jangan menambahkan satu biaya yang sama pada keduanya."
+              ]
+            },
+            {
+              "heading": "Menghitung harga proyek",
+              "paragraphs": [
+                "Pisahkan biaya, cadangan risiko, dan margin agar kamu dapat menjelaskan perhitungan internal serta menilai permintaan diskon secara sadar.",
+                "Gunakan rumus yang jelas: Biaya dasar = estimasi jam × rate dasar + biaya langsung. Biaya dengan risiko = biaya dasar × (1 + persentase risiko). Harga sebelum pajak = biaya dengan risiko / (1 - target margin). Margin berbeda dari markup: target margin 20% berarti membagi biaya dengan 0,8, bukan mengalikannya dengan 1,2.",
+                "CONTOH FIKTIF yang dipakai di toolkit: 30 jam × Rp80.000 + Rp400.000 biaya langsung = Rp2.800.000. Risiko 10% menambah Rp280.000. Harga dengan margin 20% = Rp3.080.000 / 0,8 = Rp3.850.000. Selisih setelah biaya dan cadangan risiko adalah Rp770.000; ini bukan laba bersih setelah seluruh kewajiban pajak.",
+                "Sesuaikan dengan situasi pembeli: Pertimbangkan kompleksitas, urgensi, hak penggunaan, serta risiko. Jika anggaran di bawah harga layak, tawarkan scope yang lebih kecil. Hindari mengurangi pemeriksaan mutu yang sudah dijanjikan. Penggunaan AI dapat mengubah waktu kerja, tetapi tanggung jawab pemeriksaan tetap padamu."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-03",
+            "sbs-11"
+          ],
+          "source_playbook_pages": [
+            9,
+            10
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-06",
+          "anchor": "komponen-06",
+          "title": "Pricing packages",
+          "summary": "Paket membantu pembeli memilih berdasarkan kebutuhan. Tampilkan harga, deliverables, durasi, revisi, pengecualian serta biaya tambahan.",
+          "steps": [
+            "Buat satu paket inti dahulu.",
+            "Hitung harga layak dengan kalkulator.",
+            "Tulis keenam rincian paket.",
+            "Gunakan custom untuk kebutuhan yang perlu discovery."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Harga simulasi landing page Rp3.850.000 sebelum penyesuaian pajak."
+          },
+          "common_mistake": "Mengubah label paket tanpa membedakan kebutuhan atau cakupan.",
+          "sections": [
+            {
+              "heading": "Menyusun katalog dan paket",
+              "paragraphs": [
+                "Katalog membantu pembeli mengenali pilihan. Mulai dari satu layanan inti dengan varian berdasarkan kebutuhan, bukan memberi tiga paket yang hanya berbeda label.",
+                "Tampilkan enam informasi: Cantumkan harga atau dasar estimasi, deliverables, durasi, batas revisi, pengecualian, dan biaya tambahan. Untuk proyek custom, jelaskan proses penentuan harga serta keluaran sesi discovery. Jangan menampilkan harga pasti bila kebutuhan belum cukup diketahui.",
+                "CONTOH FIKTIF paket Landing Page: Harga simulasi Rp3.850.000 sebelum penyesuaian pajak. Satu halaman, lima section, desain mobile, tombol WhatsApp, form brief, dua putaran revisi, panduan, dan serah terima source sesuai perjanjian. Estimasi sepuluh hari kerja aktif setelah prasyarat terpenuhi; waktu menunggu klien dapat menggeser tanggal.",
+                "Buat upgrade yang masuk akal: Paket lebih tinggi dapat menambah jumlah halaman, migrasi konten, atau pelatihan. Jelaskan perbedaan dan tambahan kapasitasnya. Pilihan Custom digunakan untuk kebutuhan yang perlu dihitung ulang, bukan janji mengerjakan semua permintaan dengan satu harga."
+              ]
+            },
+            {
+              "heading": "Menghitung harga proyek",
+              "paragraphs": [
+                "Pisahkan biaya, cadangan risiko, dan margin agar kamu dapat menjelaskan perhitungan internal serta menilai permintaan diskon secara sadar.",
+                "Gunakan rumus yang jelas: Biaya dasar = estimasi jam × rate dasar + biaya langsung. Biaya dengan risiko = biaya dasar × (1 + persentase risiko). Harga sebelum pajak = biaya dengan risiko / (1 - target margin). Margin berbeda dari markup: target margin 20% berarti membagi biaya dengan 0,8, bukan mengalikannya dengan 1,2.",
+                "CONTOH FIKTIF yang dipakai di toolkit: 30 jam × Rp80.000 + Rp400.000 biaya langsung = Rp2.800.000. Risiko 10% menambah Rp280.000. Harga dengan margin 20% = Rp3.080.000 / 0,8 = Rp3.850.000. Selisih setelah biaya dan cadangan risiko adalah Rp770.000; ini bukan laba bersih setelah seluruh kewajiban pajak.",
+                "Sesuaikan dengan situasi pembeli: Pertimbangkan kompleksitas, urgensi, hak penggunaan, serta risiko. Jika anggaran di bawah harga layak, tawarkan scope yang lebih kecil. Hindari mengurangi pemeriksaan mutu yang sudah dijanjikan. Penggunaan AI dapat mengubah waktu kerja, tetapi tanggung jawab pemeriksaan tetap padamu."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-03",
+            "sbs-04",
+            "sbs-11"
+          ],
+          "source_playbook_pages": [
+            8,
+            10
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-07",
+          "anchor": "komponen-07",
+          "title": "Payment terms",
+          "summary": "Termin menghubungkan tagihan dengan milestone yang disepakati. Dana diterima dicatat setelah verifikasi, terpisah dari invoice dan nilai kontrak.",
+          "steps": [
+            "Tentukan pemicu tiap termin.",
+            "Pastikan porsi total 100 persen.",
+            "Isi jatuh tempo dan metode pembayaran.",
+            "Rekonsiliasi dana, biaya dan bukti potong bila berlaku."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Simulasi 50/30/20 persen: Rp1.925.000, Rp1.155.000 dan Rp770.000."
+          },
+          "common_mistake": "Menandai lunas hanya dari screenshot transfer.",
+          "sections": [
+            {
+              "heading": "Menetapkan termin pembayaran",
+              "paragraphs": [
+                "Termin menghubungkan pembayaran dengan milestone yang dapat diperiksa. Besaran DP, jadwal, dan konsekuensi keterlambatan perlu disepakati sebelum mulai.",
+                "CONTOH FIKTIF: Total Rp3.850.000 dibagi DP 50% Rp1.925.000, setelah rancangan disetujui 30% Rp1.155.000, dan sebelum serah terima akhir 20% Rp770.000. Keseluruhan termin harus berjumlah 100%. Invoice setiap termin menyebut nilai total proyek dan tagihan termin saat itu agar klien tidak membayar dua kali.",
+                "Bedakan tagihan dan penerimaan: Invoice adalah permintaan pembayaran. Konfirmasi pelunasan dibuat setelah dana diverifikasi pada rekening atau penyedia pembayaran. Screenshot transfer saja tidak cukup untuk menandai transaksi sebagai lunas. Simpan referensi pembayaran dan tanggalnya di tracker.",
+                "Pajak dan biaya transaksi: Kalkulator tidak menghitung PPN atau pemotongan PPh secara otomatis. Perlakuan bergantung pada status para pihak dan transaksi; pastikan kepada pihak yang kompeten. Sepakati harga termasuk atau di luar pajak, biaya transfer, mata uang, dan kurs untuk klien internasional. Simpan bukti potong bila berlaku."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-06",
+            "sbs-07",
+            "sbs-08"
+          ],
+          "source_playbook_pages": [
+            11
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-08",
+          "anchor": "komponen-08",
+          "title": "Quotation dan invoice",
+          "summary": "Quotation adalah penawaran harga; invoice menagih kewajiban yang disepakati. Konfirmasi pembayaran dibuat setelah dana terverifikasi.",
+          "steps": [
+            "Cocokkan scope dengan harga dan versi.",
+            "Cantumkan identitas serta referensi proyek.",
+            "Tagih hanya termin yang berlaku.",
+            "Catat penerimaan dan sisa kewajiban secara terpisah."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Invoice DP menagih Rp1.925.000 dari nilai kontrak Rp3.850.000."
+          },
+          "common_mistake": "Menagih total kontrak kembali pada setiap termin.",
+          "sections": [
+            {
+              "heading": "Menulis proposal dan follow up",
+              "paragraphs": [
+                "Proposal menghubungkan kebutuhan klien dengan rencana pekerjaan, harga, dan keputusan yang diminta. Usahakan cukup pendek untuk dibaca pembuat keputusan tanpa kehilangan rincian penting.",
+                "Susun isi yang dapat disetujui: Tulis ringkasan kebutuhan, solusi, deliverables, kriteria penerimaan, pengecualian, timeline dan ketergantungan, harga, termin, serta masa berlaku penawaran. Jangan memasukkan ketentuan yang berbeda dari SPK dan SOW. Tetapkan nomor dokumen serta versi agar perubahan mudah ditelusuri.",
+                "Jawab keberatan dengan pilihan: Jika anggaran terbatas, tawarkan pengurangan scope. Jika tenggat mendesak, periksa kapasitas dan bahan yang tersedia sebelum menyetujui. Jika klien ragu pada pengalaman, tunjukkan demo relevan atau pilot kecil berbayar dengan keluaran terukur.",
+                "Follow up yang menghormati keputusan: Sepakati waktu tindak lanjut. Contoh: “Apakah ada bagian scope atau termin yang perlu diperjelas agar keputusan bisa diambil?” Setelah satu atau dua tindak lanjut tanpa respons, kirim penutupan singkat dan hentikan pengejaran. Hormati penolakan dan permintaan berhenti."
+              ]
+            },
+            {
+              "heading": "Menetapkan termin pembayaran",
+              "paragraphs": [
+                "Termin menghubungkan pembayaran dengan milestone yang dapat diperiksa. Besaran DP, jadwal, dan konsekuensi keterlambatan perlu disepakati sebelum mulai.",
+                "CONTOH FIKTIF: Total Rp3.850.000 dibagi DP 50% Rp1.925.000, setelah rancangan disetujui 30% Rp1.155.000, dan sebelum serah terima akhir 20% Rp770.000. Keseluruhan termin harus berjumlah 100%. Invoice setiap termin menyebut nilai total proyek dan tagihan termin saat itu agar klien tidak membayar dua kali.",
+                "Bedakan tagihan dan penerimaan: Invoice adalah permintaan pembayaran. Konfirmasi pelunasan dibuat setelah dana diverifikasi pada rekening atau penyedia pembayaran. Screenshot transfer saja tidak cukup untuk menandai transaksi sebagai lunas. Simpan referensi pembayaran dan tanggalnya di tracker.",
+                "Pajak dan biaya transaksi: Kalkulator tidak menghitung PPN atau pemotongan PPh secara otomatis. Perlakuan bergantung pada status para pihak dan transaksi; pastikan kepada pihak yang kompeten. Sepakati harga termasuk atau di luar pajak, biaya transfer, mata uang, dan kurs untuk klien internasional. Simpan bukti potong bila berlaku."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-06",
+            "sbs-08",
+            "sbs-09"
+          ],
+          "source_playbook_pages": [
+            16,
+            11
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        }
+      ]
+    },
+    {
+      "id": "pillar-3",
+      "slug": "bukti",
+      "title": "Bukti dan penjualan",
+      "components": [
+        {
+          "id": "component-09",
+          "anchor": "komponen-09",
+          "title": "Portfolio",
+          "summary": "Portofolio memperlihatkan kemampuan melalui pekerjaan yang dapat diperiksa. Proyek mandiri boleh ditampilkan dengan label yang jujur.",
+          "steps": [
+            "Pilih dua karya relevan.",
+            "Sebutkan peran dan kontribusimu.",
+            "Tampilkan hasil yang boleh dibuka.",
+            "Dapatkan izin sebelum memakai nama atau data klien."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Demo landing page mandiri dengan pengujian form dan mobile."
+          },
+          "common_mistake": "Menyebut merek sebagai klien padahal hanya konsep latihan.",
+          "sections": [
+            {
+              "heading": "Membangun portofolio yang jujur",
+              "paragraphs": [
+                "Portofolio memberi calon klien bukti bahwa kamu memahami pekerjaan dan mampu menyelesaikannya. Kualitas penjelasan lebih berguna daripada menampilkan banyak screenshot tanpa konteks.",
+                "Mulai dengan dua proyek relevan: Boleh memakai proyek mandiri. Beri label “proyek mandiri” atau “konsep latihan” dan jelaskan peranmu. Cantumkan masalah yang diasumsikan, keputusan desain atau teknis, hasil yang benar-benar dibuat, serta cara memeriksanya. Hindari menyebut merek seolah menjadi klien tanpa izin.",
+                "Susun studi kasus ringkas: Urutannya: konteks, masalah, peran, batas, proses, hasil, dan pelajaran. Tampilkan sebelum dan sesudah jika kamu memiliki data yang sah. Jika belum ada metrik bisnis, gunakan bukti fungsional seperti form yang diuji, jumlah layar, atau panduan yang selesai. Jangan mengarang kenaikan konversi.",
+                "Dapatkan izin publikasi: Kontrak perlu mengatur apakah nama, logo, screenshot, dan rincian proyek boleh dipajang. Gunakan versi anonim bila persetujuan belum ada. Hilangkan data pribadi dan akses rahasia dari demo atau rekaman."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-12"
+          ],
+          "source_playbook_pages": [
+            12
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-10",
+          "anchor": "komponen-10",
+          "title": "Case studies",
+          "summary": "Studi kasus menjelaskan konteks, masalah, keputusan dan hasil. Bila belum ada metrik bisnis, jelaskan bukti fungsional yang benar-benar diuji.",
+          "steps": [
+            "Tulis masalah dan batas proyek.",
+            "Jelaskan pendekatan serta keputusan.",
+            "Lampirkan hasil dan metode pemeriksaannya.",
+            "Catat pelajaran dan izin publikasi."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Form berhasil diuji adalah bukti fungsi; kenaikan penjualan memerlukan data tersendiri."
+          },
+          "common_mistake": "Mengarang angka konversi agar studi kasus tampak meyakinkan.",
+          "sections": [
+            {
+              "heading": "Membangun portofolio yang jujur",
+              "paragraphs": [
+                "Portofolio memberi calon klien bukti bahwa kamu memahami pekerjaan dan mampu menyelesaikannya. Kualitas penjelasan lebih berguna daripada menampilkan banyak screenshot tanpa konteks.",
+                "Mulai dengan dua proyek relevan: Boleh memakai proyek mandiri. Beri label “proyek mandiri” atau “konsep latihan” dan jelaskan peranmu. Cantumkan masalah yang diasumsikan, keputusan desain atau teknis, hasil yang benar-benar dibuat, serta cara memeriksanya. Hindari menyebut merek seolah menjadi klien tanpa izin.",
+                "Susun studi kasus ringkas: Urutannya: konteks, masalah, peran, batas, proses, hasil, dan pelajaran. Tampilkan sebelum dan sesudah jika kamu memiliki data yang sah. Jika belum ada metrik bisnis, gunakan bukti fungsional seperti form yang diuji, jumlah layar, atau panduan yang selesai. Jangan mengarang kenaikan konversi.",
+                "Dapatkan izin publikasi: Kontrak perlu mengatur apakah nama, logo, screenshot, dan rincian proyek boleh dipajang. Gunakan versi anonim bila persetujuan belum ada. Hilangkan data pribadi dan akses rahasia dari demo atau rekaman."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-12"
+          ],
+          "source_playbook_pages": [
+            12
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-11",
+          "anchor": "komponen-11",
+          "title": "Testimonials",
+          "summary": "Testimonial harus berasal dari pengalaman nyata dan digunakan sesuai izin. Meminta feedback tidak otomatis berarti mendapat hak publikasi.",
+          "steps": [
+            "Minta komentar spesifik setelah penggunaan.",
+            "Simpan kutipan asli dan sumber.",
+            "Minta persetujuan nama, logo, materi dan kanal.",
+            "Konfirmasi suntingan agar maknanya tetap sesuai."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Bila belum ada ulasan, tampilkan demo dan karya mandiri berlabel."
+          },
+          "common_mistake": "Membuat kutipan, bintang atau logo pelanggan palsu.",
+          "sections": [
+            {
+              "heading": "Menjaga hubungan dengan klien",
+              "paragraphs": [
+                "Retensi dimulai dari hasil kerja yang sesuai kesepakatan dan komunikasi yang dapat diandalkan. Tawaran lanjutan sebaiknya berangkat dari kebutuhan nyata yang muncul setelah proyek digunakan.",
+                "Minta feedback yang spesifik: Tanyakan apakah hasil dapat digunakan, bagian proses yang paling membantu, dan satu hal yang perlu diperbaiki. Minta izin terpisah untuk menampilkan testimonial, nama, logo, atau hasil proyek. Simpan kata-kata klien sesuai makna aslinya dan minta persetujuan jika diedit.",
+                "Jadwalkan pemeriksaan pemakaian: Setelah waktu yang disepakati, tanyakan apakah ada kendala. Bila kebutuhan baru muncul, jelaskan apakah masuk dukungan yang sudah termasuk atau memerlukan penawaran baru. Jangan mengubah pertanyaan dukungan menjadi promosi berulang tanpa izin.",
+                "Tawarkan retainer dengan kapasitas jelas: Sebutkan jam atau kuota pekerjaan per bulan, jenis permintaan yang termasuk, waktu respons, aturan sisa kapasitas, dan pembatalan. Bedakan waktu respons dari waktu penyelesaian. Buat prioritas bila beberapa permintaan masuk bersamaan."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-12",
+            "sbs-16"
+          ],
+          "source_playbook_pages": [
+            25
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-12",
+          "anchor": "komponen-12",
+          "title": "Service landing page",
+          "summary": "Halaman layanan membimbing calon pembeli mengenali masalah, melihat hasil dan mengirim brief. Pakai satu tindakan utama yang mudah ditemukan.",
+          "steps": [
+            "Tulis pembeli dan hasil pada hero.",
+            "Sertakan scope, bukti, paket dan proses.",
+            "Jawab pertanyaan pembayaran dan dukungan.",
+            "Uji CTA, form, serta konfirmasi dari ponsel."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "CTA Isi Brief Proyek membuka langkah berikutnya dan menjelaskan waktu respons."
+          },
+          "common_mistake": "Menampilkan harga tanpa batas pekerjaan atau biaya tambahan.",
+          "sections": [
+            {
+              "heading": "Membuat halaman layanan",
+              "paragraphs": [
+                "Halaman layanan membimbing pembeli dari mengenali masalah ke mengirim brief. Gunakan bahasa yang dipahami pembeli dan satu tindakan utama yang mudah ditemukan.",
+                "Susunan informasi: Mulai dari siapa yang dibantu dan hasil layanan. Lanjutkan dengan situasi yang cocok, deliverables, bukti pekerjaan, paket, proses, FAQ, lalu CTA “Isi Brief Proyek”. Jelaskan estimasi waktu respons sesuai jam kerja nyata. Jangan menyebut sisa slot atau testimoni yang belum ada.",
+                "CONTOH FIKTIF copy: “Rapikan informasi usahamu dalam satu landing page yang mudah dibuka dari ponsel.” Penjelasan pendamping: “Untuk usaha yang sudah punya materi dasar dan membutuhkan halaman profil, menu, lokasi, serta tombol kontak. Isi brief agar kita dapat memastikan kebutuhan dan batas pekerjaannya.”",
+                "Periksa alur calon klien: Buka halaman dari ponsel. Pastikan tombol jelas, contoh pekerjaan bisa dibuka, harga menyebut cakupan, form menampilkan status kirim, dan konfirmasi menjelaskan langkah berikutnya. Hubungi calon klien melalui kanal yang ia pilih; izin pengiriman promosi dipisahkan dari komunikasi proyek."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-12"
+          ],
+          "source_playbook_pages": [
+            13
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        }
+      ]
+    },
+    {
+      "id": "pillar-4",
+      "slug": "kesepakatan",
+      "title": "Kesepakatan dan dokumen",
+      "components": [
+        {
+          "id": "component-13",
+          "anchor": "komponen-13",
+          "title": "Service agreement dan SPK",
+          "summary": "SPK mengatur hubungan kerja sama, hak, pembayaran, perubahan, dan penanganan ketika proyek terhambat. Isi sesuai fakta dan risiko.",
+          "steps": [
+            "Verifikasi pihak dan kewenangan.",
+            "Selaraskan proposal serta SOW.",
+            "Isi hak, ketentuan penghentian dan penyelesaian.",
+            "Minta pemeriksaan profesional sesuai kebutuhan sebelum disepakati."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Semua lampiran memiliki nomor dan versi yang sama pada salinan final."
+          },
+          "common_mistake": "Menganggap template edukasi sah universal tanpa penyesuaian.",
+          "sections": [
+            {
+              "heading": "Menyepakati SPK dan SOW",
+              "paragraphs": [
+                "SPK mengatur hubungan dan ketentuan kerja sama. SOW menjadi lampiran tentang apa yang dikerjakan. Keduanya perlu konsisten dengan proposal dan dipahami kedua pihak sebelum ditandatangani.",
+                "Isi identitas dan kewenangan: Gunakan nama pihak, alamat korespondensi, peran penandatangan, tanggal, dan kontak resmi yang benar. Pastikan pihak yang menandatangani berwenang mewakili bisnisnya. Kumpulkan data secukupnya; jangan meminta dokumen identitas sensitif tanpa alasan yang jelas.",
+                "Buat hubungan dokumen jelas: Tuliskan nomor proposal dan SOW, versi, serta urutan prioritas dokumen bila terjadi perbedaan. Untuk perubahan, buat addendum atau change request yang disetujui tertulis. Persetujuan lewat kanal yang disepakati harus dapat ditelusuri.",
+                "Catatan penggunaan di Indonesia: Materi ini adalah kerangka edukasi, bukan nasihat hukum atau jaminan keberlakuan. Referensi dasar perjanjian dan pelindungan data ada di halaman 30. Untuk proyek bernilai besar, lintas negara, atau berisiko tinggi, minta pemeriksaan profesional hukum sebelum menggunakan template."
+              ]
+            },
+            {
+              "heading": "Keterlambatan dan pembatalan",
+              "paragraphs": [
+                "Aturan ketika pekerjaan terhenti harus cukup jelas untuk digunakan saat kedua pihak sedang sibuk atau berbeda pendapat. Hindari ketentuan sepihak yang tidak dapat dijelaskan dengan adil.",
+                "Jika bahan atau pembayaran terlambat: Kirim pemberitahuan tertulis yang merinci hal yang tertunda, dampaknya, dan batas tanggapan. Jeda pekerjaan mengikuti ketentuan yang disepakati. Jadwal baru dikonfirmasi berdasarkan kapasitas setelah hambatan selesai; jangan menjanjikan tanggal lama tetap berlaku.",
+                "Jika proyek dibatalkan: Rekonsiliasi pekerjaan yang sudah dilakukan, hasil yang dapat diserahkan, biaya pihak ketiga yang telah disetujui dan tidak dapat dipulihkan, serta pembayaran diterima. Refund atau sisa tagihan dihitung berdasarkan kesepakatan dan ketentuan yang berlaku. Hindari kalimat “semua DP hangus” tanpa dasar serta penjelasan.",
+                "Jika terjadi sengketa: Simpan versi dokumen, bukti persetujuan, catatan perubahan, dan penerimaan pembayaran. Mulai dari pembicaraan melalui PIC resmi, lalu mekanisme penyelesaian yang disepakati. Klausul tanggung jawab, forum sengketa, penalti, dan keadaan kahar membutuhkan penyesuaian profesional pada konteks proyek."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-07",
+            "sbs-15"
+          ],
+          "source_playbook_pages": [
+            17,
+            20
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-14",
+          "anchor": "komponen-14",
+          "title": "Statement of Work",
+          "summary": "SOW merinci tujuan, deliverables, pengecualian, timeline dan penerimaan. Perubahan pekerjaan harus dapat ditelusuri ke persetujuan baru.",
+          "steps": [
+            "Daftarkan hasil beserta acceptance criteria.",
+            "Tentukan bahan dan pemilik keputusan.",
+            "Hubungkan milestone dengan jadwal serta termin.",
+            "Catat perubahan dengan versi atau addendum."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Checkout yang tidak tercantum pada scope landing page dinilai sebagai perubahan."
+          },
+          "common_mistake": "Mengerjakan permintaan tambahan sebelum dampaknya disepakati.",
+          "sections": [
+            {
+              "heading": "Menyepakati SPK dan SOW",
+              "paragraphs": [
+                "SPK mengatur hubungan dan ketentuan kerja sama. SOW menjadi lampiran tentang apa yang dikerjakan. Keduanya perlu konsisten dengan proposal dan dipahami kedua pihak sebelum ditandatangani.",
+                "Isi identitas dan kewenangan: Gunakan nama pihak, alamat korespondensi, peran penandatangan, tanggal, dan kontak resmi yang benar. Pastikan pihak yang menandatangani berwenang mewakili bisnisnya. Kumpulkan data secukupnya; jangan meminta dokumen identitas sensitif tanpa alasan yang jelas.",
+                "Buat hubungan dokumen jelas: Tuliskan nomor proposal dan SOW, versi, serta urutan prioritas dokumen bila terjadi perbedaan. Untuk perubahan, buat addendum atau change request yang disetujui tertulis. Persetujuan lewat kanal yang disepakati harus dapat ditelusuri.",
+                "Catatan penggunaan di Indonesia: Materi ini adalah kerangka edukasi, bukan nasihat hukum atau jaminan keberlakuan. Referensi dasar perjanjian dan pelindungan data ada di halaman 30. Untuk proyek bernilai besar, lintas negara, atau berisiko tinggi, minta pemeriksaan profesional hukum sebelum menggunakan template."
+              ]
+            },
+            {
+              "heading": "Revisi dan perubahan pekerjaan",
+              "paragraphs": [
+                "Revisi memperbaiki hasil di dalam scope yang disetujui. Perubahan pekerjaan menambah atau mengganti kebutuhan. Batas ini membantu menjaga waktu dan biaya tetap bisa dikelola.",
+                "Definisikan putaran revisi: Satu putaran adalah satu daftar masukan terkonsolidasi dari PIC yang ditunjuk. Tetapkan tenggat pengiriman masukan dan contoh revisi yang termasuk, seperti koreksi teks atau penyesuaian warna dalam arah desain yang disetujui. Perbaikan kesalahan terhadap spesifikasi tidak menghabiskan jatah revisi.",
+                "Gunakan change request: Catat kebutuhan baru, alasan, pengaruh pada deliverables, biaya, dan tanggal. Tunda bagian tambahan sampai kedua pihak menyetujui perubahan. Pekerjaan awal dapat berlanjut hanya jika tidak bergantung pada keputusan tersebut. Hindari menerima tambahan lewat chat lalu menghitung tagihannya belakangan.",
+                "CONTOH FIKTIF: Permintaan mengganti warna tombol dalam rancangan disetujui termasuk revisi. Permintaan menambah katalog produk dengan checkout adalah perubahan scope. Kirim estimasi baru; jangan memasukkannya otomatis ke harga landing page Rp3.850.000."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-07",
+            "sbs-15"
+          ],
+          "source_playbook_pages": [
+            17,
+            18
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-15",
+          "anchor": "komponen-15",
+          "title": "NDA opsional",
+          "summary": "NDA mengatur informasi nonpublik yang dibagikan untuk tujuan tertentu. Gunakan bila sifat pekerjaan memerlukan kerahasiaan khusus.",
+          "steps": [
+            "Tentukan para pihak dan tujuan.",
+            "Rinci kategori serta pengecualian informasi.",
+            "Batasi akses, penggunaan, provider dan durasi.",
+            "Sepakati pengembalian, penghapusan dan penanganan pelanggaran."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Data bisnis nonpublik untuk audit digunakan hanya untuk tujuan audit yang disepakati."
+          },
+          "common_mistake": "Menganggap NDA sudah menggantikan pengaturan pemrosesan data pribadi.",
+          "sections": [
+            {
+              "heading": "Kepemilikan dan kerahasiaan",
+              "paragraphs": [
+                "Hak atas hasil kerja perlu dijelaskan per jenis aset. File final, file sumber, library, font, foto stok, template, dan akun berlangganan dapat memiliki hak penggunaan yang berbeda.",
+                "Tentukan apa yang dialihkan: Sebutkan hasil khusus proyek yang diserahkan atau dilisensikan, waktu berlakunya, dan syarat pembayarannya. Bedakan materi yang sudah dimiliki penyedia sebelumnya dari materi baru. Klien mendapat hak sesuai kesepakatan dan lisensi pihak ketiga; penyedia tidak dapat mengalihkan hak yang tidak dimilikinya.",
+                "Atur penggunaan AI: Sepakati bila AI digunakan untuk teks, desain, kode, atau pengolahan data. Periksa keluaran dan lisensinya. Jangan mengirim informasi rahasia klien ke layanan AI tanpa izin serta dasar pemrosesan yang sesuai. AI tidak menghapus kewajiban pemeriksaan mutu atau hak pihak ketiga.",
+                "Lindungi akses dan informasi: Batasi akses sesuai tugas, gunakan undangan akun daripada berbagi kata sandi, dan cabut akses setelah handover. Tentukan periode penyimpanan serta penghapusan data. NDA atau pengaturan pemrosesan data yang terpisah dapat diperlukan; template SPK umum tidak menggantikan kebutuhan itu."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-17",
+            "sbs-19"
+          ],
+          "source_playbook_pages": [
+            19
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-16",
+          "anchor": "komponen-16",
+          "title": "Terms dan policies",
+          "summary": "Kebijakan memperjelas revisi, perubahan, jeda, pembatalan, refund dan hak penggunaan. Ketentuan perlu konsisten dengan kontrak.",
+          "steps": [
+            "Definisikan satu putaran revisi.",
+            "Pisahkan bug, revisi dan pekerjaan baru.",
+            "Tentukan mekanisme jeda serta rekonsiliasi pembatalan.",
+            "Rinci kepemilikan hasil dan lisensi pihak ketiga."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Kesalahan terhadap spesifikasi diperbaiki tanpa memakan jatah revisi."
+          },
+          "common_mistake": "Menyatakan semua DP hangus tanpa dasar serta penjelasan yang sesuai.",
+          "sections": [
+            {
+              "heading": "Revisi dan perubahan pekerjaan",
+              "paragraphs": [
+                "Revisi memperbaiki hasil di dalam scope yang disetujui. Perubahan pekerjaan menambah atau mengganti kebutuhan. Batas ini membantu menjaga waktu dan biaya tetap bisa dikelola.",
+                "Definisikan putaran revisi: Satu putaran adalah satu daftar masukan terkonsolidasi dari PIC yang ditunjuk. Tetapkan tenggat pengiriman masukan dan contoh revisi yang termasuk, seperti koreksi teks atau penyesuaian warna dalam arah desain yang disetujui. Perbaikan kesalahan terhadap spesifikasi tidak menghabiskan jatah revisi.",
+                "Gunakan change request: Catat kebutuhan baru, alasan, pengaruh pada deliverables, biaya, dan tanggal. Tunda bagian tambahan sampai kedua pihak menyetujui perubahan. Pekerjaan awal dapat berlanjut hanya jika tidak bergantung pada keputusan tersebut. Hindari menerima tambahan lewat chat lalu menghitung tagihannya belakangan.",
+                "CONTOH FIKTIF: Permintaan mengganti warna tombol dalam rancangan disetujui termasuk revisi. Permintaan menambah katalog produk dengan checkout adalah perubahan scope. Kirim estimasi baru; jangan memasukkannya otomatis ke harga landing page Rp3.850.000."
+              ]
+            },
+            {
+              "heading": "Kepemilikan dan kerahasiaan",
+              "paragraphs": [
+                "Hak atas hasil kerja perlu dijelaskan per jenis aset. File final, file sumber, library, font, foto stok, template, dan akun berlangganan dapat memiliki hak penggunaan yang berbeda.",
+                "Tentukan apa yang dialihkan: Sebutkan hasil khusus proyek yang diserahkan atau dilisensikan, waktu berlakunya, dan syarat pembayarannya. Bedakan materi yang sudah dimiliki penyedia sebelumnya dari materi baru. Klien mendapat hak sesuai kesepakatan dan lisensi pihak ketiga; penyedia tidak dapat mengalihkan hak yang tidak dimilikinya.",
+                "Atur penggunaan AI: Sepakati bila AI digunakan untuk teks, desain, kode, atau pengolahan data. Periksa keluaran dan lisensinya. Jangan mengirim informasi rahasia klien ke layanan AI tanpa izin serta dasar pemrosesan yang sesuai. AI tidak menghapus kewajiban pemeriksaan mutu atau hak pihak ketiga.",
+                "Lindungi akses dan informasi: Batasi akses sesuai tugas, gunakan undangan akun daripada berbagi kata sandi, dan cabut akses setelah handover. Tentukan periode penyimpanan serta penghapusan data. NDA atau pengaturan pemrosesan data yang terpisah dapat diperlukan; template SPK umum tidak menggantikan kebutuhan itu."
+              ]
+            },
+            {
+              "heading": "Keterlambatan dan pembatalan",
+              "paragraphs": [
+                "Aturan ketika pekerjaan terhenti harus cukup jelas untuk digunakan saat kedua pihak sedang sibuk atau berbeda pendapat. Hindari ketentuan sepihak yang tidak dapat dijelaskan dengan adil.",
+                "Jika bahan atau pembayaran terlambat: Kirim pemberitahuan tertulis yang merinci hal yang tertunda, dampaknya, dan batas tanggapan. Jeda pekerjaan mengikuti ketentuan yang disepakati. Jadwal baru dikonfirmasi berdasarkan kapasitas setelah hambatan selesai; jangan menjanjikan tanggal lama tetap berlaku.",
+                "Jika proyek dibatalkan: Rekonsiliasi pekerjaan yang sudah dilakukan, hasil yang dapat diserahkan, biaya pihak ketiga yang telah disetujui dan tidak dapat dipulihkan, serta pembayaran diterima. Refund atau sisa tagihan dihitung berdasarkan kesepakatan dan ketentuan yang berlaku. Hindari kalimat “semua DP hangus” tanpa dasar serta penjelasan.",
+                "Jika terjadi sengketa: Simpan versi dokumen, bukti persetujuan, catatan perubahan, dan penerimaan pembayaran. Mulai dari pembicaraan melalui PIC resmi, lalu mekanisme penyelesaian yang disepakati. Klausul tanggung jawab, forum sengketa, penalti, dan keadaan kahar membutuhkan penyesuaian profesional pada konteks proyek."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-07",
+            "sbs-15",
+            "sbs-18",
+            "sbs-19"
+          ],
+          "source_playbook_pages": [
+            18,
+            19,
+            20
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        }
+      ]
+    },
+    {
+      "id": "pillar-5",
+      "slug": "operasional",
+      "title": "Pengerjaan dan serah terima",
+      "components": [
+        {
+          "id": "component-17",
+          "anchor": "komponen-17",
+          "title": "Client brief",
+          "summary": "Brief mengumpulkan tujuan, proses saat ini, pengguna, bahan, anggaran, tenggat dan PIC. Pengisian brief belum merupakan kontrak.",
+          "steps": [
+            "Mulai dari kebutuhan dan alasan waktunya.",
+            "Pisahkan wajib dan tambahan.",
+            "Catat hal yang belum diketahui serta penanggung jawab.",
+            "Konfirmasikan ringkasan sebelum mengirim proposal."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Hosting dan jadwal bahan yang belum jelas dicatat sebagai ketergantungan."
+          },
+          "common_mistake": "Meminta kredensial atau data sensitif melalui form umum.",
+          "sections": [
+            {
+              "heading": "Melakukan discovery dan brief",
+              "paragraphs": [
+                "Discovery memastikan kamu memahami kebutuhan sebelum menetapkan pekerjaan dan harga. Pertanyaan yang baik mencari konteks serta kriteria keputusan, tanpa membuat calon klien mengerjakan seluruh diagnosis sendiri.",
+                "Tanyakan enam hal: Apa yang ingin diperbaiki? Mengapa dibutuhkan sekarang? Bagaimana proses saat ini? Siapa pengguna dan pengambil keputusan? Bahan atau akses apa yang tersedia? Berapa kisaran anggaran dan tenggat yang masuk akal? Gunakan Client Brief untuk mencatat, bukan sebagai tes yang menyulitkan klien.",
+                "Tutup dengan rangkuman: Ulangi tujuan, ruang lingkup awal, batas yang belum jelas, dan tindakan berikutnya. Contoh: “Saya rangkum kebutuhan satu halaman lima section. Pembayaran online belum masuk. Saya perlu menu final dan satu PIC persetujuan sebelum mengirim proposal.” Minta koreksi sebelum menyusun penawaran.",
+                "Kenali kapan perlu tahap berbayar: Jika diagnosis memerlukan audit mendalam, akses produksi, atau perancangan teknis yang substansial, tawarkan discovery berbayar terpisah dengan hasil yang jelas. Jangan menjanjikan perkiraan pasti sebelum mengetahui ketergantungan penting."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-05"
+          ],
+          "source_playbook_pages": [
+            15
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-18",
+          "anchor": "komponen-18",
+          "title": "Project timeline",
+          "summary": "Timeline menunjukkan urutan milestone dan ketergantungan. Waktu kerja aktif berbeda dari waktu menunggu keputusan atau bahan.",
+          "steps": [
+            "Pastikan prasyarat kickoff.",
+            "Tetapkan keluaran, pemilik dan tenggat tiap milestone.",
+            "Catat waktu menunggu serta dampaknya.",
+            "Konfirmasikan perubahan jadwal kepada PIC."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Sepuluh hari kerja aktif adalah simulasi, bukan janji selesai sepuluh hari kalender."
+          },
+          "common_mistake": "Mempertahankan tanggal lama ketika bahan belum diserahkan.",
+          "sections": [
+            {
+              "heading": "Memulai proyek dengan rapi",
+              "paragraphs": [
+                "Kickoff dimulai setelah prasyarat yang disepakati terpenuhi. Tujuannya memastikan pekerjaan, akses, jadwal, dan wewenang persetujuan tidak hanya tersimpan di kepala masing-masing.",
+                "Periksa prasyarat: Pastikan SPK dan SOW final, pembayaran awal terverifikasi, bahan minimum tersedia, serta PIC dan kanal komunikasi ditetapkan. Buat satu folder proyek dengan akses terbatas. Gunakan ID proyek yang sama pada proposal, invoice, tracker, dan handover.",
+                "Pecah proyek menjadi milestone: CONTOH FIKTIF sepuluh hari kerja aktif: hari 1 brief final dan susunan konten; hari 2-3 wireframe; hari 4-7 implementasi; hari 8 pengujian; hari 9 revisi; hari 10 handover. Waktu menunggu persetujuan dan bahan dicatat terpisah. Tanggal kalender nyata ditetapkan ketika mulai.",
+                "Tentukan ritme komunikasi: Sepakati kapan update dikirim, berapa lama respons normal, serta siapa yang boleh menyetujui perubahan. Jika ada beberapa pemangku kepentingan, minta satu PIC menggabungkan masukan. Hindari menjalankan permintaan yang saling bertentangan tanpa klarifikasi."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-14",
+            "sbs-09"
+          ],
+          "source_playbook_pages": [
+            21
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-19",
+          "anchor": "komponen-19",
+          "title": "SOP dan workflow",
+          "summary": "SOP membuat kualitas dapat diulang. Setiap tahap membutuhkan bukti selesai dan pemeriksaan yang relevan dengan jenis jasa.",
+          "steps": [
+            "Konfirmasi brief lalu rencanakan.",
+            "Buat draf dan periksa sendiri.",
+            "Kelola review, revisi dan perubahan.",
+            "Lakukan acceptance test sebelum serah terima."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Automasi diuji untuk duplikasi, error, serta cara menghentikannya."
+          },
+          "common_mistake": "Menganggap status Selesai sebagai pengganti bukti pengujian.",
+          "sections": [
+            {
+              "heading": "SOP pengerjaan dan update",
+              "paragraphs": [
+                "SOP sederhana membantu mengulang kualitas. Catat pekerjaan yang menghasilkan bukti, lalu periksa hasilnya sebelum memberi tahu klien bahwa suatu tahap telah selesai.",
+                "Urutan kerja minimum: Konfirmasi brief, susun rencana, buat draf, periksa sendiri, kirim untuk review, terapkan masukan yang disepakati, lalu lakukan pengujian akhir. Catat estimasi dan jam aktual agar proyek berikutnya memiliki perhitungan yang lebih baik.",
+                "Format update yang dapat ditindaklanjuti: Sebutkan yang selesai, bukti yang dapat dibuka, yang sedang dikerjakan, hambatan, dan keputusan yang diminta. Contoh: “Wireframe lima section selesai. Mohon setujui urutannya atau kirim satu daftar koreksi paling lambat tanggal yang kita sepakati. Implementasi menunggu keputusan ini.”",
+                "Kelola risiko saat masih kecil: Jika estimasi meleset, laporkan penyebab dan pilihan pemulihan. Jangan menunggu tenggat terakhir. Jika masalah berada dalam tanggung jawabmu, usulkan perbaikan yang jelas. Jika disebabkan kebutuhan baru, gunakan mekanisme perubahan scope."
+              ]
+            },
+            {
+              "heading": "Review dan pemeriksaan mutu",
+              "paragraphs": [
+                "Review menilai kecocokan hasil dengan brief dan acceptance criteria. Pengujian teknis, pemeriksaan isi, dan persetujuan bisnis memiliki tujuan berbeda dan perlu dicatat.",
+                "Periksa sesuai jenis jasa: Untuk website: tautan, form, tampilan layar yang disepakati, pesan error, aksesibilitas dasar, dan akun. Untuk desain: ukuran, format ekspor, konsistensi, serta lisensi. Untuk tulisan: fakta, struktur, nada, dan izin sumber. Untuk automasi: data uji, kegagalan, duplikasi, serta cara menghentikan proses.",
+                "Kumpulkan masukan secara terstruktur: Minta lokasi masalah, hasil yang diharapkan, bukti atau screenshot, serta tingkat kepentingan. Tandai apakah masukan termasuk kesalahan, revisi, atau permintaan baru. Beri tahu perubahan yang dikerjakan dan hal yang perlu persetujuan biaya.",
+                "Pisahkan bug dari peningkatan: Kegagalan memenuhi kriteria yang sudah disetujui adalah masalah yang perlu diperbaiki. Kebutuhan baru merupakan peningkatan. Simpan daftar temuan dan statusnya; jangan menyebut siap serah terima jika masih ada temuan kritis yang belum disepakati penanganannya."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-14",
+            "sbs-09"
+          ],
+          "source_playbook_pages": [
+            22,
+            23
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-20",
+          "anchor": "komponen-20",
+          "title": "Handover checklist",
+          "summary": "Serah terima memindahkan file, pengetahuan dan akses sesuai kesepakatan. Acceptance, pembayaran dan handover perlu diperiksa masing-masing.",
+          "steps": [
+            "Inventarisasi hasil, source, panduan dan lisensi.",
+            "Uji pembukaan memakai akun klien.",
+            "Catat penerimaan serta temuan terbuka.",
+            "Verifikasi pembayaran dan jelaskan dukungan."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Klien dapat memakai hasil tanpa bergantung pada akun pribadi penyedia."
+          },
+          "common_mistake": "Menyimpan kata sandi dalam dokumen handover atau menutup proyek terlalu cepat.",
+          "sections": [
+            {
+              "heading": "Pelunasan dan serah terima",
+              "paragraphs": [
+                "Handover memindahkan hasil, pengetahuan, serta akses sesuai kesepakatan. Klien perlu mengetahui apa yang diterima dan bagaimana menggunakannya setelah proyek ditutup.",
+                "Siapkan paket serah terima: Sertakan daftar file final dan versinya, source sesuai kontrak, panduan penggunaan, catatan lisensi, akun yang dialihkan, bukti pengujian, dan temuan yang masih terbuka. Catat penerima serta lokasi file. Hindari menaruh kata sandi dalam dokumen handover.",
+                "Catat persetujuan dengan jelas: Gunakan pilihan diterima, diterima dengan catatan, atau perlu perbaikan. Sebutkan temuan, penanggung jawab, dan tenggat perbaikan. Status proyek selesai hanya bila acceptance, pembayaran, dan kewajiban handover yang berlaku telah terpenuhi; satu checklist saja tidak otomatis memenuhi semuanya.",
+                "Jelaskan dukungan setelah proyek: Tentukan periode dan batas perbaikan kesalahan terhadap scope. Maintenance, fitur baru, perubahan konten rutin, dan masalah layanan pihak ketiga perlu pengaturan terpisah. Garansi tidak berarti tersedia 24 jam atau bertanggung jawab atas semua perubahan pihak lain."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-10",
+            "sbs-14"
+          ],
+          "source_playbook_pages": [
+            24
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        }
+      ]
+    },
+    {
+      "id": "pillar-6",
+      "slug": "pertumbuhan",
+      "title": "Akuisisi dan retensi",
+      "components": [
+        {
+          "id": "component-21",
+          "anchor": "komponen-21",
+          "title": "Lead generation",
+          "summary": "Cari percakapan berdasarkan kecocokan kebutuhan. Gunakan kanal yang dapat dikelola rutin dan catat alasan relevansi.",
+          "steps": [
+            "Pilih satu kanal.",
+            "Susun daftar prospek relevan dengan data minimum.",
+            "Mulai percakapan dengan pengamatan nyata dan izin.",
+            "Evaluasi balasan serta alasan keputusan sebelum menambah volume."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Pesan meminta izin mengirim contoh sebelum memberi penawaran panjang."
+          },
+          "common_mistake": "Pesan massal tanpa konteks atau terus mengejar orang yang sudah menolak.",
+          "sections": [
+            {
+              "heading": "Mencari calon klien",
+              "paragraphs": [
+                "Mulai dari kanal yang bisa kamu kelola rutin: relasi yang relevan, konten yang menjawab masalah, komunitas sesuai aturan, atau platform freelance. Setiap kanal memiliki biaya waktu dan cara membangun kepercayaan.",
+                "Buat daftar berbasis kecocokan: Catat kebutuhan yang tampak, alasan kamu relevan, kanal kontak bisnis yang tersedia, dan tindakan berikutnya. Jangan membeli atau mengambil data pribadi secara sembarangan. Satu prospek yang cocok dan memiliki kebutuhan aktif lebih bermakna daripada daftar panjang tanpa konteks.",
+                "Bangun percakapan dengan izin: Sebutkan pengamatan singkat dan bantuan yang spesifik. Contoh: “Saya melihat informasi menu dan lokasi masih tersebar. Apakah merangkum keduanya dalam satu halaman sedang menjadi kebutuhan? Kalau relevan, saya bisa kirim contoh pendek.” Sesuaikan fakta pengamatan; jangan mengirim pesan ini bila kamu belum memeriksanya.",
+                "Evaluasi proses, bukan janji hasil: Catat jumlah kontak relevan, balasan, percakapan berkualitas, proposal, dan proyek menang. Jika balasan rendah, periksa relevansi sebelum menaikkan volume. Jika proposal sering gagal, periksa masalah, anggaran, bukti, dan kecocokan solusi. Hasil tidak dijamin oleh jumlah pesan tertentu."
+              ]
+            },
+            {
+              "heading": "Menulis proposal dan follow up",
+              "paragraphs": [
+                "Proposal menghubungkan kebutuhan klien dengan rencana pekerjaan, harga, dan keputusan yang diminta. Usahakan cukup pendek untuk dibaca pembuat keputusan tanpa kehilangan rincian penting.",
+                "Susun isi yang dapat disetujui: Tulis ringkasan kebutuhan, solusi, deliverables, kriteria penerimaan, pengecualian, timeline dan ketergantungan, harga, termin, serta masa berlaku penawaran. Jangan memasukkan ketentuan yang berbeda dari SPK dan SOW. Tetapkan nomor dokumen serta versi agar perubahan mudah ditelusuri.",
+                "Jawab keberatan dengan pilihan: Jika anggaran terbatas, tawarkan pengurangan scope. Jika tenggat mendesak, periksa kapasitas dan bahan yang tersedia sebelum menyetujui. Jika klien ragu pada pengalaman, tunjukkan demo relevan atau pilot kecil berbayar dengan keluaran terukur.",
+                "Follow up yang menghormati keputusan: Sepakati waktu tindak lanjut. Contoh: “Apakah ada bagian scope atau termin yang perlu diperjelas agar keputusan bisa diambil?” Setelah satu atau dua tindak lanjut tanpa respons, kirim penutupan singkat dan hentikan pengejaran. Hormati penolakan dan permintaan berhenti."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-13",
+            "sbs-09"
+          ],
+          "source_playbook_pages": [
+            14,
+            16
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-22",
+          "anchor": "komponen-22",
+          "title": "CRM dan client database",
+          "summary": "CRM mencatat tahap, keputusan dan tindakan berikutnya. Pisahkan prospek, kontrak, proyek dan kas agar nilainya tidak tercampur.",
+          "steps": [
+            "Gunakan ID unik.",
+            "Catat satu next action dan tanggal.",
+            "Masukkan pembayaran per transaksi terverifikasi.",
+            "Lakukan review mingguan terhadap tanggal evaluasi."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Tiga termin boleh merujuk satu ID proyek dengan ID transaksi berbeda."
+          },
+          "common_mistake": "Menganggap nilai pipeline sudah menjadi pendapatan kas.",
+          "sections": [
+            {
+              "heading": "Menggunakan CRM dan tracker",
+              "paragraphs": [
+                "CRM sederhana membantu mengingat keputusan serta tindak lanjut. Data yang dicatat harus berguna untuk pelayanan dan tidak dibagikan kepada pihak lain tanpa dasar yang sesuai.",
+                "Pisahkan prospek dan proyek: Prospek berada pada tahap Baru, Discovery, Proposal, Menang, Kalah, atau Ditunda. Proyek dimulai dengan ID tersendiri ketika pekerjaan disepakati. Pipeline bukan kas: nilai proposal belum dapat dianggap sebagai penerimaan pembayaran.",
+                "Catat pembayaran per transaksi: Tracker memisahkan nilai kontrak di tab Proyek dari dana diterima di tab Pembayaran. Gunakan ID proyek yang unik. Beberapa termin boleh merujuk proyek yang sama, tetapi setiap transaksi memiliki ID pembayaran sendiri. Rekonsiliasi dengan sumber pembayaran sebelum mencatat dana sebagai diterima.",
+                "Gunakan tanggal evaluasi yang jelas: Isi tanggal evaluasi pada Ringkasan. Indikator tenggat dan follow up dihitung terhadap tanggal itu, sehingga review dapat diulang. Workbook menyediakan 100 baris per tabel. Gunakan filter; bila melewati kapasitas, perluas formula, validasi, tabel, dan rentang ringkasan secara bersamaan."
+              ]
+            },
+            {
+              "heading": "Menilai kesehatan usaha",
+              "paragraphs": [
+                "Pantau angka yang membantumu mengambil keputusan. Hasil awal dapat berfluktuasi; evaluasi beberapa proyek dan percakapan, bukan menarik kesimpulan dari satu kejadian.",
+                "Gunakan definisi yang sama: Win rate = proposal yang menang / proposal yang sudah mendapat keputusan menang atau kalah. Penerimaan kas = dana yang benar-benar diterima. Nilai kontrak = nilai proyek disepakati. Piutang sederhana = nilai kontrak dikurangi dana diterima, dengan catatan penyesuaian pajak atau pembatalan perlu rekonsiliasi terpisah.",
+                "Belajar dari jam aktual: Bandingkan estimasi jam dengan waktu aktual dan catat penyebab selisih. Jika revisi memakan banyak waktu, perbaiki brief serta mekanisme persetujuan. Jika banyak pekerjaan di luar scope, perjelas pengecualian dan change request. Tarif efektif dari kas dibagi jam tidak sama dengan laba.",
+                "Jaga kapasitas: Kurangi jumlah proyek bersamaan bila mutu atau komunikasi mulai turun. Sisakan waktu untuk administrasi dan pemasaran. Otomasi baru dipasang ketika input, proses, dan penanggung jawabnya sudah jelas, disertai cara menangani kegagalan."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-09",
+            "sbs-13"
+          ],
+          "source_playbook_pages": [
+            26,
+            27
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-23",
+          "anchor": "komponen-23",
+          "title": "Feedback dan review",
+          "summary": "Feedback dipakai untuk memeriksa pemakaian hasil dan memperbaiki proses. Keluhan ditangani sesuai kewajiban layanan.",
+          "steps": [
+            "Tanyakan apakah hasil dapat digunakan.",
+            "Minta satu contoh yang membantu.",
+            "Minta satu perbaikan.",
+            "Pisahkan feedback privat dari izin testimonial."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Klien boleh memberi masukan tanpa mengizinkan namanya dipublikasikan."
+          },
+          "common_mistake": "Mengaitkan dukungan atau penyelesaian keluhan dengan ulasan positif.",
+          "sections": [
+            {
+              "heading": "Menjaga hubungan dengan klien",
+              "paragraphs": [
+                "Retensi dimulai dari hasil kerja yang sesuai kesepakatan dan komunikasi yang dapat diandalkan. Tawaran lanjutan sebaiknya berangkat dari kebutuhan nyata yang muncul setelah proyek digunakan.",
+                "Minta feedback yang spesifik: Tanyakan apakah hasil dapat digunakan, bagian proses yang paling membantu, dan satu hal yang perlu diperbaiki. Minta izin terpisah untuk menampilkan testimonial, nama, logo, atau hasil proyek. Simpan kata-kata klien sesuai makna aslinya dan minta persetujuan jika diedit.",
+                "Jadwalkan pemeriksaan pemakaian: Setelah waktu yang disepakati, tanyakan apakah ada kendala. Bila kebutuhan baru muncul, jelaskan apakah masuk dukungan yang sudah termasuk atau memerlukan penawaran baru. Jangan mengubah pertanyaan dukungan menjadi promosi berulang tanpa izin.",
+                "Tawarkan retainer dengan kapasitas jelas: Sebutkan jam atau kuota pekerjaan per bulan, jenis permintaan yang termasuk, waktu respons, aturan sisa kapasitas, dan pembatalan. Bedakan waktu respons dari waktu penyelesaian. Buat prioritas bila beberapa permintaan masuk bersamaan."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-16",
+            "sbs-12"
+          ],
+          "source_playbook_pages": [
+            25
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        },
+        {
+          "id": "component-24",
+          "anchor": "komponen-24",
+          "title": "After sales dan repeat order",
+          "summary": "Dukungan menjaga hasil tetap dapat digunakan dalam cakupan yang disepakati. Layanan lanjutan ditawarkan berdasarkan kebutuhan nyata.",
+          "steps": [
+            "Jelaskan masa dan kanal dukungan.",
+            "Periksa kendala penggunaan.",
+            "Bedakan bug dengan permintaan fitur baru.",
+            "Tawarkan quotation atau retainer dengan kuota dan cara berhenti yang jelas."
+          ],
+          "example": {
+            "label": "Contoh edukasi; bukan data klien nyata",
+            "text": "Retainer maintenance tidak otomatis mencakup semua pengembangan fitur."
+          },
+          "common_mistake": "Menawarkan layanan berulang tanpa batas kapasitas atau janji tersedia 24 jam.",
+          "sections": [
+            {
+              "heading": "Menjaga hubungan dengan klien",
+              "paragraphs": [
+                "Retensi dimulai dari hasil kerja yang sesuai kesepakatan dan komunikasi yang dapat diandalkan. Tawaran lanjutan sebaiknya berangkat dari kebutuhan nyata yang muncul setelah proyek digunakan.",
+                "Minta feedback yang spesifik: Tanyakan apakah hasil dapat digunakan, bagian proses yang paling membantu, dan satu hal yang perlu diperbaiki. Minta izin terpisah untuk menampilkan testimonial, nama, logo, atau hasil proyek. Simpan kata-kata klien sesuai makna aslinya dan minta persetujuan jika diedit.",
+                "Jadwalkan pemeriksaan pemakaian: Setelah waktu yang disepakati, tanyakan apakah ada kendala. Bila kebutuhan baru muncul, jelaskan apakah masuk dukungan yang sudah termasuk atau memerlukan penawaran baru. Jangan mengubah pertanyaan dukungan menjadi promosi berulang tanpa izin.",
+                "Tawarkan retainer dengan kapasitas jelas: Sebutkan jam atau kuota pekerjaan per bulan, jenis permintaan yang termasuk, waktu respons, aturan sisa kapasitas, dan pembatalan. Bedakan waktu respons dari waktu penyelesaian. Buat prioritas bila beberapa permintaan masuk bersamaan."
+              ]
+            },
+            {
+              "heading": "Menilai kesehatan usaha",
+              "paragraphs": [
+                "Pantau angka yang membantumu mengambil keputusan. Hasil awal dapat berfluktuasi; evaluasi beberapa proyek dan percakapan, bukan menarik kesimpulan dari satu kejadian.",
+                "Gunakan definisi yang sama: Win rate = proposal yang menang / proposal yang sudah mendapat keputusan menang atau kalah. Penerimaan kas = dana yang benar-benar diterima. Nilai kontrak = nilai proyek disepakati. Piutang sederhana = nilai kontrak dikurangi dana diterima, dengan catatan penyesuaian pajak atau pembatalan perlu rekonsiliasi terpisah.",
+                "Belajar dari jam aktual: Bandingkan estimasi jam dengan waktu aktual dan catat penyebab selisih. Jika revisi memakan banyak waktu, perbaiki brief serta mekanisme persetujuan. Jika banyak pekerjaan di luar scope, perjelas pengecualian dan change request. Tarif efektif dari kas dibagi jam tidak sama dengan laba.",
+                "Jaga kapasitas: Kurangi jumlah proyek bersamaan bila mutu atau komunikasi mulai turun. Sisakan waktu untuk administrasi dan pemasaran. Otomasi baru dipasang ketika input, proses, dan penanggung jawabnya sudah jelas, disertai cara menangani kegagalan."
+              ]
+            }
+          ],
+          "downloads": [
+            "sbs-16",
+            "sbs-18",
+            "sbs-10"
+          ],
+          "source_playbook_pages": [
+            25,
+            27
+          ],
+          "completion_prompt": "Tandai siap hanya setelah kamu memiliki hasil atau keputusan yang dapat diperiksa. Penanda ini membantu belajar dan bukan sertifikasi."
+        }
+      ]
+    }
+  ],
+  "model_lenses": [
+    {
+      "name": "On-demand",
+      "description": "Dipesan saat dibutuhkan, dengan respons yang disepakati."
+    },
+    {
+      "name": "Project-based",
+      "description": "Scope, hasil dan tenggat tertentu."
+    },
+    {
+      "name": "Retainer",
+      "description": "Kapasitas atau layanan rutin dengan pembayaran berkala."
+    },
+    {
+      "name": "Productized service",
+      "description": "Paket serta proses yang relatif standar."
+    },
+    {
+      "name": "Custom service",
+      "description": "Scope dan harga dirancang setelah discovery."
+    }
+  ],
+  "model_note": "Label dapat beririsan; jangan memaksakannya menjadi kategori eksklusif. Tarif per jam adalah metode penagihan, bukan pengganti Custom Service.",
+  "readiness": [
+    "Layanan inti",
+    "Pelanggan ideal",
+    "Harga dan paket",
+    "Portofolio jujur",
+    "Halaman layanan dan CTA",
+    "Client brief",
+    "Proposal dan quotation",
+    "SPK SOW dan kebijakan",
+    "Termin invoice dan verifikasi dana",
+    "SOP dan timeline",
+    "Handover dan acceptance",
+    "CRM dan tindak lanjut"
+  ],
+  "asset_registry": "assets.json"
+}

@@ -5,7 +5,7 @@ import { getBlogListingPosts } from "@/lib/mdx";
 import { SOCIAL_LINKS } from "@/content/social-links";
 
 export const metadata: Metadata = {
-  title: "Khadafi — Belajar, Berkarya & Membangun Peluang Digital",
+  title: { absolute: "Khadafi — Belajar, Berkarya & Membangun Peluang Digital" },
   description:
     "Jelajahi produk digital, panduan AI, sumber daya belajar, dan peluang freelance bersama Khadafi, AI-Assisted Product Engineer & Digital Builder.",
   alternates: {
@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function HomePage() {
-  const posts = await getBlogListingPosts();
+export default function HomePage() {
+  const posts = getBlogListingPosts();
 
   const websiteJsonLd = {
     "@context": "https://schema.org",
