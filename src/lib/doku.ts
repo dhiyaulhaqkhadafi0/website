@@ -77,9 +77,12 @@ export async function createDokuCheckout(input: {
       body,
       signal: AbortSignal.timeout(15000),
       cache: "no-store",
-      redirect: "error",
+      // workerd rejects redirect:"error" before sending the request.
+      // Manual mode plus explicit 3xx rejection never forwards credentials.
+      redirect: "manual",
     },
   ).catch(error => { throw new Error(dokuTransportFailure(error, "CHECKOUT")); });
+  if (response.status >= 300 && response.status < 400) throw new Error("DOKU_RESPONSE_REDIRECT_REJECTED");
   const raw = await response.text();
   if (raw.length > 65536) throw new Error("DOKU_RESPONSE_TOO_LARGE");
   let result;

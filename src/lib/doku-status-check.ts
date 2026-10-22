@@ -66,8 +66,9 @@ export async function checkDokuStatus(
     },
     cache: "no-store",
     signal: AbortSignal.timeout(15000),
-    redirect: "error",
+    redirect: "manual",
   }).catch(error => { throw new Error(dokuTransportFailure(error, "STATUS")); });
+  if (response.status >= 300 && response.status < 400) throw new Error("DOKU_STATUS_REDIRECT_BLOCKED");
   if (!response.ok) {
     // HTTP absence/rejection never proves that an earlier checkout is safe to recreate.
     if ([401, 403].includes(response.status)) throw new Error("DOKU_STATUS_CREDENTIALS_REJECTED");

@@ -17,7 +17,7 @@ function load(file, mocks, env, extras = {}) {
   const doku = load('src/lib/doku.ts', { './doku-security': security, './doku-config': policy, './doku-checkout-host': hosts, './checkout-methods': methods, './doku-credentials.mjs': credentials }, env, {
     fetch: async (url, options) => {
       assert.equal(url, 'https://api.doku.com/checkout/v1/payment');
-      assert.equal(options.redirect, 'error');
+      assert.equal(options.redirect, 'manual');
       const request = JSON.parse(options.body);
       assert.equal(request.order.amount, 1000);
       assert.equal(request.payment.type, 'SALE');
