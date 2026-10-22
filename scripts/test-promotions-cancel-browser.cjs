@@ -1,0 +1,27 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
+// Loopback-only fixture. Synthetic auth storage; all writes intercepted.
+const {chromium}=require('C:/Users/user/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const base=process.env.QA_BASE||'http://127.0.0.1:3043';assert.match(base,/^http:\/\/(127\.0\.0\.1|localhost):\d+$/);
+const dir=path.resolve('src/app/visual-promotion-qa');assert.ok(!fs.existsSync(dir));fs.mkdirSync(dir);
+const id='11111111-1111-4111-8111-111111111111',product={id,name:'Formula Profitable Blueprint',slug:'offline-promotion',price:59000,compare_at_price:298000,promotion_enabled:true,promotion_label:'Harga spesial',category:'Ebook',currency:'IDR',cover_url:'',status:'published',updated_at:'2026-10-22T00:00:00Z'};
+fs.writeFileSync(path.join(dir,'page.tsx'),`import {CommerceShell} from '@/components/commerce/CommerceShell';import {StudioPromotions} from '@/components/commerce/StudioPromotions';import {CancelOrderButton} from '@/components/commerce/CancelOrderButton';import {CheckoutForm} from '@/components/commerce/CheckoutForm';import type {Product} from '@/lib/commerce-types';export default function Page(){const p=${JSON.stringify(product)} as Product;return <CommerceShell><h1>Local promotion QA</h1><StudioPromotions products={[p]}/><CancelOrderButton orderId='${id}'/><CheckoutForm product={p} email='buyer@example.invalid' name='Offline buyer' available/></CommerceShell>}`);
+(async()=>{const browser=await chromium.launch({channel:'chrome',headless:true}),checks=[],errors=[];
+ try{for(const theme of ['dark','light'])for(const width of [390,1440]){
+  const context=await browser.newContext({viewport:{width,height:1000},reducedMotion:'reduce'}),page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));
+  const token=Buffer.from(JSON.stringify({alg:'HS256',typ:'JWT'})).toString('base64url')+'.'+Buffer.from(JSON.stringify({sub:id,role:'authenticated',exp:253402300799})).toString('base64url')+'.OFFLINE';
+  await page.addInitScript(({theme,token,id})=>{localStorage.setItem('khadafi-home-theme',theme);localStorage.setItem('sb-mykgtajanxczdnzekycl-auth-token',JSON.stringify({access_token:token,refresh_token:'OFFLINE',expires_at:253402300799,expires_in:3600,token_type:'bearer',user:{id,email:'buyer@example.invalid'}}));sessionStorage.setItem('khadafi-checkout-offline-promotion:buyer@example.invalid',id);sessionStorage.setItem('khadafi-checkout-other:buyer@example.invalid','keep-other');sessionStorage.setItem('khadafi-checkout-order-'+id,JSON.stringify({storageKey:'khadafi-checkout-offline-promotion:buyer@example.invalid',key:id}));},{theme,token,id});
+  await page.route('https://mykgtajanxczdnzekycl.supabase.co/**',r=>r.abort());await page.route('**/api/auth/session',r=>r.fulfill({status:200,body:'{}'}));
+  let saved,cancels=0;await page.route('**/api/studio/products/*/promotion',r=>{saved=r.request().postDataJSON();return r.fulfill({json:{product:{...product,...saved,updated_at:'2026-10-23T00:00:00Z'}}});});
+  await page.route('**/api/commerce/orders/*/cancel',r=>{cancels++;return r.fulfill({status:cancels===1?202:200,json:{status:cancels===1?'pending':'cancelled',message:cancels===1?'Pembatalan sedang diverifikasi DOKU.':'Pembatalan dikonfirmasi DOKU.'}});});
+  await page.goto(base+'/visual-promotion-qa',{waitUntil:'networkidle',timeout:120000});
+  assert.ok(await page.locator('del').count()>=2);assert.ok((await page.locator('del').first().textContent()).includes('298.000'));assert.equal(await page.getByText('Hemat 80%',{exact:true}).count(),2);
+  await page.getByRole('button',{name:'Simpan promosi',exact:true}).click();await page.getByRole('status').filter({hasText:'Promosi disimpan'}).waitFor();assert.equal(saved.price,59000);assert.equal(saved.compare_at_price,298000);assert.equal(saved.promotion_enabled,true);
+  await page.getByRole('button',{name:'Batalkan pembayaran',exact:true}).click();assert.equal(cancels,0);await page.getByRole('button',{name:'Ya, batalkan pesanan'}).click();await page.getByRole('status').filter({hasText:'Pembatalan sedang'}).waitFor();assert.equal(await page.evaluate(()=>sessionStorage.getItem('khadafi-checkout-offline-promotion:buyer@example.invalid')),id);
+  await page.getByRole('button',{name:'Batalkan pembayaran',exact:true}).click();await page.getByRole('button',{name:'Ya, batalkan pesanan'}).click();await page.getByRole('status').filter({hasText:'Pembatalan dikonfirmasi'}).waitFor();
+  assert.equal(await page.evaluate(()=>sessionStorage.getItem('khadafi-checkout-offline-promotion:buyer@example.invalid')),null);assert.equal(await page.evaluate(()=>sessionStorage.getItem('khadafi-checkout-other:buyer@example.invalid')),'keep-other');
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+  await page.screenshot({path:`artifacts/visual-payment/promotions-cancel-${theme}-${width}.png`,fullPage:true});checks.push({theme,width,promotionSaved:true,cancelVerified:true,otherProductIntentPreserved:true});await context.close();
+ }assert.deepEqual(errors,[]);fs.writeFileSync('artifacts/visual-payment/promotions-cancel-browser.json',JSON.stringify({checks,errors,realOrderCalls:0,realProviderCalls:0},null,2));console.log(JSON.stringify({passed:checks.length,errors,realProviderCalls:0}));
+ }finally{await browser.close();fs.rmSync(dir,{recursive:true});}
+})().catch(e=>{console.error(e);process.exitCode=1});

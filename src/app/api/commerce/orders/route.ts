@@ -91,6 +91,7 @@ export async function POST(request: Request) {
     return json({
       error: "Nominal pesanan sebelumnya berbeda dari harga saat ini. Periksa pesananmu atau hubungi support sebelum melanjutkan; pembayaran belum dibuat ulang.",
       code: "DOKU_ORDER_PRICE_CHANGED",
+      order_id: order.id,
     }, 409);
   try {
     const checkoutUrl = await checkoutForDokuOrder(order, user.email || "", p.name.trim(), false, method);
@@ -108,6 +109,7 @@ export async function POST(request: Request) {
     return json({
       error: messages[code] || "Halaman pembayaran DOKU belum berhasil disiapkan. Periksa pesananmu; belum ada konfirmasi pembayaran yang diterima.",
       code: /^DOKU_[A-Z_]+$/.test(code) ? code : "DOKU_CHECKOUT_UNKNOWN",
+      order_id: order.id,
     }, ["DOKU_CHECKOUT_PENDING", "DOKU_METHOD_LOCKED"].includes(code) ? 409 : 502);
   }
 }

@@ -1,5 +1,6 @@
 import app from '../.open-next/worker.js';
 import { reconcileScheduled } from './doku-schedule.mjs';
+import { emailScheduled } from './email-schedule.mjs';
 export { DOQueueHandler, DOShardedTagCache, BucketCachePurge } from '../.open-next/worker.js';
 const worker = {
   fetch(request, env, ctx) {
@@ -12,6 +13,7 @@ const worker = {
   },
   async scheduled(_event, env, ctx) {
     ctx.waitUntil(reconcileScheduled(env));
+    ctx.waitUntil(emailScheduled(env));
   },
 };
 export default worker;

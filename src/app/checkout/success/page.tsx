@@ -6,6 +6,7 @@ import s from "@/components/commerce/commerce.module.css";
 import { guestOrder } from "@/lib/guest-order";
 import { GuestDownloads } from "@/components/commerce/GuestDownloads";
 import { isAllowedDokuCheckoutUrl } from "@/lib/doku-checkout-host";
+import { CancelOrderButton } from "@/components/commerce/CancelOrderButton";
 export default async function Page({
   searchParams,
 }: {
@@ -69,6 +70,7 @@ export default async function Page({
         </div>
       )}
       <div className={s.actions}>
+        {!guest && o?.status === "pending" && o.provider === "doku" && <CancelOrderButton orderId={o.id} />}
         <Link
           href={guest ? "/login?returnTo=" + encodeURIComponent(paid ? "/account/library" : "/account/orders") : paid ? "/account/library" : "/account/orders"}
           className={s.button}

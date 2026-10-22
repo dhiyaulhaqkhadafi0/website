@@ -14,6 +14,9 @@ export type ShopItem = {
   href: string;
   price: number | null;
   priceLabel: string;
+  compare_at_price?: number | null;
+  promotion_enabled?: boolean;
+  promotion_label?: string;
   artwork:
     | "book"
     | "chatgpt"
@@ -353,6 +356,9 @@ export function originalItem(product: Product): ShopItem {
     tags: [product.category, "original", "digital"],
     href: "/products/" + product.slug,
     price: product.price,
+    compare_at_price: product.compare_at_price,
+    promotion_enabled: product.promotion_enabled,
+    promotion_label: product.promotion_label,
     priceLabel:
       product.price === 0
         ? "Gratis"

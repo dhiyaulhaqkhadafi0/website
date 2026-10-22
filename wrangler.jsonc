@@ -19,7 +19,8 @@
     "DOKU_QRIS_ENABLED": "true",
     "DOKU_QRIS_STATUS": "ACTIVE",
     "DOKU_RECONCILE_ENABLED": "true",
-    "COMMERCE_GUEST_CHECKOUT_ENABLED": "false"
+    "COMMERCE_GUEST_CHECKOUT_ENABLED": "false",
+    "TRANSACTION_EMAIL_ENABLED": "true"
   },
   "triggers": { "crons": ["*/5 * * * *"] },
   "assets": {

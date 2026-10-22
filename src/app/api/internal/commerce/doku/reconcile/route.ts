@@ -35,6 +35,9 @@ export async function POST(request: Request) {
         });
         if (writeError) throw new Error("DOKU_RECONCILE_SETTLEMENT_FAILED");
         summary.paid++;
+      } else if (["CANCELLED", "EXPIRED"].includes(result.status) && state.cancel_requested_at) {
+        const confirmed=await db.rpc("commerce_confirm_doku_cancel",{p_order:state.order_id,p_environment:policy.environment,p_invoice:state.invoice,p_total:order.total,p_outcome:result.status});
+        if(confirmed.error)throw new Error("DOKU_RECONCILE_CANCELLATION_FAILED");
       } else summary.pending++;
     } catch (error) {
       // Native/Worker errors can cross JavaScript realms; instanceof Error can

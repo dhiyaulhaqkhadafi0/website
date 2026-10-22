@@ -2,7 +2,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
-import { type Product, money } from "@/lib/commerce-types";
+import { type Product } from "@/lib/commerce-types";
+import { ProductPrice } from "./ProductPrice";
 import { BookCover } from "./BookCover";
 import s from "./commerce.module.css";
 export function ProductCatalog({ products }: { products: Product[] }) {
@@ -50,7 +51,7 @@ export function ProductCatalog({ products }: { products: Product[] }) {
                 <h3>{p.name}</h3>
                 <p>{p.short_description}</p>
                 <div className={s.cardFoot}>
-                  <strong>{money(p.price)}</strong>
+                  <ProductPrice product={p} compact/>
                   <span>
                     Lihat produk <ArrowUpRight aria-hidden="true" />
                   </span>

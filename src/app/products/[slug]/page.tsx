@@ -11,6 +11,7 @@ import {
 } from "@/lib/commerce-server";
 import { money, type Product } from "@/lib/commerce-types";
 import { ProductGallery } from "@/components/commerce/ProductGallery";
+import { ProductPrice } from "@/components/commerce/ProductPrice";
 import { ProductText } from "@/components/commerce/ProductText";
 import { CREATOR_NAME, mediaUrl } from "@/lib/product-media";
 import s from "@/components/commerce/commerce.module.css";
@@ -119,7 +120,7 @@ export default async function ProductPage({ params, searchParams }: Props) {
             <h1>{p.name}</h1>
             <p className={s.lead}>{p.short_description.length > 240 ? p.short_description.slice(0, 237).replace(/\s+\S*$/, "") + "…" : p.short_description}</p>
             {p.short_description.length > 240 && <details className={s.heroSummary}><summary>Baca ringkasan lengkap</summary><ProductText text={p.short_description} /></details>}
-            <div className={s.price}>{money(p.price)}</div>
+            <div className={s.price}><ProductPrice product={p}/></div>
             <div className={s.actions}>
               {draft ? (
                 <span className={s.badge}>

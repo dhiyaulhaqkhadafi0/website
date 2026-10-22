@@ -4,7 +4,9 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowUpRight, LoaderCircle, LockKeyhole } from "lucide-react";
 import { money, type Product } from "@/lib/commerce-types";
-import { commerceApi } from "./client-api";
+import { commerceApi, CommerceRequestError } from "./client-api";
+import { CancelOrderButton } from "./CancelOrderButton";
+import { ProductPrice } from "./ProductPrice";
 import s from "./commerce.module.css";
 import { supabase } from "@/lib/supabase";
 import { ProductImage } from "./ProductImage";
@@ -29,6 +31,7 @@ export function CheckoutForm({
   const [busy, setBusy] = useState(false);
   const submitting = useRef(false);
   const [error, setError] = useState("");
+  const [pendingOrderId, setPendingOrderId] = useState("");
   const intentStorageKey = "khadafi-checkout-" + product.slug + ":" + (email.trim().toLowerCase() || "guest");
   const [key, setKey] = useState(() => {
     if (typeof window === "undefined") return "";
@@ -59,10 +62,12 @@ export function CheckoutForm({
         method: "POST",
         body,
       }) : await fetch("/api/commerce/orders", { method: "POST", headers: { "Content-Type": "application/json" }, body }).then(async r => { const payload = await r.json(); if (!r.ok) throw new Error(payload.error || "Checkout gagal."); return payload; });
+      if (result.order_id) { try { sessionStorage.setItem("khadafi-checkout-order-" + result.order_id, JSON.stringify({storageKey:intentStorageKey,key})); } catch {} }
       if (result.payment_url) window.location.assign(result.payment_url);
       else if ((product.price === 0 || result.status === "paid") && result.order_id) router.push("/checkout/success?order=" + result.order_id);
       else throw new Error("Tautan pembayaran belum tersedia. Periksa pesananmu sebelum mencoba kembali.");
     } catch (e) {
+      if(e instanceof CommerceRequestError && e.orderId){setPendingOrderId(e.orderId);try{sessionStorage.setItem("khadafi-checkout-order-"+e.orderId,JSON.stringify({storageKey:intentStorageKey,key}));}catch{}}
       setError(e instanceof Error ? e.message : "Checkout gagal. Coba lagi.");
       submitting.current = false;
       setBusy(false);
@@ -117,6 +122,7 @@ export function CheckoutForm({
             </div>
           )}
           {error.includes("berakhir") && <button type="button" className={s.secondary} onClick={() => { const next = crypto.randomUUID(); setKey(next); setMethod("all"); try { sessionStorage.setItem(intentStorageKey, next); } catch {} setError(""); }}>Mulai pesanan baru</button>}
+          {pendingOrderId && email && <CancelOrderButton orderId={pendingOrderId} onCancelled={()=>{const next=crypto.randomUUID();setKey(next);setMethod("all");setPendingOrderId("");setError("");try{sessionStorage.setItem(intentStorageKey,next);}catch{}}}/>}
           {!email && !guestEnabled && <Link className={s.secondary} href={"/login?returnTo=" + encodeURIComponent("/checkout/" + product.slug)}>Masuk untuk membeli ↗</Link>}
           <button type="submit" className={s.button} disabled={!hydrated || busy || !available || (!email && !guestEnabled)}>
             {busy ? <LoaderCircle className={s.spin} /> : <ArrowUpRight />}
@@ -146,7 +152,7 @@ export function CheckoutForm({
         <dl>
           <div>
             <dt>Harga produk</dt>
-            <dd>{money(product.price)}</dd>
+            <dd><ProductPrice product={product} compact /></dd>
           </div>
           <div className={s.total}>
             <dt>Total</dt>

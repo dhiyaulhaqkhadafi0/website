@@ -4,9 +4,9 @@ import { normalizeDokuCredentials, dokuTransportFailure } from "./doku-credentia
 // Server-only caller: never accept a caller-supplied URL or invoice from a browser.
 // A checkout must already exist in the matching environment's order database.
 export type DokuPaymentStatus =
-  "PENDING" | "SUCCESS" | "FAILED" | "EXPIRED" | "REFUNDED" | "TIMEOUT" | "REDIRECT";
+  "PENDING" | "SUCCESS" | "FAILED" | "EXPIRED" | "REFUNDED" | "TIMEOUT" | "REDIRECT" | "CANCELLED";
 const STATES = new Set<DokuPaymentStatus>([
-  "PENDING", "SUCCESS", "FAILED", "EXPIRED", "REFUNDED", "TIMEOUT", "REDIRECT",
+  "PENDING", "SUCCESS", "FAILED", "EXPIRED", "REFUNDED", "TIMEOUT", "REDIRECT", "CANCELLED",
 ]);
 export type VerifiedDokuStatus = {
   invoice: string;
@@ -105,7 +105,13 @@ export async function checkDokuStatus(
   const transaction = record.transaction as Record<string, unknown> | null;
   const channel = record.channel as Record<string, unknown> | null;
   const amount = Number(order?.amount);
-  const status = transaction?.status;
+  const rawStatus = transaction?.status;
+  // A successful payment always wins an out-of-order cancellation observation.
+  const status = rawStatus === "SUCCESS" ? "SUCCESS"
+    : ["ORDER_CANCELLED", "CANCELLED"].includes(String(order?.status)) ? "CANCELLED"
+    : rawStatus === "CANCELED" ? "CANCELLED"
+    : rawStatus == null && order?.status === "ORDER_EXPIRED" ? "EXPIRED"
+    : rawStatus == null && order?.status === "ORDER_GENERATED" ? "PENDING" : rawStatus;
   if (order?.invoice_number !== invoice || !Number.isSafeInteger(amount) ||
       amount <= 0 || (order?.currency != null && order.currency !== "IDR") ||
       typeof status !== "string" || !STATES.has(status as DokuPaymentStatus)) {

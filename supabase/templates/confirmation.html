@@ -1,13 +1,10 @@
-<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Konfirmasi email akun Khadafi</title></head><body style="margin:0;padding:32px 16px;background:#f4f1e9;color:#252820;font-family:Arial,sans-serif">
-<div style="display:none;max-height:0;overflow:hidden">Terima kasih sudah mendaftar. Konfirmasi email untuk mulai menggunakan akun Khadafi.</div>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center"><table role="presentation" width="560" cellpadding="0" cellspacing="0" style="width:100%;max-width:560px;background:#fffdf7;border:1px solid #dedccf;border-radius:20px"><tr><td style="padding:36px">
-<p style="font-size:28px;font-weight:700;letter-spacing:-1.5px;margin:0 0 36px">khadafi<span style="color:#788765">.</span></p>
-<p style="font-size:10px;letter-spacing:2px;color:#747d67">SATU AKUN UNTUK PERJALANANMU</p>
-<h1 style="font-size:30px;line-height:1.2;letter-spacing:-1px;font-weight:500">Selamat datang di Khadafi.</h1>
-<p style="font-size:15px;line-height:1.8;color:#5f6557">Terima kasih sudah mendaftar. Konfirmasikan alamat email <strong>{{ .Email }}</strong> agar akunmu siap digunakan untuk produk dan library digital Khadafi.</p>
-<p style="margin:30px 0"><a href="https://khadafidaffa.com/auth/confirm#token_hash={{ .TokenHash }}&amp;type=email" style="display:inline-block;padding:16px 24px;border-radius:9px;background:#b9c7a6;color:#202619;text-decoration:none;font-size:14px;font-weight:700">Konfirmasi email saya →</a></p>
-<p style="font-size:13px;line-height:1.8;color:#6d7464">Tautan membuka halaman resmi Khadafi. Tekan tombol konfirmasi di halaman tersebut, lalu lanjutkan ke halaman masuk. Tautan ini bersifat pribadi dan hanya dapat digunakan satu kali.</p>
-<hr style="border:0;border-top:1px solid #e6e4d8;margin:28px 0">
-<p style="font-size:12px;line-height:1.8;color:#838a7a">Jika kamu tidak merasa mendaftar, abaikan email ini. Tidak ada pembelian atau pembayaran yang dijalankan oleh konfirmasi email.</p>
-<p style="font-size:12px;color:#838a7a">Khadafi · <a href="https://khadafidaffa.com" style="color:#5f6d4e">khadafidaffa.com</a></p>
-</td></tr></table></td></tr></table></body></html>
+<!doctype html>
+<html lang="id">
+<body style="font-family:Arial,sans-serif;color:#20241e;line-height:1.7;padding:24px">
+  <h2>Konfirmasi email akun Khadafi</h2>
+  <p>Kami menerima pendaftaran akun menggunakan <strong>{{ .Email }}</strong>.</p>
+  <p><a href="https://khadafidaffa.com/auth/confirm#token_hash={{ .TokenHash }}&amp;type=email">Konfirmasi alamat email</a></p>
+  <p>Tautan membuka halaman resmi Khadafi. Tekan tombol konfirmasi di halaman tersebut untuk mengaktifkan akun.</p>
+  <p>Tautan ini bersifat pribadi dan hanya dapat digunakan sekali. Jika kamu tidak mendaftar, abaikan email ini.</p>
+</body>
+</html>

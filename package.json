@@ -26,6 +26,7 @@
     "@tiptap/extension-underline": "^3.31.0",
     "@tiptap/react": "^3.31.0",
     "@tiptap/starter-kit": "^3.31.0",
+    "@workermailer/smtp": "0.2.1",
     "framer-motion": "^13.1.1",
     "gray-matter": "^4.0.3",
     "lucide-react": "^1.37.0",
