@@ -4,14 +4,14 @@ export { dokuInvoice, orderIdFromDokuInvoice } from "./doku-security";
 import { isAllowedDokuCheckoutUrl } from "./doku-checkout-host";
 import { dokuPolicy } from "./doku-config";
 import { checkoutMethodAllowed } from "./checkout-methods";
+import { normalizeDokuCredentials, dokuTransportFailure } from "./doku-credentials.mjs";
 
 const CHECKOUT_PATH = "/checkout/v1/payment";
 export const DOKU_WEBHOOK_PATH = "/api/commerce/doku/webhook";
 function credentials() {
   const clientId = process.env.DOKU_CLIENT_ID || "";
   const secretKey = process.env.DOKU_SECRET_KEY || "";
-  if (!clientId || !secretKey) throw new Error("DOKU credentials are missing");
-  return { clientId, secretKey };
+  return normalizeDokuCredentials(clientId, secretKey);
 }
 
 export function dokuConfigured() {
@@ -79,7 +79,7 @@ export async function createDokuCheckout(input: {
       cache: "no-store",
       redirect: "error",
     },
-  );
+  ).catch(error => { throw new Error(dokuTransportFailure(error, "CHECKOUT")); });
   const raw = await response.text();
   if (raw.length > 65536) throw new Error("DOKU_RESPONSE_TOO_LARGE");
   let result;

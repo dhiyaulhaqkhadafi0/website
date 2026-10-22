@@ -9,12 +9,12 @@ function load(file, mocks, env, extras = {}) {
 }
 (async () => {
   const security = load('src/lib/doku-security.ts', {}, {}), policy = load('src/lib/doku-config.ts', {}, {}), hosts = load('src/lib/doku-checkout-host.ts', {}, {});
-  const methods = load('src/lib/checkout-methods.ts', {}, {});
+  const methods = load('src/lib/checkout-methods.ts', {}, {}); const credentials = await import('../src/lib/doku-credentials.mjs');
   const env = { DOKU_ENABLED: 'true', PAYMENTS_ENABLED: 'true', DOKU_CLIENT_ID: 'OFFLINE_CLIENT_VECTOR', DOKU_SECRET_KEY: 'OFFLINE_HMAC_VECTOR', DOKU_SITE_ORIGIN: 'https://khadafidaffa.com', NEXT_PUBLIC_SUPABASE_URL: 'https://mykgtajanxczdnzekycl.supabase.co', DOKU_IS_PRODUCTION: 'true', DOKU_PRODUCTION_APPROVED: 'true', DOKU_PUBLIC_SALES_APPROVED: 'true', DOKU_QRIS_ENABLED: 'true', DOKU_QRIS_STATUS: 'ACTIVE', DOKU_QA_ENABLED: 'true', DOKU_QA_LIVE_APPROVED: 'true' };
   const input = { orderId: crypto.randomUUID(), requestId: crypto.randomUUID(), amount: 1000, email: 'buyer@example.invalid', name: 'Buyer' };
   let mode = 'echo';
   let expectedMethods = null;
-  const doku = load('src/lib/doku.ts', { './doku-security': security, './doku-config': policy, './doku-checkout-host': hosts, './checkout-methods': methods }, env, {
+  const doku = load('src/lib/doku.ts', { './doku-security': security, './doku-config': policy, './doku-checkout-host': hosts, './checkout-methods': methods, './doku-credentials.mjs': credentials }, env, {
     fetch: async (url, options) => {
       assert.equal(url, 'https://api.doku.com/checkout/v1/payment');
       assert.equal(options.redirect, 'error');

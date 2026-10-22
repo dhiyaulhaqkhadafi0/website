@@ -1,4 +1,5 @@
 import { createHmac, randomUUID, timingSafeEqual } from "node:crypto";
+import { normalizeDokuCredentials, dokuTransportFailure } from "./doku-credentials.mjs";
 
 // Server-only caller: never accept a caller-supplied URL or invoice from a browser.
 // A checkout must already exist in the matching environment's order database.
@@ -48,8 +49,7 @@ export async function checkDokuStatus(
   requestFetch: FetchLike = fetch,
 ): Promise<VerifiedDokuStatus> {
   if (!/^KS[0-9A-Z]{1,25}$/.test(invoice)) throw new Error("DOKU_STATUS_INVALID_INVOICE");
-  if (!credentials.clientId || !credentials.secretKey)
-    throw new Error("DOKU_STATUS_CREDENTIALS_MISSING");
+  credentials = normalizeDokuCredentials(credentials.clientId, credentials.secretKey);
   const target = "/orders/v1/status/" + invoice;
   const requestId = randomUUID();
   const time = new Date().toISOString().replace(/\.\d{3}Z$/, "Z");
@@ -67,7 +67,7 @@ export async function checkDokuStatus(
     cache: "no-store",
     signal: AbortSignal.timeout(15000),
     redirect: "error",
-  });
+  }).catch(error => { throw new Error(dokuTransportFailure(error, "STATUS")); });
   if (!response.ok) {
     // HTTP absence/rejection never proves that an earlier checkout is safe to recreate.
     if ([401, 403].includes(response.status)) throw new Error("DOKU_STATUS_CREDENTIALS_REJECTED");

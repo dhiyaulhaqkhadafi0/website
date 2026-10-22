@@ -18,7 +18,7 @@ export function PaymentQa({ qrisReady, freeReady, environment }: { qrisReady: bo
   }
   return <section className={s.section}>
     <span className={s.eyebrow}>PRIVATE QA / {environment}</span><h1>DOKU Live Payment QA</h1>
-    <p>Produk tes privat Rp1.000 dengan PDF tes. Tidak memuat ebook berbayar asli dan tidak tampil di katalog.</p>
+    <p>Uji pembayaran privat Rp1.000. Produk uji tidak tampil di katalog dan tidak mengubah harga produk publik. Setelah pembayaran terverifikasi, periksa akses berkas melalui library akunmu.</p>
     <p>Mulai checkout uang asli hanya setelah persetujuan khusus pemilik. Bayar sendiri melalui aplikasi pembayaran; periksa nominal akhir dan biaya sebelum mengonfirmasi.</p>
     {!qrisReady && <p role="status">QRIS belum siap untuk pengujian. Perlu status ACTIVE, konfigurasi tervalidasi dan izin khusus tes live.</p>}
     <div className={s.actions}><button className={s.button} disabled={busy || !qrisReady} onClick={() => start("qris")}>Checkout QRIS · Rp1.000</button>
