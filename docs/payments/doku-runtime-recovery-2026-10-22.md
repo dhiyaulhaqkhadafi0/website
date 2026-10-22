@@ -16,6 +16,16 @@
 - The runtime test uses only a local mock outbound service and no credentials. It asserts both committed Wrangler configurations support the cache option.
 - First recovery build `x2PI9r0yaXeEVBF0DW5is`: 152/152 cache objects uploaded; public preflight scanned 537 files against two available local private values, zero matches; paid PDF remains private; no component fixture in the production route manifest.
 - Recovery Worker `56ee67ad-c04b-43c0-bc83-5daf5217093b` restored the schedule. Runtime-flag Worker `71ab2747-8628-4907-8338-7191ff2c4736` adds cache support using the same application artifact. Live BUILD_ID matched the recovery build.
+- The final workerd request fix is deployed as Worker `2089df72-fc85-4573-bddc-8c6c5c201a17`, build `k3sTobKr3pLWcfcpaXGgP`. Its Next.js 16.3.8 build completed all 189 pages, OpenNext packaging passed, and 152/152 incremental cache objects were uploaded. Fifteen live HTTP/image/access checks passed, and the deployed version retains both fetch and scheduled handlers plus the cache compatibility flag.
+- After this deployment, the normal scheduled job reached DOKU for both historical orders. On 22 October at 14:45 UTC it received HTTP 404, recorded as `DOKU_STATUS_NOT_FOUND_UNCONFIRMED`. This replaces the pre-network transport failure; it does not authorize replacement bills or settlement.
+
+## Private Rp1,000 preparation
+
+The separate QA product is a non-featured draft with `is_payment_qa=true`, IDR price 1,000, and a database constraint preventing publication. Live catalog/sitemap and anonymous-role checks confirm it is hidden; public product/checkout URLs render not-found content. The original published product remains IDR 59,000 with its original private file.
+
+Studio uploads use `<product UUID>/...`, while the old QA function required `payment-qa/...`. Migration `20261022144749_doku_qa_studio_private_file.sql` aligns that validation and requires the matching object in the private `commerce-files` bucket. It preserves the confirmed-owner check, server-only execution grants, idempotency and price rules. A database test confirmed missing files reject creation without creating any order. Security advisors reported no newly introduced findings.
+
+A new one-page dummy PDF was generated and visually checked locally. At the latest preparation check it had not been uploaded to Studio: the QA product had zero files, zero orders and zero entitlements. Browser control failed to initialize, so authenticated Studio upload requires an owner action. QA runtime flags remain disabled. No checkout URL, provider method selection, actual payment or post-payment download has yet been verified for this new private test. This is not ready for manual payment until upload and official DOKU checkout verification complete.
 
 ## Historical orders and boundaries
 
