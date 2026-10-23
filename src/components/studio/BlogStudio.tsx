@@ -1,4 +1,5 @@
 "use client";
+import "./editorial.css";
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
@@ -134,12 +135,29 @@ export default function BlogStudio() {
   const [notice, setNotice] = useState('');
 
   // Layout states: persisted in localStorage
-  const [leftCollapsed, setLeftCollapsed] = useState(false);
-  const [rightCollapsed, setRightCollapsed] = useState(false);
+  const [leftCollapsed, setLeftCollapsed] = useState(true);
+  const [rightCollapsed, setRightCollapsed] = useState(true);
   const [focusMode, setFocusMode] = useState(false);
 
   // Modals & Tools
   const [previewOpen, setPreviewOpen] = useState(false);
+  useEffect(() => {
+    if (!previewOpen) return;
+    const previous = document.activeElement as HTMLElement | null;
+    const modal = document.querySelector<HTMLElement>('.studio-preview-modal');
+    modal?.focus();
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') { event.preventDefault(); setPreviewOpen(false); }
+      if (event.key !== 'Tab' || !modal) return;
+      const controls = [...modal.querySelectorAll<HTMLElement>('button:not([disabled]),a[href],input,select,textarea,[tabindex="0"]')].filter(el => el.getClientRects().length);
+      const first = controls[0], last = controls[controls.length - 1];
+      if (!first) { event.preventDefault(); return; }
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === modal)) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && (document.activeElement === last || document.activeElement === modal)) { event.preventDefault(); first.focus(); }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => { document.removeEventListener('keydown', onKey); previous?.focus(); };
+  }, [previewOpen]);
   const [previewDevice, setPreviewDevice] = useState<'desktop' | 'mobile'>('desktop');
   const [publishModalOpen, setPublishModalOpen] = useState(false);
   const [isPublishing, setIsPublishing] = useState(false);
@@ -173,7 +191,7 @@ export default function BlogStudio() {
   // Load layout preferences from localStorage
   useEffect(() => {
     try {
-      const savedLayout = localStorage.getItem('khadafi_studio_layout');
+      const savedLayout = localStorage.getItem('khadafi_studio_layout_v2');
       if (savedLayout) {
         const parsed = JSON.parse(savedLayout);
         if (typeof parsed.leftCollapsed === 'boolean') setLeftCollapsed(parsed.leftCollapsed);
@@ -188,7 +206,7 @@ export default function BlogStudio() {
   // Persist layout preferences to localStorage
   const saveLayoutPrefs = useCallback((left: boolean, right: boolean, focus: boolean) => {
     try {
-      localStorage.setItem('khadafi_studio_layout', JSON.stringify({
+      localStorage.setItem('khadafi_studio_layout_v2', JSON.stringify({
         leftCollapsed: left,
         rightCollapsed: right,
         focusMode: focus,
@@ -1021,7 +1039,7 @@ export default function BlogStudio() {
 
       {/* 5. Shared ArticleRenderer Preview Modal */}
       {previewOpen && (
-        <div className="studio-preview-modal fixed inset-3 sm:inset-6 z-50 flex flex-col rounded-2xl bg-[#090A0D] border border-white/10 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+        <div role="dialog" aria-modal="true" aria-label="Pratinjau editorial" tabIndex={-1} className="studio-preview-modal fixed inset-3 sm:inset-6 z-50 flex flex-col rounded-2xl bg-[#090A0D] border border-white/10 shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
           {/* Preview Header */}
           <div className="flex items-center justify-between px-5 py-3 border-b border-white/5 bg-[#111216]">
             <div className="flex items-center gap-2">
@@ -1054,6 +1072,7 @@ export default function BlogStudio() {
             <button
               type="button"
               onClick={() => setPreviewOpen(false)}
+              aria-label="Tutup pratinjau"
               className="w-8 h-8 rounded-lg flex items-center justify-center text-[#71717A] hover:text-white hover:bg-white/5"
             >
               <X className="w-4 h-4" />

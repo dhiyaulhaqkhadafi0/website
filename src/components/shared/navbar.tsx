@@ -1,5 +1,5 @@
 "use client";
-import { PUBLIC_NAV_CATEGORIES } from "@/content/public-navigation";
+import { PUBLIC_NAV_CATEGORIES, type NavCategory } from "@/content/public-navigation";
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
@@ -89,6 +89,7 @@ export function Navbar() {
   };
 
   const isCategoryActive = (categoryKey: string): boolean => {
+    if (categoryKey === "apps") return pathname === '/apps' || pathname.startsWith('/apps/');
     if (categoryKey === "freelance") {
       return pathname.startsWith("/freelance");
     }
@@ -111,7 +112,9 @@ export function Navbar() {
     return false;
   };
 
-  const navCategories = PUBLIC_NAV_CATEGORIES;
+  const [appCategories,setAppCategories]=useState<{slug:string;name:string;description:string}[]>([]);
+  useEffect(()=>{const c=new AbortController();void fetch('/api/apps/categories',{signal:c.signal}).then(r=>r.ok?r.json():null).then(data=>{if(data)setAppCategories(data.categories);}).catch(()=>{});return()=>c.abort();},[]);
+  const navCategories: NavCategory[] = PUBLIC_NAV_CATEGORIES.map(c=>c.key==='apps'?{...c,subMenus:[...c.subMenus,...appCategories.map(a=>({label:a.name,href:'/apps/'+a.slug,description:a.description}))]}:c);
 
   return (
     <>
@@ -262,7 +265,7 @@ export function Navbar() {
 
             {/* Right Action: Language Switcher & Primary CTA */}
             <div className="flex items-center gap-1.5 sm:gap-3 flex-shrink-0">
-              <div className="hidden sm:block">
+              <div className="block">
                 <NavbarLanguageSwitcher />
               </div>
 

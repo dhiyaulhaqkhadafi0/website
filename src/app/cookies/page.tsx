@@ -8,6 +8,11 @@ export const metadata: Metadata = {
   alternates: { canonical: "https://khadafidaffa.com/cookies" },
 };
 const sections = [
+  { id:'analytics',title:'Analytics berdasarkan pilihan Anda',paragraphs:[
+    'Google Analytics 4 hanya dimuat setelah Anda mengizinkan analytics. Pilihan khadafi-analytics-consent disimpan terpisah dari izin terjemahan. Penolakan tetap memberi akses ke halaman publik.',
+    'Pengukuran manual memakai jalur halaman tanpa query, fragmen, isi formulir, atau identitas akun. Studio, autentikasi, akun, dan checkout dikecualikan. Saat aktif, browser menghubungi Google dan Google dapat memproses informasi teknis koneksi.',
+    'Anda dapat mencabut izin pada panel preferensi. Cookie analytics pihak pertama dihapus dan halaman dimuat ulang untuk menghentikan kode yang sudah dimuat. Data yang sebelumnya terkirim ke layanan analytics tidak ikut dihapus dari layanan tersebut.',
+  ]},
   {
     id: "penting",
     title: "Sesi dan keamanan akun",

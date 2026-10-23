@@ -7,6 +7,8 @@ export type AffiliateRow = {
   referral_status?: string; amount?: number | null; currency?: string; payout_status?: string;
   confirmed_at?: string | null; paid_at?: string | null; evidence_reference?: string | null;
   created_at: string; updated_at: string;
+  category_id?: string | null; description?: string; affiliate_portal?: string; commission_terms?: string;
+  cookie_days?: number | null; payout_terms?: string; geography?: string;
 };
 export type AffiliateStats = {
   active_programs: number; active_links: number; clicks: number; last_activity: string | null;
@@ -23,5 +25,7 @@ export type AffiliateReport = {
   programs: AffiliateRow[]; links: AffiliateRow[]; campaigns: AffiliateRow[];
   environment: "preview" | "production";
   tracking_origin: string;
+  categories?: { id: string; name: string; slug: string }[];
+  revenue?: { group: string; label: string; currency: string; confirmed: number; paid: number }[];
   audit: { id: string; entity: string; action: string; occurred_at: string; record_id: string; before_data?: Record<string,unknown>|null; after_data?: Record<string,unknown>|null }[];
 };

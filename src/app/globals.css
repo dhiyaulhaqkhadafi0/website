@@ -625,3 +625,5 @@ body > .skiptranslate {
   box-shadow: none !important;
 }
 
+
+.analytics-consent{position:fixed;bottom:22px;left:24px;right:24px;margin:auto;max-width:1040px;z-index:90;background:#f7f6ee;color:#2d432f;border:1px solid #c5cfb8;border-radius:8px;padding:22px 26px;box-shadow:0 12px 60px #15271d30;display:flex;gap:20px;align-items:center;font-size:13px}.analytics-consent strong{font:20px/1.4 Georgia,serif}.analytics-consent p{font-size:12px;line-height:1.7;margin-top:6px;color:#65775a}.analytics-consent a{text-decoration:underline}.analytics-consent>div{flex:1}.analytics-consent button{min-height:44px;border:1px solid #abbc9b;border-radius:4px;padding:10px 16px;cursor:pointer;white-space:nowrap;font-size:12px}.analytics-consent button:last-child{background:#304b38;color:white}.analytics-consent button:focus-visible{outline:2px solid #749162;outline-offset:4px}@media(max-width:650px){.analytics-consent{left:14px;right:14px;bottom:14px;padding:20px;flex-wrap:wrap;gap:12px}.analytics-consent>div{flex-basis:100%}.analytics-consent button{flex:1}}

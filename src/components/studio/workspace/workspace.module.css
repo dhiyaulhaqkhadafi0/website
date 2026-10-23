@@ -1,0 +1,237 @@
+.shell {
+  --ink: #27372f;
+  --muted: #657269;
+  --paper: #f7f5ef;
+  min-height: 100dvh;
+  background: var(--paper);
+  color: var(--ink);
+  display: grid;
+  grid-template-columns: 248px minmax(0, 1fr);
+  font-size: 14px;
+  line-height: 1.7;
+}
+.shell * {
+  box-sizing: border-box;
+}
+.sidebar {
+  background: #20362d;
+  color: #e5e9dd;
+  padding: 32px 22px;
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: Georgia, serif;
+  font-size: 23px;
+}
+.brand img {
+  object-fit: contain;
+}
+.brand small {
+  display: block;
+  font: 10px/1.6 sans-serif;
+  letter-spacing: 0.24em;
+  color: #b5c2b4;
+}
+.sectionLabel {
+  padding-top: 24px;
+  border-top: 1px solid #ffffff20;
+  font-family: Georgia, serif;
+  font-size: 19px;
+}
+.group {
+  display: block;
+  margin: 24px 12px 10px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #a9b9ab;
+}
+.shell nav button {
+  width: 100%;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  text-align: left;
+  border: 0;
+  border-radius: 4px;
+  padding: 11px 14px;
+  min-height: 46px;
+  background: transparent;
+  color: #d0dbd1;
+  font: inherit;
+  cursor: pointer;
+}
+.shell nav button span {
+  font-size: 10px;
+  color: #9cac9e;
+}
+.shell nav button:hover {
+  background: #ffffff0b;
+}
+.shell nav button[aria-current="page"] {
+  background: #e3e8d7;
+  color: #25382c;
+}
+.modules {
+  display: grid;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 28px;
+  border-top: 1px solid #ffffff20;
+}
+.modules a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  color: #bccbbc;
+  font-size: 12px;
+  min-height: 40px;
+}
+.collapse {
+  border: 0;
+  background: none;
+  color: #bac8b9;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  cursor: pointer;
+  padding: 12px;
+}
+.main {
+  min-width: 0;
+}
+.top {
+  min-height: 82px;
+  border-bottom: 1px solid #dbddd3;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 48px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+}
+.top i {
+  font-style: normal;
+  color: #a4aca1;
+  margin: 0 14px;
+}
+.top > a {
+  margin-left: auto;
+  display: flex;
+  gap: 9px;
+  align-items: center;
+  min-height: 44px;
+  font-size: 12px;
+  letter-spacing: 0;
+}
+.menu {
+  display: none;
+  background: transparent;
+  border: 0;
+  min-height: 44px;
+  min-width: 44px;
+  cursor: pointer;
+}
+.collapsed {
+  grid-template-columns: minmax(0, 1fr);
+}
+.collapsed .sidebar {
+  display: none;
+}
+.collapsed .menu {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.drawer {
+  background: #20362d;
+  color: #e5e9dd;
+  width: min(320px, 90vw);
+  max-height: 100dvh;
+  height: 100dvh;
+  border: 0;
+  margin: 0;
+  padding: 36px 24px;
+  overflow: auto;
+}
+.drawer::backdrop {
+  background: #172b24a0;
+  backdrop-filter: blur(3px);
+}
+.drawerClose {
+  display: block;
+  margin-left: auto;
+  background: transparent;
+  color: #fff;
+  border: 0;
+  min-height: 44px;
+  min-width: 44px;
+}
+.shell :is(a, button, input, select, textarea, summary):focus-visible {
+  outline: 2px solid #99b396;
+  outline-offset: 4px;
+}
+.drawer .modules {
+  margin-top: 32px;
+}
+:global(body):has(.shell) > :global(footer) {
+  display: none;
+}
+@media (max-width: 1100px) {
+  .shell {
+    grid-template-columns: 216px minmax(0, 1fr);
+  }
+  .top {
+    padding: 18px 28px;
+  }
+  .sidebar {
+    padding: 28px 16px;
+  }
+  .collapsed {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 900px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    display: none;
+  }
+  .menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .top {
+    padding: 12px 20px;
+    gap: 10px;
+    min-height: 72px;
+  }
+  .top span {
+    font-size: 9px;
+    letter-spacing: 0.06em;
+  }
+  .top i {
+    margin: 0 5px;
+  }
+  .top > a {
+    font-size: 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .shell * {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}

@@ -46,7 +46,8 @@ export const PRIVACY_SECTIONS: LegalSection[] = [
     title: "Penyedia layanan dan penyimpanan browser",
     paragraphs: [
       "Supabase digunakan untuk autentikasi dan database; Cloudflare digunakan untuk penyajian situs dan infrastruktur. Data diproses melalui layanan tersebut sesuai fungsi yang Anda gunakan. Lokasi pemrosesan dapat berbeda dari lokasi Anda.",
-      "Sesi akun dan preferensi tampilan memakai cookies atau penyimpanan browser. Google Translate merupakan fitur opsional yang dimuat setelah Anda mengaktifkannya. Saat aktif, penyedia terjemahan menerima permintaan dari browser dan dapat memproses konten halaman. Rincian dan kontrol tersedia pada halaman Cookies.",
+        "Sesi akun dan preferensi tampilan memakai cookies atau penyimpanan browser. Google Translate merupakan fitur opsional yang dimuat setelah Anda mengaktifkannya. Saat aktif, penyedia terjemahan menerima permintaan dari browser dan dapat memproses konten halaman. Rincian dan kontrol tersedia pada halaman Cookies.",
+        "Google Analytics 4 mengukur penggunaan halaman publik setelah izin analytics diberikan, terpisah dari izin terjemahan. Pengukuran manual mengecualikan Studio, autentikasi, akun, dan checkout, serta memakai jalur halaman tanpa query atau fragmen. Browser berkomunikasi dengan Google saat analytics aktif. Anda dapat mencabut izin melalui halaman Cookies.",
     ],
   },
   {

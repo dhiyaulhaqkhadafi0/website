@@ -9,6 +9,8 @@ import {
 } from "@/content/freelance-resources";
 import { FREELANCE_PLATFORMS } from "@/content/freelance-directory";
 import { isPublicDestination } from "@/lib/public-routes";
+import { publicApps } from "@/lib/apps-server";
+import { appHref } from "@/lib/apps-types";
 import { publishedProducts } from "@/lib/commerce-server";
 
 export const dynamic = "force-dynamic";
@@ -17,7 +19,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = "https://khadafidaffa.com";
   const [posts, products] = await Promise.all([getAllPosts(), publishedProducts()]);
 
+  const appData=await publicApps();
   const staticRoutes: MetadataRoute.Sitemap = [
+    {url:siteUrl+"/apps",changeFrequency:"weekly",priority:0.8},
+    ...appData.categories.map(c=>({url:siteUrl+"/apps/"+c.slug,changeFrequency:"weekly" as const,priority:0.6})),
+    ...appData.apps.map(a=>({url:siteUrl+appHref(a,appData.categories),lastModified:new Date(a.updated_at),changeFrequency:"weekly" as const,priority:0.7})),
     { url: `${siteUrl}/cookies`, changeFrequency: "monthly", priority: 0.3 },
     { url: `${siteUrl}/products`, changeFrequency: "weekly", priority: 0.8 },
     ...[

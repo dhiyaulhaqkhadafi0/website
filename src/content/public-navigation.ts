@@ -14,6 +14,7 @@ export interface NavCategory {
   subMenus: SubMenuItem[];
 }
 const NAV_CATEGORIES: NavCategory[] = [
+  { key: "apps", label: "Apps", href: "/apps", subMenus: [{label:"Semua Apps", href:"/apps",description:"Tools praktis untuk kerja mandiri"}] },
   {
     key: "produk",
     label: "Produk & Jasa",
@@ -190,7 +191,7 @@ const NAV_CATEGORIES: NavCategory[] = [
 ];
 export const PUBLIC_NAV_CATEGORIES: NavCategory[] = [
   ...NAV_CATEGORIES.filter((c) =>
-    ["produk", "freelance", "resources"].includes(c.key),
+    ["apps", "produk", "freelance", "resources"].includes(c.key),
   ),
   {
     key: "artikel",

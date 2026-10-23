@@ -26,6 +26,9 @@ export function validateAffiliate(entity: AffiliateEntity, body: Record<string, 
     choice("status", entity === "links" ? ["active", "paused", "archived"] : ["draft", "active", "paused", "archived"]);
   }
   if (entity === "programs") {
+    if (body.category_id != null) reference("category_id", false);
+    for (const key of ['description','commission_terms','payout_terms','geography']) if (body[key] != null) text(key, key === 'geography' ? 120 : 2000);
+    if (body.affiliate_portal != null) { const portal=text('affiliate_portal',2048); if(portal) { try { const u=new URL(portal); if(u.protocol!=='https:'||u.username||u.password)throw new Error(); } catch { throw new Error('Portal affiliate harus HTTPS.'); } } }
     text("provider", 120, true); text("type", 80, true); date("last_verified_at");
     const website = text("official_website", 2048, true);
     try { const u = new URL(website); if (u.protocol !== "https:" || u.username || u.password || u.port || /[\s\\]/.test(website)) throw new Error(); } catch { throw new Error("Situs resmi harus URL HTTPS yang valid."); }

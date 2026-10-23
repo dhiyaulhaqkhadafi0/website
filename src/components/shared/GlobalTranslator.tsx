@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { LanguageSuggestion } from "./LanguageSuggestion";
 import { SUPPORTED_LANGUAGES, isPublicTranslationPath } from "@/lib/visitor-language.mjs";
 export { SUPPORTED_LANGUAGES } from "@/lib/visitor-language.mjs";
+import { trackEvent } from "@/lib/analytics";
 import { TRANSLATION_CONSENT_KEY } from "@/components/legal/CookiePreferences";
 declare global {
   interface Window {
@@ -41,6 +42,7 @@ function currentLanguage() {
 }
 function setLanguage(code: string) {
   try {
+    trackEvent("language_changed",{language:code});
     localStorage.setItem("khadafi_lang_preference", code);
     const value = code === "id" ? "" : "/id/" + code;
     const maxAge = code === "id" ? 0 : 30 * 86400;
@@ -180,7 +182,7 @@ export function NavbarLanguageSwitcher() {
         className="min-h-11 inline-flex gap-2 items-center px-3 rounded-lg text-xs text-white/75 border border-white/10 bg-white/5"
       >
         <Globe size={15} aria-hidden="true" />
-        <span>{lang.toUpperCase()}</span>
+        <span className="notranslate" translate="no"><strong style={{opacity:lang==="id"?1:.6}}>ID</strong> / <strong style={{opacity:lang==="en"?1:.6}}>EN</strong>{!["id","en"].includes(lang)?` · ${lang.toUpperCase()}`:""}</span>
       </button>
       {open && (
         <div

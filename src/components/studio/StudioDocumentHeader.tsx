@@ -68,6 +68,7 @@ export function StudioDocumentHeader({ article, onUpdate }: Props) {
 
       {/* 2. Auto-resizing Massive Editorial Title */}
       <textarea
+        aria-label="Judul naskah"
         ref={titleRef}
         rows={1}
         value={article.title}
@@ -94,6 +95,7 @@ export function StudioDocumentHeader({ article, onUpdate }: Props) {
       {/* 3. Deck / Subtitle Input (Synchronized with article.excerpt) */}
       <div className="mt-4">
         <textarea
+          aria-label="Ringkasan naskah"
           ref={deckRef}
           rows={2}
           value={article.excerpt}

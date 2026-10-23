@@ -36,9 +36,11 @@ export async function GET(request: Request,{params}:{params:Promise<{entity:stri
       auth.client.from("affiliate_links").select("id,name,slug,program_id,status,created_at,updated_at").order("name").limit(1000),
       auth.client.from("affiliate_campaigns").select("id,name,slug,link_id,program_id,status,created_at,updated_at").order("name").limit(1000),
       auth.client.from("affiliate_audit_log").select("id,entity,record_id,action,occurred_at,before_data,after_data").order("occurred_at",{ascending:false}).limit(12).abortSignal(AbortSignal.timeout(8000)),
+      auth.client.from("affiliate_categories").select("id,name,slug").order("name").limit(100),
+      auth.client.rpc('affiliate_revenue_breakdown',{p_since:period.since,p_until:period.until,p_environment:environment,p_program:program||null}).abortSignal(AbortSignal.timeout(8000)),
     ]);
     if(results.some(r=>r.error)) return affiliateJson({error:"Data affiliate belum dapat dimuat. Periksa migrasi database dan akses admin."},503);
-    return affiliateJson({rows:results[0].data,count:results[0].count,page,stats:results[1].data,programs:results[2].data,links:results[3].data,campaigns:results[4].data,audit:results[5].data,environment,tracking_origin:environment==="preview"?new URL(request.url).origin:"https://khadafidaffa.com"});
+    return affiliateJson({rows:results[0].data,count:results[0].count,page,stats:results[1].data,programs:results[2].data,links:results[3].data,campaigns:results[4].data,audit:results[5].data,categories:results[6].data,revenue:results[7].data,environment,tracking_origin:environment==="preview"?new URL(request.url).origin:"https://khadafidaffa.com"});
   } catch(error){return affiliateJson({error:error instanceof Error?error.message:"Permintaan tidak valid."},400);}
 }
 async function write(request: Request,entity: string,editing: boolean) {

@@ -17,6 +17,7 @@ export function PrivateNav({ studio = false }: { studio?: boolean }) {
         ["Pelanggan", "/studio/customers"],
         ["Subscriber", "/studio/freelance"],
         ["Afiliasi", "/studio/affiliates"],
+        ["Apps", "/studio/apps"],
       ]
     : [
         ["Ringkasan", "/account"],

@@ -89,14 +89,14 @@ export function StudioArticleRail({
         <div className="flex items-center gap-3 min-w-0">
           <div className="studio-brand-mark w-11 h-11 rounded-xl bg-[#14151B] border border-white/15 p-1 flex items-center justify-center shadow-md flex-shrink-0 overflow-hidden hover:border-[#34D399]/40 transition-colors">
             <img
-              src="/assets/logo%20AAPE.png"
-              alt="AAPE Studio Logo"
+              src="/images/brand/khadafi-studio-ks.webp"
+              alt="Khadafi Studio"
               className="w-full h-full object-contain"
             />
           </div>
           <div className="flex flex-col min-w-0">
             <strong className="font-serif text-sm text-[#F8FAFC] tracking-tight leading-tight truncate">Khadafi</strong>
-            <span className="text-[10px] text-[#34D399] tracking-widest uppercase font-mono mt-0.5 font-semibold">AAPE Studio</span>
+            <span className="text-[10px] text-[#34D399] tracking-widest uppercase font-mono mt-0.5 font-semibold">KHADAFI STUDIO</span>
           </div>
         </div>
         <button
